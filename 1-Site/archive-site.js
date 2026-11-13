@@ -28,6 +28,24 @@
       ? error.message : 'This page could not be loaded. Try refreshing, or return to the archive.';
   }
 
+  function trackVisit() {
+    const archiveRoot = '/the-ts-archive';
+    if (location.origin !== 'https://0lqc-go.github.io' || !location.pathname.startsWith(archiveRoot + '/')) return;
+
+    const page = document.body.dataset.page;
+    const path = page === 'home' ? '/' : location.pathname.slice(archiveRoot.length);
+    const key = page === 'list' ? 'list' : 'edition';
+    const id = params.get(key);
+    const reportPath = page !== 'home' && /^[a-z0-9-]+$/.test(id ?? '') ? `${path}?${key}=${id}` : path;
+
+    const script = document.createElement('script');
+    script.src = 'https://gc.zgo.at/count.js';
+    script.async = true;
+    script.dataset.goatcounter = 'https://tsarchive.goatcounter.com/count';
+    script.dataset.goatcounterSettings = JSON.stringify({path: reportPath, no_events: true});
+    document.head.append(script);
+  }
+
   function displayProfile({profile}) {
     setText('.profile-name', profile.name);
     for (const link of document.querySelectorAll('.profile, .curator-link')) link.href = profile.url;
@@ -56,7 +74,7 @@
   async function renderHome() {
     const index = await catalog();
     const hash = location.hash;
-    if (hash && !['#top', '#decades', '#lists'].includes(hash)) {
+    if (hash && !['#top', '#decades', '#lists', '#toggle-goatcounter'].includes(hash)) {
       location.replace(editionHref(index.featuredEdition) + hash);
       return;
     }
@@ -74,6 +92,7 @@
     $('#list-cards').innerHTML = index.lists.map(item => archiveCard(item, listHref(item), item.subtitle || 'Film list')).join('');
     $('#lists').hidden = index.lists.length === 0;
     $('#content-status').hidden = true;
+    trackVisit();
   }
 
   async function renderList() {
@@ -106,5 +125,8 @@
 
   window.ArchiveSite = {catalog, read, params, editionHref, listHref, showError, displayProfile, setText, setCover};
   if (document.body.dataset.page === 'home') renderHome().catch(showError);
-  if (document.body.dataset.page === 'list') renderList().catch(showError);
+  else {
+    trackVisit();
+    if (document.body.dataset.page === 'list') renderList().catch(showError);
+  }
 })();
