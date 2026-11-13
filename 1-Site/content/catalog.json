@@ -1,0 +1,35 @@
+{
+  "profile": {
+    "name": "0lqc",
+    "url": "https://letterboxd.com/0lqc/",
+    "avatar": "assets/profile.webp"
+  },
+  "featuredEdition": "2020-2026",
+  "editions": [
+    {
+      "id": "2020-2026",
+      "title": "The 2020–2026 Awards",
+      "period": "2020–2026",
+      "description": "The films, performances, and scenes that shaped my decade so far.",
+      "cover": "assets/films/tar-2022-wide.webp",
+      "cardImage": "assets/films/tar-2022-best-picture.webp",
+      "coverFilm": "TÁR",
+      "coverYear": 2022,
+      "coverSource": "https://www.focusfeatures.com/tar",
+      "content": "content/2020-2026.json"
+    }
+  ],
+  "lists": [
+    {
+      "id": "oscar-snubs-2020-2026",
+      "title": "Oscar Snubs",
+      "subtitle": "2020–2026",
+      "description": "Ten choices the Academy passed over.",
+      "cover": "assets/films/drive-my-car-wide.webp",
+      "coverFilm": "Drive My Car",
+      "coverYear": 2021,
+      "edition": "2020-2026",
+      "kind": "snubs"
+    }
+  ]
+}

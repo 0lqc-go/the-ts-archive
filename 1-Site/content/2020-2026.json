@@ -1,0 +1,2313 @@
+{
+  "chapters": [
+    {
+      "number": "01",
+      "name": "Film & Direction",
+      "shortName": "Film & Direction",
+      "id": "film-direction",
+      "awards": [
+        {
+          "id": "best-picture",
+          "number": 1,
+          "name": "Best Picture",
+          "feature": true,
+          "winner": {
+            "text": "TÁR",
+            "title": "TÁR",
+            "detail": "",
+            "films": [
+              "tar-2022"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "Decision to Leave",
+              "title": "Decision to Leave",
+              "detail": "",
+              "films": [
+                "decision-to-leave"
+              ]
+            },
+            {
+              "text": "The Worst Person in the World",
+              "title": "The Worst Person in the World",
+              "detail": "",
+              "films": [
+                "the-worst-person-in-the-world"
+              ]
+            },
+            {
+              "text": "The Brutalist",
+              "title": "The Brutalist",
+              "detail": "",
+              "films": [
+                "the-brutalist"
+              ]
+            },
+            {
+              "text": "The Count of Monte Cristo (2024)",
+              "title": "The Count of Monte Cristo (2024)",
+              "detail": "",
+              "films": [
+                "the-count-of-monte-cristo-2024"
+              ]
+            },
+            {
+              "text": "The Batman",
+              "title": "The Batman",
+              "detail": "",
+              "films": [
+                "the-batman"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "worst-picture",
+          "number": 2,
+          "name": "Worst Picture",
+          "winner": {
+            "text": "Wuthering Heights (2026)",
+            "title": "Wuthering Heights (2026)",
+            "detail": "",
+            "films": [
+              "wuthering-heights-2026"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "Materialists",
+              "title": "Materialists",
+              "detail": "",
+              "films": [
+                "materialists"
+              ]
+            },
+            {
+              "text": "Extraction (2020)",
+              "title": "Extraction (2020)",
+              "detail": "",
+              "films": [
+                "extraction-2020"
+              ]
+            },
+            {
+              "text": "Peaky Blinders: The Immortal Man",
+              "title": "Peaky Blinders: The Immortal Man",
+              "detail": "",
+              "films": [
+                "peaky-blinders-the-immortal-man"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "director-of-the-decade",
+          "number": 3,
+          "name": "Director of the Decade",
+          "winner": {
+            "text": "Park Chan-wook — Decision to Leave / No Other Choice",
+            "title": "Park Chan-wook",
+            "detail": "Decision to Leave / No Other Choice",
+            "films": [
+              "decision-to-leave",
+              "no-other-choice-2025"
+            ],
+            "creditFirst": true
+          },
+          "nominees": [
+            {
+              "text": "Christopher Nolan — Tenet / Oppenheimer / The Odyssey (2026)",
+              "title": "Christopher Nolan",
+              "detail": "Tenet / Oppenheimer / The Odyssey (2026)",
+              "films": [
+                "tenet",
+                "oppenheimer-2023",
+                "the-odyssey-2026"
+              ],
+              "creditFirst": true
+            },
+            {
+              "text": "Joachim Trier — The Worst Person in the World / Sentimental Value",
+              "title": "Joachim Trier",
+              "detail": "The Worst Person in the World / Sentimental Value",
+              "films": [
+                "the-worst-person-in-the-world",
+                "sentimental-value-2025"
+              ],
+              "creditFirst": true
+            },
+            {
+              "text": "Denis Villeneuve — Dune (2021) / Dune: Part Two",
+              "title": "Denis Villeneuve",
+              "detail": "Dune (2021) / Dune: Part Two",
+              "films": [
+                "dune-2021",
+                "dune-part-two"
+              ],
+              "creditFirst": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": "02",
+      "name": "Acting & Characters",
+      "shortName": "Acting",
+      "id": "acting-characters",
+      "awards": [
+        {
+          "id": "best-actor",
+          "number": 4,
+          "name": "Best Actor",
+          "winner": {
+            "text": "The Brutalist — Adrien Brody",
+            "title": "The Brutalist",
+            "detail": "Adrien Brody",
+            "films": [
+              "the-brutalist"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "Marty Supreme — Timothée Chalamet",
+              "title": "Marty Supreme",
+              "detail": "Timothée Chalamet",
+              "films": [
+                "marty-supreme"
+              ]
+            },
+            {
+              "text": "tick, tick... BOOM! — Andrew Garfield",
+              "title": "tick, tick... BOOM!",
+              "detail": "Andrew Garfield",
+              "films": [
+                "tick-tick-boom-2021"
+              ]
+            },
+            {
+              "text": "One Battle After Another — Leonardo DiCaprio",
+              "title": "One Battle After Another",
+              "detail": "Leonardo DiCaprio",
+              "films": [
+                "one-battle-after-another"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "best-actress",
+          "number": 5,
+          "name": "Best Actress",
+          "winner": {
+            "text": "TÁR — Cate Blanchett",
+            "title": "TÁR",
+            "detail": "Cate Blanchett",
+            "films": [
+              "tar-2022"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "Decision to Leave — Tang Wei",
+              "title": "Decision to Leave",
+              "detail": "Tang Wei",
+              "films": [
+                "decision-to-leave"
+              ]
+            },
+            {
+              "text": "The Worst Person in the World — Renate Reinsve",
+              "title": "The Worst Person in the World",
+              "detail": "Renate Reinsve",
+              "films": [
+                "the-worst-person-in-the-world"
+              ]
+            },
+            {
+              "text": "Anatomy of a Fall — Sandra Hüller",
+              "title": "Anatomy of a Fall",
+              "detail": "Sandra Hüller",
+              "films": [
+                "anatomy-of-a-fall"
+              ]
+            },
+            {
+              "text": "Promising Young Woman — Carey Mulligan",
+              "title": "Promising Young Woman",
+              "detail": "Carey Mulligan",
+              "films": [
+                "promising-young-woman"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "best-supporting-actor",
+          "number": 6,
+          "name": "Best Supporting Actor",
+          "winner": {
+            "text": "One Battle After Another — Sean Penn",
+            "title": "One Battle After Another",
+            "detail": "Sean Penn",
+            "films": [
+              "one-battle-after-another"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "Sentimental Value — Stellan Skarsgård",
+              "title": "Sentimental Value",
+              "detail": "Stellan Skarsgård",
+              "films": [
+                "sentimental-value-2025"
+              ]
+            },
+            {
+              "text": "Oppenheimer — Robert Downey Jr.",
+              "title": "Oppenheimer",
+              "detail": "Robert Downey Jr.",
+              "films": [
+                "oppenheimer-2023"
+              ]
+            },
+            {
+              "text": "The Brutalist — Guy Pearce",
+              "title": "The Brutalist",
+              "detail": "Guy Pearce",
+              "films": [
+                "the-brutalist"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "best-supporting-actress",
+          "number": 7,
+          "name": "Best Supporting Actress",
+          "winner": {
+            "text": "The Banshees of Inisherin — Kerry Condon",
+            "title": "The Banshees of Inisherin",
+            "detail": "Kerry Condon",
+            "films": [
+              "the-banshees-of-inisherin"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "May December — Julianne Moore",
+              "title": "May December",
+              "detail": "Julianne Moore",
+              "films": [
+                "may-december"
+              ]
+            },
+            {
+              "text": "Sentimental Value — Inga Ibsdotter Lilleaas",
+              "title": "Sentimental Value",
+              "detail": "Inga Ibsdotter Lilleaas",
+              "films": [
+                "sentimental-value-2025"
+              ]
+            },
+            {
+              "text": "The Assessment — Alicia Vikander",
+              "title": "The Assessment",
+              "detail": "Alicia Vikander",
+              "films": [
+                "the-assessment-2024"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "best-breakthrough-performance",
+          "number": 8,
+          "name": "Best Breakthrough Performance",
+          "winner": {
+            "text": "Elvis — Austin Butler",
+            "title": "Elvis",
+            "detail": "Austin Butler",
+            "films": [
+              "elvis-2022"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "The Worst Person in the World — Renate Reinsve",
+              "title": "The Worst Person in the World",
+              "detail": "Renate Reinsve",
+              "films": [
+                "the-worst-person-in-the-world"
+              ]
+            },
+            {
+              "text": "La Chimera / Challengers — Josh O’Connor",
+              "title": "La Chimera / Challengers",
+              "detail": "Josh O’Connor",
+              "films": [
+                "la-chimera",
+                "challengers"
+              ]
+            },
+            {
+              "text": "The Novice — Isabelle Fuhrman",
+              "title": "The Novice",
+              "detail": "Isabelle Fuhrman",
+              "films": [
+                "the-novice"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "best-antagonist",
+          "number": 9,
+          "name": "Best Antagonist",
+          "winner": {
+            "text": "Nightmare Alley — Lilith Ritter (Cate Blanchett)",
+            "title": "Nightmare Alley",
+            "detail": "Lilith Ritter (Cate Blanchett)",
+            "films": [
+              "nightmare-alley-2021"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "One Battle After Another — Lockjaw (Sean Penn)",
+              "title": "One Battle After Another",
+              "detail": "Lockjaw (Sean Penn)",
+              "films": [
+                "one-battle-after-another"
+              ]
+            },
+            {
+              "text": "The Menu — Chef Slowik (Ralph Fiennes)",
+              "title": "The Menu",
+              "detail": "Chef Slowik (Ralph Fiennes)",
+              "films": [
+                "the-menu-2022"
+              ]
+            },
+            {
+              "text": "The Batman — The Riddler (Paul Dano)",
+              "title": "The Batman",
+              "detail": "The Riddler (Paul Dano)",
+              "films": [
+                "the-batman"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": "03",
+      "name": "Writing",
+      "id": "writing",
+      "awards": [
+        {
+          "id": "best-original-screenplay",
+          "number": 10,
+          "name": "Best Original Screenplay",
+          "winner": {
+            "text": "Anatomy of a Fall — Triet & Harari",
+            "title": "Anatomy of a Fall",
+            "detail": "Triet & Harari",
+            "films": [
+              "anatomy-of-a-fall"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "Decision to Leave — Park & Jeong",
+              "title": "Decision to Leave",
+              "detail": "Park & Jeong",
+              "films": [
+                "decision-to-leave"
+              ]
+            },
+            {
+              "text": "The Worst Person in the World — Vogt & Trier",
+              "title": "The Worst Person in the World",
+              "detail": "Vogt & Trier",
+              "films": [
+                "the-worst-person-in-the-world"
+              ]
+            },
+            {
+              "text": "TÁR — Todd Field",
+              "title": "TÁR",
+              "detail": "Todd Field",
+              "films": [
+                "tar-2022"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "best-non-original-screenplay",
+          "number": 11,
+          "name": "Best Non-Original Screenplay",
+          "winner": {
+            "text": "The Count of Monte Cristo (2024)",
+            "title": "The Count of Monte Cristo (2024)",
+            "detail": "",
+            "films": [
+              "the-count-of-monte-cristo-2024"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "Drive My Car — Murakami × Chekhov",
+              "title": "Drive My Car",
+              "detail": "Murakami × Chekhov",
+              "films": [
+                "drive-my-car"
+              ]
+            },
+            {
+              "text": "No Other Choice",
+              "title": "No Other Choice",
+              "detail": "",
+              "films": [
+                "no-other-choice-2025"
+              ]
+            },
+            {
+              "text": "Dune: Part Two",
+              "title": "Dune: Part Two",
+              "detail": "",
+              "films": [
+                "dune-part-two"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "best-line-of-dialogue",
+          "number": 12,
+          "name": "Best Line of Dialogue",
+          "winner": {
+            "text": "The Worst Person in the World — “I’m sure I remember things about you that you’ve forgotten.”",
+            "title": "The Worst Person in the World",
+            "detail": "“I’m sure I remember things about you that you’ve forgotten.”",
+            "films": [
+              "the-worst-person-in-the-world"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "TÁR — “Sublimate yourself, your ego, and yes, your identity!”",
+              "title": "TÁR",
+              "detail": "“Sublimate yourself, your ego, and yes, your identity!”",
+              "films": [
+                "tar-2022"
+              ]
+            },
+            {
+              "text": "The Menu — “We strive for perfection, but there is no such thing.”",
+              "title": "The Menu",
+              "detail": "“We strive for perfection, but there is no such thing.”",
+              "films": [
+                "the-menu-2022"
+              ]
+            },
+            {
+              "text": "The Brutalist — “It is the destination, not the journey.”",
+              "title": "The Brutalist",
+              "detail": "“It is the destination, not the journey.”",
+              "films": [
+                "the-brutalist"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "the-tattoo-line-award",
+          "number": 13,
+          "name": "The Tattoo Line Award",
+          "feature": true,
+          "winner": {
+            "text": "The Brutalist — “It is the destination, not the journey.”",
+            "title": "The Brutalist",
+            "detail": "“It is the destination, not the journey.”",
+            "films": [
+              "the-brutalist"
+            ]
+          },
+          "nominees": []
+        }
+      ]
+    },
+    {
+      "number": "04",
+      "name": "Scenes & Moments",
+      "shortName": "Scenes",
+      "id": "scenes-moments",
+      "awards": [
+        {
+          "id": "best-scene",
+          "number": 14,
+          "name": "Best Scene",
+          "winner": {
+            "text": "TÁR — The one-take Juilliard lecture",
+            "title": "TÁR",
+            "detail": "The one-take Juilliard lecture",
+            "films": [
+              "tar-2022"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "Decision to Leave — The beach finale",
+              "title": "Decision to Leave",
+              "detail": "The beach finale",
+              "films": [
+                "decision-to-leave"
+              ]
+            },
+            {
+              "text": "Anatomy of a Fall — The recorded argument",
+              "title": "Anatomy of a Fall",
+              "detail": "The recorded argument",
+              "films": [
+                "anatomy-of-a-fall"
+              ]
+            },
+            {
+              "text": "The Worst Person in the World — The city stands still",
+              "title": "The Worst Person in the World",
+              "detail": "The city stands still",
+              "films": [
+                "the-worst-person-in-the-world"
+              ]
+            },
+            {
+              "text": "Dune: Part Two — The closing scene",
+              "title": "Dune: Part Two",
+              "detail": "The closing scene",
+              "films": [
+                "dune-part-two"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "best-opening-sequence",
+          "number": 15,
+          "name": "Best Opening Sequence",
+          "winner": {
+            "text": "Tenet — The opera siege",
+            "title": "Tenet",
+            "detail": "The opera siege",
+            "films": [
+              "tenet"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "The Batman — The Riddler at the window",
+              "title": "The Batman",
+              "detail": "The Riddler at the window",
+              "films": [
+                "the-batman"
+              ]
+            },
+            {
+              "text": "TÁR — Opening credits and the onstage interview",
+              "title": "TÁR",
+              "detail": "Opening credits and the onstage interview",
+              "films": [
+                "tar-2022"
+              ]
+            },
+            {
+              "text": "tick, tick... BOOM!",
+              "title": "tick, tick... BOOM!",
+              "detail": "",
+              "films": [
+                "tick-tick-boom-2021"
+              ]
+            },
+            {
+              "text": "Don’t Look Up",
+              "title": "Don’t Look Up",
+              "detail": "",
+              "films": [
+                "dont-look-up-2021"
+              ]
+            },
+            {
+              "text": "Babylon — The opening party",
+              "title": "Babylon",
+              "detail": "The opening party",
+              "films": [
+                "babylon-2022"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": "05",
+      "name": "Technical & Craft",
+      "shortName": "Craft",
+      "id": "technical-craft",
+      "awards": [
+        {
+          "id": "best-cinematography",
+          "number": 16,
+          "name": "Best Cinematography",
+          "winner": {
+            "text": "Dune: Part Two — Greig Fraser",
+            "title": "Dune: Part Two",
+            "detail": "Greig Fraser",
+            "films": [
+              "dune-part-two"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "The Batman — Greig Fraser",
+              "title": "The Batman",
+              "detail": "Greig Fraser",
+              "films": [
+                "the-batman"
+              ]
+            },
+            {
+              "text": "Tenet — Hoyte van Hoytema",
+              "title": "Tenet",
+              "detail": "Hoyte van Hoytema",
+              "films": [
+                "tenet"
+              ]
+            },
+            {
+              "text": "Decision to Leave — Kim Ji-yong",
+              "title": "Decision to Leave",
+              "detail": "Kim Ji-yong",
+              "films": [
+                "decision-to-leave"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "best-film-editing",
+          "number": 17,
+          "name": "Best Film Editing",
+          "winner": {
+            "text": "Tenet — Jennifer Lame",
+            "title": "Tenet",
+            "detail": "Jennifer Lame",
+            "films": [
+              "tenet"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "Marty Supreme — Ronald Bronstein & Josh Safdie",
+              "title": "Marty Supreme",
+              "detail": "Ronald Bronstein & Josh Safdie",
+              "films": [
+                "marty-supreme"
+              ]
+            },
+            {
+              "text": "Challengers — Marco Costa",
+              "title": "Challengers",
+              "detail": "Marco Costa",
+              "films": [
+                "challengers"
+              ]
+            },
+            {
+              "text": "Anatomy of a Fall",
+              "title": "Anatomy of a Fall",
+              "detail": "",
+              "films": [
+                "anatomy-of-a-fall"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "best-production-design",
+          "number": 18,
+          "name": "Best Production Design",
+          "winner": {
+            "text": "The Brutalist — Judy Becker & Patricia Cuccia",
+            "title": "The Brutalist",
+            "detail": "Judy Becker & Patricia Cuccia",
+            "films": [
+              "the-brutalist"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "Marty Supreme",
+              "title": "Marty Supreme",
+              "detail": "",
+              "films": [
+                "marty-supreme"
+              ]
+            },
+            {
+              "text": "Nightmare Alley",
+              "title": "Nightmare Alley",
+              "detail": "",
+              "films": [
+                "nightmare-alley-2021"
+              ]
+            },
+            {
+              "text": "Poor Things",
+              "title": "Poor Things",
+              "detail": "",
+              "films": [
+                "poor-things-2023"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "best-visual-effects",
+          "number": 19,
+          "name": "Best Visual Effects",
+          "winner": {
+            "text": "Dune: Part Two",
+            "title": "Dune: Part Two",
+            "detail": "",
+            "films": [
+              "dune-part-two"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "Tenet",
+              "title": "Tenet",
+              "detail": "",
+              "films": [
+                "tenet"
+              ]
+            },
+            {
+              "text": "The Batman",
+              "title": "The Batman",
+              "detail": "",
+              "films": [
+                "the-batman"
+              ]
+            },
+            {
+              "text": "The Odyssey (2026)",
+              "title": "The Odyssey (2026)",
+              "detail": "",
+              "films": [
+                "the-odyssey-2026"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "best-costume-design",
+          "number": 20,
+          "name": "Best Costume Design",
+          "winner": {
+            "text": "The Count of Monte Cristo (2024)",
+            "title": "The Count of Monte Cristo (2024)",
+            "detail": "",
+            "films": [
+              "the-count-of-monte-cristo-2024"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "The Beast (2023)",
+              "title": "The Beast (2023)",
+              "detail": "",
+              "films": [
+                "the-beast-2023"
+              ]
+            },
+            {
+              "text": "Elvis — Catherine Martin",
+              "title": "Elvis",
+              "detail": "Catherine Martin",
+              "films": [
+                "elvis-2022"
+              ]
+            },
+            {
+              "text": "Dune: Part Two",
+              "title": "Dune: Part Two",
+              "detail": "",
+              "films": [
+                "dune-part-two"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "best-original-score",
+          "number": 21,
+          "name": "Best Original Score",
+          "feature": true,
+          "winner": {
+            "text": "Babylon — Justin Hurwitz",
+            "title": "Babylon",
+            "detail": "Justin Hurwitz",
+            "films": [
+              "babylon-2022"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "TÁR — Hildur Guðnadóttir",
+              "title": "TÁR",
+              "detail": "Hildur Guðnadóttir",
+              "films": [
+                "tar-2022"
+              ]
+            },
+            {
+              "text": "Don’t Look Up — Nicholas Britell",
+              "title": "Don’t Look Up",
+              "detail": "Nicholas Britell",
+              "films": [
+                "dont-look-up-2021"
+              ]
+            },
+            {
+              "text": "Oppenheimer — Ludwig Göransson",
+              "title": "Oppenheimer",
+              "detail": "Ludwig Göransson",
+              "films": [
+                "oppenheimer-2023"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": "06",
+      "name": "Editorial Picks",
+      "shortName": "Editorial",
+      "id": "editorial-picks",
+      "awards": [
+        {
+          "id": "most-underrated-movie",
+          "number": 22,
+          "name": "Most Underrated Movie",
+          "winner": {
+            "text": "The Count of Monte Cristo (2024)",
+            "title": "The Count of Monte Cristo (2024)",
+            "detail": "",
+            "films": [
+              "the-count-of-monte-cristo-2024"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "Babylon",
+              "title": "Babylon",
+              "detail": "",
+              "films": [
+                "babylon-2022"
+              ]
+            },
+            {
+              "text": "La Chimera",
+              "title": "La Chimera",
+              "detail": "",
+              "films": [
+                "la-chimera"
+              ]
+            },
+            {
+              "text": "The Flash",
+              "title": "The Flash",
+              "detail": "",
+              "films": [
+                "the-flash"
+              ]
+            },
+            {
+              "text": "Don’t Look Up",
+              "title": "Don’t Look Up",
+              "detail": "",
+              "films": [
+                "dont-look-up-2021"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "most-overrated-movie",
+          "number": 23,
+          "name": "Most Overrated Movie",
+          "winner": {
+            "text": "Hamnet",
+            "title": "Hamnet",
+            "detail": "",
+            "films": [
+              "hamnet"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "Aftersun",
+              "title": "Aftersun",
+              "detail": "",
+              "films": [
+                "aftersun"
+              ]
+            },
+            {
+              "text": "The Power of the Dog",
+              "title": "The Power of the Dog",
+              "detail": "",
+              "films": [
+                "the-power-of-the-dog"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "the-price-of-obsession",
+          "number": 24,
+          "name": "The Price of Obsession",
+          "winner": {
+            "text": "TÁR",
+            "title": "TÁR",
+            "detail": "",
+            "films": [
+              "tar-2022"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "The Novice",
+              "title": "The Novice",
+              "detail": "",
+              "films": [
+                "the-novice"
+              ]
+            },
+            {
+              "text": "tick, tick... BOOM!",
+              "title": "tick, tick... BOOM!",
+              "detail": "",
+              "films": [
+                "tick-tick-boom-2021"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "lives-we-might-have-lived",
+          "number": 25,
+          "name": "Lives We Might Have Lived",
+          "winner": {
+            "text": "The Worst Person in the World",
+            "title": "The Worst Person in the World",
+            "detail": "",
+            "films": [
+              "the-worst-person-in-the-world"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "Past Lives",
+              "title": "Past Lives",
+              "detail": "",
+              "films": [
+                "past-lives"
+              ]
+            },
+            {
+              "text": "The Count of Monte Cristo (2024)",
+              "title": "The Count of Monte Cristo (2024)",
+              "detail": "",
+              "films": [
+                "the-count-of-monte-cristo-2024"
+              ]
+            },
+            {
+              "text": "Decision to Leave",
+              "title": "Decision to Leave",
+              "detail": "",
+              "films": [
+                "decision-to-leave"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "music-as-power-memory",
+          "number": 26,
+          "name": "Music as Power & Memory",
+          "winner": {
+            "text": "TÁR",
+            "title": "TÁR",
+            "detail": "",
+            "films": [
+              "tar-2022"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "A Complete Unknown",
+              "title": "A Complete Unknown",
+              "detail": "",
+              "films": [
+                "a-complete-unknown"
+              ]
+            },
+            {
+              "text": "Aftersun",
+              "title": "Aftersun",
+              "detail": "",
+              "films": [
+                "aftersun"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "performances": [
+    {
+      "text": "TÁR — Cate Blanchett",
+      "title": "TÁR",
+      "detail": "Cate Blanchett",
+      "films": [
+        "tar-2022"
+      ]
+    },
+    {
+      "text": "The Brutalist — Adrien Brody",
+      "title": "The Brutalist",
+      "detail": "Adrien Brody",
+      "films": [
+        "the-brutalist"
+      ]
+    },
+    {
+      "text": "One Battle After Another — Sean Penn",
+      "title": "One Battle After Another",
+      "detail": "Sean Penn",
+      "films": [
+        "one-battle-after-another"
+      ]
+    },
+    {
+      "text": "The Banshees of Inisherin — Kerry Condon",
+      "title": "The Banshees of Inisherin",
+      "detail": "Kerry Condon",
+      "films": [
+        "the-banshees-of-inisherin"
+      ]
+    }
+  ],
+  "actors": [
+    {
+      "name": "Leonardo DiCaprio",
+      "films": [
+        "one-battle-after-another",
+        "killers-of-the-flower-moon",
+        "dont-look-up-2021"
+      ]
+    },
+    {
+      "name": "Robert Pattinson",
+      "films": [
+        "the-batman",
+        "tenet",
+        "mickey-17"
+      ]
+    },
+    {
+      "name": "Timothée Chalamet",
+      "films": [
+        "marty-supreme",
+        "a-complete-unknown",
+        "dune-part-two"
+      ]
+    },
+    {
+      "name": "Adrien Brody",
+      "films": [
+        "the-brutalist",
+        "the-french-dispatch-of-the-liberty-kansas",
+        "asteroid-city"
+      ]
+    }
+  ],
+  "snubs": [
+    {
+      "name": "Best Picture",
+      "entry": {
+        "text": "TÁR",
+        "title": "TÁR",
+        "detail": "",
+        "films": [
+          "tar-2022"
+        ]
+      },
+      "status": "2023 Oscars · Nominee"
+    },
+    {
+      "name": "Best Director",
+      "entry": {
+        "text": "Decision to Leave — Park Chan-wook",
+        "title": "Decision to Leave",
+        "detail": "Park Chan-wook",
+        "films": [
+          "decision-to-leave"
+        ]
+      },
+      "status": "2023 Oscars · No nomination"
+    },
+    {
+      "name": "Best Actor",
+      "entry": {
+        "text": "tick, tick... BOOM! — Andrew Garfield",
+        "title": "tick, tick... BOOM!",
+        "detail": "Andrew Garfield",
+        "films": [
+          "tick-tick-boom-2021"
+        ]
+      },
+      "status": "2022 Oscars · Nominee"
+    },
+    {
+      "name": "Best Actress",
+      "entry": {
+        "text": "TÁR — Cate Blanchett",
+        "title": "TÁR",
+        "detail": "Cate Blanchett",
+        "films": [
+          "tar-2022"
+        ]
+      },
+      "status": "2023 Oscars · Nominee"
+    },
+    {
+      "name": "Best Supporting Actress",
+      "entry": {
+        "text": "The Banshees of Inisherin — Kerry Condon",
+        "title": "The Banshees of Inisherin",
+        "detail": "Kerry Condon",
+        "films": [
+          "the-banshees-of-inisherin"
+        ]
+      },
+      "status": "2023 Oscars · Lost to Jamie Lee Curtis"
+    },
+    {
+      "name": "Best Antagonist",
+      "entry": {
+        "text": "The Menu — Ralph Fiennes",
+        "title": "The Menu",
+        "detail": "Ralph Fiennes",
+        "films": [
+          "the-menu-2022"
+        ]
+      },
+      "status": "2023 Oscars · No Best Actor nomination"
+    },
+    {
+      "name": "Best Original Screenplay",
+      "entry": {
+        "text": "The Banshees of Inisherin — Martin McDonagh",
+        "title": "The Banshees of Inisherin",
+        "detail": "Martin McDonagh",
+        "films": [
+          "the-banshees-of-inisherin"
+        ]
+      },
+      "status": "2023 Oscars · Nominee"
+    },
+    {
+      "name": "Best Adapted Screenplay",
+      "entry": {
+        "text": "Drive My Car — Hamaguchi & Oe",
+        "title": "Drive My Car",
+        "detail": "Hamaguchi & Oe",
+        "films": [
+          "drive-my-car"
+        ]
+      },
+      "status": "2022 Oscars · Nominee"
+    },
+    {
+      "name": "Best Cinematography",
+      "entry": {
+        "text": "The Batman — Greig Fraser",
+        "title": "The Batman",
+        "detail": "Greig Fraser",
+        "films": [
+          "the-batman"
+        ]
+      },
+      "status": "2023 Oscars · No nomination"
+    },
+    {
+      "name": "Best Original Score",
+      "entry": {
+        "text": "Don’t Look Up — Nicholas Britell",
+        "title": "Don’t Look Up",
+        "detail": "Nicholas Britell",
+        "films": [
+          "dont-look-up-2021"
+        ]
+      },
+      "status": "2022 Oscars · Nominee"
+    }
+  ],
+  "watch": {
+    "label": "2027 OSCAR WATCH · SUPPORTING ACTOR",
+    "note": "Nominations scheduled for January 2027.",
+    "text": "The Odyssey (2026) — Himesh Patel",
+    "title": "The Odyssey (2026)",
+    "detail": "Himesh Patel",
+    "films": [
+      "the-odyssey-2026"
+    ]
+  },
+  "films": {
+    "a-complete-unknown": {
+      "title": "A Complete Unknown",
+      "year": 2024,
+      "url": "https://letterboxd.com/film/a-complete-unknown/"
+    },
+    "aftersun": {
+      "title": "Aftersun",
+      "year": 2022,
+      "url": "https://letterboxd.com/film/aftersun/"
+    },
+    "anatomy-of-a-fall": {
+      "title": "Anatomy of a Fall",
+      "year": 2023,
+      "url": "https://letterboxd.com/film/anatomy-of-a-fall/"
+    },
+    "asteroid-city": {
+      "title": "Asteroid City",
+      "year": 2023,
+      "url": "https://letterboxd.com/film/asteroid-city/"
+    },
+    "babylon-2022": {
+      "title": "Babylon",
+      "year": 2022,
+      "url": "https://letterboxd.com/film/babylon-2022/"
+    },
+    "challengers": {
+      "title": "Challengers",
+      "year": 2024,
+      "url": "https://letterboxd.com/film/challengers/"
+    },
+    "decision-to-leave": {
+      "title": "Decision to Leave",
+      "year": 2022,
+      "url": "https://letterboxd.com/film/decision-to-leave/"
+    },
+    "dont-look-up-2021": {
+      "title": "Don’t Look Up",
+      "year": 2021,
+      "url": "https://letterboxd.com/film/dont-look-up-2021/"
+    },
+    "drive-my-car": {
+      "title": "Drive My Car",
+      "year": 2021,
+      "url": "https://letterboxd.com/film/drive-my-car/"
+    },
+    "dune-2021": {
+      "title": "Dune",
+      "year": 2021,
+      "url": "https://letterboxd.com/film/dune-2021/"
+    },
+    "dune-part-two": {
+      "title": "Dune: Part Two",
+      "year": 2024,
+      "url": "https://letterboxd.com/film/dune-part-two/"
+    },
+    "elvis-2022": {
+      "title": "Elvis",
+      "year": 2022,
+      "url": "https://letterboxd.com/film/elvis-2022/"
+    },
+    "extraction-2020": {
+      "title": "Extraction",
+      "year": 2020,
+      "url": "https://letterboxd.com/film/extraction-2020/"
+    },
+    "hamnet": {
+      "title": "Hamnet",
+      "year": 2025,
+      "url": "https://letterboxd.com/film/hamnet/"
+    },
+    "killers-of-the-flower-moon": {
+      "title": "Killers of the Flower Moon",
+      "year": 2023,
+      "url": "https://letterboxd.com/film/killers-of-the-flower-moon/"
+    },
+    "la-chimera": {
+      "title": "La Chimera",
+      "year": 2023,
+      "url": "https://letterboxd.com/film/la-chimera/"
+    },
+    "marty-supreme": {
+      "title": "Marty Supreme",
+      "year": 2025,
+      "url": "https://letterboxd.com/film/marty-supreme/"
+    },
+    "materialists": {
+      "title": "Materialists",
+      "year": 2025,
+      "url": "https://letterboxd.com/film/materialists/"
+    },
+    "may-december": {
+      "title": "May December",
+      "year": 2023,
+      "url": "https://letterboxd.com/film/may-december/"
+    },
+    "mickey-17": {
+      "title": "Mickey 17",
+      "year": 2025,
+      "url": "https://letterboxd.com/film/mickey-17/"
+    },
+    "nightmare-alley-2021": {
+      "title": "Nightmare Alley",
+      "year": 2021,
+      "url": "https://letterboxd.com/film/nightmare-alley-2021/"
+    },
+    "no-other-choice-2025": {
+      "title": "No Other Choice",
+      "year": 2025,
+      "url": "https://letterboxd.com/film/no-other-choice-2025/"
+    },
+    "one-battle-after-another": {
+      "title": "One Battle After Another",
+      "year": 2025,
+      "url": "https://letterboxd.com/film/one-battle-after-another/"
+    },
+    "oppenheimer-2023": {
+      "title": "Oppenheimer",
+      "year": 2023,
+      "url": "https://letterboxd.com/film/oppenheimer-2023/"
+    },
+    "past-lives": {
+      "title": "Past Lives",
+      "year": 2023,
+      "url": "https://letterboxd.com/film/past-lives/"
+    },
+    "peaky-blinders-the-immortal-man": {
+      "title": "Peaky Blinders: The Immortal Man",
+      "year": 2026,
+      "url": "https://letterboxd.com/film/peaky-blinders-the-immortal-man/"
+    },
+    "poor-things-2023": {
+      "title": "Poor Things",
+      "year": 2023,
+      "url": "https://letterboxd.com/film/poor-things-2023/"
+    },
+    "promising-young-woman": {
+      "title": "Promising Young Woman",
+      "year": 2020,
+      "url": "https://letterboxd.com/film/promising-young-woman/"
+    },
+    "sentimental-value-2025": {
+      "title": "Sentimental Value",
+      "year": 2025,
+      "url": "https://letterboxd.com/film/sentimental-value-2025/"
+    },
+    "tar-2022": {
+      "title": "TÁR",
+      "year": 2022,
+      "url": "https://letterboxd.com/film/tar-2022/"
+    },
+    "tenet": {
+      "title": "Tenet",
+      "year": 2020,
+      "url": "https://letterboxd.com/film/tenet/"
+    },
+    "the-assessment-2024": {
+      "title": "The Assessment",
+      "year": 2024,
+      "url": "https://letterboxd.com/film/the-assessment-2024/"
+    },
+    "the-banshees-of-inisherin": {
+      "title": "The Banshees of Inisherin",
+      "year": 2022,
+      "url": "https://letterboxd.com/film/the-banshees-of-inisherin/"
+    },
+    "the-batman": {
+      "title": "The Batman",
+      "year": 2022,
+      "url": "https://letterboxd.com/film/the-batman/"
+    },
+    "the-beast-2023": {
+      "title": "The Beast",
+      "year": 2023,
+      "url": "https://letterboxd.com/film/the-beast-2023-1/"
+    },
+    "the-brutalist": {
+      "title": "The Brutalist",
+      "year": 2024,
+      "url": "https://letterboxd.com/film/the-brutalist/"
+    },
+    "the-count-of-monte-cristo-2024": {
+      "title": "The Count of Monte Cristo",
+      "year": 2024,
+      "url": "https://letterboxd.com/film/the-count-of-monte-cristo-2024/"
+    },
+    "the-flash": {
+      "title": "The Flash",
+      "year": 2023,
+      "url": "https://letterboxd.com/film/the-flash/"
+    },
+    "the-french-dispatch-of-the-liberty-kansas": {
+      "title": "The French Dispatch",
+      "year": 2021,
+      "url": "https://letterboxd.com/film/the-french-dispatch-of-the-liberty-kansas/"
+    },
+    "the-menu-2022": {
+      "title": "The Menu",
+      "year": 2022,
+      "url": "https://letterboxd.com/film/the-menu-2022/"
+    },
+    "the-novice": {
+      "title": "The Novice",
+      "year": 2021,
+      "url": "https://letterboxd.com/film/the-novice/"
+    },
+    "the-odyssey-2026": {
+      "title": "The Odyssey",
+      "year": 2026,
+      "url": "https://letterboxd.com/film/the-odyssey-2026/"
+    },
+    "the-power-of-the-dog": {
+      "title": "The Power of the Dog",
+      "year": 2021,
+      "url": "https://letterboxd.com/film/the-power-of-the-dog/"
+    },
+    "the-worst-person-in-the-world": {
+      "title": "The Worst Person in the World",
+      "year": 2021,
+      "url": "https://letterboxd.com/film/the-worst-person-in-the-world/"
+    },
+    "tick-tick-boom-2021": {
+      "title": "tick, tick... BOOM!",
+      "year": 2021,
+      "url": "https://letterboxd.com/film/tick-tick-boom-2021/"
+    },
+    "wuthering-heights-2026": {
+      "title": "Wuthering Heights",
+      "year": 2026,
+      "url": "https://letterboxd.com/film/wuthering-heights-2026/"
+    }
+  },
+  "media": {
+    "films": {
+      "a-complete-unknown": {
+        "source": "https://www.imdb.com/title/tt11563598/",
+        "poster": "assets/films/a-complete-unknown-poster.webp"
+      },
+      "aftersun": {
+        "source": "https://www.imdb.com/title/tt19770238/",
+        "poster": "assets/films/aftersun-poster.webp"
+      },
+      "anatomy-of-a-fall": {
+        "source": "https://www.imdb.com/title/tt17009710/",
+        "poster": "assets/films/anatomy-of-a-fall-poster.webp",
+        "backdrop": "assets/films/anatomy-of-a-fall-wide.webp"
+      },
+      "asteroid-city": {
+        "source": "https://www.imdb.com/title/tt14230388/",
+        "poster": "assets/films/asteroid-city-poster.webp"
+      },
+      "babylon-2022": {
+        "source": "https://www.imdb.com/title/tt10640346/",
+        "poster": "assets/films/babylon-2022-poster.webp",
+        "backdrop": "assets/films/babylon-2022-wide.webp"
+      },
+      "challengers": {
+        "source": "https://www.imdb.com/title/tt16426418/",
+        "poster": "assets/films/challengers-poster.webp"
+      },
+      "decision-to-leave": {
+        "source": "https://letterboxd.com/film/decision-to-leave/",
+        "poster": "assets/films/decision-to-leave-poster.webp",
+        "backdrop": "assets/films/decision-to-leave-wide.webp"
+      },
+      "dont-look-up-2021": {
+        "source": "https://www.imdb.com/title/tt11286314/",
+        "poster": "assets/films/dont-look-up-2021-poster.webp"
+      },
+      "drive-my-car": {
+        "source": "https://www.imdb.com/title/tt14039582/",
+        "poster": "assets/films/drive-my-car-poster.webp",
+        "backdrop": "assets/films/drive-my-car-wide.webp"
+      },
+      "dune-2021": {
+        "source": "https://letterboxd.com/film/dune-2021/",
+        "poster": "assets/films/dune-2021-poster.webp"
+      },
+      "dune-part-two": {
+        "source": "https://www.imdb.com/title/tt15239678/",
+        "poster": "assets/films/dune-part-two-poster.webp",
+        "backdrop": "assets/films/dune-part-two-wide.webp"
+      },
+      "elvis-2022": {
+        "source": "https://www.imdb.com/title/tt3704428/",
+        "poster": "assets/films/elvis-2022-poster.webp",
+        "backdrop": "assets/films/elvis-2022-wide.webp"
+      },
+      "extraction-2020": {
+        "source": "https://www.imdb.com/title/tt8936646/",
+        "poster": "assets/films/extraction-2020-poster.webp"
+      },
+      "hamnet": {
+        "source": "https://www.imdb.com/title/tt14905854/",
+        "poster": "assets/films/hamnet-poster.webp",
+        "backdrop": "assets/films/hamnet-wide.webp"
+      },
+      "killers-of-the-flower-moon": {
+        "source": "https://www.imdb.com/title/tt5537002/",
+        "poster": "assets/films/killers-of-the-flower-moon-poster.webp"
+      },
+      "la-chimera": {
+        "source": "https://www.imdb.com/title/tt14561712/",
+        "poster": "assets/films/la-chimera-poster.webp"
+      },
+      "marty-supreme": {
+        "source": "https://www.imdb.com/title/tt32916440/",
+        "poster": "assets/films/marty-supreme-poster.webp"
+      },
+      "materialists": {
+        "source": "https://www.imdb.com/title/tt30253473/",
+        "poster": "assets/films/materialists-poster.webp"
+      },
+      "may-december": {
+        "source": "https://www.imdb.com/title/tt13651794/",
+        "poster": "assets/films/may-december-poster.webp"
+      },
+      "mickey-17": {
+        "source": "https://www.imdb.com/title/tt12299608/",
+        "poster": "assets/films/mickey-17-poster.webp"
+      },
+      "nightmare-alley-2021": {
+        "source": "https://www.imdb.com/title/tt7740496/",
+        "poster": "assets/films/nightmare-alley-2021-poster.webp",
+        "backdrop": "assets/films/nightmare-alley-2021-wide.webp"
+      },
+      "no-other-choice-2025": {
+        "source": "https://www.imdb.com/title/tt1527793/",
+        "poster": "assets/films/no-other-choice-2025-poster.webp",
+        "backdrop": "assets/films/no-other-choice-2025-wide.webp"
+      },
+      "one-battle-after-another": {
+        "source": "https://www.imdb.com/title/tt30144839/",
+        "poster": "assets/films/one-battle-after-another-poster.webp",
+        "backdrop": "assets/films/one-battle-after-another-wide.webp"
+      },
+      "oppenheimer-2023": {
+        "source": "https://www.imdb.com/title/tt15398776/",
+        "poster": "assets/films/oppenheimer-2023-poster.webp"
+      },
+      "past-lives": {
+        "source": "https://www.imdb.com/title/tt13238346/",
+        "poster": "assets/films/past-lives-poster.webp"
+      },
+      "peaky-blinders-the-immortal-man": {
+        "source": "https://www.imdb.com/title/tt15574124/",
+        "poster": "assets/films/peaky-blinders-the-immortal-man-poster.webp"
+      },
+      "poor-things-2023": {
+        "source": "https://www.imdb.com/title/tt14230458/",
+        "poster": "assets/films/poor-things-2023-poster.webp"
+      },
+      "promising-young-woman": {
+        "source": "https://www.imdb.com/title/tt9620292/",
+        "poster": "assets/films/promising-young-woman-poster.webp"
+      },
+      "sentimental-value-2025": {
+        "source": "https://www.imdb.com/title/tt27714581/",
+        "poster": "assets/films/sentimental-value-2025-poster.webp"
+      },
+      "tar-2022": {
+        "source": "https://www.imdb.com/title/tt14444726/",
+        "backdropSource": "https://www.focusfeatures.com/tar",
+        "poster": "assets/films/tar-2022-poster.webp",
+        "backdrop": "assets/films/tar-2022-wide.webp"
+      },
+      "tenet": {
+        "source": "https://letterboxd.com/film/tenet/",
+        "poster": "assets/films/tenet-poster.webp",
+        "backdrop": "assets/films/tenet-wide.webp"
+      },
+      "the-assessment-2024": {
+        "source": "https://www.imdb.com/title/tt32768323/",
+        "poster": "assets/films/the-assessment-2024-poster.webp"
+      },
+      "the-banshees-of-inisherin": {
+        "source": "https://www.imdb.com/title/tt11813216/",
+        "poster": "assets/films/the-banshees-of-inisherin-poster.webp",
+        "backdrop": "assets/films/the-banshees-of-inisherin-wide.webp"
+      },
+      "the-batman": {
+        "source": "https://www.imdb.com/title/tt1877830/",
+        "poster": "assets/films/the-batman-poster.webp",
+        "backdrop": "assets/films/the-batman-wide.webp"
+      },
+      "the-beast-2023": {
+        "source": "https://www.janusfilms.com/films/2182",
+        "poster": "assets/films/the-beast-2023-janus-poster.webp"
+      },
+      "the-brutalist": {
+        "source": "https://www.imdb.com/title/tt8999762/",
+        "poster": "assets/films/the-brutalist-poster.webp",
+        "backdrop": "assets/films/the-brutalist-wide.webp"
+      },
+      "the-count-of-monte-cristo-2024": {
+        "source": "https://www.imdb.com/title/tt26446278/",
+        "poster": "assets/films/the-count-of-monte-cristo-2024-poster.webp",
+        "backdrop": "assets/films/the-count-of-monte-cristo-2024-wide.webp"
+      },
+      "the-flash": {
+        "source": "https://www.imdb.com/title/tt0439572/",
+        "poster": "assets/films/the-flash-poster.webp"
+      },
+      "the-french-dispatch-of-the-liberty-kansas": {
+        "source": "https://www.imdb.com/title/tt8847712/",
+        "poster": "assets/films/the-french-dispatch-of-the-liberty-kansas-poster.webp"
+      },
+      "the-menu-2022": {
+        "source": "https://www.imdb.com/title/tt9764362/",
+        "poster": "assets/films/the-menu-2022-poster.webp"
+      },
+      "the-novice": {
+        "source": "https://letterboxd.com/film/the-novice/",
+        "poster": "assets/films/the-novice-poster.webp"
+      },
+      "the-odyssey-2026": {
+        "source": "https://www.imdb.com/title/tt33764258/",
+        "poster": "assets/films/the-odyssey-2026-poster.webp",
+        "backdrop": "assets/films/the-odyssey-2026-wide.webp"
+      },
+      "the-power-of-the-dog": {
+        "source": "https://www.imdb.com/title/tt10293406/",
+        "poster": "assets/films/the-power-of-the-dog-poster.webp"
+      },
+      "the-worst-person-in-the-world": {
+        "source": "https://www.imdb.com/title/tt10370710/",
+        "poster": "assets/films/the-worst-person-in-the-world-poster.webp",
+        "backdrop": "assets/films/the-worst-person-in-the-world-wide.webp"
+      },
+      "tick-tick-boom-2021": {
+        "source": "https://www.imdb.com/title/tt8721424/",
+        "poster": "assets/films/tick-tick-boom-2021-poster.webp"
+      },
+      "wuthering-heights-2026": {
+        "source": "https://www.imdb.com/title/tt32897959/",
+        "poster": "assets/films/wuthering-heights-2026-poster.webp",
+        "backdrop": "assets/films/wuthering-heights-2026-wide.webp"
+      }
+    },
+    "sizes": {
+      "assets/films/a-complete-unknown-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/aftersun-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/anatomy-of-a-fall-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/anatomy-of-a-fall-wide.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/asteroid-city-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/babylon-2022-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/babylon-2022-wide.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/challengers-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/decision-to-leave-poster.webp": [
+        380,
+        570
+      ],
+      "assets/films/decision-to-leave-seo-rae.webp": [
+        1920,
+        804
+      ],
+      "assets/films/decision-to-leave-wide.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/dont-look-up-2021-alt-01.webp": [
+        1800,
+        1200
+      ],
+      "assets/films/dont-look-up-2021-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/drive-my-car-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/drive-my-car-wide.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/dune-2021-poster.webp": [
+        380,
+        570
+      ],
+      "assets/films/dune-part-two-final-duel.webp": [
+        1300,
+        659
+      ],
+      "assets/films/dune-part-two-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/dune-part-two-sardaukar.webp": [
+        1536,
+        768
+      ],
+      "assets/films/dune-part-two-wide.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/elvis-2022-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/elvis-2022-wide.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/extraction-2020-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/hamnet-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/hamnet-wide.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/killers-of-the-flower-moon-alt-01.webp": [
+        1802,
+        1200
+      ],
+      "assets/films/killers-of-the-flower-moon-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/la-chimera-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/marty-supreme-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/materialists-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/may-december-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/mickey-17-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/nightmare-alley-2021-lilith-cabaret.webp": [
+        1200,
+        646
+      ],
+      "assets/films/nightmare-alley-2021-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/nightmare-alley-2021-wide.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/no-other-choice-2025-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/no-other-choice-2025-wide.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/one-battle-after-another-alt-01.webp": [
+        1920,
+        1071
+      ],
+      "assets/films/one-battle-after-another-alt-02.webp": [
+        780,
+        438
+      ],
+      "assets/films/one-battle-after-another-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/one-battle-after-another-wide.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/oppenheimer-2023-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/past-lives-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/peaky-blinders-the-immortal-man-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/poor-things-2023-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/promising-young-woman-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/sentimental-value-2025-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/tar-2022-alt-02.webp": [
+        1024,
+        576
+      ],
+      "assets/films/tar-2022-alt-04.webp": [
+        1920,
+        804
+      ],
+      "assets/films/tar-2022-lydia-conducting.webp": [
+        1920,
+        804
+      ],
+      "assets/films/tar-2022-lydia-running.webp": [
+        1920,
+        804
+      ],
+      "assets/films/tar-2022-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/tar-2022-wide.webp": [
+        1680,
+        840
+      ],
+      "assets/films/tenet-alt-01.webp": [
+        1250,
+        703
+      ],
+      "assets/films/tenet-curator-editing.webp": [
+        2160,
+        1217
+      ],
+      "assets/films/tenet-poster.webp": [
+        380,
+        570
+      ],
+      "assets/films/tenet-wide.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/the-assessment-2024-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/the-banshees-of-inisherin-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/the-banshees-of-inisherin-siobhan-ferry.webp": [
+        1920,
+        804
+      ],
+      "assets/films/the-banshees-of-inisherin-wide.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/the-batman-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/the-batman-wide.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/the-beast-2023-janus-poster.webp": [
+        440,
+        652
+      ],
+      "assets/films/the-brutalist-alt-01.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/the-brutalist-alt-02.webp": [
+        1920,
+        1079
+      ],
+      "assets/films/the-brutalist-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/the-brutalist-wide.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/the-count-of-monte-cristo-2024-costume.webp": [
+        2160,
+        910
+      ],
+      "assets/films/the-count-of-monte-cristo-2024-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/the-count-of-monte-cristo-2024-screenplay.webp": [
+        2160,
+        908
+      ],
+      "assets/films/the-count-of-monte-cristo-2024-underrated.webp": [
+        2160,
+        906
+      ],
+      "assets/films/the-count-of-monte-cristo-2024-wide.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/the-flash-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/the-french-dispatch-of-the-liberty-kansas-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/the-menu-2022-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/the-novice-poster.webp": [
+        380,
+        570
+      ],
+      "assets/films/the-odyssey-2026-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/the-odyssey-2026-wide.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/the-power-of-the-dog-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/the-worst-person-in-the-world-aksel-julie.webp": [
+        1920,
+        1038
+      ],
+      "assets/films/the-worst-person-in-the-world-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/the-worst-person-in-the-world-wide.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/tick-tick-boom-2021-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/wuthering-heights-2026-poster.webp": [
+        300,
+        450
+      ],
+      "assets/films/wuthering-heights-2026-wide.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/tar-2022-best-picture.webp": [
+        1671,
+        880
+      ],
+      "assets/films/tar-2022-records.webp": [
+        1920,
+        804
+      ]
+    }
+  },
+  "editorial": {
+    "actorFocalPoints": {
+      "one-battle-after-another": "44%",
+      "killers-of-the-flower-moon": "60%",
+      "dont-look-up-2021": "32%"
+    },
+    "accents": [
+      "#b9b0a2",
+      "#ba8f94",
+      "#a6b8ab",
+      "#c3ad94",
+      "#b7bac7",
+      "#b5a3bb",
+      "#b9b89c",
+      "#c6a4a1",
+      "#b59788",
+      "#b4bcc4",
+      "#c8ab7d",
+      "#bea1aa",
+      "#b9a187",
+      "#bac3cb",
+      "#9db1bc",
+      "#d0ae84",
+      "#a8bec9",
+      "#baa78e",
+      "#c8b690",
+      "#bf9c79",
+      "#c49b9f",
+      "#c7b18c",
+      "#b6a78f",
+      "#b7ab9d",
+      "#bfadb5",
+      "#ada9ba"
+    ],
+    "opening": {
+      "text": "After all, it's the me who was chasing him that I love.",
+      "credit": "Millennium Actress · 2001"
+    },
+    "closing": {
+      "text": "Perfection is not real. That’s why it’s beautiful.",
+      "credit": "The Menu · 2022"
+    },
+    "interludes": {
+      "director-of-the-decade": {
+        "text": "Musicians play their instruments. I play the orchestra.",
+        "credit": "Steve Jobs · 2015"
+      },
+      "best-supporting-actor": {
+        "text": "I just want to be perfect.",
+        "credit": "Black Swan · 2010"
+      },
+      "best-antagonist": {
+        "text": "You confuse love with admiration.",
+        "credit": "Birdman · 2014"
+      },
+      "the-tattoo-line-award": {
+        "text": "You can sew almost anything into the canvas of a coat.",
+        "credit": "Phantom Thread · 2017"
+      },
+      "best-opening-sequence": {
+        "text": "There are patterns everywhere... even in madness.",
+        "credit": "Pi · 1998"
+      },
+      "best-production-design": {
+        "text": "There are no two words in the English language more harmful than ‘good job’.",
+        "credit": "Whiplash · 2014"
+      },
+      "best-original-score": {
+        "text": "Fear or love, baby? Don’t say the answer matters.",
+        "credit": "tick, tick… BOOM! · 2021"
+      },
+      "most-overrated-movie": {
+        "text": "Creativity and psychosis often go hand in hand.",
+        "credit": "The Queen’s Gambit · 2020"
+      }
+    }
+  },
+  "stills": {
+    "tar-2022": [
+      {
+        "path": "assets/films/tar-2022-lydia-running.webp",
+        "credit": "Stills supplied by the curator",
+        "award": "best-actress"
+      },
+      {
+        "path": "assets/films/tar-2022-alt-02.webp",
+        "source": "https://www.scannain.com/featured/opinion-piece/the-clock-comes-to-cancel-time-and-the-loss-of-control-in-tar/",
+        "imageUrl": "https://www.scannain.com/media/tar-scene1-videoSixteenByNine1050-1024x576.png",
+        "award": "best-scene"
+      },
+      {
+        "path": "assets/films/tar-2022-records.webp",
+        "source": "https://film-grab.com/2023/04/18/tar/",
+        "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/Tar_03.jpg?bwg=1680016803",
+        "award": "the-price-of-obsession"
+      },
+      {
+        "path": "assets/films/tar-2022-alt-04.webp",
+        "source": "https://film-grab.com/2023/04/18/tar/",
+        "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/Tar_14.jpg?bwg=1680016802",
+        "award": "music-as-power-memory"
+      },
+      {
+        "path": "assets/films/tar-2022-lydia-conducting.webp",
+        "credit": "Stills supplied by the curator",
+        "award": "performances-spotlight"
+      },
+      {
+        "path": "assets/films/tar-2022-best-picture.webp",
+        "award": "best-picture",
+        "credit": "Stills supplied by the curator"
+      }
+    ],
+    "the-brutalist": [
+      {
+        "path": "assets/films/the-brutalist-alt-01.webp",
+        "source": "https://a24films.com/films/the-brutalist",
+        "imageUrl": "https://api-asset-production.s3.amazonaws.com/media/images/TheBrutalist_16x9_Trailer3_Thubmnail.jpg",
+        "award": "best-production-design"
+      },
+      {
+        "path": "assets/films/the-brutalist-alt-02.webp",
+        "source": "https://a24films.com/films/the-brutalist",
+        "imageUrl": "https://api-asset-production.s3.amazonaws.com/media/images/TBR_LP_Rec709_UHD_FLAT_3840X2160_20_PM_20240911.00_24_22_06.Still048_CropEdit.jpg",
+        "award": "the-tattoo-line-award"
+      }
+    ],
+    "the-count-of-monte-cristo-2024": [
+      {
+        "path": "assets/films/the-count-of-monte-cristo-2024-screenplay.webp",
+        "credit": "Stills supplied by the curator",
+        "award": "best-non-original-screenplay"
+      },
+      {
+        "path": "assets/films/the-count-of-monte-cristo-2024-costume.webp",
+        "credit": "Stills supplied by the curator",
+        "award": "best-costume-design"
+      },
+      {
+        "path": "assets/films/the-count-of-monte-cristo-2024-underrated.webp",
+        "credit": "Stills supplied by the curator",
+        "award": "most-underrated-movie"
+      }
+    ],
+    "the-worst-person-in-the-world": [
+      {
+        "path": "assets/films/the-worst-person-in-the-world-wide.webp",
+        "source": "https://letterboxd.com/film/the-worst-person-in-the-world/",
+        "award": "lives-we-might-have-lived"
+      },
+      {
+        "path": "assets/films/the-worst-person-in-the-world-aksel-julie.webp",
+        "source": "https://clip.cafe/the-worst-person-in-the-world-2021/im-sure-i-remember-things-about-you-that-youve-forgotten/",
+        "imageUrl": "https://clip.cafe/clipimg/im-sure-i-remember-things-about-you-that-youve-forgotten.jpg",
+        "award": "best-line-of-dialogue"
+      }
+    ],
+    "tenet": [
+      {
+        "path": "assets/films/tenet-alt-01.webp",
+        "source": "https://film-grab.com/2021/04/02/tenet/",
+        "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/Tenet_001.jpg?bwg=1614340152",
+        "award": "best-opening-sequence"
+      },
+      {
+        "path": "assets/films/tenet-curator-editing.webp",
+        "credit": "Stills supplied by the curator",
+        "award": "best-film-editing"
+      }
+    ],
+    "dune-part-two": [
+      {
+        "path": "assets/films/dune-part-two-sardaukar.webp",
+        "credit": "Stills supplied by the curator",
+        "award": "best-visual-effects"
+      },
+      {
+        "path": "assets/films/dune-part-two-final-duel.webp",
+        "credit": "Stills supplied by the curator",
+        "award": "best-cinematography"
+      }
+    ],
+    "one-battle-after-another": [
+      {
+        "path": "assets/films/one-battle-after-another-alt-01.webp",
+        "source": "https://vaguevisages.com/2025/10/17/one-battle-after-another-cast-disney-hbo-max-hulu-characters/",
+        "imageUrl": "https://vaguevisages.com/wp-content/uploads/2025/10/One-Battle-After-Another-Cast-Disney-HBO-Max-Hulu-Sean-Penn-Steven-J-Lockjaw.jpg",
+        "award": "best-supporting-actor"
+      },
+      {
+        "path": "assets/films/one-battle-after-another-alt-02.webp",
+        "source": "https://www.slashfilm.com/2124183/actors-with-three-oscar-wins/",
+        "imageUrl": "https://www.slashfilm.com/img/gallery/the-only-actors-to-win-three-or-more-oscars/intro-1773660852.jpg",
+        "award": "performances-spotlight"
+      }
+    ],
+    "killers-of-the-flower-moon": [
+      {
+        "path": "assets/films/killers-of-the-flower-moon-alt-01.webp",
+        "source": "https://www.kunr.org/u-s-headlines/2023-10-30/you-talkin-to-me-how-scorseses-killers-of-the-flower-moon-gets-in-your-head",
+        "imageUrl": "https://media.npr.org/assets/img/2023/10/27/killers_of_the_flower_moon_photo_0110_custom-5b6286e7d1d237734fff55986026888868da5422.jpg",
+        "award": "actor-spotlight"
+      }
+    ],
+    "dont-look-up-2021": [
+      {
+        "path": "assets/films/dont-look-up-2021-alt-01.webp",
+        "source": "https://time.com/6126912/dont-look-up-review-netflix/",
+        "imageUrl": "https://gcp-na-images.contentstack.com/v3/assets/bltea6093859af6183b/blt76df9640ea7d47ed/698a208409208f36a9418a56/DLU_20201203_02259_R.jpg?branch=production",
+        "award": "actor-spotlight"
+      }
+    ],
+    "nightmare-alley-2021": [
+      {
+        "path": "assets/films/nightmare-alley-2021-lilith-cabaret.webp",
+        "credit": "Stills supplied by the curator",
+        "award": "best-antagonist"
+      }
+    ],
+    "the-banshees-of-inisherin": [
+      {
+        "path": "assets/films/the-banshees-of-inisherin-siobhan-ferry.webp",
+        "credit": "Stills supplied by the curator",
+        "award": "best-supporting-actress"
+      }
+    ],
+    "decision-to-leave": [
+      {
+        "path": "assets/films/decision-to-leave-seo-rae.webp",
+        "credit": "Stills supplied by the curator",
+        "award": "director-of-the-decade"
+      }
+    ]
+  }
+}

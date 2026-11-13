@@ -1,0 +1,76 @@
+@property --current-accent {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #c0b3a1;
+}
+body { --current-accent: #c0b3a1; transition: --current-accent .62s ease; }
+.reading-progress { background: var(--current-accent); }
+.masthead { border-bottom-color: color-mix(in srgb, var(--current-accent) 25%, #242528); }
+.profile { gap: 11px; font-size: 1.06rem; }
+.avatar { width: 46px; height: 46px; border-color: #a19b91; }
+.chapter-nav { border-bottom-color: color-mix(in srgb, var(--current-accent) 30%, #292929); }
+.chapter-link[aria-current], .chapter-link:hover { border-color: var(--current-accent); }
+.chapter-link[aria-current] { color: var(--text); }
+.chapter-heading .chapter-number { color: var(--accent); }
+.chapter-heading { margin-bottom: clamp(23px, 4vw, 44px); }
+.chapter { padding-bottom: 0; }
+.award-grid { grid-template-columns: minmax(0, 1fr); gap: clamp(48px, 7vw, 102px); }
+.award-card { --award-line: color-mix(in srgb, var(--accent) 43%, var(--line)); background: transparent; border: 0; border-radius: 0; padding-top: 2px; }
+.award-card .award-heading { border-top: 1px solid var(--award-line); padding: 14px 0 13px; }
+.award-heading h3 { font-size: clamp(1.45rem, 2.65vw, 2.45rem); }
+.award-number { color: var(--accent); }
+.award-card .winner-frame { min-height: 0; aspect-ratio: 2; border: 0; border-radius: 4px; }
+.award-card .winner-title { font-size: clamp(2.25rem, 5.6vw, 5.5rem); }
+.award-card .winner-copy { inset: auto 55px 19px 19px; }
+.award-card .shortlist { border: 0; padding: 15px 1px 0; }
+.award-card .shortlist .micro { margin-bottom: 12px; }
+.award-card .star, .ceremony-frame .star, .spotlight-visual .star { color: #171717; background: var(--accent); }
+.award-card .star.critical, .ceremony-frame .star.critical { background: #131416d9; color: var(--accent); border: 1px solid var(--accent); }
+.winner-frame:hover .frame-open, .ceremony-footer .ceremony-next { background: var(--accent); color: #171717; border-color: var(--accent); }
+.ceremony-header { background: color-mix(in srgb, var(--accent) 8%, var(--deep)); }
+.ceremony-footer button:hover:not(:disabled) { border-color: var(--accent); }
+.ceremony-progress { background: var(--accent); }
+.line-of-dialogue { max-width: 32ch; }
+.edition-quote { margin: 0; border-block: 1px solid #f2e9dc21; padding: clamp(32px, 5vw, 68px) clamp(10px, 4vw, 55px); text-align: center; }
+.edition-quote blockquote { margin: 0 auto; max-width: 29ch; font: italic 400 clamp(1.85rem, 4.3vw, 4.25rem)/1.04 var(--serif); text-wrap: balance; }
+.edition-quote figcaption { margin-top: 16px; color: #c0b3a1; font-size: .72rem; font-weight: 700; letter-spacing: .115em; }
+.edition-quote.opening, .edition-quote.closing { width: min(900px, calc(100% - 2 * var(--gutter))); margin: clamp(52px, 8vw, 114px) auto; }
+.edition-quote.interlude { margin-block: 0; background: #1b1b1c; border-color: #f2e9dc14; }
+.edition-quote.interlude blockquote { font-size: clamp(1.65rem, 3.65vw, 3.4rem); }
+.spotlight-card { border: 0; border-top: 1px solid var(--line); background: transparent; border-radius: 0; }
+.spotlight-visual { border-radius: 4px; }
+.spotlight-card h3 { padding-left: 0; }
+.spotlight-method { margin-left: 0; }
+.spotlight-list { padding-inline: 0; }
+.snubs-banner { background: #1c1d1f; }
+.snubs-banner:hover { background: #262628; }
+.award-card.in-frame .winner-frame { animation: award-arrival .55s cubic-bezier(.2,.7,.3,1) both; }
+@keyframes award-arrival { from { opacity: .77; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (min-width: 850px) {
+  .award-card:has(.shortlist) { display: grid; grid-template-columns: minmax(0, 2.65fr) minmax(0, 1fr); column-gap: clamp(20px, 4vw, 56px); align-items: center; }
+  .award-card .award-heading { grid-column: 1 / -1; }
+  .award-card:has(.shortlist) .winner-frame { height: auto; aspect-ratio: 2; }
+  .award-card .shortlist { padding: 0; }
+  .award-card .nominee-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+  .award-card .nominee { display: grid; grid-template-columns: minmax(38px, auto) minmax(0, 1fr); column-gap: 10px; grid-template-rows: auto auto; align-content: center; }
+  .award-card .nominee-art { grid-row: 1 / span 2; align-self: center; }
+  .award-card .nominee-poster { width: 35px; }
+  .award-card .multi-poster .nominee-poster { width: 27px; }
+  .award-card .nominee strong { margin: 0; align-self: end; font-size: .84rem; }
+  .award-card .nominee:not(:has(small)) strong { align-self: center; grid-row: 1 / span 2; }
+  .award-card .nominee small { align-self: start; margin-top: 3px; }
+  .award-card.quote-card:not(:has(.shortlist)) .winner-frame { aspect-ratio: 3.35; }
+}
+@media (max-width: 680px) {
+  :root { --header: 61px; }
+  .profile { gap: 7px; font-size: .95rem; }
+  .avatar { width: 40px; height: 40px; }
+  .award-card .winner-frame { min-height: 215px; }
+  .award-card .winner-copy { inset: auto 50px 15px 15px; }
+  .award-card .winner-title { font-size: clamp(1.85rem, 8.6vw, 3.15rem); }
+  .award-card .nominee-grid { padding-inline: 2px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body { transition: none; }
+  .award-card.in-frame .winner-frame { animation: none; }
+}
