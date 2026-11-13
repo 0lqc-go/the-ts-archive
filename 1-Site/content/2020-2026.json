@@ -63,45 +63,6 @@
           ]
         },
         {
-          "id": "worst-picture",
-          "number": 2,
-          "name": "Worst Picture",
-          "winner": {
-            "text": "Wuthering Heights (2026)",
-            "title": "Wuthering Heights (2026)",
-            "detail": "",
-            "films": [
-              "wuthering-heights-2026"
-            ]
-          },
-          "nominees": [
-            {
-              "text": "Materialists",
-              "title": "Materialists",
-              "detail": "",
-              "films": [
-                "materialists"
-              ]
-            },
-            {
-              "text": "Extraction (2020)",
-              "title": "Extraction (2020)",
-              "detail": "",
-              "films": [
-                "extraction-2020"
-              ]
-            },
-            {
-              "text": "Peaky Blinders: The Immortal Man",
-              "title": "Peaky Blinders: The Immortal Man",
-              "detail": "",
-              "films": [
-                "peaky-blinders-the-immortal-man"
-              ]
-            }
-          ]
-        },
-        {
           "id": "director-of-the-decade",
           "number": 3,
           "name": "Director of the Decade",
@@ -974,6 +935,45 @@
               "detail": "",
               "films": [
                 "the-power-of-the-dog"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "worst-picture",
+          "number": 2,
+          "name": "Worst Picture",
+          "winner": {
+            "text": "Wuthering Heights (2026)",
+            "title": "Wuthering Heights (2026)",
+            "detail": "",
+            "films": [
+              "wuthering-heights-2026"
+            ]
+          },
+          "nominees": [
+            {
+              "text": "Materialists",
+              "title": "Materialists",
+              "detail": "",
+              "films": [
+                "materialists"
+              ]
+            },
+            {
+              "text": "Extraction (2020)",
+              "title": "Extraction (2020)",
+              "detail": "",
+              "films": [
+                "extraction-2020"
+              ]
+            },
+            {
+              "text": "Peaky Blinders: The Immortal Man",
+              "title": "Peaky Blinders: The Immortal Man",
+              "detail": "",
+              "films": [
+                "peaky-blinders-the-immortal-man"
               ]
             }
           ]
@@ -1870,10 +1870,6 @@
         1920,
         1080
       ],
-      "assets/films/one-battle-after-another-alt-01.webp": [
-        1920,
-        1071
-      ],
       "assets/films/one-battle-after-another-alt-02.webp": [
         780,
         438
@@ -2073,6 +2069,18 @@
       "assets/films/tar-2022-records.webp": [
         1920,
         804
+      ],
+      "assets/films/one-battle-after-another-sean-penn.webp": [
+        1536,
+        768
+      ],
+      "assets/films/anatomy-of-a-fall-piano.webp": [
+        1456,
+        779
+      ],
+      "assets/films/wuthering-heights-2026-veil.webp": [
+        2048,
+        1152
       ]
     }
   },
@@ -2084,7 +2092,6 @@
     },
     "accents": [
       "#b9b0a2",
-      "#ba8f94",
       "#a6b8ab",
       "#c3ad94",
       "#b7bac7",
@@ -2106,6 +2113,7 @@
       "#c49b9f",
       "#c7b18c",
       "#b6a78f",
+      "#ba8f94",
       "#b7ab9d",
       "#bfadb5",
       "#ada9ba"
@@ -2147,7 +2155,7 @@
         "text": "Fear or love, baby? Don’t say the answer matters.",
         "credit": "tick, tick… BOOM! · 2021"
       },
-      "most-overrated-movie": {
+      "worst-picture": {
         "text": "Creativity and psychosis often go hand in hand.",
         "credit": "The Queen’s Gambit · 2020"
       }
@@ -2260,9 +2268,8 @@
     ],
     "one-battle-after-another": [
       {
-        "path": "assets/films/one-battle-after-another-alt-01.webp",
-        "source": "https://vaguevisages.com/2025/10/17/one-battle-after-another-cast-disney-hbo-max-hulu-characters/",
-        "imageUrl": "https://vaguevisages.com/wp-content/uploads/2025/10/One-Battle-After-Another-Cast-Disney-HBO-Max-Hulu-Sean-Penn-Steven-J-Lockjaw.jpg",
+        "path": "assets/films/one-battle-after-another-sean-penn.webp",
+        "credit": "Still supplied by the curator",
         "award": "best-supporting-actor"
       },
       {
@@ -2307,6 +2314,20 @@
         "path": "assets/films/decision-to-leave-seo-rae.webp",
         "credit": "Stills supplied by the curator",
         "award": "director-of-the-decade"
+      }
+    ],
+    "anatomy-of-a-fall": [
+      {
+        "path": "assets/films/anatomy-of-a-fall-piano.webp",
+        "credit": "Still supplied by the curator",
+        "award": "best-original-screenplay"
+      }
+    ],
+    "wuthering-heights-2026": [
+      {
+        "path": "assets/films/wuthering-heights-2026-veil.webp",
+        "credit": "Still supplied by the curator",
+        "award": "worst-picture"
       }
     ]
   }
