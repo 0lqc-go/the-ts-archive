@@ -1,0 +1,110 @@
+
+/* Quiet category hierarchy used by every award edition. */
+
+body[data-page="awards"] .hero-image {
+  background-position: var(--cover-position, 54% 58%);
+}
+
+.award-description {
+  margin-top: 6px;
+  color: #b7b3ac;
+  font: 400 .84rem/1.45 var(--body);
+  max-width: 52ch;
+  text-wrap: pretty;
+}
+
+.ceremony-description {
+  padding-inline: 22px;
+  margin-top: 14px;
+}
+
+.portfolio-card .winner-frame > .frame-media.split-media {
+  aspect-ratio: 2.5;
+  gap: 2px;
+}
+
+.portfolio-card .frame-image.wide img {
+  object-fit: cover;
+}
+
+.portfolio-card .nominee-grid {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 15px;
+}
+
+.portfolio-card .nominee {
+  display: grid;
+  grid-template-columns: clamp(92px, 10vw, 125px) minmax(0, 1fr);
+  column-gap: 13px;
+  align-items: center;
+}
+
+.portfolio-card .nominee-art {
+  grid-row: span 2;
+}
+
+.portfolio-card .nominee strong {
+  align-self: end;
+  margin: 0;
+}
+
+.portfolio-card .nominee small {
+  align-self: start;
+}
+
+@media (min-width: 681px) {
+  .ceremony-frame.portrait-frame .frame-image img {
+    object-fit: cover;
+    object-position: var(--focal-x, 50%) 30%;
+  }
+}
+
+body[data-award-view] .chapter-nav nav {
+  gap: clamp(13px, 1.9vw, 29px);
+}
+
+/* The cleaner hierarchy is shared by all award editions. */
+body[data-award-view] .chapter-heading {
+  border-bottom: 0;
+  padding-bottom: 0;
+  margin-bottom: clamp(26px, 3.5vw, 50px);
+}
+
+body[data-award-view] .award-card .award-heading {
+  border-top: 0;
+  padding-top: 0;
+}
+
+/* Use generous whitespace to separate awards without a visual divider. */
+body[data-award-view] .award-grid {
+  row-gap: clamp(70px, 8.4vw, 122px);
+}
+
+body[data-award-view] .ceremony-body.slide-in,
+body[data-award-view] .ceremony-body.slide-back {
+  animation-duration: .32s;
+}
+
+@media (max-width: 680px) {
+  .portfolio-card .winner-frame > .frame-media.split-media,
+  .portfolio-frame .frame-media.split-media {
+    aspect-ratio: 2.1;
+  }
+
+  .portfolio-card:has(.shortlist) .nominee-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ceremony-description {
+    padding-inline: 13px;
+  }
+
+  body[data-award-view] .ceremony-footer {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.45fr);
+  }
+
+  body[data-award-view] .ceremony-next {
+    width: 100%;
+    min-width: 0;
+  }
+}

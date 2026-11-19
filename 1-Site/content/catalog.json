@@ -5,6 +5,14 @@
     "avatar": "assets/profile.webp"
   },
   "featuredEdition": "2020-2026",
+  "homeCover": {
+    "cover": "assets/films/inside-llewyn-davis-home.webp",
+    "coverFilm": "Inside Llewyn Davis",
+    "coverYear": 2013,
+    "coverSource": "https://film-grab.com/2014/03/31/inside-llewyn-davis/",
+    "coverPosition": "67% 39%",
+    "coverMobilePosition": "60% center"
+  },
   "editions": [
     {
       "id": "2020-2026",

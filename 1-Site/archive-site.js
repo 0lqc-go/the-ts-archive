@@ -9,7 +9,16 @@
   const listHref = list => list.kind === 'snubs'
     ? 'snubs.html?edition=' + encodeURIComponent(list.edition)
     : 'list.html?list=' + encodeURIComponent(list.id);
-  const catalog = () => read('content/catalog.json');
+  const catalog = async () => {
+    const [index, shared] = await Promise.all([
+      read('content/catalog.json'),
+      read('content/artwork-variants.json').catch(() => ({}))
+    ]);
+    return {...index, media: {
+      sizes: {...index.media?.sizes, ...shared.sizes},
+      variants: {...index.media?.variants, ...shared.variants}
+    }};
+  };
   const setText = (selector, value) => {
     for (const node of document.querySelectorAll(selector)) node.textContent = value;
   };
@@ -59,14 +68,21 @@
     }
   }
 
-  function archiveCard(item, url, label) {
+  function artworkMarkup(file, media, sizes, fallback = [960,540]) {
+    const [width,height] = media?.sizes?.[file] ?? fallback;
+    const variants = media?.variants?.[file] ?? [];
+    const srcset = variants.map(item => `${item.src} ${item.width}w`).join(', ');
+    return `<img src="${escape(file)}"${srcset ? ` srcset="${escape(srcset)}" sizes="${escape(sizes)}"` : ''} alt="" width="${width}" height="${height}" loading="lazy" decoding="async">`;
+  }
+
+  function archiveCard(item, url, label, media) {
+    const cover = item.cardImage || item.cover;
     return `<a class="archive-card" href="${escape(url)}">
-      ${item.cardImage || item.cover ? `<img src="${escape(item.cardImage || item.cover)}" alt="" width="960" height="540" loading="lazy" decoding="async">` : ''}
+      ${cover ? artworkMarkup(cover, media, '(min-width: 1450px) 610px, (min-width: 681px) 44vw, 90vw') : ''}
       <div class="archive-card-copy">
         <p class="eyebrow">${escape(label)}</p>
         <h3>${escape(item.title)}</h3>
         <p>${escape(item.description)}</p>
-        <span aria-hidden="true">↗</span>
       </div>
     </a>`;
   }
@@ -85,11 +101,14 @@
       featureLink.href = editionHref(featured.id);
       featureLink.hidden = false;
       setText('#featured-period', featured.period + ' AWARDS');
-      setCover($('.hero-image'), featured.cover);
-      setText('#cover-credit', featured.coverFilm + ' / ' + featured.coverYear);
     }
-    $('#edition-cards').innerHTML = index.editions.map(item => archiveCard(item, editionHref(item.id), item.period)).join('');
-    $('#list-cards').innerHTML = index.lists.map(item => archiveCard(item, listHref(item), item.subtitle || 'Film list')).join('');
+    const homeCover = index.homeCover ?? featured;
+    if (homeCover?.cover) {
+      setCover($('.hero-image'), homeCover.cover, homeCover);
+      setText('#cover-credit', homeCover.coverFilm + ' / ' + homeCover.coverYear);
+    }
+    $('#edition-cards').innerHTML = index.editions.map(item => archiveCard(item, editionHref(item.id), item.period, index.media)).join('');
+    $('#list-cards').innerHTML = index.lists.map(item => archiveCard(item, listHref(item), item.subtitle || 'Film list', index.media)).join('');
     $('#lists').hidden = index.lists.length === 0;
     $('#content-status').hidden = true;
     trackVisit();
@@ -100,30 +119,63 @@
     const list = index.lists.find(item => item.id === params.get('list') && item.kind !== 'snubs');
     if (!list) throw new Error('That list is not in the archive.');
     displayProfile(index);
-    const {items} = await read(list.content);
+    const {items, media} = await read(list.content);
+    const listMedia = {sizes:{...index.media.sizes,...media?.sizes},variants:{...index.media.variants,...media?.variants}};
     document.title = list.title + ' — The T.S. Archive';
     setText('#list-title', list.title);
     setText('#list-subtitle', list.subtitle || 'Film list');
     setText('#list-description', list.description);
-    if (list.cover) {
-      const cover = $('#list-cover');
-      cover.src = list.cover;
-      cover.hidden = false;
+    const hero = $('.collection-hero');
+    hero.dataset.hasCover = String(Boolean(list.cover));
+    if (list.cover) setCover($('.collection-image'), list.cover, list);
+    const credit = $('#list-cover-credit');
+    if (list.cover && list.coverFilm) {
+      credit.hidden = false;
+      setText('#list-cover-film', list.coverFilm + (list.coverYear ? ' / ' + list.coverYear : ''));
     }
-    $('#list-items').innerHTML = items.map(item => `<li class="collection-entry">
-      ${item.poster ? `<img src="${escape(item.poster)}" alt="" width="80" height="120" loading="lazy" decoding="async">` : ''}
-      <div><h2>${item.url ? `<a href="${escape(item.url)}" target="_blank" rel="noopener noreferrer">${escape(item.title)} <span aria-hidden="true">↗</span></a>` : escape(item.title)} ${item.year ? `<small>${escape(item.year)}</small>` : ''}</h2>
+    setText('#list-count', `${items.length} ${items.length === 1 ? 'film' : 'films'}`);
+    $('#list-items').innerHTML = items.map(item => `<li class="collection-entry${item.poster ? '' : ' without-poster'}">
+      ${item.poster ? `<span class="list-poster">${artworkMarkup(item.poster, listMedia, '(max-width: 560px) 64px, 76px', [80,120])}</span>` : ''}
+      <div><h2>${item.url ? `<a class="list-film-link" href="${escape(item.url)}" target="_blank" rel="noopener noreferrer">${escape(item.title)}</a>` : escape(item.title)} ${item.year ? `<small>${escape(item.year)}</small>` : ''}</h2>
       ${item.note ? `<p>${escape(item.note)}</p>` : ''}</div>
     </li>`).join('');
+    setupListView();
     $('#content-status').hidden = true;
     $('#collection').hidden = false;
   }
 
-  function setCover(node, path) {
-    if (node && path) node.style.backgroundImage = 'url(' + JSON.stringify(path) + ')';
+  function setupListView() {
+    const toggle = $('[data-list-view-toggle]');
+    if (!toggle) return;
+    const sync = mode => {
+      document.body.dataset.listView = mode;
+      const next = mode === 'compact' ? 'cinematic' : 'compact';
+      const label = next === 'compact' ? 'Compact' : 'Cinematic';
+      toggle.dataset.nextView = next;
+      toggle.querySelector('.nav-view-label').textContent = label;
+      toggle.setAttribute('aria-label', `Switch to ${label} view`);
+      toggle.title = `Switch to ${label} view`;
+    };
+    sync(params.get('view') === 'compact' ? 'compact' : 'cinematic');
+    toggle.hidden = false;
+    toggle.addEventListener('click', () => {
+      const mode = toggle.dataset.nextView;
+      sync(mode);
+      const url = new URL(location.href);
+      if (mode === 'compact') url.searchParams.set('view', mode);
+      else url.searchParams.delete('view');
+      history.replaceState(history.state, '', url);
+    });
   }
 
-  window.ArchiveSite = {catalog, read, params, editionHref, listHref, showError, displayProfile, setText, setCover};
+  function setCover(node, path, options = {}) {
+    if (!node || !path) return;
+    node.style.backgroundImage = 'url(' + JSON.stringify(path) + ')';
+    if (options.coverPosition) node.style.setProperty('--cover-position', options.coverPosition);
+    if (options.coverMobilePosition) node.style.setProperty('--cover-mobile-position', options.coverMobilePosition);
+  }
+
+  window.ArchiveSite = {catalog, read, params, editionHref, listHref, showError, displayProfile, setText, setCover, setupListView};
   if (document.body.dataset.page === 'home') renderHome().catch(showError);
   else {
     trackVisit();

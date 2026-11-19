@@ -1518,11 +1518,17 @@
     "films": {
       "a-complete-unknown": {
         "source": "https://www.imdb.com/title/tt11563598/",
-        "poster": "assets/films/a-complete-unknown-poster.webp"
+        "poster": "assets/films/a-complete-unknown-poster.webp",
+        "backdrop": "assets/films/a-complete-unknown-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/a-complete-unknown/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/sm/upload/y7/ha/y0/tk/a-complete-unknown-1920-1920-1080-1080-crop-000000.jpg?v=5519495df2"
       },
       "aftersun": {
         "source": "https://www.imdb.com/title/tt19770238/",
-        "poster": "assets/films/aftersun-poster.webp"
+        "poster": "assets/films/aftersun-poster.webp",
+        "backdrop": "assets/films/aftersun-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/aftersun/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/sm/upload/8p/e8/kc/48/aftersun-1920-1920-1080-1080-crop-000000.jpg?v=e57125ef44"
       },
       "anatomy-of-a-fall": {
         "source": "https://www.imdb.com/title/tt17009710/",
@@ -1531,7 +1537,10 @@
       },
       "asteroid-city": {
         "source": "https://www.imdb.com/title/tt14230388/",
-        "poster": "assets/films/asteroid-city-poster.webp"
+        "poster": "assets/films/asteroid-city-poster.webp",
+        "backdrop": "assets/films/asteroid-city-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/asteroid-city/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/sm/upload/j4/pi/fy/cf/525FJ1YD28efjP5cI7V2gDro6Qc-1920-1920-1080-1080-crop-000000.jpg?v=c93e68da37"
       },
       "babylon-2022": {
         "source": "https://www.imdb.com/title/tt10640346/",
@@ -1540,7 +1549,10 @@
       },
       "challengers": {
         "source": "https://www.imdb.com/title/tt16426418/",
-        "poster": "assets/films/challengers-poster.webp"
+        "poster": "assets/films/challengers-poster.webp",
+        "backdrop": "assets/films/challengers-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/challengers/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/sm/upload/1v/t5/ny/lk/MV5BYWRmZWM2ZTktMzE1Ny00NmQyLWE3ZDItZTk5MjY5OGQ5NzdhXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_-1920-1920-1080-1080-crop-000000.jpg?v=bc9f57c5b8"
       },
       "decision-to-leave": {
         "source": "https://letterboxd.com/film/decision-to-leave/",
@@ -1549,7 +1561,9 @@
       },
       "dont-look-up-2021": {
         "source": "https://www.imdb.com/title/tt11286314/",
-        "poster": "assets/films/dont-look-up-2021-poster.webp"
+        "poster": "assets/films/dont-look-up-2021-poster.webp",
+        "backdrop": "assets/films/dont-look-up-2021-alt-01.webp",
+        "backdropSource": "https://time.com/6126912/dont-look-up-review-netflix/"
       },
       "drive-my-car": {
         "source": "https://www.imdb.com/title/tt14039582/",
@@ -1558,7 +1572,10 @@
       },
       "dune-2021": {
         "source": "https://letterboxd.com/film/dune-2021/",
-        "poster": "assets/films/dune-2021-poster.webp"
+        "poster": "assets/films/dune-2021-poster.webp",
+        "backdrop": "assets/films/dune-2021-film-file.webp",
+        "backdropSource": "https://film-grab.com/2022/06/24/dune-2021/",
+        "backdropImageSource": "https://film-grab.com/wp-content/uploads/photo-gallery/Dune_2021_002.jpg?bwg=1642501569"
       },
       "dune-part-two": {
         "source": "https://www.imdb.com/title/tt15239678/",
@@ -1572,7 +1589,10 @@
       },
       "extraction-2020": {
         "source": "https://www.imdb.com/title/tt8936646/",
-        "poster": "assets/films/extraction-2020-poster.webp"
+        "poster": "assets/films/extraction-2020-poster.webp",
+        "backdrop": "assets/films/extraction-2020-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/extraction-2020/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/sm/upload/23/fy/l1/io/extraction-2020-1920-1920-1080-1080-crop-000000.jpg?v=4a480d6575"
       },
       "hamnet": {
         "source": "https://www.imdb.com/title/tt14905854/",
@@ -1581,27 +1601,44 @@
       },
       "killers-of-the-flower-moon": {
         "source": "https://www.imdb.com/title/tt5537002/",
-        "poster": "assets/films/killers-of-the-flower-moon-poster.webp"
+        "poster": "assets/films/killers-of-the-flower-moon-poster.webp",
+        "backdrop": "assets/films/killers-of-the-flower-moon-alt-01.webp",
+        "backdropSource": "https://www.kunr.org/u-s-headlines/2023-10-30/you-talkin-to-me-how-scorseses-killers-of-the-flower-moon-gets-in-your-head"
       },
       "la-chimera": {
         "source": "https://www.imdb.com/title/tt14561712/",
-        "poster": "assets/films/la-chimera-poster.webp"
+        "poster": "assets/films/la-chimera-poster.webp",
+        "backdrop": "assets/films/la-chimera-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/la-chimera/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/sm/upload/s4/qu/cr/yr/la-chimera-1920-1920-1080-1080-crop-000000.jpg?v=01fedaa12c"
       },
       "marty-supreme": {
         "source": "https://www.imdb.com/title/tt32916440/",
-        "poster": "assets/films/marty-supreme-poster.webp"
+        "poster": "assets/films/marty-supreme-poster.webp",
+        "backdrop": "assets/films/marty-supreme-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/marty-supreme/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/sm/upload/9v/j7/mm/yn/marty-sup-1920-1920-1080-1080-crop-000000.jpg?v=4c4675acde"
       },
       "materialists": {
         "source": "https://www.imdb.com/title/tt30253473/",
-        "poster": "assets/films/materialists-poster.webp"
+        "poster": "assets/films/materialists-poster.webp",
+        "backdrop": "assets/films/materialists-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/materialists/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/alternative-backdrop/1/0/2/4/5/6/2/tmdb/cciiSBKGc2uZxjFkhKaWw4QzvAH-1920-1920-1080-1080-crop-000000.jpg?v=105534a375"
       },
       "may-december": {
         "source": "https://www.imdb.com/title/tt13651794/",
-        "poster": "assets/films/may-december-poster.webp"
+        "poster": "assets/films/may-december-poster.webp",
+        "backdrop": "assets/films/may-december-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/may-december/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/sm/upload/r3/ll/he/8n/97MOhHIgU6ZdLcB9DrAhx3WAqrU-1920-1920-1080-1080-crop-000000.jpg?v=0e7320df4c"
       },
       "mickey-17": {
         "source": "https://www.imdb.com/title/tt12299608/",
-        "poster": "assets/films/mickey-17-poster.webp"
+        "poster": "assets/films/mickey-17-poster.webp",
+        "backdrop": "assets/films/mickey-17-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/mickey-17/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/sm/upload/ce/wj/ed/wq/7Oh1xRB8QbMduhqXEUHKlnwxMJi-1920-1920-1080-1080-crop-000000.jpg?v=c4a2895be9"
       },
       "nightmare-alley-2021": {
         "source": "https://www.imdb.com/title/tt7740496/",
@@ -1620,27 +1657,45 @@
       },
       "oppenheimer-2023": {
         "source": "https://www.imdb.com/title/tt15398776/",
-        "poster": "assets/films/oppenheimer-2023-poster.webp"
+        "poster": "assets/films/oppenheimer-2023-poster.webp",
+        "backdrop": "assets/films/oppenheimer-2023-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/oppenheimer-2023/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/sm/upload/mn/uu/op/02/oppenheimer-2023-1920-1920-1080-1080-crop-000000.jpg?v=aa1b3a6d85"
       },
       "past-lives": {
         "source": "https://www.imdb.com/title/tt13238346/",
-        "poster": "assets/films/past-lives-poster.webp"
+        "poster": "assets/films/past-lives-poster.webp",
+        "backdrop": "assets/films/past-lives-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/past-lives/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/sm/upload/w5/vf/ru/qm/past-lives-1920-1920-1080-1080-crop-000000.jpg?v=2ff888a5e1"
       },
       "peaky-blinders-the-immortal-man": {
         "source": "https://www.imdb.com/title/tt15574124/",
-        "poster": "assets/films/peaky-blinders-the-immortal-man-poster.webp"
+        "poster": "assets/films/peaky-blinders-the-immortal-man-poster.webp",
+        "backdrop": "assets/films/peaky-blinders-the-immortal-man-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/peaky-blinders-the-immortal-man/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/alternative-backdrop/7/8/7/8/4/9/tmdb/wVs2jRKmoVxZPgPM53ppZwVVabn-1920-1920-1080-1080-crop-000000.jpg?v=844ce3b0aa"
       },
       "poor-things-2023": {
         "source": "https://www.imdb.com/title/tt14230458/",
-        "poster": "assets/films/poor-things-2023-poster.webp"
+        "poster": "assets/films/poor-things-2023-poster.webp",
+        "backdrop": "assets/films/poor-things-2023-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/poor-things-2023/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/sm/upload/33/cq/4s/53/gsVC7HMf4VR2XFOyqjTSklY2Tms-1920-1920-1080-1080-crop-000000.jpg?v=026c0bec1a"
       },
       "promising-young-woman": {
         "source": "https://www.imdb.com/title/tt9620292/",
-        "poster": "assets/films/promising-young-woman-poster.webp"
+        "poster": "assets/films/promising-young-woman-poster.webp",
+        "backdrop": "assets/films/promising-young-woman-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/promising-young-woman/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/sm/upload/x1/bt/3e/m8/promising-young-woman-1920-1920-1080-1080-crop-000000.jpg?v=1f0669f36e"
       },
       "sentimental-value-2025": {
         "source": "https://www.imdb.com/title/tt27714581/",
-        "poster": "assets/films/sentimental-value-2025-poster.webp"
+        "poster": "assets/films/sentimental-value-2025-poster.webp",
+        "backdrop": "assets/films/sentimental-value-2025-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/sentimental-value-2025/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/sm/upload/6v/ar/g0/nb/w7s8q7sXbqao6Sp907kxSzUMpL1-1920-1920-1080-1080-crop-000000.jpg?v=b6153fb694"
       },
       "tar-2022": {
         "source": "https://www.imdb.com/title/tt14444726/",
@@ -1655,7 +1710,10 @@
       },
       "the-assessment-2024": {
         "source": "https://www.imdb.com/title/tt32768323/",
-        "poster": "assets/films/the-assessment-2024-poster.webp"
+        "poster": "assets/films/the-assessment-2024-poster.webp",
+        "backdrop": "assets/films/the-assessment-2024-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/the-assessment-2024/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/alternative-backdrop/1/1/9/7/8/8/4/tmdb/6sJQmkHBYXGaxXVIZvUFGAeFDOC-1920-1920-1080-1080-crop-000000.jpg?v=69aa109679"
       },
       "the-banshees-of-inisherin": {
         "source": "https://www.imdb.com/title/tt11813216/",
@@ -1669,7 +1727,10 @@
       },
       "the-beast-2023": {
         "source": "https://www.janusfilms.com/films/2182",
-        "poster": "assets/films/the-beast-2023-janus-poster.webp"
+        "poster": "assets/films/the-beast-2023-janus-poster.webp",
+        "backdrop": "assets/films/the-beast-2023-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/the-beast-2023-1/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/sm/upload/is/cr/ak/2e/TheBeast2023-1920-1920-1080-1080-crop-000000.jpg?v=79856b7bdc"
       },
       "the-brutalist": {
         "source": "https://www.imdb.com/title/tt8999762/",
@@ -1683,19 +1744,31 @@
       },
       "the-flash": {
         "source": "https://www.imdb.com/title/tt0439572/",
-        "poster": "assets/films/the-flash-poster.webp"
+        "poster": "assets/films/the-flash-poster.webp",
+        "backdrop": "assets/films/the-flash-film-file.webp",
+        "backdropSource": "https://www.dc.com/movies/the-flash-2023",
+        "backdropImageSource": "https://static.dc.com/2023-05/Movies_Gallery-rev-1-FLSH-DCT-0001_High_Res_JPEG.jpeg?w=1200"
       },
       "the-french-dispatch-of-the-liberty-kansas": {
         "source": "https://www.imdb.com/title/tt8847712/",
-        "poster": "assets/films/the-french-dispatch-of-the-liberty-kansas-poster.webp"
+        "poster": "assets/films/the-french-dispatch-of-the-liberty-kansas-poster.webp",
+        "backdrop": "assets/films/the-french-dispatch-of-the-liberty-kansas-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/the-french-dispatch-of-the-liberty-kansas/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/sm/upload/so/sr/fc/im/french%203-1920-1920-1080-1080-crop-000000.jpg?v=c49f740775"
       },
       "the-menu-2022": {
         "source": "https://www.imdb.com/title/tt9764362/",
-        "poster": "assets/films/the-menu-2022-poster.webp"
+        "poster": "assets/films/the-menu-2022-poster.webp",
+        "backdrop": "assets/films/the-menu-2022-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/the-menu-2022/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/sm/upload/9k/lr/hv/rv/GFq9kYUnpRCnlbIbjPzNA96e0j-1920-1920-1080-1080-crop-000000.jpg?v=4de0ef9ae6"
       },
       "the-novice": {
         "source": "https://letterboxd.com/film/the-novice/",
-        "poster": "assets/films/the-novice-poster.webp"
+        "poster": "assets/films/the-novice-poster.webp",
+        "backdrop": "assets/films/the-novice-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/the-novice/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/sm/upload/9o/mf/v8/4u/the-novice-1920-1920-1080-1080-crop-000000.jpg?v=0b72610c83"
       },
       "the-odyssey-2026": {
         "source": "https://www.imdb.com/title/tt33764258/",
@@ -1704,7 +1777,10 @@
       },
       "the-power-of-the-dog": {
         "source": "https://www.imdb.com/title/tt10293406/",
-        "poster": "assets/films/the-power-of-the-dog-poster.webp"
+        "poster": "assets/films/the-power-of-the-dog-poster.webp",
+        "backdrop": "assets/films/the-power-of-the-dog-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/the-power-of-the-dog/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/sm/upload/xr/9v/ho/1w/power-of-dog-1920-1920-1080-1080-crop-000000.jpg?v=bdf4f99f9e"
       },
       "the-worst-person-in-the-world": {
         "source": "https://www.imdb.com/title/tt10370710/",
@@ -1713,7 +1789,10 @@
       },
       "tick-tick-boom-2021": {
         "source": "https://www.imdb.com/title/tt8721424/",
-        "poster": "assets/films/tick-tick-boom-2021-poster.webp"
+        "poster": "assets/films/tick-tick-boom-2021-poster.webp",
+        "backdrop": "assets/films/tick-tick-boom-2021-film-file.webp",
+        "backdropSource": "https://letterboxd.com/film/tick-tick-boom-2021/",
+        "backdropImageSource": "https://a.ltrbxd.com/resized/sm/upload/w9/5v/km/6g/tick-1920-1920-1080-1080-crop-000000.jpg?v=7d39f820bc"
       },
       "wuthering-heights-2026": {
         "source": "https://www.imdb.com/title/tt32897959/",
@@ -2081,6 +2160,106 @@
       "assets/films/wuthering-heights-2026-veil.webp": [
         2048,
         1152
+      ],
+      "assets/films/a-complete-unknown-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/aftersun-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/asteroid-city-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/challengers-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/dune-2021-film-file.webp": [
+        1680,
+        700
+      ],
+      "assets/films/extraction-2020-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/la-chimera-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/marty-supreme-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/materialists-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/may-december-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/mickey-17-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/oppenheimer-2023-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/past-lives-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/peaky-blinders-the-immortal-man-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/poor-things-2023-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/promising-young-woman-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/sentimental-value-2025-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/the-assessment-2024-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/the-beast-2023-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/the-flash-film-file.webp": [
+        1200,
+        675
+      ],
+      "assets/films/the-french-dispatch-of-the-liberty-kansas-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/the-menu-2022-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/the-novice-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/the-power-of-the-dog-film-file.webp": [
+        1680,
+        945
+      ],
+      "assets/films/tick-tick-boom-2021-film-file.webp": [
+        1680,
+        945
       ]
     }
   },
