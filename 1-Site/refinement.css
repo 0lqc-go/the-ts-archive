@@ -52,10 +52,6 @@ body { -webkit-font-smoothing: antialiased; }
 .edition-quote.interlude { border: 0; border-left: 1px solid #65615b; background: transparent; padding: 26px 7%; text-align: left; width: 86%; margin: 0 auto; }
 .edition-quote.interlude blockquote { margin: 0; font-size: clamp(1.8rem,3.2vw,3.1rem); max-width: 32ch; }
 .edition-quote figcaption { font-size: .64rem; letter-spacing: .12em; font-weight: 500; color: #a79f95; }
-.chapter-continuation { display: flex; justify-content: end; margin-top: 34px; font-size: .75rem; color: #aaa39a; }
-.chapter-continuation a { display: inline-flex; gap: 14px; align-items: center; border-bottom: 1px solid #5c5853; padding-bottom: 5px; }
-.chapter-continuation a:hover { color: var(--text); }
-.continuation-label { font-size: .62rem; letter-spacing: .11em; }
 .section-heading h2 { font: 400 clamp(3rem, 5.2vw, 5rem)/.96 var(--serif); letter-spacing: -.015em; }
 .section-heading h2 em { font-size: 1em; }
 .section-aside { font-size: .61rem; font-weight: 500; }

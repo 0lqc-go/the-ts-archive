@@ -96,7 +96,7 @@ body[data-award-view] .enhanced-card .winner-frame:hover .frame-media { box-shad
   min-width: 0;
   margin-top: 10px;
 }
-.film-file-action, .music-link, .file-letterboxd {
+.music-link, .file-letterboxd {
   font: 500 .83rem/1.5 var(--body);
   color: #bfc4c9;
   text-decoration: underline;
@@ -104,7 +104,7 @@ body[data-award-view] .enhanced-card .winner-frame:hover .frame-media { box-shad
   text-underline-offset: 4px;
   transition: color .16s, text-decoration-color .16s;
 }
-.film-file-action:hover, .music-link:hover, .file-letterboxd:hover { color: var(--text); text-decoration-color: currentColor; }
+.music-link:hover, .file-letterboxd:hover { color: var(--text); text-decoration-color: currentColor; }
 .music-actions { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
 .music-label { color: #a8a5a2; font-size: .83rem; }
 .music-link { color: var(--accent, var(--paper-accent)); }
@@ -261,7 +261,6 @@ body[data-award-view="compact"] .enhanced-card .winner-title { font: 600 clamp(1
 body[data-award-view="compact"] .enhanced-card .winner-detail { font: 400 .8rem/1.45 var(--body); margin-top: 4px; color: #afb2b7; }
 body[data-award-view="compact"] .enhanced-card .compact-year { display: block; color: #a5a6aa; font: 400 .74rem/1.4 var(--body); margin-top: 3px; }
 body[data-award-view="compact"] .enhanced-card .winner-actions { margin: 5px 0 0 67px; gap: 4px 12px; }
-body[data-award-view="compact"] .enhanced-card .winner-actions .film-file-action,
 body[data-award-view="compact"] .enhanced-card .winner-actions .music-link { font-size: .75rem; }
 body[data-award-view="compact"] .enhanced-card .music-actions { gap: 4px 9px; }
 @media (max-width: 560px) {

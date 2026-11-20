@@ -1,4 +1,116 @@
 {
+  "discovery": {
+    "searchSuggestions": ["Obsession", "Music", "Visuals", "Nostalgia", "Atmosphere"],
+    "topics": [
+      {
+        "label": "Music",
+        "terms": ["musical", "musically", "score", "soundtrack"],
+        "awards": ["best-original-score", "music-as-power-memory"],
+        "films": ["tar-2022", "tick-tick-boom-2021", "babylon-2022", "a-complete-unknown", "elvis-2022", "aftersun", "oppenheimer-2023", "dont-look-up-2021"]
+      },
+      {
+        "label": "Visuals",
+        "terms": ["visual", "visual style", "cinematography", "visual effects", "imagery"],
+        "awards": ["best-cinematography", "best-production-design", "best-visual-effects", "best-costume-design"],
+        "films": ["dune-part-two", "the-batman", "tenet", "decision-to-leave", "the-brutalist", "marty-supreme", "nightmare-alley-2021", "poor-things-2023", "the-count-of-monte-cristo-2024", "the-beast-2023", "elvis-2022", "the-odyssey-2026", "dune-2021"]
+      },
+      {
+        "label": "Atmosphere",
+        "terms": ["atmospheric", "ambience", "ambiance", "vibe"],
+        "films": ["the-batman", "decision-to-leave", "drive-my-car", "dune-2021", "dune-part-two", "nightmare-alley-2021", "la-chimera", "past-lives", "aftersun", "the-beast-2023", "the-power-of-the-dog"]
+      }
+    ],
+    "chapterAwards": {
+      "film-direction": "best-picture",
+      "acting-characters": "best-actor",
+      "writing": "best-original-screenplay",
+      "scenes-moments": "best-opening-sequence",
+      "technical-craft": "best-cinematography",
+      "editorial-picks": "most-underrated-movie"
+    },
+    "creditNames": {
+      "Triet & Harari": [
+        "Justine Triet",
+        "Arthur Harari"
+      ],
+      "Park & Jeong": [
+        "Park Chan-wook",
+        "Jeong Seo-kyeong"
+      ],
+      "Vogt & Trier": [
+        "Eskil Vogt",
+        "Joachim Trier"
+      ],
+      "Murakami × Chekhov": [
+        "Haruki Murakami",
+        "Anton Chekhov"
+      ],
+      "Hamaguchi & Oe": [
+        "Ryusuke Hamaguchi",
+        "Takamasa Oe"
+      ]
+    },
+    "personAliases": {
+      "Jeong Seo-kyeong": [
+        "Chung Seo-kyung",
+        "Jeong Seo-kyung"
+      ]
+    },
+    "moods": [
+      {
+        "label": "Nostalgia",
+        "terms": ["nostalgic","memory","wistful"],
+        "films": ["aftersun","past-lives","sentimental-value-2025","babylon-2022","tick-tick-boom-2021","the-french-dispatch-of-the-liberty-kansas","a-complete-unknown","elvis-2022","la-chimera"]
+      },
+      {
+        "label": "Obsession",
+        "terms": ["ambition","perfection","obsessive"],
+        "films": ["tar-2022","the-novice","tick-tick-boom-2021","challengers","oppenheimer-2023","the-menu-2022","the-brutalist","marty-supreme","elvis-2022","nightmare-alley-2021","decision-to-leave"]
+      },
+      {
+        "label": "Longing",
+        "terms": ["yearning","romance","desire"],
+        "films": ["past-lives","the-worst-person-in-the-world","decision-to-leave","the-beast-2023","la-chimera","drive-my-car","aftersun","hamnet","materialists","wuthering-heights-2026"]
+      },
+      {
+        "label": "Melancholy",
+        "terms": ["grief","sadness","loneliness"],
+        "films": ["aftersun","drive-my-car","past-lives","the-banshees-of-inisherin","the-power-of-the-dog","the-beast-2023","hamnet","la-chimera","sentimental-value-2025"]
+      },
+      {
+        "label": "Dreamlike",
+        "terms": ["surreal","dream","otherworldly"],
+        "films": ["poor-things-2023","asteroid-city","la-chimera","the-beast-2023","tenet","dune-2021","mickey-17"]
+      },
+      {
+        "label": "Unease",
+        "terms": ["tension","anxiety","suspense","unsettling"],
+        "films": ["anatomy-of-a-fall","the-assessment-2024","may-december","the-power-of-the-dog","killers-of-the-flower-moon","promising-young-woman","the-menu-2022","the-batman","nightmare-alley-2021","extraction-2020","no-other-choice-2025","peaky-blinders-the-immortal-man"]
+      },
+      {
+        "label": "Wonder",
+        "terms": ["awe","epic","spectacle"],
+        "films": ["dune-2021","dune-part-two","tenet","the-odyssey-2026","the-flash","the-count-of-monte-cristo-2024","oppenheimer-2023","poor-things-2023"]
+      },
+      {
+        "label": "Intimacy",
+        "terms": ["intimate","tenderness","quiet"],
+        "films": ["past-lives","the-worst-person-in-the-world","drive-my-car","aftersun","sentimental-value-2025","hamnet","materialists"]
+      },
+      {
+        "label": "Dark comedy",
+        "terms": ["satire","irony","absurd"],
+        "films": ["the-banshees-of-inisherin","dont-look-up-2021","mickey-17","the-menu-2022","the-french-dispatch-of-the-liberty-kansas","asteroid-city","poor-things-2023","no-other-choice-2025","one-battle-after-another","babylon-2022"]
+      }
+    ],
+    "doubleFeature": {
+      "title": "Becoming an Artist",
+      "films": [
+        "tick-tick-boom-2021",
+        "a-complete-unknown"
+      ]
+    }
+  },
   "chapters": [
     {
       "number": "01",
@@ -1161,7 +1273,8 @@
           "tar-2022"
         ]
       },
-      "status": "2023 Oscars · Nominee"
+      "status": "2023 Oscars · Nominee",
+      "academy": {"year":2023,"category":"Best Picture","winner":"Everything Everywhere All at Once","credit":"Daniel Kwan, Daniel Scheinert & Jonathan Wang","nominated":true}
     },
     {
       "name": "Best Director",
@@ -1173,7 +1286,8 @@
           "decision-to-leave"
         ]
       },
-      "status": "2023 Oscars · No nomination"
+      "status": "2023 Oscars · No nomination",
+      "academy": {"year":2023,"category":"Best Director","winner":"Everything Everywhere All at Once","credit":"Daniel Kwan & Daniel Scheinert","nominated":false}
     },
     {
       "name": "Best Actor",
@@ -1185,7 +1299,8 @@
           "tick-tick-boom-2021"
         ]
       },
-      "status": "2022 Oscars · Nominee"
+      "status": "2022 Oscars · Nominee",
+      "academy": {"year":2022,"category":"Best Actor","winner":"King Richard","credit":"Will Smith","nominated":true}
     },
     {
       "name": "Best Actress",
@@ -1197,7 +1312,8 @@
           "tar-2022"
         ]
       },
-      "status": "2023 Oscars · Nominee"
+      "status": "2023 Oscars · Nominee",
+      "academy": {"year":2023,"category":"Best Actress","winner":"Everything Everywhere All at Once","credit":"Michelle Yeoh","nominated":true}
     },
     {
       "name": "Best Supporting Actress",
@@ -1209,7 +1325,8 @@
           "the-banshees-of-inisherin"
         ]
       },
-      "status": "2023 Oscars · Lost to Jamie Lee Curtis"
+      "status": "2023 Oscars · Lost to Jamie Lee Curtis",
+      "academy": {"year":2023,"category":"Best Supporting Actress","winner":"Everything Everywhere All at Once","credit":"Jamie Lee Curtis","nominated":true}
     },
     {
       "name": "Best Antagonist",
@@ -1221,7 +1338,8 @@
           "the-menu-2022"
         ]
       },
-      "status": "2023 Oscars · No Best Actor nomination"
+      "status": "2023 Oscars · No Best Actor nomination",
+      "academy": {"year":2023,"category":"Best Actor","winner":"The Whale","credit":"Brendan Fraser","nominated":false}
     },
     {
       "name": "Best Original Screenplay",
@@ -1233,7 +1351,8 @@
           "the-banshees-of-inisherin"
         ]
       },
-      "status": "2023 Oscars · Nominee"
+      "status": "2023 Oscars · Nominee",
+      "academy": {"year":2023,"category":"Best Original Screenplay","winner":"Everything Everywhere All at Once","credit":"Daniel Kwan & Daniel Scheinert","nominated":true}
     },
     {
       "name": "Best Adapted Screenplay",
@@ -1245,7 +1364,8 @@
           "drive-my-car"
         ]
       },
-      "status": "2022 Oscars · Nominee"
+      "status": "2022 Oscars · Nominee",
+      "academy": {"year":2022,"category":"Best Adapted Screenplay","winner":"CODA","credit":"Siân Heder","nominated":true}
     },
     {
       "name": "Best Cinematography",
@@ -1257,7 +1377,8 @@
           "the-batman"
         ]
       },
-      "status": "2023 Oscars · No nomination"
+      "status": "2023 Oscars · No nomination",
+      "academy": {"year":2023,"category":"Best Cinematography","winner":"All Quiet on the Western Front","credit":"James Friend","nominated":false}
     },
     {
       "name": "Best Original Score",
@@ -1269,7 +1390,8 @@
           "dont-look-up-2021"
         ]
       },
-      "status": "2022 Oscars · Nominee"
+      "status": "2022 Oscars · Nominee",
+      "academy": {"year":2022,"category":"Best Original Score","winner":"Dune","credit":"Hans Zimmer","nominated":true}
     }
   ],
   "watch": {
