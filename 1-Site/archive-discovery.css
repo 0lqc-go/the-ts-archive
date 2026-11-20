@@ -1,9 +1,12 @@
 /* Shared film discovery and award presentation. */
 body[data-award-view="cinematic"] .award-grid {
-  row-gap: clamp(110px, 13vw, 190px);
+  row-gap: clamp(90px, 10.1vw, 145px);
 }
 body[data-award-view="cinematic"] .chapter {
-  padding-top: clamp(80px, 9vw, 135px);
+  padding-top: clamp(70px, 8vw, 110px);
+}
+body[data-award-view="cinematic"] .chapter + .chapter {
+  padding-top: clamp(126px, 13vw, 190px);
 }
 
 .award-stills {
@@ -137,6 +140,23 @@ body[data-award-view] #index-results { min-height: 0; }
   background: #ffffff12;
   border-color: #ffffff28;
 }
+.index-year-compact { display: none; }
+.index-year-select-wrap { position: relative; display: inline-flex; align-items: center; }
+#index-year-select {
+  min-width: 84px;
+  min-height: 35px;
+  margin: 0;
+  padding: 6px 27px 6px 11px;
+  appearance: none;
+  border: 1px solid #ffffff28;
+  border-radius: 3px;
+  background: #262729;
+  color: var(--text);
+  font: 500 .83rem/1.3 var(--body);
+  cursor: pointer;
+  color-scheme: dark;
+}
+.index-year-select-wrap > svg { position: absolute; inset-inline-end: 9px; color: #b7bac0; pointer-events: none; }
 
 .snub-spotlight { padding-block: clamp(60px, 8vw, 110px); }
 .snub-spotlight-feature {
@@ -177,14 +197,16 @@ body[data-award-view] #index-results { min-height: 0; }
 #snub-spotlight-selection:target { outline: 1px solid #c0b3a170; outline-offset: 5px; }
 
 @media (max-width: 680px) {
-  body[data-award-view="cinematic"] .award-grid { row-gap: 90px; }
-  body[data-award-view="cinematic"] .chapter { padding-top: 78px; }
+  body[data-award-view="cinematic"] .award-grid { row-gap: 72px; }
+  body[data-award-view="cinematic"] .chapter { padding-top: 68px; }
+  body[data-award-view="cinematic"] .chapter + .chapter { padding-top: 108px; }
   .copy-award-link { width: 26px; height: 34px; }
   .award-stills { padding-inline: 13px; padding-bottom: 21px; }
   .award-stills-track { gap: 10px; }
   .award-still { flex-basis: 168px; }
-  .index-year-filter { margin-inline: 14px; }
-  .index-years button { padding-inline: 8px; }
+  .index-year-filter { margin-inline: 20px; }
+  .index-year-label, .index-years { display: none; }
+  .index-year-compact { display: inline-flex; align-items: center; gap: 10px; color: #b9bdc0; font: 500 .82rem/1.3 var(--body); }
   .snub-spotlight-feature { grid-template-columns: minmax(0, 1fr); gap: 18px; }
   .snub-spotlight { padding-block: 66px; }
 }
@@ -439,7 +461,9 @@ body[data-award-view] #index-results { max-height: min(58dvh, 640px); }
 .index-chapter-label small { font: 400 .72rem/1.35 var(--body); color: #aeb2b8; }
 .index-chapter-context { margin: 0; padding: 9px 20px; border-bottom: 1px solid #ffffff19; }
 .index-chapter-context > span { color: var(--text); text-align: right; }
-.person-index-row { grid-template-columns: minmax(0, 1fr) auto; }
+.film-index-row { grid-template-columns: 32px minmax(0, 1fr); padding-block: 8px; }
+.film-index-row > span:last-child, .person-index-row > span { min-width: 0; overflow-wrap: anywhere; }
+.person-index-row { grid-template-columns: minmax(0, 1fr); }
 .person-index-row > span:first-child { color: var(--text); font: 400 .9rem/1.4 var(--body); }
 
 /* The same winners in chronological order, and a small two-film pairing. */
@@ -486,10 +510,11 @@ body[data-award-view="compact"] .double-feature { padding-block: 48px; }
   align-items: center;
   gap: 7px;
   list-style: none;
-  padding: 4px 0;
+  padding: 6px 0;
   cursor: pointer;
   font: 500 .8rem/1.35 var(--body);
 }
+.academy-comparison > summary > span { min-width: 0; overflow-wrap: anywhere; }
 .academy-comparison > summary::-webkit-details-marker { display: none; }
 .academy-comparison > summary:hover, .academy-comparison[open] > summary { color: var(--text); }
 .academy-comparison > summary svg { flex: none; transition: transform .15s; }

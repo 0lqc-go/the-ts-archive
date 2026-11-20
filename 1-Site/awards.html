@@ -8,16 +8,16 @@
   <meta property="og:title" content="The T.S. Archive — Awards">
   <title>Awards — The T.S. Archive</title>
   <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=polish-1">
   <link rel="stylesheet" href="edition.css">
   <link rel="stylesheet" href="refinement.css?v=7">
   <link rel="stylesheet" href="archive.css">
   <link rel="stylesheet" href="award-hierarchy.css?v=20261119">
-  <link rel="stylesheet" href="award-experience.css?v=20261120">
+  <link rel="stylesheet" href="award-experience.css?v=polish-2">
   <link rel="stylesheet" href="archive-experience.css?v=20261119">
-  <link rel="stylesheet" href="archive-discovery.css?v=3.2">
-  <script src="archive-site.js?v=archive-discovery-2" defer></script>
-  <script src="app.js?v=archive-discovery-3.2" defer></script>
+  <link rel="stylesheet" href="archive-discovery.css?v=3.3">
+  <script src="archive-site.js?v=polish-1" defer></script>
+  <script src="app.js?v=archive-discovery-3.4" defer></script>
 </head>
 <body data-page="awards">
   <a class="skip" href="#awards">Skip to the awards</a>
@@ -31,12 +31,21 @@
   <main id="top" hidden>
     <section class="hero legacy-awards-hero" aria-labelledby="hero-title">
       <div class="hero-image" aria-hidden="true"></div><div class="hero-shade"></div>
-      <div class="hero-topline"><a href="index.html#decades">← THE DECADES</a><span data-edition-label></span></div>
-      <div class="hero-title"><h1 id="hero-title">THE T.S.<br><span>ARCHIVE</span><sup aria-hidden="true">★</sup></h1><div class="hero-bottom"><p>The films. The moments.<br>The ones that stay.</p><button class="round-link start-ceremony legacy-entry" aria-haspopup="dialog" aria-label="Start the visual awards presentation"><span>ENTER THE<br>ARCHIVE</span><b aria-hidden="true">↗</b></button><button class="ceremony-entry start-ceremony" aria-haspopup="dialog" aria-label="View the visual awards presentation"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true"><path d="m5 3 7 5-7 5V3Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg><span>View ceremony</span></button></div></div>
+      <div class="hero-topline"><a href="index.html#decades">← THE DECADES</a></div>
+      <div class="hero-title">
+        <h1 id="hero-title"><span class="hero-edition-period"></span> <span class="hero-edition-awards">Awards</span></h1>
+      </div>
       <div class="hero-foot"><a href="#awards">SCROLL TO EXPLORE <span>↓</span></a><span class="hero-caption">ON THE COVER <b id="cover-credit"></b></span></div>
     </section>
+    <section class="edition-utilities section-shell" aria-label="Award edition overview and actions">
+      <p class="edition-totals"><span><b id="award-count"></b> awards</span><span aria-hidden="true">·</span><span><b id="chapter-count"></b> chapters</span></p>
+      <div class="edition-tools">
+        <button type="button" class="ceremony-entry start-ceremony" aria-haspopup="dialog" aria-label="View the visual awards presentation"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true"><path d="m5 3 7 5-7 5V3Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg><span>View ceremony</span></button>
+        <button type="button" class="ceremony-entry edition-index-open" aria-haspopup="dialog" aria-label="Open award index"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="m10.4 10.4 3.1 3.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><span>Index</span></button>
+      </div>
+    </section>
     <div id="opening-line"></div>
-    <section class="edition-strip" aria-label="Edition overview"><div><span class="micro">THE EDITION</span><strong data-edition-period></strong></div><div><strong><span id="award-count"></span> / <span id="chapter-count"></span></strong><span class="micro">AWARDS / CHAPTERS</span></div><a href="#final-cut">MEET THE FILMS <span>↘</span></a></section>
+    <section class="edition-strip" aria-label="Winners’ collection"><a href="#final-cut">Meet the films</a></section>
     <div class="chapter-nav" id="awards"><span class="micro">THE CHAPTERS</span><div class="current-chapter" hidden><span class="micro" data-edition-period></span><strong id="active-chapter-label">Film &amp; Direction</strong></div><nav aria-label="Award chapters" id="chapter-links"></nav><div class="chapter-actions"><button class="nav-view-toggle" type="button" data-view-toggle hidden aria-label="Switch to Compact view" title="Switch to Compact view"><svg class="view-icon-list" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M1.5 3h2M6 3h8.5M1.5 8h2M6 8h8.5M1.5 13h2M6 13h8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><svg class="view-icon-cinematic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1.5" y="2" width="13" height="9" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M2 14h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><span class="nav-view-label">Compact</span></button><button class="index-open" aria-haspopup="dialog" aria-label="Open the full award index"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M1 3h14M1 8h14M1 13h14" stroke="currentColor"/></svg><span>INDEX</span></button></div></div>
     <div id="chapter-content"></div>
     <section class="spotlights section-shell" id="spotlights" aria-labelledby="spotlights-title"><div class="section-heading"><div><p class="eyebrow">BEYOND A SINGLE CATEGORY</p><h2 id="spotlights-title">The presence.<br><em>The body of work.</em></h2></div><span class="section-aside">TWO WAYS TO REMEMBER<br>A PERFORMANCE.</span></div><div id="spotlight-content"></div></section>

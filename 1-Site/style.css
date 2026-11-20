@@ -69,7 +69,12 @@ img { display: block; max-width: 100%; }
 
 .hero, .snubs-hero { position: relative; display: flex; min-height: min(760px, max(600px, 78svh)); isolation: isolate; overflow: hidden; background: #171b1c; }
 .hero-image, .hero-shade, .snubs-image { position: absolute; inset: 0; z-index: -1; }
-.hero-image { background: center 54% / cover no-repeat url('assets/films/tar-2022-wide.webp'); animation: cover-in 1s both; }
+.hero-image { background: center 54% / cover no-repeat; animation: cover-in 1s both; }
+.cover-art { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: var(--cover-position, 54% 58%); }
+.snubs-image > .cover-art { object-position: var(--cover-position, 50% center); }
+@media (max-width: 680px) {
+  :is(.hero-image, .snubs-image) > .cover-art { object-position: var(--cover-mobile-position, 51% center); }
+}
 .hero-shade { background: linear-gradient(90deg,#0b1013e8 0%,#0b1013b5 26%,#0b101325 62%,#0b10133b 100%), linear-gradient(0deg,#121315 1%,#1213155c 34%,transparent 65%,#1213154d 100%); }
 .hero-topline, .hero-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; position: absolute; inset-inline: var(--gutter); color: #e7e7e3; font-size: .69rem; font-weight: 700; letter-spacing: .16em; }
 .hero-topline { top: 34px; }
@@ -280,7 +285,7 @@ dialog[open] { animation: title-in .22s both; }
 .image-sources ul { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; padding: 9px 0 0 17px; font-size: .78rem; }
 
 .snubs-hero { min-height: min(650px,max(500px,70svh)); }
-.snubs-image { background: center / cover no-repeat url('assets/films/drive-my-car-wide.webp'); animation: cover-in .8s both; }
+.snubs-image { background: center / cover no-repeat; animation: cover-in .8s both; }
 .snubs-hero-copy { align-self: end; padding: 43px var(--gutter) 66px; }
 .back-archive { display: inline-block; color: #f4e7d7; font-size: .68rem; font-weight: 700; letter-spacing: .1em; margin-bottom: 20px; }
 .back-archive:hover { color: var(--warm-accent); }

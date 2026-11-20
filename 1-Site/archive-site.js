@@ -104,7 +104,7 @@
     }
     const homeCover = index.homeCover ?? featured;
     if (homeCover?.cover) {
-      setCover($('.hero-image'), homeCover.cover, homeCover);
+      setCover($('.hero-image'), homeCover.cover, homeCover, index.media);
       setText('#cover-credit', homeCover.coverFilm + ' / ' + homeCover.coverYear);
     }
     $('#edition-cards').innerHTML = index.editions.map(item => archiveCard(item, editionHref(item.id), item.period, index.media)).join('');
@@ -127,7 +127,7 @@
     setText('#list-description', list.description);
     const hero = $('.collection-hero');
     hero.dataset.hasCover = String(Boolean(list.cover));
-    if (list.cover) setCover($('.collection-image'), list.cover, list);
+    if (list.cover) setCover($('.collection-image'), list.cover, list, listMedia);
     const credit = $('#list-cover-credit');
     if (list.cover && list.coverFilm) {
       credit.hidden = false;
@@ -172,11 +172,44 @@
     history.replaceState(history.state, '', url);
   }
 
-  function setCover(node, path, options = {}) {
+  function setCover(node, path, options = {}, media = {}) {
     if (!node || !path) return;
-    node.style.backgroundImage = 'url(' + JSON.stringify(path) + ')';
     if (options.coverPosition) node.style.setProperty('--cover-position', options.coverPosition);
     if (options.coverMobilePosition) node.style.setProperty('--cover-mobile-position', options.coverMobilePosition);
+    const image = document.createElement('img');
+    image.className = 'cover-art';
+    image.alt = '';
+    image.loading = 'eager';
+    image.decoding = 'async';
+    image.fetchPriority = 'high';
+    const [width, height] = media.sizes?.[path] ?? [];
+    const variants = [...(media.variants?.[path] ?? [])];
+    if (width && height) {
+      image.width = width;
+      image.height = height;
+      if (variants.length && !variants.some(variant => variant.width === width)) {
+        variants.push({src: path, width});
+      }
+    }
+    // A tall cover crops a wide image on mobile. Its effective source width
+    // is determined by the full scaled image, rather than just the viewport.
+    const updateSizes = () => {
+      if (!width || !height || !node.clientWidth || !node.clientHeight) return;
+      image.sizes = Math.ceil(Math.max(node.clientWidth, node.clientHeight * width / height)) + 'px';
+    };
+    requestAnimationFrame(() => {
+      if (variants.length) {
+        image.sizes = '100vw';
+        updateSizes();
+        image.srcset = variants.map(variant => `${variant.src} ${variant.width}w`).join(', ');
+      }
+      image.src = path;
+      node.replaceChildren(image);
+      if (variants.length && width && height && 'ResizeObserver' in window) {
+        const observer = new ResizeObserver(updateSizes);
+        observer.observe(node);
+      }
+    });
   }
 
   window.ArchiveSite = {catalog, read, params, editionHref, listHref, showError, displayProfile, setText, setCover, setupListView, replaceLocation};

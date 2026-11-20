@@ -84,7 +84,7 @@
   site.setText('[data-edition-label]', onSnubs ? 'THE ALTERNATE BALLOT / ' + selected.period : 'THE ' + selected.period + ' EDITION');
   const cover = onSnubs ? snubList : selected;
   const coverImage = $(onSnubs ? '.snubs-image' : '.hero-image');
-  site.setCover(coverImage, cover?.cover, cover);
+  site.setCover(coverImage, cover?.cover, cover, media);
   if (cover?.coverFilm) site.setText('#cover-credit', cover.coverFilm + ' / ' + cover.coverYear);
   $$('[data-awards-link]').forEach(link => { link.href = site.editionHref(editionId) + '#awards'; });
   if (snubList && archive.snubs?.length) {
@@ -301,6 +301,26 @@
     return esc(credit.prefix) + joined + esc(credit.suffix);
   }
 
+  function performanceCredit(entry, category) {
+    return actingCredits.has(keyFor(category)) ? creditFor(entry, category) : null;
+  }
+
+  function performanceName(credit) {
+    return credit.names.join(credit.joiner || ' & ');
+  }
+
+  function performanceNameMarkup(credit) {
+    return creditMarkup({...credit, prefix: '', suffix: ''});
+  }
+
+  function performanceFilmLine(entry, credit, classes = 'performance-film-link') {
+    const works = entry.films.map(slug => {
+      const info = film(slug);
+      return `<span class="performance-work"><a class="${classes}" href="${esc(info.url)}" ${external} ${filmAttributes(slug)}>${esc(info.title)}</a><span class="performance-year"> · ${esc(info.year)}</span></span>`;
+    }).join(' <span class="title-slash" aria-hidden="true">/</span> ');
+    return works + (credit.suffix ? ` <span class="performance-role">· ${esc(credit.suffix.trim())}</span>` : '');
+  }
+
   function personSearchText(person) {
     if (!person) return '';
     return [person.name, ...(discovery.personAliases?.[person.name] ?? [])].join(' ');
@@ -337,9 +357,10 @@
     const posters = entry.films.map(slug => `<a class="nominee-poster" href="${esc(film(slug).url)}" ${external} ${filmAttributes(slug)}>${poster(slug, eager, posterSize)}</a>`).join('');
     const detail = artist ? workNames(entry) : entry.detail;
     const credit = creditFor(entry, category);
-    const name = artist ? creditMarkup(credit, artistName(entry)) : title(entry);
-    const caption = artist ? esc(detail) : creditMarkup(credit, detail);
-    return `<li class="nominee"><div class="nominee-art${entry.films.length > 1 ? ' multi-poster' : ''}">${posters}</div><strong>${name}</strong>${detail ? `<small>${caption}</small>` : ''}</li>`;
+    const performance = !artist && performanceCredit(entry, category);
+    const name = artist ? creditMarkup(credit, artistName(entry)) : performance ? performanceNameMarkup(performance) : title(entry);
+    const caption = artist ? esc(detail) : performance ? performanceFilmLine(entry, performance) : creditMarkup(credit, detail);
+    return `<li class="nominee${performance ? ' performance-nominee' : ''}"><div class="nominee-art${entry.films.length > 1 ? ' multi-poster' : ''}">${posters}</div><strong>${name}</strong>${detail || performance ? `<small>${caption}</small>` : ''}</li>`;
   }
 
   function nominations(entries, eager = false, artist = false, category = '', listId = '') {
@@ -368,10 +389,15 @@
     const quote = award.winner.detail?.startsWith('“') && award.chapter.id !== 'film-music';
     const detail = artist ? workNames(award.winner) : award.winner.detail;
     const credit = creditFor(award.winner, award.id);
-    const linkedCredit = !artist && personDialog && credit;
-    const winner = `<button class="winner-frame" data-award="${award.number - 1}" aria-haspopup="dialog" aria-label="Open ${esc(award.name)}: ${esc(award.winner.text)}">
+    const performance = enhanced && !artist && performanceCredit(award.winner, award.id);
+    const linkedCredit = !artist && !performance && personDialog && credit;
+    const caption = performance
+      ? `<div class="winner-copy performance-copy"><strong class="winner-title">${performanceNameMarkup(performance)}</strong><div class="winner-detail">${performanceFilmLine(award.winner, performance)}</div></div>`
+      : '';
+    const winnerSummary = performance ? performanceName(performance) + ' — ' + workNames(award.winner) : award.winner.text;
+    const winner = `<button class="winner-frame" data-award="${award.number - 1}" aria-haspopup="dialog" aria-label="Open ${esc(award.name)}: ${esc(winnerSummary)}">
         ${renderFrames(awardFrames(award), feature, featured && !artist ? 'feature' : 'card')}${enhanced ? compactArtwork(award, artist) : ''}${winnerBadge(award)}
-        <span class="winner-copy"><span class="winner-title">${artist ? esc(artistName(award.winner)) : title(award.winner)}</span>${detail && !linkedCredit ? `<span class="winner-detail${artist ? ' portfolio-summary' : quote ? ' line-of-dialogue' : ''}">${esc(detail)}</span>` : ''}${enhanced && !artist && award.winner.films.length === 1 ? `<span class="compact-year">${esc(film(award.winner.films[0]).year)}</span>` : ''}</span>${enhanced ? '' : '<span class="frame-open" aria-hidden="true">↗</span>'}
+        ${performance ? '' : `<span class="winner-copy"><span class="winner-title">${artist ? esc(artistName(award.winner)) : title(award.winner)}</span>${detail && !linkedCredit ? `<span class="winner-detail${artist ? ' portfolio-summary' : quote ? ' line-of-dialogue' : ''}">${esc(detail)}</span>` : ''}${enhanced && !artist && award.winner.films.length === 1 ? `<span class="compact-year">${esc(film(award.winner.films[0]).year)}</span>` : ''}</span>`}${enhanced ? '' : '<span class="frame-open" aria-hidden="true">↗</span>'}
       </button>`;
     const actions = musicActions(award);
     const mentionsId = 'mentions-' + award.id;
@@ -383,10 +409,10 @@
     const artistAction = artist && credit && personDialog ? personLink(credit.names[0], 'Artist file', 'person-link artist-file-action') : '';
     const artistContext = artist
       ? `<div class="artist-context">${artistHeading}${artistWorks(award.winner)}${actions ? `<div class="winner-actions">${actions}</div>` : ''}</div>${artistAction || mentionsToggle ? `<div class="winner-actions portfolio-compact-actions">${artistAction}${mentionsToggle}</div>` : ''}`
-      : `${linkedCredit ? `<p class="winner-credit-line">${creditMarkup(credit, detail)}</p>` : ''}${actions || mentionsToggle ? `<div class="winner-actions${actions ? '' : ' compact-only'}">${actions}${mentionsToggle}</div>` : ''}`;
+      : `${caption}${linkedCredit ? `<p class="winner-credit-line">${creditMarkup(credit, detail)}</p>` : ''}${actions || mentionsToggle ? `<div class="winner-actions${actions ? '' : ' compact-only'}">${actions}${mentionsToggle}</div>` : ''}`;
     return `<article class="award-card${feature ? ' feature-card' : ''}${quote ? ' quote-card' : ''}${artist ? ' portfolio-card' : ''}${enhanced ? ' enhanced-card' : ''}${featured ? ' featured-award' : ''}" id="${award.id}" data-accent="${award.accent}" style="--accent:${award.accent}" aria-labelledby="heading-${award.id}">
       <div class="award-heading"><div><h3 id="heading-${award.id}">${esc(award.name)}</h3>${award.description ? `<p class="award-description">${esc(award.description)}</p>` : ''}</div><span class="award-number" aria-label="Award ${award.number}">${pad(award.number)}</span></div>
-      ${enhanced ? `<div class="winner-block${artist ? ' artist-winner-block' : ''}">${winner}${artistContext}</div>` : winner}
+      ${enhanced ? `<div class="winner-block${artist ? ' artist-winner-block' : performance ? ' performance-winner-block' : ''}">${winner}${artistContext}</div>` : winner}
       ${nominations(award.nominees, false, artist, award.id, mentionsId)}
     </article>`;
   }
@@ -408,8 +434,12 @@
   function renderSpotlights() {
     const entry = archive.performances?.[0];
     const actor = archive.actors?.[0];
+    const performance = entry && performanceCredit(entry, 'best-actor');
     $('#spotlight-content').innerHTML = `<div class="spotlight-grid">
-      ${entry ? `<article class="spotlight-card" style="--accent:#b7bac7"><h3>Best Performances of the Decade</h3><p class="spotlight-method">One role per entry.</p><div class="spotlight-visual">${backdrop(entry.films, false, selectStills(entry.films, 'performances-spotlight'))}<div class="winner-copy"><span class="winner-title">${title(entry)}</span><span class="winner-detail">${creditMarkup(creditFor(entry, 'best-actor'), entry.detail)}</span></div></div><ol class="spotlight-list"><li class="spotlight-winner">${filmLinks(entry.films)}</li>${archive.performances.slice(1).map(row => `<li>${poster(row.films[0], false, '48px')}<span><strong>${filmLinks(row.films)}</strong><small>${creditMarkup(creditFor(row, 'best-actor'), row.detail)}</small></span></li>`).join('')}</ol></article>` : ''}
+      ${entry ? `<article class="spotlight-card" style="--accent:#b7bac7"><h3>Best Performances of the Decade</h3><p class="spotlight-method">One role per entry.</p><div class="spotlight-visual">${backdrop(entry.films, false, selectStills(entry.films, 'performances-spotlight'))}<div class="winner-copy"><span class="winner-title">${performance ? performanceNameMarkup(performance) : title(entry)}</span><span class="winner-detail">${performance ? performanceFilmLine(entry, performance) : creditMarkup(creditFor(entry, 'best-actor'), entry.detail)}</span></div></div><ol class="spotlight-list">${performance ? '' : `<li class="spotlight-winner">${filmLinks(entry.films)}</li>`}${archive.performances.slice(1).map(row => {
+        const credit = performanceCredit(row, 'best-actor');
+        return `<li>${poster(row.films[0], false, '48px')}<span><strong>${credit ? performanceNameMarkup(credit) : filmLinks(row.films)}</strong><small>${credit ? performanceFilmLine(row, credit) : creditMarkup(creditFor(row, 'best-actor'), row.detail)}</small></span></li>`;
+      }).join('')}</ol></article>` : ''}
       ${actor ? `<article class="spotlight-card" style="--accent:#c4a385"><h3>Actor of the Decade</h3><p class="spotlight-method">Selected films across the decade.</p><div class="spotlight-visual">${backdrop(actor.films, false, selectStills(actor.films, 'actor-spotlight'), actorFocalPoints)}<div class="winner-copy"><span class="winner-title">${personLink(actor.name)}</span></div></div><ol class="spotlight-list"><li class="spotlight-winner">${filmLinks(actor.films)}</li>${archive.actors.slice(1).map(row => `<li>${poster(row.films[0], false, '48px')}<span><strong>${personLink(row.name)}</strong><small>${filmLinks(row.films)}</small></span></li>`).join('')}</ol></article>` : ''}
     </div>`;
   }
@@ -457,13 +487,21 @@
     if (!result) return '';
     const {year, category, winner, credit, nominated} = result;
     const outcome = nominated ? 'Nominated · did not win' : 'No nomination in this category';
+    const alternateCategory = keyFor(item.name) !== keyFor(category);
+    const summary = alternateCategory
+      ? nominated ? 'Nominated for ' + category : 'No ' + category + ' nomination'
+      : nominated ? 'Nominated' : 'No nomination';
+    const performance = performanceCredit(item.entry, category);
+    const archiveTitle = performance ? performanceNameMarkup(performance) : title(item.entry);
+    const archiveCredit = performance ? performanceFilmLine(item.entry, performance) : creditMarkup(snubCredit(item), item.entry.detail);
+    const personAward = actingCredits.has(keyFor(category)) && credit;
     const source = 'https://www.oscars.org/oscars/ceremonies/' + encodeURIComponent(year);
-    return `<details class="academy-comparison"><summary><span>Academy result <span class="academy-year">· ${esc(year)}</span></span><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="m2 4 4 4 4-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"/></svg></summary>
+    return `<details class="academy-comparison"><summary><span><span class="academy-year">${esc(year)} Oscars</span> · ${esc(summary)}</span><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="m2 4 4 4 4-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"/></svg></summary>
       <div class="academy-result">
         <p class="academy-category">${esc(year)} OSCARS · ${esc(category)}</p>
         <div class="academy-choices">
-          <div><span class="academy-label">Archive pick</span><strong>${title(item.entry)}</strong>${item.entry.detail ? `<small>${creditMarkup(snubCredit(item), item.entry.detail)}</small>` : ''}<span class="academy-outcome">${esc(outcome)}</span></div>
-          <div class="academy-winner"><span class="academy-label">Oscar winner</span><strong>${esc(winner)}</strong>${credit ? `<small>${esc(credit)}</small>` : ''}</div>
+          <div><span class="academy-label">Archive pick</span><strong>${archiveTitle}</strong>${archiveCredit ? `<small>${archiveCredit}</small>` : ''}<span class="academy-outcome">${esc(outcome)}</span></div>
+          <div class="academy-winner"><span class="academy-label">Oscar winner</span><strong>${esc(personAward ? credit : winner)}</strong>${credit ? `<small>${esc(personAward ? winner : credit)}</small>` : ''}</div>
         </div>
         <a class="academy-source" href="${esc(source)}" ${external}>Official Academy results</a>
       </div></details>`;
@@ -477,7 +515,11 @@
       const {name,entry,status} = item;
       const slug = entry.films[0];
       const link = `href="${esc(film(slug).url)}" ${external} ${filmAttributes(slug)}`;
-      return `<article class="snub-card" id="${esc(snubAnchor(item))}"><a class="list-poster-link" ${link}>${poster(slug, false, '(max-width: 560px) 64px, 76px')}</a><div><p class="eyebrow">${esc(name)}</p><h3><a class="list-film-link" ${link}>${title(entry)}</a></h3>${entry.detail ? `<p>${creditMarkup(snubCredit(item), entry.detail)}</p>` : ''}<small>${esc(status)}</small>${academyComparison(item)}</div></article>`;
+      const performance = performanceCredit(entry, name);
+      const heading = performance ? performanceNameMarkup(performance) : `<a class="list-film-link" ${link}>${title(entry)}</a>`;
+      const description = performance ? performanceFilmLine(entry, performance, 'list-film-link performance-film-link') : creditMarkup(snubCredit(item), entry.detail);
+      const comparison = academyComparison(item);
+      return `<article class="snub-card" id="${esc(snubAnchor(item))}"><a class="list-poster-link" ${link}>${poster(slug, false, '(max-width: 560px) 64px, 76px')}</a><div><p class="eyebrow">${esc(name)}</p><h3>${heading}</h3>${description ? `<p>${description}</p>` : ''}${comparison || `<small>${esc(status)}</small>`}</div></article>`;
     }).join('');
     const entry = archive.watch;
     if (entry) {
@@ -498,6 +540,7 @@
   }
 
   function closeDialog(dialog) {
+    if (dialog === indexDialog && dialog.open) saveIndexPosition();
     dialog.close();
   }
 
@@ -640,11 +683,10 @@
   if (!$('#chapter-content')) return;
   if (edition.opening) $('#opening-line').innerHTML = quotePanel(edition.opening, 'opening');
   if (edition.closing) $('#closing-line').innerHTML = quotePanel(edition.closing, 'closing');
-  site.setText('#award-count, #dialog-total', pad(awards.length));
-  site.setText('#chapter-count', pad(archive.chapters.length));
-  if (enhanced) {
-    $('.edition-strip').innerHTML = `<p class="edition-totals"><span><b id="award-count">${awards.length}</b> awards</span><span aria-hidden="true">·</span><span><b id="chapter-count">${archive.chapters.length}</b> chapters</span></p><a href="#final-cut">Meet the films</a>`;
-  }
+  site.setText('.hero-edition-period', 'The ' + selected.period);
+  site.setText('#award-count', awards.length);
+  site.setText('#chapter-count', archive.chapters.length);
+  site.setText('#dialog-total', pad(awards.length));
   renderChapters();
   if (hasSpotlights) renderSpotlights();
   renderFilmWall();
@@ -662,7 +704,7 @@
       const link = listLink + '#' + spotlightAnchor;
       $('.snubs-banner').outerHTML = `<section class="snub-spotlight section-shell" aria-labelledby="snub-spotlight-title">
         <div class="snub-spotlight-feature"><a class="snub-spotlight-image" href="${esc(link)}" aria-label="Read the ${esc(film(slug).title)} selection">${imageMarkup(path, false, '(min-width: 850px) 56vw, 90vw')}</a>
-        <div class="snub-spotlight-copy"><p class="eyebrow">OSCAR SNUBS · ${esc(item.name)}</p><h2 id="snub-spotlight-title">${esc(film(slug).title)}</h2><p class="snub-spotlight-person">${creditMarkup(snubCredit(item), item.entry.detail)}</p><p class="snub-spotlight-status">${esc(item.status)}</p>${academyComparison(item)}<a href="${esc(listLink + '#snub-entries')}" class="snub-spotlight-link">View all ${archive.snubs.length} Oscar Snubs</a></div></div>
+        <div class="snub-spotlight-copy"><p class="eyebrow">OSCAR SNUBS · ${esc(item.name)}</p><h2 id="snub-spotlight-title">${esc(film(slug).title)}</h2><p class="snub-spotlight-person">${creditMarkup(snubCredit(item), item.entry.detail)}</p>${academyComparison(item) || `<p class="snub-spotlight-status">${esc(item.status)}</p>`}<a href="${esc(listLink + '#snub-entries')}" class="snub-spotlight-link">View all ${archive.snubs.length} Oscar Snubs</a></div></div>
       </section>`;
     }
   }
@@ -672,26 +714,37 @@
   const dialogTitle = $('#dialog-category');
   const nextButton = $('.ceremony-next', awardDialog);
   const search = $('#category-search');
+  const indexResults = $('#index-results');
   let current = 0;
   let startTouch = null;
   let sceneChange = null;
   let indexYear = null;
   let indexChapter = null;
+  let indexScrollTop = 0;
+  let indexRendered = false;
+  let indexReturnAward = null;
   let copyNoticeTimer;
   const shareButton = $('[data-copy-award]', awardDialog);
   if (enhanced) {
     const years = [...new Set(Object.values(archive.films).map(info => info.year))].sort((a,b) => a-b);
     const suggestions = (discovery.searchSuggestions ?? searchTopics.map(topic => topic.label)).slice(0, 5);
     const suggestedSearches = suggestions.length ? `<div class="index-suggestions" role="group" aria-label="Suggested searches">${suggestions.map(label => `<button type="button" data-index-suggestion="${esc(label)}" aria-pressed="false">${esc(label)}</button>`).join('')}</div>` : '';
-    search.insertAdjacentHTML('afterend', suggestedSearches + `<div class="index-year-filter"><div class="index-year-label">Release year</div><div class="index-years" role="group" aria-label="Filter films and awards by release year"><button type="button" data-index-year="all" aria-pressed="true">All</button>${years.map(year => `<button type="button" data-index-year="${esc(year)}" aria-pressed="false">${esc(year)}</button>`).join('')}</div></div>`);
+    const yearButtons = `<div class="index-year-label">Release year</div><div class="index-years" role="group" aria-label="Filter films and awards by release year"><button type="button" data-index-year="all" aria-pressed="true">All</button>${years.map(year => `<button type="button" data-index-year="${esc(year)}" aria-pressed="false">${esc(year)}</button>`).join('')}</div>`;
+    const yearSelect = `<label class="index-year-compact" for="index-year-select"><span>Year</span><span class="index-year-select-wrap"><select id="index-year-select" aria-label="Filter by release year"><option value="all">All</option>${years.map(year => `<option value="${esc(year)}">${esc(year)}</option>`).join('')}</select><svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12"><path d="m2 4 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label>`;
+    search.insertAdjacentHTML('afterend', suggestedSearches + `<div class="index-year-filter">${yearButtons}${yearSelect}</div>`);
     $('.index-years').addEventListener('click', event => {
       const button = event.target.closest('button[data-index-year]');
       if (!button) return;
-      indexYear = button.dataset.indexYear === 'all' ? null : Number(button.dataset.indexYear);
-      $$('.index-years button').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
-      renderIndex(search.value);
-      $('#index-results').scrollTop = 0;
+      setIndexYear(button.dataset.indexYear);
     });
+    $('#index-year-select').addEventListener('change', event => setIndexYear(event.target.value));
+  }
+
+  function setIndexYear(value) {
+    indexYear = value === 'all' ? null : Number(value);
+    $$('.index-years button').forEach(item => item.setAttribute('aria-pressed', String(item.dataset.indexYear === value)));
+    $('#index-year-select').value = value;
+    refreshIndex();
   }
 
   if (enhanced) {
@@ -838,7 +891,7 @@
       ${dossierSection('Awards',wins)}${dossierSection('Honorable mentions',mentions)}${dossierSection('Body of work',portfolios)}${dossierSection('Editorial selections',selected)}
       ${creditedPeople(slug)}
       ${listening.length ? `<section class="film-file-section file-music"><h3>Film music</h3><ul>${listening.map(item => `<li><a href="${esc(item.url)}" class="music-link file-music-link" ${external}>${esc(item.title)}</a></li>`).join('')}</ul></section>` : ''}
-      ${snubs.length ? `<section class="film-file-section file-snubs"><h3>Oscar Snubs</h3><ul>${snubs.map(item => `<li><strong>${esc(item.name)}</strong><small>${esc(item.status)}</small>${academyComparison(item)}</li>`).join('')}</ul>${snubList ? `<a class="file-letterboxd" href="${esc(site.listHref(snubList))}">See the alternate ballot</a>` : ''}</section>` : ''}
+      ${snubs.length ? `<section class="film-file-section file-snubs"><h3>Oscar Snubs</h3><ul>${snubs.map(item => `<li><strong>${esc(item.name)}</strong>${academyComparison(item) || `<small>${esc(item.status)}</small>`}</li>`).join('')}</ul>${snubList ? `<a class="file-letterboxd" href="${esc(site.listHref(snubList))}">See the alternate ballot</a>` : ''}</section>` : ''}
       ${!wins.length && !mentions.length && !portfolios.length && !selected.length && !snubs.length ? '<p class="empty-index">No selections in this edition.</p>' : ''}</div>`;
     $('#film-file-content').scrollTop = 0;
     openDialog(filmDialog, '#film-file-title', trigger);
@@ -883,6 +936,7 @@
     const percent = (index + 1) / awards.length * 100;
     const artist = enhanced && portfolioPresentation(award);
     const credit = creditFor(award.winner, award.id);
+    const performance = enhanced && !artist && performanceCredit(award.winner, award.id);
     const winnerDetail = artist || (award.honorsPortfolio && award.winner.creditFirst) ? '' : award.winner.detail;
     dialogContent.style.setProperty('--accent', award.accent);
     $('#dialog-chapter').textContent = award.chapter.name;
@@ -898,16 +952,18 @@
     nextButton.setAttribute('aria-label', next ? `Next award: ${next.name}` : 'Finish awards presentation');
     const frames = renderFrames(awardFrames(award, 'dialog'), true, 'dialog');
     const frameClass = `ceremony-frame${artist ? ' portfolio-frame' : ''}${award.winnerArtwork ? ' portrait-frame' : ''}`;
-    const winnerTitle = artist ? creditMarkup(credit, artistName(award.winner)) : title(award.winner);
-    const detailMarkup = winnerDetail ? `<span class="winner-detail">${creditMarkup(credit, winnerDetail)}</span>` : '';
+    const winnerTitle = artist ? creditMarkup(credit, artistName(award.winner)) : performance ? performanceNameMarkup(performance) : title(award.winner);
+    const detailMarkup = performance
+      ? `<span class="winner-detail">${performanceFilmLine(award.winner, performance, 'ceremony-title-link performance-film-link')}</span>`
+      : winnerDetail ? `<span class="winner-detail">${creditMarkup(credit, winnerDetail)}</span>` : '';
     const singleFilm = !artist && award.winner.films.length === 1 ? award.winner.films[0] : null;
-    const linkedTitle = singleFilm
+    const linkedTitle = singleFilm && !performance
       ? `<a class="ceremony-title-link" href="${esc(film(singleFilm).url)}" ${external} ${filmAttributes(singleFilm)} title="Open film file">${winnerTitle}</a>`
       : winnerTitle;
     const compactFrame = `<div class="${frameClass}">${frames}</div>`;
-    const compactMeta = `<div class="ceremony-winner-meta"><div><strong class="winner-title">${linkedTitle}</strong>${detailMarkup}</div>${singleFilm ? `<span class="ceremony-year">${esc(film(singleFilm).year)}</span>` : ''}</div>`;
+    const compactMeta = `<div class="ceremony-winner-meta"><div><strong class="winner-title">${linkedTitle}</strong>${detailMarkup}</div>${singleFilm && !performance ? `<span class="ceremony-year">${esc(film(singleFilm).year)}</span>` : ''}</div>`;
     const winnerMarkup = enhanced
-      ? compactFrame + compactMeta + (!artist && !singleFilm ? `<div class="ceremony-links">${filmLinks(award.winner.films)}</div>` : '')
+      ? compactFrame + compactMeta + (!artist && !singleFilm && !performance ? `<div class="ceremony-links">${filmLinks(award.winner.films)}</div>` : '')
       : `<div class="${frameClass}">${frames}<span class="frame-shade"></span>${winnerBadge(award)}
         <div class="winner-copy"><strong class="winner-title">${winnerTitle}</strong>${detailMarkup}${artist ? '' : `<div class="ceremony-links">${filmLinks(award.winner.films)}</div>`}</div>
       </div>`;
@@ -933,7 +989,8 @@
     sceneChange = null;
   }
 
-  function openAward(index, trigger) {
+  function openAward(index, trigger, fromIndex = false) {
+    indexReturnAward = fromIndex ? index : null;
     cancelSceneChange();
     renderAward(index);
     if (!awardDialog.open) openDialog(awardDialog, '#dialog-category', trigger);
@@ -1065,36 +1122,49 @@
       if (awardOrder.size) results.sort((a, b) =>
         (awardOrder.get(a.id) ?? awards.length) - (awardOrder.get(b.id) ?? awards.length));
     }
-    const films = indexYear !== null || selectedTopics.length ? matchingFilms : matchingFilms.slice(0, 8);
-    const filmHeading = ['FILM FILES', ...selectedTopics.map(topic => topic.label.toUpperCase()),
-      ...(indexYear !== null ? [indexYear] : [])].join(' · ');
-    const filmMatches = films.length ? `<p class="index-match-heading">${esc(filmHeading)}</p>${films.map(([slug,info]) => `<a class="index-row film-index-row" href="${esc(info.url)}" ${external} ${filmAttributes(slug)}>${poster(slug,false,'32px')}<span><strong>${esc(info.title)}</strong><small>${esc(info.year)}</small></span><span class="file-result-label">Film file</span></a>`).join('')}` : '';
+    const films = matchingFilms;
+    const filmMatches = films.length ? `<p class="index-match-heading">Films · ${films.length}</p>${films.map(([slug,info]) => `<a class="index-row film-index-row" href="${esc(info.url)}" ${external} ${filmAttributes(slug)}>${poster(slug,false,'32px')}<span><strong>${esc(info.title)}</strong><small>${esc(info.year)}</small></span></a>`).join('')}` : '';
     const nameQuery = personKey(normalized);
     const artistMatches = words.length ? [...people.values()].filter(person =>
       (matches(personSearchText(person)) || (nameQuery && personKey(personSearchText(person)).includes(nameQuery))) && person.appearances.some(appearance =>
         (!chapter || appearance.chapterId === chapter.id) && appearance.films.some(yearMatches))
     ).sort((a,b) => a.name.localeCompare(b.name)).slice(0, 12) : [];
-    const personMatches = artistMatches.length ? `<p class="index-match-heading">ARTISTS</p>${artistMatches.map(person => {
+    const personMatches = artistMatches.length ? `<p class="index-match-heading">Artists</p>${artistMatches.map(person => {
       const count = new Set(person.appearances.flatMap(entry => entry.films)).size;
-      return `<button type="button" class="index-row person-index-row" data-person="${esc(person.id)}" aria-haspopup="dialog"><span><strong>${esc(person.name)}</strong><small>${count} ${count === 1 ? 'film' : 'films'} in the archive</small></span><span class="file-result-label">Artist file</span></button>`;
+      return `<button type="button" class="index-row person-index-row" data-person="${esc(person.id)}" aria-haspopup="dialog"><span><strong>${esc(person.name)}</strong><small>${count} ${count === 1 ? 'film' : 'films'} in the archive</small></span></button>`;
     }).join('')}` : '';
-    const awardMatches = results.length ? `${films.length || artistMatches.length || indexYear !== null ? `<p class="index-match-heading">${indexYear !== null ? `AWARDS INVOLVING ${esc(indexYear)} FILMS` : 'AWARDS'}</p>` : ''}${results.map(a => `<button class="index-row" data-award="${a.number - 1}"><span>${pad(a.number)}</span><span><strong>${esc(a.name)}</strong><small>${esc(enhanced && portfolioPresentation(a) ? artistName(a.winner) : a.winner.title)}</small></span><b aria-hidden="true">↗</b></button>`).join('')}` : '';
+    const awardMatches = results.length ? `<p class="index-match-heading">Awards · ${results.length}${indexYear !== null ? ' · ' + esc(indexYear) + ' films' : ''}</p>${results.map(a => {
+      const performance = performanceCredit(a.winner, a.id);
+      const caption = performance ? performanceName(performance) + ' · ' + workNames(a.winner) : portfolioPresentation(a) ? artistName(a.winner) : a.winner.title;
+      return `<button class="index-row" data-award="${a.number - 1}"><span>${pad(a.number)}</span><span><strong>${esc(a.name)}</strong><small>${esc(caption)}</small></span><b aria-hidden="true">↗</b></button>`;
+    }).join('')}` : '';
     const context = indexChapter ? `<div class="index-chapter-context"><button type="button" data-index-chapter="">All chapters</button><span>${esc(chapter?.name ?? 'All awards')}</span></div>` : '';
     resultsNode.innerHTML = context + (personMatches + filmMatches + awardMatches || '<p class="empty-index">No matches. Try another film, person, award or mood.</p>');
   }
 
-  function openIndex(trigger) {
-    search.value = '';
-    indexChapter = null;
-    indexYear = null;
-    $$('.index-years button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.indexYear === 'all')));
-    $('.index-years').scrollLeft = 0;
-    renderIndex();
-    $('#index-results').scrollTop = 0;
-    openDialog(indexDialog, '#index-title', trigger);
+  function saveIndexPosition() {
+    indexScrollTop = indexResults.scrollTop;
   }
 
-  search.addEventListener('input', () => renderIndex(search.value));
+  function refreshIndex() {
+    renderIndex(search.value);
+    indexRendered = true;
+    indexReturnAward = null;
+    indexScrollTop = 0;
+    indexResults.scrollTop = 0;
+  }
+
+  function openIndex(trigger, returnToAward = false) {
+    if (!indexRendered) refreshIndex();
+    openDialog(indexDialog, '#index-title', trigger);
+    indexResults.scrollTop = indexScrollTop;
+    if (returnToAward && indexReturnAward !== null) {
+      indexResults.querySelector(`[data-award="${indexReturnAward}"]`)?.focus({preventScroll:true});
+      indexResults.scrollTop = indexScrollTop;
+    }
+  }
+
+  search.addEventListener('input', refreshIndex);
   document.addEventListener('click', event => {
     const button = event.target.closest('button');
     if (!button) return;
@@ -1108,33 +1178,32 @@
     }
     if (button.matches('[data-index-chapter]')) {
       indexChapter = button.dataset.indexChapter || null;
-      renderIndex(search.value);
-      $('#index-results').scrollTop = 0;
+      refreshIndex();
       $('#index-results button')?.focus({preventScroll: true});
       return;
     }
     if (button.matches('[data-index-suggestion]')) {
       search.value = button.dataset.indexSuggestion;
-      renderIndex(search.value);
-      $('#index-results').scrollTop = 0;
+      refreshIndex();
       return;
     }
     if (button.matches('[data-view-toggle]')) { setAwardView(button.dataset.nextView, true); return; }
     if (button.matches('[data-view]')) { setAwardView(button.dataset.view); return; }
     if (button.matches('[data-jump-award]')) return;
     if (button.matches('.start-ceremony')) openAward(0, button);
-    if (button.matches('.index-open')) openIndex(button);
+    if (button.matches('.index-open, .edition-index-open')) openIndex(button);
     if (button.matches('[data-award]')) {
-      const trigger = indexDialog.open ? dialogTriggers.get(indexDialog) : button;
-      if (indexDialog.open) closeDialog(indexDialog);
-      openAward(Number(button.dataset.award), trigger);
+      const fromIndex = indexDialog.open && Boolean(button.closest('#index-results'));
+      const trigger = fromIndex ? dialogTriggers.get(indexDialog) : button;
+      if (fromIndex) closeDialog(indexDialog);
+      openAward(Number(button.dataset.award), trigger, fromIndex);
     }
     if (button.matches('.ceremony-prev')) advance(-1);
     if (button.matches('.ceremony-next')) advance(1);
     if (button.matches('.ceremony-index')) {
       const trigger = dialogTriggers.get(awardDialog);
       closeDialog(awardDialog);
-      openIndex(trigger);
+      openIndex(trigger, true);
     }
   });
 
