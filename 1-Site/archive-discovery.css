@@ -1,0 +1,190 @@
+/* Shared film discovery and award presentation. */
+body[data-award-view="cinematic"] .award-grid {
+  row-gap: clamp(110px, 13vw, 190px);
+}
+body[data-award-view="cinematic"] .chapter {
+  padding-top: clamp(80px, 9vw, 135px);
+}
+
+.award-stills {
+  padding: 0 22px 26px;
+  min-width: 0;
+}
+.award-stills-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.award-stills-heading h3 {
+  font: 600 1rem/1.35 var(--body);
+  margin: 0;
+}
+.award-stills-heading > span {
+  font-size: .78rem;
+  color: var(--muted);
+}
+.award-stills-track {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 2px 1px 12px;
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #ffffff38 transparent;
+}
+.award-still {
+  flex: 0 0 224px;
+  min-width: 0;
+  scroll-snap-align: start;
+  font: 500 .82rem/1.4 var(--body);
+  color: var(--text);
+  text-decoration: none;
+}
+.award-still img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  object-fit: cover;
+  border-radius: 3px;
+  background: var(--deep);
+  transition: filter .2s ease;
+}
+.award-still > span {
+  display: block;
+  padding-block: 8px 2px;
+}
+.award-still:hover img, .award-still:focus-visible img { filter: brightness(1.12); }
+.award-still:hover > span { color: var(--paper-accent); }
+
+.award-share {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+}
+.copy-award-link {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  color: #8d949b;
+  cursor: pointer;
+}
+.copy-award-link:hover, .copy-award-link:focus-visible { color: var(--text); background: #ffffff10; }
+.copy-award-link.is-copied { color: var(--paper-accent); }
+.award-share-status:empty { display: none; }
+.award-share-status {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 6;
+  padding: 7px 10px;
+  border-radius: 3px;
+  border: 1px solid #ffffff24;
+  background: #222529;
+  color: var(--text);
+  white-space: nowrap;
+  font: 400 .78rem/1.4 var(--body);
+}
+.award-share-field {
+  width: min(50vw, 300px);
+  padding: 5px 8px;
+  color: var(--text);
+  font: 400 .76rem/1.4 var(--body);
+  border: 1px solid #ffffff37;
+  background: var(--deep);
+}
+
+.index-year-filter { margin: 4px 20px 13px; }
+body[data-award-view] #index-dialog[open] { display: flex; flex-direction: column; }
+body[data-award-view] #index-dialog > :not(#index-results) { flex: none; }
+body[data-award-view] #index-results { min-height: 0; }
+.index-year-label {
+  color: #b5b7b9;
+  font: 500 .75rem/1.4 var(--body);
+  margin-bottom: 6px;
+}
+.index-years {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #ffffff30 transparent;
+  padding: 2px 1px 8px;
+}
+.index-years button {
+  flex: 0 0 auto;
+  color: #b9bdc0;
+  font: 500 .8rem/1.2 var(--body);
+  padding: 7px 9px;
+  min-width: 42px;
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.index-years button:hover { color: var(--text); background: #ffffff09; }
+.index-years button[aria-pressed="true"] {
+  color: var(--text);
+  background: #ffffff12;
+  border-color: #ffffff28;
+}
+
+.snub-spotlight { padding-block: clamp(60px, 8vw, 110px); }
+.snub-spotlight-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(22px, 4vw, 66px);
+}
+.snub-spotlight-image { display: block; overflow: hidden; border-radius: 3px; }
+.snub-spotlight-image img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2.1;
+  object-fit: cover;
+  transition: filter .2s ease;
+}
+.snub-spotlight-image:hover img { filter: brightness(1.1); }
+.snub-spotlight-copy .eyebrow { color: #b7b2aa; margin-bottom: 9px; }
+.snub-spotlight-copy h2 {
+  color: var(--text);
+  font: 400 clamp(2.2rem, 5vw, 4.3rem)/1.06 var(--serif);
+  margin: 0 0 9px;
+  letter-spacing: -.02em;
+}
+.snub-spotlight-person { margin: 0 0 5px; color: var(--text); font-size: 1.05rem; }
+.snub-spotlight-status { color: #aeb4b8; font-size: .9rem; }
+.snub-spotlight-link {
+  display: inline-block;
+  margin-top: 18px;
+  color: var(--text);
+  font: 500 .9rem/1.4 var(--body);
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-color: #ffffff45;
+}
+.snub-spotlight-link:hover { color: var(--paper-accent); }
+#snub-spotlight-selection { scroll-margin-top: 105px; }
+#snub-spotlight-selection:target { outline: 1px solid #c0b3a170; outline-offset: 5px; }
+
+@media (max-width: 680px) {
+  body[data-award-view="cinematic"] .award-grid { row-gap: 90px; }
+  body[data-award-view="cinematic"] .chapter { padding-top: 78px; }
+  .copy-award-link { width: 26px; height: 34px; }
+  .award-stills { padding-inline: 13px; padding-bottom: 21px; }
+  .award-stills-track { gap: 10px; }
+  .award-still { flex-basis: 168px; }
+  .index-year-filter { margin-inline: 14px; }
+  .index-years button { padding-inline: 8px; }
+  .snub-spotlight-feature { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .snub-spotlight { padding-block: 66px; }
+}

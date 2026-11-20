@@ -37,7 +37,8 @@
       "coverFilm": "Drive My Car",
       "coverYear": 2021,
       "edition": "2020-2026",
-      "kind": "snubs"
+      "kind": "snubs",
+      "spotlight": {"film": "the-batman", "category": "Best Cinematography"}
     }
   ]
 }

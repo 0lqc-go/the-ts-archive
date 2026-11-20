@@ -15,8 +15,9 @@
   <link rel="stylesheet" href="award-hierarchy.css?v=20261119">
   <link rel="stylesheet" href="award-experience.css?v=20261119">
   <link rel="stylesheet" href="archive-experience.css?v=20261119">
-  <script src="archive-site.js?v=20261119" defer></script>
-  <script src="app.js?v=20261119" defer></script>
+  <link rel="stylesheet" href="archive-discovery.css?v=2">
+  <script src="archive-site.js?v=archive-discovery-2" defer></script>
+  <script src="app.js?v=archive-discovery-2" defer></script>
 </head>
 <body data-page="awards">
   <a class="skip" href="#awards">Skip to the awards</a>
@@ -49,6 +50,7 @@
       <div class="ceremony-header">
         <div><p class="eyebrow" id="dialog-chapter"></p><h2 id="dialog-category" tabindex="-1"></h2></div>
         <span class="ceremony-counter"><span id="dialog-number"></span> <b>/</b> <span id="dialog-total"></span></span>
+        <div class="award-share"><button type="button" class="copy-award-link" data-copy-award="" aria-label="Copy award link" title="Copy award link"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button><span class="award-share-status" role="status"></span></div>
         <button class="dialog-close" aria-label="Close awards presentation">✕</button>
         <span class="ceremony-progress" aria-hidden="true"></span>
       </div>

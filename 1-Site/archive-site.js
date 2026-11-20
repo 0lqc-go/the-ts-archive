@@ -164,8 +164,12 @@
       const url = new URL(location.href);
       if (mode === 'compact') url.searchParams.set('view', mode);
       else url.searchParams.delete('view');
-      history.replaceState(history.state, '', url);
+      replaceLocation(url);
     });
+  }
+
+  function replaceLocation(url) {
+    history.replaceState(history.state, '', url);
   }
 
   function setCover(node, path, options = {}) {
@@ -175,7 +179,7 @@
     if (options.coverMobilePosition) node.style.setProperty('--cover-mobile-position', options.coverMobilePosition);
   }
 
-  window.ArchiveSite = {catalog, read, params, editionHref, listHref, showError, displayProfile, setText, setCover, setupListView};
+  window.ArchiveSite = {catalog, read, params, editionHref, listHref, showError, displayProfile, setText, setCover, setupListView, replaceLocation};
   if (document.body.dataset.page === 'home') renderHome().catch(showError);
   else {
     trackVisit();

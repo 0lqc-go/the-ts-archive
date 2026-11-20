@@ -31,6 +31,19 @@
       accent: award.accent ?? edition.accents?.[i % edition.accents.length] ?? defaultAccent
     }));
   const awardsById = new Map(awards.map(award => [award.id, award]));
+  function directAwardHref(id) {
+    const url = new URL(site.editionHref(editionId), location.href);
+    url.searchParams.set('award', id);
+    return url.href;
+  }
+
+  function spotlightSnub() {
+    const preferred = snubList?.spotlight;
+    const eligible = (archive.snubs ?? []).filter(item => art(item.entry.films[0]).backdrop);
+    return eligible.find(item => item.name === preferred?.category && item.entry.films.includes(preferred.film)) ?? eligible[0];
+  }
+
+  const spotlightAnchor = 'snub-spotlight-selection';
   function selectStills(slugs, context) {
     return Object.fromEntries(slugs.map(slug => [
       slug, alternates[slug]?.find(still => still.award === context)?.path
@@ -261,10 +274,12 @@
     if (!snubList || !archive.snubs?.length) throw new Error('That edition has no Oscar Snubs list.');
     site.setText('#snubs-description', snubList.description);
     site.setText('#snub-count', `${archive.snubs.length} selections`);
-    $('#snub-entries').innerHTML = archive.snubs.map(({name,entry,status}) => {
+    const featuredSnub = spotlightSnub();
+    $('#snub-entries').innerHTML = archive.snubs.map(item => {
+      const {name,entry,status} = item;
       const slug = entry.films[0];
       const link = `href="${esc(film(slug).url)}" ${external} ${filmAttributes(slug)}`;
-      return `<article class="snub-card"><a class="list-poster-link" ${link}>${poster(slug, false, '(max-width: 560px) 64px, 76px')}</a><div><p class="eyebrow">${esc(name)}</p><h3><a class="list-film-link" ${link}>${title(entry)}</a></h3>${entry.detail ? `<p>${esc(entry.detail)}</p>` : ''}<small>${esc(status)}</small></div></article>`;
+      return `<article class="snub-card"${item === featuredSnub ? ` id="${spotlightAnchor}"` : ''}><a class="list-poster-link" ${link}>${poster(slug, false, '(max-width: 560px) 64px, 76px')}</a><div><p class="eyebrow">${esc(name)}</p><h3><a class="list-film-link" ${link}>${title(entry)}</a></h3>${entry.detail ? `<p>${esc(entry.detail)}</p>` : ''}<small>${esc(status)}</small></div></article>`;
     }).join('');
     const entry = archive.watch;
     if (entry) {
@@ -307,6 +322,17 @@
 
   // Dossiers work from an edition or its alternate ballot, without leaving the archive.
   document.addEventListener('click', event => {
+    const frameAward = event.target.closest('a[data-frame-award]');
+    if (!onSnubs && frameAward && event.button === 0 && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) {
+      event.preventDefault();
+      const award = awardsById.get(frameAward.dataset.frameAward);
+      if (award) {
+        if (filmDialog.open) closeDialog(filmDialog);
+        if (indexDialog.open) closeDialog(indexDialog);
+        openAward(award.number - 1, document.getElementById(award.id)?.querySelector('.winner-frame'));
+      }
+      return;
+    }
     const movie = event.target.closest('a[data-film-file]');
     if (filmDialog && movie && event.button === 0 && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) {
       event.preventDefault();
@@ -365,6 +391,18 @@
   renderChapters();
   if (hasSpotlights) renderSpotlights();
   renderFilmWall();
+  if (snubList && spotlightSnub()) {
+    const item = spotlightSnub();
+    const slug = item.entry.films[0];
+    const path = art(slug).backdrop;
+    if (path) {
+      const link = site.listHref(snubList) + '#' + spotlightAnchor;
+      $('.snubs-banner').insertAdjacentHTML('beforebegin', `<section class="snub-spotlight section-shell" aria-labelledby="snub-spotlight-title">
+        <div class="snub-spotlight-feature"><a class="snub-spotlight-image" href="${esc(link)}" aria-label="Read the ${esc(film(slug).title)} selection">${imageMarkup(path, false, '(min-width: 850px) 56vw, 90vw')}</a>
+        <div class="snub-spotlight-copy"><p class="eyebrow">OSCAR SNUBS · ${esc(item.name)}</p><h2 id="snub-spotlight-title">${esc(film(slug).title)}</h2><p class="snub-spotlight-person">${esc(item.entry.detail)}</p><p class="snub-spotlight-status">${esc(item.status)}</p><a href="${esc(link)}" class="snub-spotlight-link">Explore the alternate ballot</a></div></div>
+      </section>`);
+    }
+  }
 
   const dialogContent = $('#dialog-content');
   const dialogScroll = $('.ceremony-scroll', awardDialog);
@@ -374,6 +412,21 @@
   let current = 0;
   let startTouch = null;
   let sceneChange = null;
+  let indexYear = null;
+  let copyNoticeTimer;
+  const shareButton = $('[data-copy-award]', awardDialog);
+  if (enhanced) {
+    const years = [...new Set(Object.values(archive.films).map(info => info.year))].sort((a,b) => a-b);
+    search.insertAdjacentHTML('afterend', `<div class="index-year-filter"><div class="index-year-label">Release year</div><div class="index-years" role="group" aria-label="Filter films and awards by release year"><button type="button" data-index-year="all" aria-pressed="true">All</button>${years.map(year => `<button type="button" data-index-year="${esc(year)}" aria-pressed="false">${esc(year)}</button>`).join('')}</div></div>`);
+    $('.index-years').addEventListener('click', event => {
+      const button = event.target.closest('button[data-index-year]');
+      if (!button) return;
+      indexYear = button.dataset.indexYear === 'all' ? null : Number(button.dataset.indexYear);
+      $$('.index-years button').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      renderIndex(search.value);
+      $('#index-results').scrollTop = 0;
+    });
+  }
 
   if (enhanced) {
     for (const switcher of $$('.view-switch')) switcher.hidden = false;
@@ -412,7 +465,7 @@
     if (mode === 'compact') url.searchParams.set('view', mode);
     else url.searchParams.delete('view');
     if (anchor) url.hash = anchor.id;
-    history.replaceState(history.state, '', url);
+    site.replaceLocation(url);
     if (fromIndex) closeDialog(indexDialog);
     requestAnimationFrame(() => {
       if (anchor) anchor.scrollIntoView({behavior:'instant',block:'start'});
@@ -448,6 +501,18 @@
     return `<section class="film-file-section"><h3>${esc(label)} <span>${pad(rows.length)}</span></h3><ul>${rows.map(({award,detail}) => `<li><button class="film-award-row" data-jump-award="${esc(award.id)}"><span><strong>${esc(award.name)}</strong>${detail ? `<small>${esc(detail)}</small>` : ''}</span><span class="file-award-number">${pad(award.number)}</span></button></li>`).join('')}</ul></section>`;
   }
 
+  function awardStillGallery(slug) {
+    const seen = new Set();
+    const frames = (alternates[slug] ?? []).filter(still => {
+      const award = awardsById.get(still.award);
+      if (!still.path || seen.has(still.award) || !award?.winner.films.includes(slug)) return false;
+      seen.add(still.award);
+      return true;
+    }).sort((a, b) => awardsById.get(a.award).number - awardsById.get(b.award).number);
+    if (frames.length < 2) return '';
+    return `<section class="award-stills" aria-labelledby="award-stills-title"><div class="award-stills-heading"><h3 id="award-stills-title">Through its awards</h3><span>${frames.length} frames</span></div><div class="award-stills-track" tabindex="0" aria-label="Scroll through award film stills">${frames.map(still => `<a class="award-still" href="${esc(directAwardHref(still.award))}" data-frame-award="${esc(still.award)}">${imageMarkup(still.path, false, '(max-width: 560px) 168px, 224px')}<span>${esc(awardsById.get(still.award).name)}</span></a>`).join('')}</div></section>`;
+  }
+
   function openFilmFile(slug, trigger) {
     if (!filmDialog || !film(slug)) return;
     const info = film(slug);
@@ -462,6 +527,7 @@
     $('#film-file-content').innerHTML = `
       ${dossierStill ? `<div class="film-file-frame">${imageMarkup(dossierStill, true, '(min-width: 920px) 820px, 90vw')}</div>` : ''}
       <div class="film-file-meta"><div class="file-poster">${poster(slug,true,'96px')}</div><div><p class="file-year">${esc(info.year)}${director ? ` · ${esc(director)}` : ''}</p><p class="file-tally">${esc(winText)} <span>· ${mentions.length} ${mentions.length === 1 ? 'honorable mention' : 'honorable mentions'}</span></p><a class="file-letterboxd" href="${esc(info.url)}" ${external}>View on Letterboxd</a></div></div>
+      ${awardStillGallery(slug)}
       <div class="film-file-sections">
       ${dossierSection('Awards',wins)}${dossierSection('Honorable mentions',mentions)}${dossierSection('Body of work',portfolios)}${dossierSection('Editorial selections',selected)}
       ${listening.length ? `<section class="film-file-section file-music"><h3>Film music</h3><ul>${listening.map(item => `<li><a href="${esc(item.url)}" class="music-link file-music-link" ${external}>${esc(item.title)}</a></li>`).join('')}</ul></section>` : ''}
@@ -480,7 +546,7 @@
     for (const dialog of [filmDialog, awardDialog, indexDialog]) if (dialog?.open) closeDialog(dialog);
     const url = new URL(location.href);
     url.hash = id;
-    history.replaceState(history.state, '', url);
+    site.replaceLocation(url);
     requestAnimationFrame(() => target.scrollIntoView({block:'start',behavior: reducedMotion.matches ? 'instant' : 'smooth'}));
   }
 
@@ -512,6 +578,10 @@
     dialogContent.style.setProperty('--accent', award.accent);
     $('#dialog-chapter').textContent = award.chapter.name;
     dialogTitle.textContent = award.name;
+    shareButton.dataset.copyAward = award.id;
+    clearTimeout(copyNoticeTimer);
+    $('.award-share-status', shareButton.parentElement).replaceChildren();
+    shareButton.classList.remove('is-copied');
     $('#dialog-number').textContent = pad(index + 1);
     $('.ceremony-progress', awardDialog).style.setProperty('--progress', `${percent}%`);
     $('.ceremony-prev', awardDialog).disabled = index === 0;
@@ -557,7 +627,41 @@
   function openAward(index, trigger) {
     cancelSceneChange();
     renderAward(index);
-    openDialog(awardDialog, '#dialog-category', trigger);
+    if (!awardDialog.open) openDialog(awardDialog, '#dialog-category', trigger);
+  }
+
+  async function copyAwardLink(button) {
+    const awardId = button.dataset.copyAward;
+    const value = directAwardHref(awardId);
+    const status = $('.award-share-status', button.parentElement);
+    clearTimeout(copyNoticeTimer);
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(value);
+    } catch {
+      if (button.dataset.copyAward !== awardId) return;
+      const field = document.createElement('input');
+      field.className = 'award-share-field';
+      field.setAttribute('aria-label', 'Direct award link');
+      field.readOnly = true;
+      field.value = value;
+      status.replaceChildren(field);
+      field.select();
+      try {
+        if (!document.execCommand('copy')) throw new Error('Copy unavailable');
+      } catch {
+        field.focus();
+        field.select();
+        return;
+      }
+    }
+    if (button.dataset.copyAward !== awardId) return;
+    status.textContent = 'Link copied';
+    button.classList.add('is-copied');
+    copyNoticeTimer = setTimeout(() => {
+      status.replaceChildren();
+      button.classList.remove('is-copied');
+    }, 2000);
   }
 
   async function advance(direction) {
@@ -603,14 +707,16 @@
     const words = normal(query).trim().split(/\s+/).filter(Boolean);
     const results = awards.filter(a => {
       const haystack = normal([a.name,a.chapter.name,a.winner.text,...a.nominees.map(n => n.text)].join(' '));
-      return words.every(word => haystack.includes(word));
+      const yearMatches = indexYear === null || [a.winner, ...a.nominees].some(entry => entry.films.some(slug => Number(film(slug)?.year) === indexYear));
+      return yearMatches && words.every(word => haystack.includes(word));
     });
-    const films = enhanced && words.length ? Object.entries(archive.films).filter(([,info]) => {
+    const matchingFilms = enhanced && (words.length || indexYear !== null) ? Object.entries(archive.films).filter(([,info]) => {
       const haystack = normal(`${info.title} ${info.year ?? ''}`);
-      return words.every(word => haystack.includes(word));
-    }).slice(0,8) : [];
-    const filmMatches = films.length ? `<p class="index-match-heading">FILM FILES</p>${films.map(([slug,info]) => `<a class="index-row film-index-row" href="${esc(info.url)}" ${external} ${filmAttributes(slug)}>${poster(slug,false,'32px')}<span><strong>${esc(info.title)}</strong><small>${esc(info.year)}</small></span><span class="file-result-label">Film file</span></a>`).join('')}` : '';
-    const awardMatches = results.length ? `${films.length ? '<p class="index-match-heading">AWARDS</p>' : ''}${results.map(a => `<button class="index-row" data-award="${a.number - 1}"><span>${pad(a.number)}</span><span><strong>${esc(a.name)}</strong><small>${esc(enhanced && portfolioPresentation(a) ? artistName(a.winner) : a.winner.title)}</small></span><b aria-hidden="true">↗</b></button>`).join('')}` : '';
+      return (indexYear === null || Number(info.year) === indexYear) && words.every(word => haystack.includes(word));
+    }) : [];
+    const films = indexYear === null ? matchingFilms.slice(0,8) : matchingFilms;
+    const filmMatches = films.length ? `<p class="index-match-heading">FILM FILES${indexYear !== null ? ` · ${esc(indexYear)}` : ''}</p>${films.map(([slug,info]) => `<a class="index-row film-index-row" href="${esc(info.url)}" ${external} ${filmAttributes(slug)}>${poster(slug,false,'32px')}<span><strong>${esc(info.title)}</strong><small>${esc(info.year)}</small></span><span class="file-result-label">Film file</span></a>`).join('')}` : '';
+    const awardMatches = results.length ? `${films.length || indexYear !== null ? `<p class="index-match-heading">${indexYear !== null ? `AWARDS INVOLVING ${esc(indexYear)} FILMS` : 'AWARDS'}</p>` : ''}${results.map(a => `<button class="index-row" data-award="${a.number - 1}"><span>${pad(a.number)}</span><span><strong>${esc(a.name)}</strong><small>${esc(enhanced && portfolioPresentation(a) ? artistName(a.winner) : a.winner.title)}</small></span><b aria-hidden="true">↗</b></button>`).join('')}` : '';
     $('#index-results').innerHTML = filmMatches + awardMatches || '<p class="empty-index">No matches. Try a film title, category or name.</p>';
   }
 
@@ -624,6 +730,7 @@
   document.addEventListener('click', event => {
     const button = event.target.closest('button');
     if (!button) return;
+    if (button.matches('[data-copy-award]')) { copyAwardLink(button); return; }
     if (button.matches('[data-view-toggle]')) { setAwardView(button.dataset.nextView, true); return; }
     if (button.matches('[data-view]')) { setAwardView(button.dataset.view); return; }
     if (button.matches('[data-jump-award]')) return;
@@ -752,4 +859,10 @@
     const target = document.getElementById(location.hash.slice(1));
     if (target) requestAnimationFrame(() => target.scrollIntoView({behavior:'instant'}));
   }
+  const directAward = awardsById.get(site.params.get('award'));
+  if (directAward) requestAnimationFrame(() => {
+    const card = document.getElementById(directAward.id);
+    card?.scrollIntoView({behavior:'instant', block:'start'});
+    openAward(directAward.number - 1, card?.querySelector('.winner-frame'));
+  });
 })().catch(error => window.ArchiveSite.showError(error));
