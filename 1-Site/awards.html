@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#14181c">
   <meta name="description" content="Personal cinema awards curated by 0lqc.">
@@ -16,10 +17,13 @@
   <link rel="stylesheet" href="award-experience.css?v=layout-1">
   <link rel="stylesheet" href="archive-experience.css?v=layout-1">
   <link rel="stylesheet" href="archive-discovery.css?v=layout-1">
+  <link rel="stylesheet" href="archive-explore.css?v=explore-2">
   <script src="archive-site.js?v=layout-1" defer></script>
-  <script src="app.js?v=layout-1" defer></script>
+  <script src="archive-explore.js?v=explore-2" defer></script>
+  <script src="app.js?v=explore-2" defer></script>
 </head>
 <body data-page="awards">
+
   <a class="skip" href="#awards">Skip to the awards</a>
   <div class="reading-progress" aria-hidden="true"></div>
   <header class="masthead">
@@ -35,7 +39,7 @@
       <div class="hero-title">
         <h1 id="hero-title"><span class="hero-edition-period"></span> <span class="hero-edition-awards">Awards</span></h1>
       </div>
-      <div class="hero-foot"><a href="#awards">SCROLL TO EXPLORE <span>↓</span></a><span class="hero-caption">ON THE COVER <b id="cover-credit"></b></span></div>
+      <div class="hero-foot awards-cover-credit"><span class="hero-caption">On the cover <b id="cover-credit"></b></span></div>
     </section>
     <section class="edition-utilities section-shell" aria-label="Award edition overview and actions">
       <p class="edition-totals"><span><b id="award-count"></b> awards</span><span aria-hidden="true">·</span><span><b id="chapter-count"></b> chapters</span></p>
@@ -53,6 +57,10 @@
       <div class="section-heading"><div><p class="eyebrow">THE WINNERS’ COLLECTION</p><h2 id="final-cut-title">The final cut.</h2></div><p class="section-aside">EVERY FILM THAT TOOK SOMETHING HOME.<br>ONE FRAME, MANY REASONS.</p></div>
       <div class="film-wall-toolbar"><div class="wall-order" role="group" aria-label="Sort winning films"><button type="button" data-wall-order="wins" aria-pressed="true">By wins</button><button type="button" data-wall-order="year" aria-pressed="false">By year</button></div></div>
       <div class="film-wall" id="film-wall"></div>
+      <details id="decade-numbers" class="decade-numbers" hidden>
+        <summary><span>The decade in numbers</span><svg width="14" height="14" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2 4 4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/></svg></summary>
+        <div id="decade-numbers-content"></div>
+      </details>
     </section>
     <section class="double-feature section-shell" id="double-feature" aria-labelledby="double-feature-title" hidden></section>
     <a class="snubs-banner" href="snubs.html" data-snubs-link hidden><span class="micro">A SEPARATE BALLOT</span><span>The ones they <em>missed.</em></span><b>THE OSCAR SNUBS ↗</b></a>
@@ -64,11 +72,15 @@
       <div class="ceremony-header">
         <div><p class="eyebrow" id="dialog-chapter"></p><h2 id="dialog-category" tabindex="-1"></h2></div>
         <span class="ceremony-counter"><span id="dialog-number"></span> <b>/</b> <span id="dialog-total"></span></span>
-        <div class="award-share"><button type="button" class="copy-award-link" data-copy-award="" aria-label="Copy award link" title="Copy award link"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button><span class="award-share-status" role="status"></span></div>
+        <div class="award-share">
+          <button type="button" class="copy-award-link" data-copy-award="" aria-label="Copy award link" title="Copy award link"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button>
+          <a class="save-award-card" data-save-award-card download aria-label="Save award image card" title="Save award image card (JPG)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M13.5 3.5H5.5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2v-6"/><circle cx="8" cy="8" r="1.5"/><path d="m4 16.5 4.8-4.9c.4-.4 1-.4 1.4 0l4.4 4.5 1.8-1.8 4.1 4.2M18.5 2.5v8m-3-3 3 3 3-3"/></svg></a>
+          <span class="award-share-status" role="status"></span>
+        </div>
         <button class="dialog-close" aria-label="Close awards presentation">✕</button>
         <span class="ceremony-progress" aria-hidden="true"></span>
       </div>
-      <div class="ceremony-scroll" tabindex="0" aria-label="Award details"></div>
+      <div class="ceremony-scroll" tabindex="0" aria-label="Award details. Swipe horizontally to move between awards."></div>
       <div class="ceremony-footer">
         <button class="ceremony-prev" aria-label="Previous award">← <span>PREVIOUS</span></button>
         <button class="ceremony-index" aria-haspopup="dialog" title="Open award index">INDEX</button>
@@ -76,14 +88,14 @@
       </div>
     </div>
   </dialog>
-  <dialog id="index-dialog" aria-labelledby="index-title"><div class="index-header"><div><p class="eyebrow">AWARDS</p><h2 id="index-title" tabindex="-1">The index.</h2></div><button class="dialog-close" aria-label="Close index">✕</button></div><div class="view-switch index-view-switch" role="group" aria-label="Award display mode" hidden><button type="button" data-view="cinematic" aria-pressed="true">Cinematic</button><button type="button" data-view="compact" aria-pressed="false">Compact</button></div><label class="search-label" for="category-search">SEARCH FILMS, PEOPLE, AWARDS OR MOODS</label><input id="category-search" type="search" placeholder="Film, person, category or mood…" autocomplete="off"><div id="index-results" role="region" aria-label="Index results"></div></dialog>
+  <dialog id="index-dialog" aria-labelledby="index-title"><div class="index-header"><h2 id="index-title" tabindex="-1">The index.</h2><div class="view-switch index-view-switch" role="group" aria-label="Award display mode" hidden><button type="button" data-view="cinematic" aria-pressed="true">Cinematic</button><button type="button" data-view="compact" aria-pressed="false">Compact</button></div><button class="dialog-close" aria-label="Close index">✕</button></div><label class="search-label" for="category-search">Search films, people, awards or moods</label><input id="category-search" type="search" placeholder="Film, person, award or mood…" autocomplete="off"><div id="index-results" role="region" aria-label="Index results"></div></dialog>
   <dialog id="film-file-dialog" aria-labelledby="film-file-title"><div class="film-file-header"><div><p class="eyebrow">THE FILM FILE</p><h2 id="film-file-title" tabindex="-1"></h2></div><button class="dialog-close" aria-label="Close film file">✕</button></div><div class="film-file-scroll" id="film-file-content"></div></dialog>
   <dialog id="person-dialog" aria-labelledby="person-title">
     <div class="film-file-header person-header"><div><p class="eyebrow">THE ARTIST FILE</p><h2 id="person-title" tabindex="-1"></h2></div><button class="dialog-close" aria-label="Close artist file">✕</button></div>
     <div class="person-scroll" id="person-content"></div>
   </dialog>
   <dialog id="frame-dialog" aria-labelledby="full-frame-title">
-    <div class="full-frame-header"><h2 id="full-frame-title" tabindex="-1"></h2><button class="dialog-close" aria-label="Close full frame">✕</button></div>
+    <div class="full-frame-header"><div class="full-frame-caption"><h2 id="full-frame-title" tabindex="-1"></h2><small id="full-frame-context" hidden></small></div><div class="full-frame-tools"><div class="frame-gallery-controls" hidden><button class="frame-gallery-prev" type="button" aria-label="Previous film still" title="Previous film still"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m10 3-5 5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span id="frame-gallery-count" aria-live="polite"></span><button class="frame-gallery-next" type="button" aria-label="Next film still" title="Next film still"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m6 3 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><button class="dialog-close" aria-label="Close full frame">✕</button></div></div>
     <div class="full-frame-stage"><img id="full-frame-image" alt="" decoding="async"><p id="full-frame-status" role="status" hidden>Loading frame…</p></div>
   </dialog>
   <dialog id="credits-dialog" aria-labelledby="credits-title"><button class="dialog-close" aria-label="Close credits">✕</button><p class="eyebrow">THE END CREDITS</p><h2 id="credits-title">Made of cinema.</h2><p>The award results and honorable mentions come from the retained T.S. Archive ballot. The first selection in each category is the winning selection.</p><p>Film artwork belongs to its respective rights holders. This is an independent, personal editorial archive.</p><div id="credit-links"></div><p class="credit-note">Design references include the <a href="https://www.oscars.org/oscars/ceremonies/2025" target="_blank" rel="noopener noreferrer">Academy archive ↗</a>, <a href="https://www.criterion.com/current/top-10-lists" target="_blank" rel="noopener noreferrer">Criterion’s personal film collections ↗</a> and the <a href="https://a24films.com/films" target="_blank" rel="noopener noreferrer">A24 film catalogue ↗</a>.</p></dialog>

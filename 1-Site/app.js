@@ -6,6 +6,8 @@
   const selected = catalog.editions.find(item => item.id === editionId);
   if (!selected) throw new Error('That edition is not in the archive.');
   const archive = await site.read(selected.content);
+  const explore = window.ArchiveExplore;
+  const exploreEngine = explore.createEngine(catalog, {edition: selected, archive});
   document.body.dataset.edition = selected.id;
   const media = {
     films: archive.media?.films ?? {},
@@ -73,7 +75,7 @@
   // All editions share one presentation; decade-specific data stays in JSON.
   const enhanced = !onSnubs;
   const awardDialog = $('#award-dialog');
-  const indexDialog = $('#index-dialog');
+  const indexDialog = onSnubs ? null : $('#index-dialog');
   const filmDialog = $('#film-file-dialog');
   const personDialog = $('#person-dialog');
   const frameDialog = $('#frame-dialog');
@@ -112,7 +114,7 @@
   }
 
   function frameButton(path, label, classes, markup, attributes = '') {
-    return `<button type="button" class="${classes} frame-enlarge" data-full-frame="${esc(largestFrame(path))}" data-frame-label="${esc(label)}" aria-label="View full frame of ${esc(label)}" aria-haspopup="dialog" title="View full frame"${attributes}>${markup}<svg class="frame-expand-icon" width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8V3h5m4 0h5v5m0 4v5h-5m-4 0H3v-5"/></svg></button>`;
+    return `<button type="button" class="${classes} frame-enlarge" data-full-frame="${esc(largestFrame(path))}" data-frame-path="${esc(path)}" data-frame-label="${esc(label)}" aria-label="View full frame of ${esc(label)}" aria-haspopup="dialog" title="View full frame"${attributes}>${markup}<svg class="frame-expand-icon" width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8V3h5m4 0h5v5m0 4v5h-5m-4 0H3v-5"/></svg></button>`;
   }
 
   function poster(slug, eager = false, sizes = '82px') {
@@ -209,35 +211,9 @@
 
   // Only categories with actual personal credits enter the artist index.
   // Mood descriptions, dialogue, character names and technical teams do not.
-  const actingCredits = new Set(['best-actor', 'best-actress', 'best-supporting-actor',
-    'best-supporting-actress', 'best-breakthrough-performance']);
-  const namedCredits = new Set([...actingCredits, 'best-director', 'director-of-the-decade',
-    'best-original-screenplay', 'best-adapted-screenplay', 'best-non-original-screenplay',
-    'best-cinematography', 'best-film-editing', 'best-production-design', 'best-costume-design',
-    'best-original-score', 'composer-of-the-decade', 'best-antagonist', 'best-villain-antagonist',
-    'best-score-cue', 'best-song-in-a-film']);
-
+  const actingCredits = explore.actingCredits;
   function creditFor(entry, category) {
-    const id = keyFor(category);
-    if (!namedCredits.has(id)) return null;
-    let value = (entry.creditFirst ? entry.title : entry.detail)?.trim() ?? '';
-    let prefix = '', suffix = '';
-    if (id === 'best-antagonist' || id === 'best-villain-antagonist') {
-      const match = value.match(/^(.*)\(([^()]*)\)$/u);
-      if (match) { prefix = match[1] + '('; value = match[2]; suffix = ')'; }
-    } else if (actingCredits.has(id)) {
-      const role = value.match(/\s+as\s+.+$/i);
-      if (role) { suffix = role[0]; value = value.slice(0, role.index); }
-    } else if (id === 'best-score-cue' || id === 'best-song-in-a-film') {
-      const separator = value.lastIndexOf(' · ');
-      if (separator < 0) return null;
-      prefix = value.slice(0, separator + 3);
-      value = value.slice(separator + 3);
-    }
-    if (!value) return null;
-    const names = (discovery.creditNames?.[value] ?? value.split(/\s+&\s+|\s+×\s+|,\s*/u))
-      .map(name => name.trim()).filter(Boolean);
-    return names.length ? {names, prefix, suffix, joiner: value.includes(' feat. ') ? ' feat. ' : ''} : null;
+    return explore.creditFor(entry, category, discovery);
   }
 
   function snubCredit(item) {
@@ -320,25 +296,6 @@
       return `<span class="performance-work"><a class="${classes}" href="${esc(info.url)}" ${external} ${filmAttributes(slug)}>${esc(info.title)}</a><span class="performance-year"> · ${esc(info.year)}</span></span>`;
     }).join(' <span class="title-slash" aria-hidden="true">/</span> ');
     return works + (credit.suffix ? ` <span class="performance-role">· ${esc(credit.suffix.trim())}</span>` : '');
-  }
-
-  function personSearchText(person) {
-    if (!person) return '';
-    return [person.name, ...(discovery.personAliases?.[person.name] ?? [])].join(' ');
-  }
-
-  const searchTopics = [...(discovery.moods ?? []), ...(discovery.topics ?? [])];
-  const topicsByFilm = new Map();
-  for (const topic of searchTopics) {
-    for (const slug of topic.films) {
-      if (!topicsByFilm.has(slug)) topicsByFilm.set(slug, []);
-      topicsByFilm.get(slug).push(topic);
-    }
-  }
-  function filmSearchText(slug) {
-    const info = film(slug);
-    const tags = (topicsByFilm.get(slug) ?? []).flatMap(topic => [topic.label, ...(topic.terms ?? [])]);
-    return [info.title, info.year, ...tags].join(' ');
   }
 
   function filmAttributes(slug) {
@@ -475,6 +432,33 @@
     $$('[data-wall-order]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.wallOrder === order)));
   }
 
+  function renderDecadeNumbers() {
+    const panel = $('#decade-numbers');
+    if (!panel) return;
+    const filmWins = new Map();
+    const filmAwards = awards.filter(award => !negative.has(award.id) && !portfolioPresentation(award));
+    for (const award of filmAwards) {
+      for (const slug of new Set(award.winner.films)) filmWins.set(slug, (filmWins.get(slug) ?? 0) + 1);
+    }
+    const maximum = Math.max(0, ...filmWins.values());
+    const leaders = [...filmWins].filter(([,count]) => count === maximum).map(([slug]) => film(slug).title);
+    const years = new Map();
+    for (const info of Object.values(archive.films)) {
+      const year = Number(info.year);
+      if (Number.isFinite(year)) years.set(year, (years.get(year) ?? 0) + 1);
+    }
+    if (!years.size || !leaders.length) return;
+    const peak = Math.max(...years.values());
+    const peakYears = [...years].filter(([,count]) => count === peak).map(([year]) => year).sort((a,b) => a-b);
+    $('#decade-numbers-content').innerHTML = `<div class="decade-metrics">
+      <div class="decade-metric" data-metric="most-awarded"><span>Most awarded</span><strong>${esc(leaders.join(' / '))}</strong><small>${maximum} individual ${maximum === 1 ? 'win' : 'wins'}</small></div>
+      <div class="decade-metric" data-metric="peak-year"><span>Most represented year</span><strong>${esc(peakYears.join(' / '))}</strong><small>${peak} films in the archive</small></div>
+      <div class="decade-metric" data-metric="winning-films"><span>Films with individual wins</span><strong>${filmWins.size}</strong><small>${filmAwards.length} positive film categories</small></div>
+      </div><div class="decade-graph"><h3>Films by release year · ${Object.keys(archive.films).length} films</h3><ol>${[...years].sort((a,b)=>a[0]-b[0]).map(([year,count]) => `<li data-year="${year}" data-count="${count}" class="${count === peak ? 'is-peak' : ''}" aria-label="${year}: ${count} films"><span>${year}</span><span class="decade-graph-bar" aria-hidden="true"><i style="--bar-width:${count/peak*100}%"></i></span><span>${count}</span></li>`).join('')}</ol></div>
+      <p class="decade-note">Based on this edition’s curated ballot. Individual film wins exclude portfolio honors and negative awards. Release-year totals count distinct films across the edition, including mentions and Oscar Snubs.</p>`;
+    panel.hidden = false;
+  }
+
   function renderDoubleFeature() {
     const pair = discovery.doubleFeature;
     const section = $('#double-feature');
@@ -546,7 +530,7 @@
     dialog.close();
   }
 
-  $$('dialog').forEach(dialog => {
+  $$('dialog').filter(dialog => !dialog.classList.contains('archive-standalone-index')).forEach(dialog => {
     dialog.addEventListener('click', event => {
       if (event.target === dialog || event.target.closest('.dialog-close')) closeDialog(dialog);
     });
@@ -565,6 +549,7 @@
     });
   });
 
+  let frameCollection = [], frameIndex = 0, frameTouch = null;
   if (frameDialog) {
     const image = $('#full-frame-image', frameDialog);
     const status = $('#full-frame-status', frameDialog);
@@ -576,22 +561,90 @@
       }
     });
     frameDialog.addEventListener('close', () => {
-      if (!frameDialog.open) image.removeAttribute('src');
+      if (!frameDialog.open) {
+        image.removeAttribute('src');
+        frameCollection = []; frameIndex = 0; frameTouch = null;
+        $('.frame-gallery-controls', frameDialog).hidden = true;
+      }
     });
+    $('.frame-gallery-prev', frameDialog).addEventListener('click', () => stepFrame(-1));
+    $('.frame-gallery-next', frameDialog).addEventListener('click', () => stepFrame(1));
+    frameDialog.addEventListener('keydown', event => {
+      if (frameCollection.length < 2 || event.ctrlKey || event.altKey || event.metaKey || event.shiftKey) return;
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      event.preventDefault(); stepFrame(event.key === 'ArrowRight' ? 1 : -1);
+    });
+    const stage = $('.full-frame-stage', frameDialog);
+    stage.addEventListener('touchstart', event => {
+      if (event.touches.length !== 1) { frameTouch = null; return; }
+      frameTouch = [event.touches[0].clientX, event.touches[0].clientY];
+    }, {passive:true});
+    stage.addEventListener('touchend', event => {
+      if (!frameTouch || !event.changedTouches.length) return;
+      const dx = event.changedTouches[0].clientX - frameTouch[0], dy = event.changedTouches[0].clientY - frameTouch[1];
+      frameTouch = null;
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) stepFrame(dx < 0 ? 1 : -1);
+    }, {passive:true});
+    stage.addEventListener('touchcancel', () => { frameTouch = null; }, {passive:true});
   }
 
-  function openFullFrame(trigger) {
-    if (!frameDialog) return;
+  function filmFrameCollection(slug) {
+    const frames = [], seen = new Set();
+    const info = film(slug);
+    if (!info) return frames;
+    const add = (path, context) => {
+      if (!path) return;
+      const src = largestFrame(path);
+      if (seen.has(src)) return;
+      seen.add(src);
+      frames.push({src, path, label:info.title, context});
+    };
+    add(art(slug).backdrop, 'Film still');
+    for (const still of (alternates[slug] ?? [])) {
+      add(still.path, awardsById.get(still.award)?.name ?? 'Film still');
+    }
+    for (const [awardId, still] of Object.entries(edition.presentationStills ?? {})) {
+      if (still.film === slug) add(still.path, awardsById.get(awardId)?.name ?? 'Presentation still');
+    }
+    for (const cover of [selected, snubList, catalog.homeCover]) {
+      if (cover?.coverFilm === info.title && Number(cover.coverYear) === Number(info.year)) add(cover.cover, 'Cover still');
+    }
+    return frames;
+  }
+
+  function displayFrame() {
     const image = $('#full-frame-image', frameDialog);
     const status = $('#full-frame-status', frameDialog);
-    const label = trigger.dataset.frameLabel;
-    $('#full-frame-title', frameDialog).textContent = label;
-    image.alt = label;
+    const frame = frameCollection[frameIndex];
+    if (!frame) return;
+    $('#full-frame-title', frameDialog).textContent = frame.label;
+    const context = $('#full-frame-context', frameDialog);
+    context.textContent = frame.context || '';
+    context.hidden = frameCollection.length < 2 || !frame.context;
+    $('.frame-gallery-controls', frameDialog).hidden = frameCollection.length < 2;
+    $('#frame-gallery-count', frameDialog).textContent = (frameIndex + 1) + ' / ' + frameCollection.length;
+    image.alt = frame.label;
     status.textContent = 'Loading frame…';
     status.hidden = false;
-    openDialog(frameDialog, '.dialog-close', trigger);
-    image.src = trigger.dataset.fullFrame;
+    image.src = frame.src;
     if (image.complete && image.naturalWidth) status.hidden = true;
+  }
+  function stepFrame(direction) {
+    if (frameCollection.length < 2) return;
+    frameIndex = (frameIndex + direction + frameCollection.length) % frameCollection.length;
+    displayFrame();
+  }
+  function openFullFrame(trigger) {
+    if (!frameDialog) return;
+    const src = trigger.dataset.fullFrame;
+    frameCollection = filmFrameCollection(trigger.dataset.film);
+    frameIndex = frameCollection.findIndex(frame => frame.src === src);
+    if (frameIndex < 0) {
+      frameCollection.unshift({src, label:trigger.dataset.frameLabel, context:'Selected still'});
+      frameIndex = 0;
+    }
+    openDialog(frameDialog, '.dialog-close', trigger);
+    displayFrame();
   }
 
   // Dossiers work from an edition or its alternate ballot, without leaving the archive.
@@ -646,6 +699,7 @@
   });
 
   if ($('#snub-entries')) renderSnubs();
+  explore.setPageActions({editionId, awards:!onSnubs, openFilm:openFilmFile});
 
   if ($('#credit-links')) {
     $('#credit-links').innerHTML = `<p>${selected.coverSource ? `<a href="${esc(selected.coverSource)}" ${external}>${esc(selected.coverFilm)} cover image ↗</a><br>` : ''}<a href="${esc(profile.url)}" ${external}>${esc(profile.name)} · Letterboxd profile artwork ↗</a></p><details class="image-sources"><summary>Film artwork sources</summary><ul>${Object.entries(archive.films).map(([slug, info]) => `<li><a href="${esc(art(slug).source || info.url)}" ${external}>${esc(info.title)} ↗</a>${art(slug).posterSource ? ` · <a href="${esc(art(slug).posterSource)}" ${external}>Poster source</a>` : ''}${art(slug).backdropSource ? ` · <a href="${esc(art(slug).backdropSource)}" ${external}>Film still</a>` : ''}</li>`).join('')}</ul></details>`;
@@ -692,6 +746,7 @@
   renderChapters();
   if (hasSpotlights) renderSpotlights();
   renderFilmWall();
+  renderDecadeNumbers();
   $('.wall-order')?.addEventListener('click', event => {
     const button = event.target.closest('button[data-wall-order]');
     if (button) renderFilmWall(button.dataset.wallOrder);
@@ -715,39 +770,26 @@
   const dialogScroll = $('.ceremony-scroll', awardDialog);
   const dialogTitle = $('#dialog-category');
   const nextButton = $('.ceremony-next', awardDialog);
-  const search = $('#category-search');
   const indexResults = $('#index-results');
   let current = 0;
   let startTouch = null;
+  let suppressSwipeClickUntil = 0;
   let sceneChange = null;
-  let indexYear = null;
-  let indexChapter = null;
   let indexScrollTop = 0;
-  let indexRendered = false;
   let indexReturnAward = null;
   let copyNoticeTimer;
-  const shareButton = $('[data-copy-award]', awardDialog);
-  if (enhanced) {
-    const years = [...new Set(Object.values(archive.films).map(info => info.year))].sort((a,b) => a-b);
-    const suggestions = (discovery.searchSuggestions ?? searchTopics.map(topic => topic.label)).slice(0, 5);
-    const suggestedSearches = suggestions.length ? `<div class="index-suggestions" role="group" aria-label="Suggested searches">${suggestions.map(label => `<button type="button" data-index-suggestion="${esc(label)}" aria-pressed="false">${esc(label)}</button>`).join('')}</div>` : '';
-    const yearButtons = `<div class="index-year-label">Release year</div><div class="index-years" role="group" aria-label="Filter films and awards by release year"><button type="button" data-index-year="all" aria-pressed="true">All</button>${years.map(year => `<button type="button" data-index-year="${esc(year)}" aria-pressed="false">${esc(year)}</button>`).join('')}</div>`;
-    const yearSelect = `<label class="index-year-compact" for="index-year-select"><span>Year</span><span class="index-year-select-wrap"><select id="index-year-select" aria-label="Filter by release year"><option value="all">All</option>${years.map(year => `<option value="${esc(year)}">${esc(year)}</option>`).join('')}</select><svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12"><path d="m2 4 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label>`;
-    search.insertAdjacentHTML('afterend', suggestedSearches + `<div class="index-year-filter">${yearButtons}${yearSelect}</div>`);
-    $('.index-years').addEventListener('click', event => {
-      const button = event.target.closest('button[data-index-year]');
-      if (!button) return;
-      setIndexYear(button.dataset.indexYear);
-    });
-    $('#index-year-select').addEventListener('change', event => setIndexYear(event.target.value));
-  }
-
-  function setIndexYear(value) {
-    indexYear = value === 'all' ? null : Number(value);
-    $$('.index-years button').forEach(item => item.setAttribute('aria-pressed', String(item.dataset.indexYear === value)));
-    $('#index-year-select').value = value;
-    refreshIndex();
-  }
+  const shareGroup = $('.award-share', awardDialog);
+  const shareStatus = $('.award-share-status', shareGroup);
+  const copyButton = $('[data-copy-award]', awardDialog);
+  const saveCard = $('[data-save-award-card]', awardDialog);
+  const indexController = explore.createIndex({
+    dialog:indexDialog, catalog, engine:exploreEngine, localEdition:editionId, chapterIndex,
+    onRefresh() { indexReturnAward = null; indexScrollTop = 0; },
+  });
+  const globalSearchButton = explore.searchButton();
+  explore.bindSearchShortcut(globalSearchButton, trigger => {
+    indexController.global(); openIndex(trigger); $('#category-search', indexDialog).focus({preventScroll:true});
+  });
 
   if (enhanced) {
     for (const switcher of $$('.view-switch')) switcher.hidden = false;
@@ -885,7 +927,7 @@
     $('#film-file-title').textContent = info.title;
     $('#film-file-content').innerHTML = `
       ${dossierStill ? frameDialog
-        ? frameButton(dossierStill, info.title, 'film-file-frame', imageMarkup(dossierStill, true, '(min-width: 1971px) 1080px, (min-width: 1440px) 55vw, (min-width: 920px) 790px, 90vw'))
+        ? frameButton(dossierStill, info.title, 'film-file-frame', imageMarkup(dossierStill, true, '(min-width: 1971px) 1080px, (min-width: 1440px) 55vw, (min-width: 920px) 790px, 90vw'), ` data-film="${esc(slug)}"`)
         : `<div class="film-file-frame">${imageMarkup(dossierStill, true, '(min-width: 1971px) 1080px, (min-width: 1440px) 55vw, (min-width: 920px) 790px, 90vw')}</div>` : ''}
       <div class="film-file-meta"><div class="file-poster">${poster(slug,true,'96px')}</div><div><p class="file-year">${esc(info.year)}${director ? ` · ${personLink(director)}` : ''}</p><p class="file-tally">${esc(winText)} <span>· ${mentions.length} ${mentions.length === 1 ? 'honorable mention' : 'honorable mentions'}</span></p><a class="file-letterboxd" href="${esc(info.url)}" ${external}>View on Letterboxd</a></div></div>
       ${awardStillGallery(slug)}
@@ -943,10 +985,12 @@
     dialogContent.style.setProperty('--accent', award.accent);
     $('#dialog-chapter').textContent = award.chapter.name;
     dialogTitle.textContent = award.name;
-    shareButton.dataset.copyAward = award.id;
+    copyButton.dataset.copyAward = award.id;
+    saveCard.href = 'assets/share-cards/' + encodeURIComponent(editionId) + '/' + encodeURIComponent(award.id) + '.jpg';
+    saveCard.download = 'TS-Archive-' + editionId + '-' + award.id + '.jpg';
     clearTimeout(copyNoticeTimer);
-    $('.award-share-status', shareButton.parentElement).replaceChildren();
-    shareButton.classList.remove('is-copied');
+    shareStatus.replaceChildren();
+    copyButton.classList.remove('is-copied');
     $('#dialog-number').textContent = pad(index + 1);
     $('.ceremony-progress', awardDialog).style.setProperty('--progress', `${percent}%`);
     $('.ceremony-prev', awardDialog).disabled = index === 0;
@@ -979,7 +1023,9 @@
     dialogScroll.innerHTML = `<div class="ceremony-body${artist ? ' portfolio-presentation' : ''} ${direction < 0 ? 'slide-back' : 'slide-in'}">
       ${lead}
       ${nominations(award.nominees, true, artist, award.id)}
+      ${catalog.editions.length > 1 ? '<div class="award-comparison-slot"></div>' : ''}
     </div>`;
+    explore.renderComparison($('.award-comparison-slot', dialogScroll), exploreEngine, award, editionId, catalog);
     dialogScroll.scrollTop = 0;
     if (awardDialog.open) dialogTitle.focus({preventScroll: true});
     prepareAward(index + 1);
@@ -998,10 +1044,52 @@
     if (!awardDialog.open) openDialog(awardDialog, '#dialog-category', trigger);
   }
 
+  function prepareOfflineShare(awardId) {
+    const key = editionId + '/' + awardId;
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'content/local-share-cards/' + encodeURIComponent(editionId) + '/' + encodeURIComponent(awardId) + '.js';
+      script.onload = () => {
+        const payloads = window.__tsArchiveSharePayloads;
+        const data = payloads?.[key];
+        if (payloads) delete payloads[key];
+        script.remove();
+        if (data) resolve(data); else reject(new Error('Local card not found'));
+      };
+      script.onerror = () => { script.remove(); reject(new Error('Local card not found')); };
+      document.head.append(script);
+    });
+  }
+  saveCard.addEventListener('click', async event => {
+    if (location.protocol !== 'file:') return;
+    event.preventDefault();
+    const awardId = copyButton.dataset.copyAward;
+    const filename = saveCard.download;
+    const fileHref = saveCard.href;
+    const status = shareStatus;
+    clearTimeout(copyNoticeTimer);
+    status.textContent = 'Preparing card…';
+    try {
+      const data = await prepareOfflineShare(awardId);
+      const link = document.createElement('a');
+      link.href = data; link.download = filename;
+      awardDialog.append(link); link.click(); link.remove();
+      if (copyButton.dataset.copyAward === awardId) {
+        status.textContent = 'Download started';
+        copyNoticeTimer = setTimeout(() => status.replaceChildren(), 2000);
+      }
+    } catch {
+      if (copyButton.dataset.copyAward !== awardId) return;
+      const link = document.createElement('a');
+      link.href = fileHref; link.target = '_blank'; link.rel = 'noopener'; link.textContent = 'Open JPG';
+      status.replaceChildren(link);
+    }
+  });
+
   async function copyAwardLink(button) {
     const awardId = button.dataset.copyAward;
     const value = directAwardHref(awardId);
-    const status = $('.award-share-status', button.parentElement);
+    const status = shareStatus;
     clearTimeout(copyNoticeTimer);
     try {
       if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
@@ -1069,6 +1157,7 @@
   awardDialog.addEventListener('close', () => {
     if (!awardDialog.open) cancelSceneChange();
     startTouch = null;
+    suppressSwipeClickUntil = 0;
   });
 
   function chapterIndex() {
@@ -1085,79 +1174,12 @@
     return `<div class="index-discovery"><div class="index-chapters-heading"><span>Chapters</span><button type="button" data-index-chapter="all-awards">All awards</button></div><div class="index-chapter-grid">${tiles}</div></div>`;
   }
 
-  function renderIndex(query = '') {
-    const normalized = normal(query).trim();
-    const words = normalized.split(/\s+/).filter(Boolean);
-    const resultsNode = $('#index-results');
-    $$('[data-index-suggestion]').forEach(button => button.setAttribute('aria-pressed',
-      String(normal(button.dataset.indexSuggestion) === normalized)));
-    if (!indexChapter && indexYear === null && !words.length) {
-      resultsNode.innerHTML = chapterIndex();
-      return;
-    }
-    const matches = value => {
-      const text = normal(value);
-      return words.every(word => text.includes(word));
-    };
-    const chapter = archive.chapters.find(item => item.id === indexChapter);
-    const scopedAwards = chapter ? awards.filter(award => award.chapter.id === chapter.id) : awards;
-    const chapterFilms = chapter ? new Set(scopedAwards.flatMap(award =>
-      [award.winner, ...award.nominees].flatMap(entry => entry.films))) : null;
-    const yearMatches = slug => indexYear === null || Number(film(slug)?.year) === indexYear;
-    const filmInScope = slug => yearMatches(slug) && (!chapterFilms || chapterFilms.has(slug));
-    const results = scopedAwards.filter(award => [award.winner, ...award.nominees].some(entry => {
-      const slugs = entry.films.filter(yearMatches);
-      if (!slugs.length) return false;
-      const credit = creditFor(entry, award.id);
-      const creditText = (credit?.names ?? []).map(name => personSearchText(people.get(personKey(name))));
-      const detail = portfolioPresentation(award) ? artistName(entry) : entry.detail;
-      return matches([award.name, award.chapter.name, detail, ...creditText, ...slugs.map(filmSearchText)].join(' '));
-    }));
-    const selectedTopics = searchTopics.filter(topic => [topic.label, ...(topic.terms ?? [])].some(term =>
-      (' ' + normalized + ' ').includes(' ' + normal(term) + ' ')));
-    const matchingFilms = words.length || indexYear !== null
-      ? Object.entries(archive.films).filter(([slug]) => filmInScope(slug) && matches(filmSearchText(slug))) : [];
-    if (selectedTopics.length) {
-      const filmOrder = new Map(selectedTopics[0].films.map((slug, i) => [slug, i]));
-      matchingFilms.sort((a, b) => (filmOrder.get(a[0]) ?? Infinity) - (filmOrder.get(b[0]) ?? Infinity));
-      const awardOrder = new Map(selectedTopics.flatMap(topic => topic.awards ?? []).map((id, i) => [id, i]));
-      if (awardOrder.size) results.sort((a, b) =>
-        (awardOrder.get(a.id) ?? awards.length) - (awardOrder.get(b.id) ?? awards.length));
-    }
-    const films = matchingFilms;
-    const filmMatches = films.length ? `<p class="index-match-heading">Films · ${films.length}</p>${films.map(([slug,info]) => `<a class="index-row film-index-row" href="${esc(info.url)}" ${external} ${filmAttributes(slug)}>${poster(slug,false,'32px')}<span><strong>${esc(info.title)}</strong><small>${esc(info.year)}</small></span></a>`).join('')}` : '';
-    const nameQuery = personKey(normalized);
-    const artistMatches = words.length ? [...people.values()].filter(person =>
-      (matches(personSearchText(person)) || (nameQuery && personKey(personSearchText(person)).includes(nameQuery))) && person.appearances.some(appearance =>
-        (!chapter || appearance.chapterId === chapter.id) && appearance.films.some(yearMatches))
-    ).sort((a,b) => a.name.localeCompare(b.name)).slice(0, 12) : [];
-    const personMatches = artistMatches.length ? `<p class="index-match-heading">Artists</p>${artistMatches.map(person => {
-      const count = new Set(person.appearances.flatMap(entry => entry.films)).size;
-      return `<button type="button" class="index-row person-index-row" data-person="${esc(person.id)}" aria-haspopup="dialog"><span><strong>${esc(person.name)}</strong><small>${count} ${count === 1 ? 'film' : 'films'} in the archive</small></span></button>`;
-    }).join('')}` : '';
-    const awardMatches = results.length ? `<p class="index-match-heading">Awards · ${results.length}${indexYear !== null ? ' · ' + esc(indexYear) + ' films' : ''}</p>${results.map(a => {
-      const performance = performanceCredit(a.winner, a.id);
-      const caption = performance ? performanceName(performance) + ' · ' + workNames(a.winner) : portfolioPresentation(a) ? artistName(a.winner) : a.winner.title;
-      return `<button class="index-row" data-award="${a.number - 1}"><span>${pad(a.number)}</span><span><strong>${esc(a.name)}</strong><small>${esc(caption)}</small></span><b aria-hidden="true">↗</b></button>`;
-    }).join('')}` : '';
-    const context = indexChapter ? `<div class="index-chapter-context"><button type="button" data-index-chapter="">All chapters</button><span>${esc(chapter?.name ?? 'All awards')}</span></div>` : '';
-    resultsNode.innerHTML = context + (personMatches + filmMatches + awardMatches || '<p class="empty-index">No matches. Try another film, person, award or mood.</p>');
-  }
-
   function saveIndexPosition() {
     indexScrollTop = indexResults.scrollTop;
   }
 
-  function refreshIndex() {
-    renderIndex(search.value);
-    indexRendered = true;
-    indexReturnAward = null;
-    indexScrollTop = 0;
-    indexResults.scrollTop = 0;
-  }
-
   function openIndex(trigger, returnToAward = false) {
-    if (!indexRendered) refreshIndex();
+    indexController.ensure();
     openDialog(indexDialog, '#index-title', trigger);
     indexResults.scrollTop = indexScrollTop;
     if (returnToAward && indexReturnAward !== null) {
@@ -1166,7 +1188,6 @@
     }
   }
 
-  search.addEventListener('input', refreshIndex);
   document.addEventListener('click', event => {
     const button = event.target.closest('button');
     if (!button) return;
@@ -1176,17 +1197,6 @@
       const expanded = button.getAttribute('aria-expanded') !== 'true';
       button.setAttribute('aria-expanded', String(expanded));
       card.dataset.mentionsOpen = String(expanded);
-      return;
-    }
-    if (button.matches('[data-index-chapter]')) {
-      indexChapter = button.dataset.indexChapter || null;
-      refreshIndex();
-      $('#index-results button')?.focus({preventScroll: true});
-      return;
-    }
-    if (button.matches('[data-index-suggestion]')) {
-      search.value = button.dataset.indexSuggestion;
-      refreshIndex();
       return;
     }
     if (button.matches('[data-view-toggle]')) { setAwardView(button.dataset.nextView, true); return; }
@@ -1211,23 +1221,57 @@
 
   awardDialog.addEventListener('keydown', event => {
     if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    if (event.target.matches('input,textarea,select')) return;
     if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
       event.preventDefault();
       advance(event.key === 'ArrowRight' ? 1 : -1);
     }
   });
-  awardDialog.addEventListener('touchstart', event => {
-    if (!event.target.closest('.ceremony-frame')) return;
-    startTouch = [event.changedTouches[0].clientX,event.changedTouches[0].clientY];
-  },{passive:true});
-  awardDialog.addEventListener('touchend', event => {
-    if (!startTouch) return;
-    const dx = event.changedTouches[0].clientX - startTouch[0];
-    const dy = event.changedTouches[0].clientY - startTouch[1];
+  // The whole award body responds to deliberate horizontal swipes, while
+  // ordinary vertical scrolling, poster taps and pinch zoom remain native.
+  function hasHorizontalScroller(target) {
+    for (let node = target; node instanceof HTMLElement && node !== dialogScroll; node = node.parentElement) {
+      if (node.scrollWidth > node.clientWidth + 2 && /auto|scroll/.test(getComputedStyle(node).overflowX)) return true;
+    }
+    return false;
+  }
+  dialogScroll.addEventListener('touchstart', event => {
     startTouch = null;
-    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.6) advance(dx < 0 ? 1 : -1);
+    if (event.touches.length !== 1 || event.target.closest('input,textarea,select') || hasHorizontalScroller(event.target)) return;
+    const touch = event.touches[0];
+    startTouch = {id:touch.identifier,x:touch.clientX,y:touch.clientY, axis:null};
   },{passive:true});
-  awardDialog.addEventListener('touchcancel', () => { startTouch = null; }, {passive:true});
+  dialogScroll.addEventListener('touchmove', event => {
+    if (!startTouch) return;
+    if (event.touches.length !== 1) { startTouch = null; return; }
+    const touch = event.touches[0];
+    if (touch.identifier !== startTouch.id) {startTouch=null;return;}
+    const dx = Math.abs(touch.clientX - startTouch.x), dy = Math.abs(touch.clientY - startTouch.y);
+    if (!startTouch.axis && Math.max(dx,dy) > 12) {
+      if (dy >= dx) {startTouch = null; return;}
+      if (dx > dy * 1.25) startTouch.axis = 'horizontal';
+    }
+    if (startTouch?.axis === 'horizontal' && event.cancelable) event.preventDefault();
+  },{passive:false});
+  dialogScroll.addEventListener('touchend', event => {
+    const start = startTouch;
+    startTouch = null;
+    if (!start || event.touches.length) return;
+    const touch = [...event.changedTouches].find(item => item.identifier === start.id);
+    if (!touch) return;
+    const dx = touch.clientX - start.x, dy = touch.clientY - start.y;
+    if (Math.abs(dx) < 44 || Math.abs(dx) < Math.abs(dy)*1.4) return;
+    if (event.cancelable) event.preventDefault();
+    suppressSwipeClickUntil = performance.now() + 300;
+    const direction = dx < 0 ? 1 : -1;
+    if (current + direction >= 0 && current + direction < awards.length) advance(direction);
+  },{passive:false});
+  dialogScroll.addEventListener('touchcancel', () => { startTouch = null; }, {passive:true});
+  awardDialog.addEventListener('click', event => {
+    if (performance.now() < suppressSwipeClickUntil && event.target.closest('.ceremony-scroll') && (event.sourceCapabilities?.firesTouchEvents || event.detail > 0)) {
+      event.preventDefault(); event.stopImmediatePropagation(); suppressSwipeClickUntil = 0;
+    }
+  }, {capture:true});
 
   const chapters = $$('.chapter');
   const cards = $$('.award-card');
@@ -1324,4 +1368,10 @@
     card?.scrollIntoView({behavior:'instant', block:'start'});
     openAward(directAward.number - 1, card?.querySelector('.winner-frame'));
   });
+  else {
+    const directFilm = site.params.get('film');
+    const directPerson = site.params.get('artist');
+    if (directFilm && film(directFilm)) requestAnimationFrame(() => openFilmFile(directFilm, globalSearchButton));
+    else if (directPerson && people.has(directPerson)) requestAnimationFrame(() => openPersonFile(directPerson, globalSearchButton));
+  }
 })().catch(error => window.ArchiveSite.showError(error));
