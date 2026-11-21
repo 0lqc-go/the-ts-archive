@@ -1,0 +1,181 @@
+/* Film files: keep the film, its selections and the optional detail distinct.
+   This sheet is scoped to the dossier, never the award or snubs page itself. */
+#film-file-dialog { --file-gutter: clamp(16px,2.2vw,26px); }
+#film-file-dialog .film-file-header { padding: 15px var(--file-gutter); }
+/* The title receives programmatic focus for dialogue announcements; only
+   the actual interactive controls need a visible keyboard focus ring. */
+#film-file-title:focus { outline: none; }
+#film-file-content { scrollbar-width: thin; scrollbar-color: var(--surface-border) transparent; }
+#film-file-dialog .film-file-meta { padding: 18px var(--file-gutter) 23px; }
+#film-file-dialog .film-file-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 var(--file-gutter) 23px;
+}
+#film-file-dialog .film-file-section { min-width: 0; }
+#film-file-dialog .film-file-section h3 {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  font: 600 .92rem/1.35 var(--body);
+  letter-spacing: -.01em;
+  margin: 0 0 7px;
+  color: var(--text);
+}
+#film-file-dialog .film-file-section h3 > span {
+  margin: 0;
+  font: 500 .76rem/1.3 var(--body);
+  color: var(--paper-accent);
+  font-variant-numeric: tabular-nums;
+}
+#film-file-dialog .film-file-section ul { padding: 0; margin: 0; list-style: none; }
+.file-award-groups {
+  --file-column-gap: clamp(24px,3vw,42px);
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  align-items: start;
+  gap: 18px var(--file-column-gap);
+}
+.file-award-groups[data-groups="1"] { grid-template-columns: minmax(0,1fr); }
+.file-award-groups[data-groups="3"] > :last-child { grid-column: 1 / -1; }
+.file-award-groups[data-groups="3"] > :last-child > ul { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); column-gap: var(--file-column-gap); }
+#film-file-dialog .film-award-row {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  display: block;
+  padding: 6px 0;
+  min-height: 31px;
+  border-radius: 2px;
+  text-align: start;
+}
+.file-award-copy { display: block; min-width: 0; }
+#film-file-dialog .film-award-row strong,
+#film-file-dialog .file-snub-name {
+  display: block;
+  font: 500 .92rem/1.38 var(--body);
+  color: var(--text);
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+#film-file-dialog .film-award-row small {
+  display: block;
+  font: 400 .81rem/1.42 var(--body);
+  color: var(--muted);
+  margin-top: 2px;
+  overflow-wrap: anywhere;
+}
+#film-file-dialog .film-award-row:hover strong { color: var(--paper-accent); text-decoration-color: var(--surface-border); }
+
+/* Optional archive-specific frames: one quiet text control, never a
+   partially clipped horizontal carousel or a duplicate visual grid. */
+#film-file-dialog .film-award-frames {
+  padding: 0;
+  min-width: 0;
+  margin: -3px 0 0;
+}
+.film-award-frames > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  list-style: none;
+  min-height: 32px;
+  padding: 5px 0;
+  color: var(--text-subtle);
+  font: 500 .84rem/1.4 var(--body);
+  cursor: pointer;
+  border-radius: 2px;
+}
+.film-award-frames > summary::-webkit-details-marker { display: none; }
+.film-award-frames > summary b { margin-left: 3px; font: 500 .75rem/1 var(--body); font-variant-numeric: tabular-nums; color: var(--muted); }
+.film-award-frames > summary:hover, .film-award-frames[open] > summary { color: var(--paper-accent); }
+.film-award-frames > summary svg { flex: none; color: var(--muted); transition: transform .15s; }
+.film-award-frames[open] > summary svg { transform: rotate(180deg); }
+#film-file-dialog .film-award-frames .award-stills-track {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 13px;
+  overflow: visible;
+  scroll-snap-type: none;
+  padding: 8px 0 3px;
+}
+#film-file-dialog .film-award-frames .award-still { min-width: 0; scroll-snap-align: none; }
+#film-file-dialog .film-award-frames .award-still img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2.15;
+  object-fit: cover;
+  border-radius: 3px;
+}
+#film-file-dialog .film-award-frames .award-still > span { padding: 6px 0 0; font-size: .78rem; overflow-wrap: anywhere; }
+
+/* Credits and the alternate ballot have their own short, full-width area.
+   No empty second column or repeated title/status pairs. */
+.file-secondary {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  padding-top: 16px;
+  border-top: 1px solid var(--hairline);
+  min-width: 0;
+}
+#film-file-dialog .file-people,
+#film-file-dialog .file-music {
+  display: grid;
+  grid-template-columns: minmax(0,108px) minmax(0,1fr);
+  align-items: baseline;
+  gap: 5px 16px;
+}
+#film-file-dialog :is(.file-people,.file-music) h3 { margin: 0; }
+#film-file-dialog .file-people-list,
+#film-file-dialog .file-music ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 13px;
+  align-items: baseline;
+  color: var(--text-subtle);
+  font: 400 .84rem/1.48 var(--body);
+  min-width: 0;
+}
+#film-file-dialog .file-people-list .person-link { overflow-wrap: anywhere; text-decoration-color: var(--surface-border); }
+#film-file-dialog .file-music li { padding: 0; min-width: 0; overflow-wrap: anywhere; }
+#film-file-dialog .file-music-link { font: inherit; overflow-wrap: anywhere; }
+.file-snubs-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 6px 16px; flex-wrap: wrap; margin-bottom: 4px; }
+#film-file-dialog .file-snubs-heading h3 { margin: 0; }
+#film-file-dialog .file-ballot-link { display: inline-block; margin: 0; font: 500 .78rem/1.35 var(--body); color: var(--text-subtle); text-decoration-color: var(--surface-border); }
+#film-file-dialog .file-snubs li { padding: 0; }
+#film-file-dialog .file-snub-comparison { margin: 0; }
+#film-file-dialog .file-snub-summary {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(0,45%) 12px;
+  align-items: center;
+  gap: 10px;
+  min-height: 34px;
+  padding: 6px 0;
+  border-radius: 2px;
+}
+#film-file-dialog .file-snub-status { font: 400 .8rem/1.38 var(--body); color: var(--muted); text-align: end; overflow-wrap: anywhere; }
+#film-file-dialog .file-snub-comparison > summary:hover .file-snub-name { color: var(--paper-accent); }
+#film-file-dialog .file-snub-comparison > summary svg { justify-self: end; color: var(--muted); }
+#film-file-dialog .file-snub-comparison .academy-result { margin: 2px 0 10px; border-color: var(--hairline); padding: 5px 0 8px 11px; }
+#film-file-dialog .file-snub-comparison .academy-result .academy-category { font-size: .73rem; }
+
+@media (max-width: 680px) {
+  #film-file-dialog { --file-gutter: 14px; }
+  #film-file-dialog .film-file-header { padding-block: 12px; }
+  #film-file-dialog .film-file-meta { padding-block: 14px 20px; }
+  #film-file-dialog .film-file-sections { gap: 14px; padding-bottom: 19px; }
+  .file-award-groups { grid-template-columns: minmax(0,1fr); gap: 18px; }
+  .file-award-groups[data-groups="3"] > :last-child > ul { grid-template-columns: minmax(0,1fr); }
+  #film-file-dialog .film-award-frames .award-stills-track { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+  .file-secondary { gap: 15px; padding-top: 14px; }
+  #film-file-dialog :is(.file-people,.file-music) { grid-template-columns: minmax(0,1fr); gap: 6px; }
+  #film-file-dialog .file-snub-summary { gap: 7px; grid-template-columns: minmax(0,1fr) minmax(0,46%) 12px; }
+}
+@media (pointer: coarse) {
+  #film-file-dialog :is(.film-award-row,.file-snub-summary), .film-award-frames > summary { min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) { .film-award-frames > summary svg { transition: none; } }
