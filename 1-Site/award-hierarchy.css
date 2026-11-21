@@ -7,7 +7,7 @@ body[data-page="awards"] .hero-image {
 
 .award-description {
   margin-top: 6px;
-  color: #b7b3ac;
+  color: var(--muted);
   font: 400 .84rem/1.45 var(--body);
   max-width: 52ch;
   text-wrap: pretty;

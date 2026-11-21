@@ -9,18 +9,20 @@
   <meta property="og:title" content="The T.S. Archive — Awards">
   <title>Awards — The T.S. Archive</title>
   <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="style.css?v=layout-1">
-  <link rel="stylesheet" href="edition.css?v=layout-1">
-  <link rel="stylesheet" href="refinement.css?v=layout-1">
-  <link rel="stylesheet" href="archive.css">
-  <link rel="stylesheet" href="award-hierarchy.css?v=20261119">
-  <link rel="stylesheet" href="award-experience.css?v=layout-1">
-  <link rel="stylesheet" href="archive-experience.css?v=layout-1">
-  <link rel="stylesheet" href="archive-discovery.css?v=layout-1">
-  <link rel="stylesheet" href="archive-explore.css?v=explore-2">
-  <script src="archive-site.js?v=layout-1" defer></script>
-  <script src="archive-explore.js?v=explore-2" defer></script>
-  <script src="app.js?v=explore-2" defer></script>
+  <script src="archive-theme.js?v=editorial-2"></script>
+  <link rel="stylesheet" href="style.css?v=editorial-2">
+  <link rel="stylesheet" href="edition.css?v=editorial-2">
+  <link rel="stylesheet" href="refinement.css?v=editorial-2">
+  <link rel="stylesheet" href="archive.css?v=editorial-2">
+  <link rel="stylesheet" href="award-hierarchy.css?v=editorial-2">
+  <link rel="stylesheet" href="award-experience.css?v=editorial-2">
+  <link rel="stylesheet" href="archive-experience.css?v=editorial-2">
+  <link rel="stylesheet" href="archive-discovery.css?v=editorial-2">
+  <link rel="stylesheet" href="archive-explore.css?v=editorial-2">
+  <link rel="stylesheet" href="archive-editorial.css?v=editorial-2">
+  <script src="archive-site.js?v=editorial-2" defer></script>
+  <script src="archive-explore.js?v=editorial-2" defer></script>
+  <script src="app.js?v=editorial-2" defer></script>
 </head>
 <body data-page="awards">
 
@@ -50,7 +52,7 @@
     </section>
     <div id="opening-line"></div>
     <section class="edition-strip" aria-label="Winners’ collection"><a href="#final-cut">Meet the films</a></section>
-    <div class="chapter-nav" id="awards"><span class="micro">THE CHAPTERS</span><div class="current-chapter" hidden><span class="micro" data-edition-period></span><strong id="active-chapter-label">Film &amp; Direction</strong></div><nav aria-label="Award chapters" id="chapter-links"></nav><div class="chapter-actions"><button class="nav-view-toggle" type="button" data-view-toggle hidden aria-label="Switch to Compact view" title="Switch to Compact view"><svg class="view-icon-list" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M1.5 3h2M6 3h8.5M1.5 8h2M6 8h8.5M1.5 13h2M6 13h8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><svg class="view-icon-cinematic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1.5" y="2" width="13" height="9" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M2 14h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><span class="nav-view-label">Compact</span></button><button class="index-open" aria-haspopup="dialog" aria-label="Open the full award index"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M1 3h14M1 8h14M1 13h14" stroke="currentColor"/></svg><span>INDEX</span></button></div></div>
+    <div class="chapter-nav" id="awards"><span class="micro">THE CHAPTERS</span><div class="current-chapter" hidden><span class="micro" data-edition-period></span><strong id="active-chapter-label">Film &amp; Direction</strong></div><nav aria-label="Award chapters" id="chapter-links"></nav><div class="chapter-actions"><button class="nav-view-toggle" type="button" data-view-toggle hidden aria-label="Switch to Compact view" title="Switch to Compact view"><svg class="view-icon-list" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M1.5 3h2M6 3h8.5M1.5 8h2M6 8h8.5M1.5 13h2M6 13h8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><svg class="view-icon-cinematic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1.5" y="2" width="13" height="9" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M2 14h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><span class="nav-view-label">Compact</span></button><button class="index-open" aria-haspopup="dialog" aria-label="Open the full award index"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M1 3h14M1 8h14M1 13h14" stroke="currentColor"/></svg><span>Index</span></button></div></div>
     <div id="chapter-content"></div>
     <section class="spotlights section-shell" id="spotlights" aria-labelledby="spotlights-title"><div class="section-heading"><div><p class="eyebrow">BEYOND A SINGLE CATEGORY</p><h2 id="spotlights-title">The presence.<br><em>The body of work.</em></h2></div><span class="section-aside">TWO WAYS TO REMEMBER<br>A PERFORMANCE.</span></div><div id="spotlight-content"></div></section>
     <section class="final-cut section-shell" id="final-cut" aria-labelledby="final-cut-title">
@@ -82,21 +84,22 @@
       </div>
       <div class="ceremony-scroll" tabindex="0" aria-label="Award details. Swipe horizontally to move between awards."></div>
       <div class="ceremony-footer">
-        <button class="ceremony-prev" aria-label="Previous award">← <span>PREVIOUS</span></button>
-        <button class="ceremony-index" aria-haspopup="dialog" title="Open award index">INDEX</button>
+        <button class="ceremony-prev" aria-label="Previous award">← <span>Previous</span></button>
+        <button class="ceremony-index" aria-haspopup="dialog" title="Open award index">Index</button>
         <button class="ceremony-next"></button>
       </div>
     </div>
   </dialog>
   <dialog id="index-dialog" aria-labelledby="index-title"><div class="index-header"><h2 id="index-title" tabindex="-1">The index.</h2><div class="view-switch index-view-switch" role="group" aria-label="Award display mode" hidden><button type="button" data-view="cinematic" aria-pressed="true">Cinematic</button><button type="button" data-view="compact" aria-pressed="false">Compact</button></div><button class="dialog-close" aria-label="Close index">✕</button></div><label class="search-label" for="category-search">Search films, people, awards or moods</label><input id="category-search" type="search" placeholder="Film, person, award or mood…" autocomplete="off"><div id="index-results" role="region" aria-label="Index results"></div></dialog>
-  <dialog id="film-file-dialog" aria-labelledby="film-file-title"><div class="film-file-header"><div><p class="eyebrow">THE FILM FILE</p><h2 id="film-file-title" tabindex="-1"></h2></div><button class="dialog-close" aria-label="Close film file">✕</button></div><div class="film-file-scroll" id="film-file-content"></div></dialog>
+  <dialog id="film-file-dialog" aria-labelledby="film-file-title"><div class="film-file-header"><div><p class="eyebrow">Film file</p><h2 id="film-file-title" tabindex="-1"></h2></div><button class="dialog-close" aria-label="Close film file">✕</button></div><div class="film-file-scroll" id="film-file-content"></div></dialog>
   <dialog id="person-dialog" aria-labelledby="person-title">
-    <div class="film-file-header person-header"><div><p class="eyebrow">THE ARTIST FILE</p><h2 id="person-title" tabindex="-1"></h2></div><button class="dialog-close" aria-label="Close artist file">✕</button></div>
+    <div class="film-file-header person-header"><div><p class="eyebrow">Artist file</p><h2 id="person-title" tabindex="-1"></h2></div><button class="dialog-close" aria-label="Close artist file">✕</button></div>
     <div class="person-scroll" id="person-content"></div>
   </dialog>
   <dialog id="frame-dialog" aria-labelledby="full-frame-title">
-    <div class="full-frame-header"><div class="full-frame-caption"><h2 id="full-frame-title" tabindex="-1"></h2><small id="full-frame-context" hidden></small></div><div class="full-frame-tools"><div class="frame-gallery-controls" hidden><button class="frame-gallery-prev" type="button" aria-label="Previous film still" title="Previous film still"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m10 3-5 5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span id="frame-gallery-count" aria-live="polite"></span><button class="frame-gallery-next" type="button" aria-label="Next film still" title="Next film still"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m6 3 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><button class="dialog-close" aria-label="Close full frame">✕</button></div></div>
+    <div class="full-frame-header"><div class="full-frame-caption"><h2 id="full-frame-title" tabindex="-1"></h2><div class="frame-caption-meta"><small id="full-frame-context" hidden></small><a id="full-frame-source" target="_blank" rel="noopener noreferrer" hidden>Image source</a></div></div><div class="full-frame-tools"><div class="frame-gallery-controls" hidden><button class="frame-gallery-prev" type="button" aria-label="Previous film still" title="Previous film still"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m10 3-5 5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" id="frame-gallery-count" aria-expanded="false" aria-controls="frame-contact-sheet" aria-label="Show contact sheet" title="Show contact sheet"><span class="frame-count-label" aria-live="polite"></span><svg class="contact-glyph" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><rect x="1.5" y="2" width="5.5" height="4.5" rx=".6"/><rect x="9" y="2" width="5.5" height="4.5" rx=".6"/><rect x="1.5" y="9" width="5.5" height="4.5" rx=".6"/><rect x="9" y="9" width="5.5" height="4.5" rx=".6"/></svg></button><button class="frame-gallery-next" type="button" aria-label="Next film still" title="Next film still"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m6 3 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><button class="dialog-close" aria-label="Close full frame">✕</button></div></div>
     <div class="full-frame-stage"><img id="full-frame-image" alt="" decoding="async"><p id="full-frame-status" role="status" hidden>Loading frame…</p></div>
+    <div id="frame-contact-sheet" class="frame-contact-sheet" hidden><div class="frame-contact-grid" role="group" aria-label="Choose a film still"></div></div>
   </dialog>
   <dialog id="credits-dialog" aria-labelledby="credits-title"><button class="dialog-close" aria-label="Close credits">✕</button><p class="eyebrow">THE END CREDITS</p><h2 id="credits-title">Made of cinema.</h2><p>The award results and honorable mentions come from the retained T.S. Archive ballot. The first selection in each category is the winning selection.</p><p>Film artwork belongs to its respective rights holders. This is an independent, personal editorial archive.</p><div id="credit-links"></div><p class="credit-note">Design references include the <a href="https://www.oscars.org/oscars/ceremonies/2025" target="_blank" rel="noopener noreferrer">Academy archive ↗</a>, <a href="https://www.criterion.com/current/top-10-lists" target="_blank" rel="noopener noreferrer">Criterion’s personal film collections ↗</a> and the <a href="https://a24films.com/films" target="_blank" rel="noopener noreferrer">A24 film catalogue ↗</a>.</p></dialog>
 </body>

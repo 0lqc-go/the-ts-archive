@@ -90,7 +90,7 @@
   async function renderHome() {
     const index = await catalog();
     const hash = location.hash;
-    if (hash && !['#top', '#decades', '#lists', '#toggle-goatcounter'].includes(hash)) {
+    if (hash && !['#top', '#decades', '#moods', '#lists', '#toggle-goatcounter'].includes(hash)) {
       location.replace(editionHref(index.featuredEdition) + hash);
       return;
     }
@@ -118,6 +118,7 @@
     const index = await catalog();
     const list = index.lists.find(item => item.id === params.get('list') && item.kind !== 'snubs');
     if (!list) throw new Error('That list is not in the archive.');
+    window.ArchiveTheme?.apply('list', list.id);
     displayProfile(index);
     const {items, media} = await read(list.content);
     const listMedia = {sizes:{...index.media.sizes,...media?.sizes},variants:{...index.media.variants,...media?.variants}};
@@ -169,7 +170,12 @@
   }
 
   function replaceLocation(url) {
-    history.replaceState(history.state, '', url);
+    try { history.replaceState(history.state, '', url); }
+    catch (error) {
+      if (location.protocol !== 'file:' || error.name !== 'SecurityError') throw error;
+      // A file URL cannot use every history operation on every browser.
+      location.replace(url.href);
+    }
   }
 
   function setCover(node, path, options = {}, media = {}) {

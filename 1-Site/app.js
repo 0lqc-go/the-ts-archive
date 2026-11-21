@@ -5,6 +5,8 @@
   const editionId = site.params.get('edition') ?? catalog.featuredEdition;
   const selected = catalog.editions.find(item => item.id === editionId);
   if (!selected) throw new Error('That edition is not in the archive.');
+  const theme = window.ArchiveTheme;
+  theme.apply(document.body.dataset.page, selected.id);
   const archive = await site.read(selected.content);
   const explore = window.ArchiveExplore;
   const exploreEngine = explore.createEngine(catalog, {edition: selected, archive});
@@ -27,11 +29,12 @@
   const actorFocalPoints = edition.actorFocalPoints ?? {};
   const hasSpotlights = archive.performances?.length || archive.actors?.length;
   const snubList = catalog.lists.find(item => item.kind === 'snubs' && item.edition === editionId);
-  const defaultAccent = '#c0b3a1';
+  const defaultAccent = theme.accent();
+  const chapterAccent = chapterId => theme.chapterAccent(chapterId);
   const awards = archive.chapters.flatMap(chapter => chapter.awards.map(award => ({...award, chapter})))
     .map((award, i) => ({
       ...award, number: i + 1,
-      accent: award.accent ?? edition.accents?.[i % edition.accents.length] ?? defaultAccent
+      accent: chapterAccent(award.chapter.id)
     }));
   const awardsById = new Map(awards.map(award => [award.id, award]));
   function directAwardHref(id) {
@@ -323,7 +326,7 @@
 
   function nominations(entries, eager = false, artist = false, category = '', listId = '') {
     if (!entries.length) return '';
-    return `<div class="shortlist${artist ? ' artist-shortlist' : ''}"${listId ? ` id="${esc(listId)}"` : ''}><p class="micro">HONORABLE MENTIONS <span>${pad(entries.length)}</span></p><ul class="nominee-grid" aria-label="Honorable mentions" style="--count:${entries.length}">${entries.map(entry => nomination(entry, eager, artist, category)).join('')}</ul></div>`;
+    return `<div class="shortlist${artist ? ' artist-shortlist' : ''}"${listId ? ` id="${esc(listId)}"` : ''}><p class="micro">Honorable mentions <span>${pad(entries.length)}</span></p><ul class="nominee-grid" aria-label="Honorable mentions" style="--count:${entries.length}">${entries.map(entry => nomination(entry, eager, artist, category)).join('')}</ul></div>`;
   }
 
   function artistWorks(entry) {
@@ -379,14 +382,28 @@
     $('#chapter-links').innerHTML = archive.chapters.map(chapter => `<a href="#${esc(chapter.id)}" class="chapter-link" data-chapter="${esc(chapter.id)}">${esc(chapter.shortName ?? chapter.name)}</a>`).join('');
     $('#chapter-content').innerHTML = archive.chapters.map((chapter, i) => {
       const id = esc(chapter.id);
-      return `<section class="chapter section-shell" style="--accent:${awardsById.get(chapter.awards[0].id).accent}" id="${id}" aria-labelledby="chapter-title-${id}">
-      <header class="chapter-heading"><span class="chapter-number" aria-label="Chapter ${i + 1}">${pad(i + 1)}<span>.</span></span><div><p class="eyebrow">${chapter.awards.length} ${chapter.awards.length === 1 ? 'AWARD' : 'AWARDS'}</p><h2 id="chapter-title-${id}">${esc(chapter.name)}</h2></div></header>
+      const accent = chapterAccent(chapter.id);
+      const opener = chapterPreview(chapter);
+      return `<section class="chapter section-shell" data-chapter-accent="${accent}" style="--accent:${accent};--chapter-accent:${accent}" id="${id}" aria-labelledby="chapter-title-${id}">
+      <header class="chapter-heading${opener?.path ? ' has-opener' : ''}"><span class="chapter-number" aria-label="Chapter ${i + 1}">${pad(i + 1)}<span>.</span></span><div class="chapter-heading-title"><p class="eyebrow">${chapter.awards.length} ${chapter.awards.length === 1 ? 'award' : 'awards'}</p><h2 id="chapter-title-${id}">${esc(chapter.name)}</h2></div>${opener?.path ? `<span class="chapter-opener" aria-hidden="true"${opener.focal ? ` style="--focal-x:${esc(opener.focal)}"` : ''}>${imageMarkup(opener.path,false,'(max-width: 360px) 1px, (max-width: 680px) 36vw, (min-width: 1447px) 560px, 39vw')}</span>` : ''}</header>
       <div class="award-grid">${chapter.awards.map(a => {
         const quote = edition.interludes?.[a.id];
         return awardCard(awardsById.get(a.id)) + (quote ? quotePanel(quote, 'interlude') : '');
       }).join('')}</div>
     </section>`;
     }).join('');
+  }
+
+  function chapterPreview(chapter) {
+    const chosen = edition.chapterOpeners?.[chapter.id];
+    if (chosen?.path) return chosen;
+    const preferred = discovery.chapterAwards?.[chapter.id];
+    const candidates = [preferred, ...chapter.awards.map(award => award.id)]
+      .map(id => awardsById.get(id)).filter(award => award?.chapter.id === chapter.id);
+    // A chapter is introduced by film imagery, never an artist portrait.
+    return candidates.flatMap(award => award.winnerArtwork
+      ? filmFrames(award.winner.films,award.stills,award.focalPoints)
+      : awardFrames(award)).find(item => item.path && item.shape === 'wide');
   }
 
   function renderSpotlights() {
@@ -562,6 +579,7 @@
     });
     frameDialog.addEventListener('close', () => {
       if (!frameDialog.open) {
+        setContactSheet(false, true);
         image.removeAttribute('src');
         frameCollection = []; frameIndex = 0; frameTouch = null;
         $('.frame-gallery-controls', frameDialog).hidden = true;
@@ -569,10 +587,21 @@
     });
     $('.frame-gallery-prev', frameDialog).addEventListener('click', () => stepFrame(-1));
     $('.frame-gallery-next', frameDialog).addEventListener('click', () => stepFrame(1));
+    $('#frame-gallery-count', frameDialog).addEventListener('click', () => setContactSheet($('#frame-contact-sheet',frameDialog).hidden));
+    $('.frame-contact-grid',frameDialog).addEventListener('click', event => {
+      const button = event.target.closest('[data-frame-index]');
+      if (!button) return;
+      const index = Number(button.dataset.frameIndex);
+      if (Number.isInteger(index) && frameCollection[index]) {
+        frameIndex = index; displayFrame();
+      }
+    });
     frameDialog.addEventListener('keydown', event => {
       if (frameCollection.length < 2 || event.ctrlKey || event.altKey || event.metaKey || event.shiftKey) return;
       if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      const fromSheet = event.target.closest('.frame-contact-thumb');
       event.preventDefault(); stepFrame(event.key === 'ArrowRight' ? 1 : -1);
+      if (fromSheet) $('.frame-contact-thumb[aria-pressed="true"]',frameDialog)?.focus({preventScroll:true});
     });
     const stage = $('.full-frame-stage', frameDialog);
     stage.addEventListener('touchstart', event => {
@@ -588,28 +617,67 @@
     stage.addEventListener('touchcancel', () => { frameTouch = null; }, {passive:true});
   }
 
+  function frameThumbnail(path) {
+    const variants = [...(media.variants?.[path] ?? [])].sort((a,b) => a.width-b.width);
+    return variants.find(item => item.width >= 280)?.src ?? variants[0]?.src ?? path;
+  }
+  function frameRecord(slug, record) {
+    return {
+      src: largestFrame(record.path), path:record.path,
+      thumbnail:record.thumbnail || frameThumbnail(record.path), label:film(slug).title,
+      context: awardsById.get(record.award)?.name ?? record.label ?? record.context ?? 'Film still',
+      source:record.source,
+      credit:record.credit
+    };
+  }
   function filmFrameCollection(slug) {
     const frames = [], seen = new Set();
     const info = film(slug);
     if (!info) return frames;
-    const add = (path, context) => {
+    const curated = archive.galleries?.[slug];
+    if (curated?.length) return curated.slice(0,7).map(record => frameRecord(slug,record));
+    const add = (path, context, record = {}) => {
       if (!path) return;
       const src = largestFrame(path);
       if (seen.has(src)) return;
       seen.add(src);
-      frames.push({src, path, label:info.title, context});
+      frames.push({src,path,thumbnail:frameThumbnail(path),label:info.title,context,source:record.source,credit:record.credit});
     };
-    add(art(slug).backdrop, 'Film still');
+    add(art(slug).backdrop, 'Film still', {source:art(slug).backdropSource || art(slug).source});
     for (const still of (alternates[slug] ?? [])) {
-      add(still.path, awardsById.get(still.award)?.name ?? 'Film still');
+      add(still.path, awardsById.get(still.award)?.name ?? 'Film still',still);
     }
     for (const [awardId, still] of Object.entries(edition.presentationStills ?? {})) {
-      if (still.film === slug) add(still.path, awardsById.get(awardId)?.name ?? 'Presentation still');
+      if (still.film === slug) add(still.path, awardsById.get(awardId)?.name ?? 'Presentation still',still);
     }
     for (const cover of [selected, snubList, catalog.homeCover]) {
-      if (cover?.coverFilm === info.title && Number(cover.coverYear) === Number(info.year)) add(cover.cover, 'Cover still');
+      if (cover?.coverFilm === info.title && Number(cover.coverYear) === Number(info.year)) add(cover.cover, 'Cover still',{source:cover.coverSource});
     }
-    return frames;
+    return frames.slice(0,7);
+  }
+
+  function updateContactSheet() {
+    const sheet = $('#frame-contact-sheet',frameDialog);
+    const counter = $('#frame-gallery-count',frameDialog);
+    const expanded = !sheet.hidden;
+    $('.frame-count-label',counter).textContent = (frameIndex + 1) + ' / ' + frameCollection.length;
+    counter.setAttribute('aria-expanded',String(expanded));
+    const action = expanded ? 'Hide contact sheet' : 'Show contact sheet';
+    counter.setAttribute('aria-label',action + ', frame ' + (frameIndex+1) + ' of ' + frameCollection.length);
+    counter.title = action;
+    $$('.frame-contact-thumb',sheet).forEach((button,i) => button.setAttribute('aria-pressed',String(i===frameIndex)));
+  }
+  function setContactSheet(open, clear = false) {
+    if (!frameDialog) return;
+    const sheet = $('#frame-contact-sheet',frameDialog), grid = $('.frame-contact-grid',sheet);
+    if (clear) grid.replaceChildren();
+    sheet.hidden = !open || frameCollection.length < 2;
+    if (!sheet.hidden && !grid.children.length) {
+      // Until the visitor opens the contact sheet, these files are not requested.
+      grid.style.setProperty('--frame-count',frameCollection.length);
+      grid.innerHTML = frameCollection.map((frame,i) => `<button type="button" class="frame-contact-thumb" data-frame-index="${i}" aria-pressed="${i===frameIndex}" aria-label="Frame ${i+1}: ${esc(frame.context || frame.label)}" title="${esc(frame.context || frame.label)}"><img src="${esc(frame.thumbnail || frame.src)}" alt="" width="320" height="180" decoding="async" loading="lazy"></button>`).join('');
+    }
+    updateContactSheet();
   }
 
   function displayFrame() {
@@ -621,8 +689,14 @@
     const context = $('#full-frame-context', frameDialog);
     context.textContent = frame.context || '';
     context.hidden = frameCollection.length < 2 || !frame.context;
+    const source = $('#full-frame-source', frameDialog);
+    let sourceUrl;
+    try { const url = new URL(frame.source); if (url.protocol === 'https:') sourceUrl = url; } catch {}
+    source.hidden = !sourceUrl;
+    if (sourceUrl) {source.href = sourceUrl.href; source.title = 'View still credit on ' + sourceUrl.hostname;}
+    else source.removeAttribute('href');
     $('.frame-gallery-controls', frameDialog).hidden = frameCollection.length < 2;
-    $('#frame-gallery-count', frameDialog).textContent = (frameIndex + 1) + ' / ' + frameCollection.length;
+    updateContactSheet();
     image.alt = frame.label;
     status.textContent = 'Loading frame…';
     status.hidden = false;
@@ -637,14 +711,24 @@
   function openFullFrame(trigger) {
     if (!frameDialog) return;
     const src = trigger.dataset.fullFrame;
-    frameCollection = filmFrameCollection(trigger.dataset.film);
+    const slug = trigger.dataset.film;
+    const path = trigger.dataset.framePath || src;
+    frameCollection = filmFrameCollection(slug);
     frameIndex = frameCollection.findIndex(frame => frame.src === src);
     if (frameIndex < 0) {
-      frameCollection.unshift({src, label:trigger.dataset.frameLabel, context:'Selected still'});
+      // Do not lose the explicitly selected award frame, even when the
+      // curated contact sheet already contains seven other photographs.
+      const entry = (alternates[slug] ?? []).find(still => still.path === path);
+      const presentation = Object.entries(edition.presentationStills ?? {}).find(([,still]) => still.path === path);
+      const context = awardsById.get(entry?.award ?? presentation?.[0])?.name || 'Selected artwork';
+      frameCollection = [{src,path,thumbnail:frameThumbnail(path),label:trigger.dataset.frameLabel,context,
+        source:entry?.source || presentation?.[1]?.source}, ...frameCollection].slice(0,7);
       frameIndex = 0;
     }
+    setContactSheet(false,true);
     openDialog(frameDialog, '.dialog-close', trigger);
     displayFrame();
+    if (trigger.dataset.openContactSheet === 'true') setContactSheet(true);
   }
 
   // Dossiers work from an edition or its alternate ballot, without leaving the archive.
@@ -703,7 +787,8 @@
 
   if ($('#credit-links')) {
     $('#credit-links').innerHTML = `<p>${selected.coverSource ? `<a href="${esc(selected.coverSource)}" ${external}>${esc(selected.coverFilm)} cover image ↗</a><br>` : ''}<a href="${esc(profile.url)}" ${external}>${esc(profile.name)} · Letterboxd profile artwork ↗</a></p><details class="image-sources"><summary>Film artwork sources</summary><ul>${Object.entries(archive.films).map(([slug, info]) => `<li><a href="${esc(art(slug).source || info.url)}" ${external}>${esc(info.title)} ↗</a>${art(slug).posterSource ? ` · <a href="${esc(art(slug).posterSource)}" ${external}>Poster source</a>` : ''}${art(slug).backdropSource ? ` · <a href="${esc(art(slug).backdropSource)}" ${external}>Film still</a>` : ''}</li>`).join('')}</ul></details>`;
-    const sources = Object.entries(alternates).flatMap(([slug, stills]) => {
+    const sources = Object.entries(archive.films).flatMap(([slug]) => {
+      const stills = [...(alternates[slug] ?? []),...(archive.galleries?.[slug] ?? [])];
       const name = esc(film(slug).title);
       const urls = new Set(stills.map(still => still.source).filter(Boolean));
       const credits = new Set(stills.map(still => still.credit).filter(Boolean));
@@ -920,7 +1005,8 @@
     const {wins,mentions,portfolios,selected} = dossierEntries(slug);
     const director = directorFor(slug);
     const movieArt = art(slug);
-    const dossierStill = movieArt.backdrop || alternates[slug]?.find(still => still.path)?.path;
+    const gallery = filmFrameCollection(slug);
+    const dossierStill = gallery[0]?.path || movieArt.backdrop || alternates[slug]?.find(still => still.path)?.path;
     const listening = awards.flatMap(award => (award.listen ?? []).filter(item => item.film === slug));
     const snubs = (archive.snubs ?? []).filter(item => item.entry.films.includes(slug));
     const winText = `${wins.length} ${wins.length === 1 ? 'award' : 'awards'}`;
@@ -929,7 +1015,7 @@
       ${dossierStill ? frameDialog
         ? frameButton(dossierStill, info.title, 'film-file-frame', imageMarkup(dossierStill, true, '(min-width: 1971px) 1080px, (min-width: 1440px) 55vw, (min-width: 920px) 790px, 90vw'), ` data-film="${esc(slug)}"`)
         : `<div class="film-file-frame">${imageMarkup(dossierStill, true, '(min-width: 1971px) 1080px, (min-width: 1440px) 55vw, (min-width: 920px) 790px, 90vw')}</div>` : ''}
-      <div class="film-file-meta"><div class="file-poster">${poster(slug,true,'96px')}</div><div><p class="file-year">${esc(info.year)}${director ? ` · ${personLink(director)}` : ''}</p><p class="file-tally">${esc(winText)} <span>· ${mentions.length} ${mentions.length === 1 ? 'honorable mention' : 'honorable mentions'}</span></p><a class="file-letterboxd" href="${esc(info.url)}" ${external}>View on Letterboxd</a></div></div>
+      <div class="film-file-meta"><div class="file-poster">${poster(slug,true,'96px')}</div><div><p class="file-year">${esc(info.year)}${director ? ` · ${personLink(director)}` : ''}</p><p class="file-tally">${esc(winText)} <span>· ${mentions.length} ${mentions.length === 1 ? 'honorable mention' : 'honorable mentions'}</span></p><div class="file-links">${gallery.length > 1 && frameDialog ? `<button class="film-gallery-open" type="button" data-full-frame="${esc(gallery[0].src)}" data-frame-path="${esc(gallery[0].path)}" data-frame-label="${esc(info.title)}" data-film="${esc(slug)}" data-open-contact-sheet="true" aria-haspopup="dialog" aria-label="Browse ${gallery.length} film stills"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><rect x="1.5" y="2.5" width="5.5" height="4" rx=".6"/><rect x="9" y="2.5" width="5.5" height="4" rx=".6"/><rect x="1.5" y="9.5" width="5.5" height="4" rx=".6"/><rect x="9" y="9.5" width="5.5" height="4" rx=".6"/></svg>${gallery.length} stills</button>` : ''}<a class="file-letterboxd" href="${esc(info.url)}" ${external}>View on Letterboxd</a></div></div></div>
       ${awardStillGallery(slug)}
       <div class="film-file-sections">
       ${dossierSection('Awards',wins)}${dossierSection('Honorable mentions',mentions)}${dossierSection('Body of work',portfolios)}${dossierSection('Editorial selections',selected)}
@@ -994,7 +1080,7 @@
     $('#dialog-number').textContent = pad(index + 1);
     $('.ceremony-progress', awardDialog).style.setProperty('--progress', `${percent}%`);
     $('.ceremony-prev', awardDialog).disabled = index === 0;
-    nextButton.innerHTML = next ? `<span>NEXT AWARD →</span><small>${esc(next.name)}</small>` : '<span>FINISH ✓</span>';
+    nextButton.innerHTML = next ? `<span>Next award →</span><small>${esc(next.name)}</small>` : '<span>Finish ✓</span>';
     nextButton.setAttribute('aria-label', next ? `Next award: ${next.name}` : 'Finish awards presentation');
     const frames = renderFrames(awardFrames(award, 'dialog'), true, 'dialog');
     const frameClass = `ceremony-frame${artist ? ' portfolio-frame' : ''}${award.winnerArtwork ? ' portrait-frame' : ''}`;
@@ -1162,11 +1248,8 @@
 
   function chapterIndex() {
     const tiles = archive.chapters.map(chapter => {
-      const preferred = discovery.chapterAwards?.[chapter.id];
-      const candidates = [preferred, ...chapter.awards.map(award => award.id)]
-        .map(id => awardsById.get(id)).filter(award => award?.chapter.id === chapter.id);
-      const frame = candidates.flatMap(award => awardFrames(award)).find(item => item.path);
-      return `<button type="button" class="index-chapter" data-index-chapter="${esc(chapter.id)}">
+      const frame = chapterPreview(chapter);
+      return `<button type="button" class="index-chapter" data-index-chapter="${esc(chapter.id)}" style="--chapter-accent:${chapterAccent(chapter.id)}">
         ${frame ? `<span class="index-chapter-art"${frame.focal ? ` style="--focal-x:${esc(frame.focal)}"` : ''}>${imageMarkup(frame.path, false, '(min-width: 2447px) 328px, (min-width: 1450px) 14vw, (min-width: 681px) 192px, 44vw')}</span>` : ''}
         <span class="index-chapter-label"><strong>${esc(chapter.name)}</strong><small>${chapter.awards.length} ${chapter.awards.length === 1 ? 'award' : 'awards'}</small></span>
       </button>`;
@@ -1320,16 +1403,14 @@
     refreshNavigation();
     const scrollable = document.documentElement.scrollHeight - window.innerHeight;
     $('.reading-progress').style.transform = `scaleX(${scrollable > 0 ? window.scrollY / scrollable : 0})`;
-    const line = window.innerHeight * .45;
-    const currentCard = cards.findLast(card => card.getBoundingClientRect().top <= line);
-    const withinAwards = cards.at(-1)?.getBoundingClientRect().bottom >= line;
-    const nextAccent = withinAwards && currentCard ? currentCard.dataset.accent : '#c0b3a1';
+    const active = chapters.findLast(chapter => chapter.getBoundingClientRect().top < 180);
+    const withinAwards = $('#final-cut').getBoundingClientRect().top >= 180;
+    const nextAccent = withinAwards && active ? chapterAccent(active.id) : defaultAccent;
     if (currentAccent !== nextAccent) {
       document.body.style.setProperty('--current-accent', nextAccent);
       currentAccent = nextAccent;
     }
     // Match the persistent anchor top margin in both navigation modes.
-    const active = chapters.findLast(chapter => chapter.getBoundingClientRect().top < 180);
     if (enhanced) {
       const end = $('#final-cut').getBoundingClientRect().top < 180;
       const label = end ? 'The final cut' : archive.chapters.find(chapter => chapter.id === active?.id)?.name ?? archive.chapters[0].name;

@@ -8,6 +8,7 @@ A personal cinema archive by [0lqc](https://letterboxd.com/0lqc/). Browse the [p
 - [content/2020-2026.json](content/2020-2026.json) holds the 2020–2026 ballot, film links, stills, and quotes.
 - [assets/films](assets/films/) holds film artwork. Record any new still's width and height in the edition's `media.sizes`, and give the source or curator credit in `stills`.
 - `media.films` defines the poster and landscape image for each film file. `content/artwork-variants.json` lists optimized sizes for responsive loading; the original images remain the main references. Every new edition automatically inherits the shared cinematic/compact layouts, award index and film dossiers.
+- `galleries` records the verified contact sheets (3–7 stills per film), their source credits, dimensions, and responsive thumbnail paths. `editorial.chapterOpeners` and `editorial.moodCovers` select artwork for the cinematic chapter headings and visual mood collections.
 
 In an edition, `chapters` groups awards. Each award has a unique `id`, a `name`, a `winner`, and a `nominees` array. `winner` and the entries in `nominees` refer to film IDs in `films`. Award order follows the order in the file. Optional `editorial.interludes` keys match award IDs.
 

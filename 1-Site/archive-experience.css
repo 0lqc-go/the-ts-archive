@@ -4,12 +4,12 @@
   background: var(--ink);
 }
 :is(.archive-hero, .archive-list-hero) .hero-shade {
-  background: linear-gradient(to top, #18191b 0%, #18191bf5 10%, #18191bc6 24%, #18191b65 43%, #18191b12 62%, transparent 78%),
+  background: linear-gradient(to top, var(--ink) 0%, color-mix(in srgb, var(--ink) 96.08%, transparent) 10%, color-mix(in srgb, var(--ink) 77.65%, transparent) 24%, color-mix(in srgb, var(--ink) 39.61%, transparent) 43%, color-mix(in srgb, var(--ink) 7.06%, transparent) 62%, transparent 78%),
               linear-gradient(90deg, #11131935 0%, transparent 58%);
 }
 .archive-list-hero .hero-shade {
-  background: linear-gradient(to bottom, #18191bca 0%, #18191b91 9%, transparent 24%),
-              linear-gradient(to top, #18191b 0%, #18191bf5 10%, #18191bc6 24%, #18191b65 43%, #18191b12 62%, transparent 78%),
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--ink) 79.22%, transparent) 0%, color-mix(in srgb, var(--ink) 56.86%, transparent) 9%, transparent 24%),
+              linear-gradient(to top, var(--ink) 0%, color-mix(in srgb, var(--ink) 96.08%, transparent) 10%, color-mix(in srgb, var(--ink) 77.65%, transparent) 24%, color-mix(in srgb, var(--ink) 39.61%, transparent) 43%, color-mix(in srgb, var(--ink) 7.06%, transparent) 62%, transparent 78%),
               linear-gradient(90deg, #11131935 0%, transparent 58%);
 }
 :is(.archive-hero, .archive-list-hero) :is(.hero-image, .snubs-image) {
@@ -50,24 +50,24 @@
 .archive-card-copy { padding: 13px 1px 0; }
 .archive-card-copy .eyebrow { font-weight: 500; letter-spacing: .1em; }
 .archive-card h3 { font: 600 clamp(1.375rem, 2vw, 1.8rem)/1.14 var(--display); margin: 7px 0 5px; }
-.archive-card-copy p:last-of-type { color: #aeb2b8; font-size: .91rem; line-height: 1.48; }
+.archive-card-copy p:last-of-type { color: var(--muted); font-size: .91rem; line-height: 1.48; }
 .archive-card:hover img, .archive-card:focus-visible img { box-shadow: 0 0 0 1.5px var(--paper-accent); }
 .archive-card:hover h3 { color: var(--paper-accent); }
 
 /* List covers use the same cinematic composition, including coverless lists. */
 .collection-hero #list-title { max-width: min(100%, 17ch); width: auto; line-height: 1; text-wrap: balance; overflow-wrap: anywhere; }
-.collection-hero #list-description { margin: 0; color: #f4f0e8; }
+.collection-hero #list-description { margin: 0; color: var(--text); }
 .collection-hero[data-has-cover="false"] { min-height: 0; }
 .collection-hero[data-has-cover="false"] :is(.hero-image, .hero-shade, .hero-foot) { display: none; }
 .collection-hero[data-has-cover="false"] .hero-title { padding: 92px var(--gutter) 28px; }
 .collection-hero[data-has-cover="false"] #list-title { font-size: var(--type-section); }
-.collection-hero[data-has-cover="false"] #list-description { font: 400 1rem/1.55 var(--body); color: #aeb2b8; }
+.collection-hero[data-has-cover="false"] #list-description { font: 400 1rem/1.55 var(--body); color: var(--muted); }
 
 /* A unified, compact option across film lists, without oversized cards. */
 :is(.snub-list, .collection) { padding-block: clamp(45px, 6.5vw, 88px); }
 .snub-list .section-heading { margin-bottom: 23px; }
 .list-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin: 0 0 clamp(20px, 3vw, 31px); }
-.list-count { color: #aeb2b8; font-size: var(--type-control); }
+.list-count { color: var(--muted); font-size: var(--type-control); }
 .list-view-toggle { min-height: var(--control-height); }
 .list-view-toggle .nav-view-label { display: inline; }
 body[data-list-view="compact"] .list-view-toggle .view-icon-list { display: none; }
@@ -92,8 +92,8 @@ body[data-list-view="compact"] .list-view-toggle .view-icon-cinematic { display:
 .list-poster-link:hover .poster, .list-poster-link:focus-visible .poster { box-shadow: 0 0 0 1.5px var(--paper-accent); }
 .snub-card h3, .collection-entry h2 { font: 600 clamp(1.03rem, 1.6vw, 1.2rem)/1.33 var(--body); letter-spacing: -.015em; margin: 3px 0 4px; overflow-wrap: anywhere; }
 .snub-card .eyebrow { color: var(--paper-accent); font: 500 var(--type-meta)/1.4 var(--body); letter-spacing: .06em; }
-.snub-card p:not(.eyebrow), .collection-entry p { color: #b2b6bb; font-size: .89rem; line-height: 1.43; margin-top: 4px; overflow-wrap: anywhere; }
-.snub-card small, .collection-entry h2 small { color: #a9b2bb; font: 400 .77rem/1.4 var(--body); }
+.snub-card p:not(.eyebrow), .collection-entry p { color: var(--muted); font-size: .89rem; line-height: 1.43; margin-top: 4px; overflow-wrap: anywhere; }
+.snub-card small, .collection-entry h2 small { color: var(--muted); font: 400 .77rem/1.4 var(--body); }
 .snub-card small { margin-top: 6px; }
 .list-film-link:hover { color: var(--paper-accent); text-decoration: underline; text-underline-offset: 3px; }
 body[data-list-view="compact"] :is(#snub-entries, #list-items) { gap: 16px 25px; }
@@ -113,9 +113,9 @@ body[data-list-view="compact"] :is(.snub-card p:not(.eyebrow), .collection-entry
 .watch-frame .frame-image img { object-fit: contain; }
 .watch-frame .winner-copy { position: relative; inset: auto; padding: 14px 0 3px; }
 .watch-frame .winner-title { font: 600 clamp(1.5rem, 2vw, 1.8rem)/1.25 var(--body); }
-.watch-frame .winner-detail { color: #b2b6bb; font-size: .95rem; }
-.watch-frame .watch-note { color: #aeb2b8; font-size: .86rem; }
-.watch-frame .film-link { color: #bfc4c9; text-decoration: underline; text-decoration-color: #ffffff27; text-underline-offset: 4px; }
+.watch-frame .winner-detail { color: var(--muted); font-size: .95rem; }
+.watch-frame .watch-note { color: var(--muted); font-size: .86rem; }
+.watch-frame .film-link { color: var(--text-subtle); text-decoration: underline; text-decoration-color: #ffffff27; text-underline-offset: 4px; }
 .watch-frame .film-link:hover { color: var(--text); }
 .spotlight-card { border-top: 0; }
 .spotlight-card h3 { padding-top: 0; }
@@ -125,13 +125,13 @@ body[data-list-view="compact"] :is(.snub-card p:not(.eyebrow), .collection-entry
 .wall-tile .poster { transition: box-shadow .17s ease; }
 .wall-tile:hover .poster, .wall-tile:focus-visible .poster { box-shadow: 0 0 0 1.5px var(--paper-accent); }
 #film-file-dialog .film-file-header h2 { font: 600 var(--type-dialog)/1.25 var(--body); letter-spacing: -.015em; }
-#film-file-dialog .dialog-close { border: 0; border-radius: 3px; background: transparent; color: #c4c4c4; width: 34px; height: 34px; }
+#film-file-dialog .dialog-close { border: 0; border-radius: 3px; background: transparent; color: var(--text-subtle); width: 34px; height: 34px; }
 #film-file-dialog .dialog-close:hover { background: #ffffff10; color: var(--text); }
 
 @media (max-width: 680px) {
   :is(.archive-hero, .archive-list-hero) { min-height: clamp(510px, 73svh, 650px); }
-  :is(.archive-hero, .archive-list-hero) .hero-shade { background: linear-gradient(to top, #18191b 0%, #18191bf5 14%, #18191bdb 29%, #18191b75 45%, #18191b15 68%, transparent 83%); }
-  .archive-list-hero .hero-shade { background: linear-gradient(to bottom, #18191bca 0%, #18191b91 9%, transparent 24%), linear-gradient(to top, #18191b 0%, #18191bf5 14%, #18191bdb 29%, #18191b75 45%, #18191b15 68%, transparent 83%); }
+  :is(.archive-hero, .archive-list-hero) .hero-shade { background: linear-gradient(to top, var(--ink) 0%, color-mix(in srgb, var(--ink) 96.08%, transparent) 14%, color-mix(in srgb, var(--ink) 85.88%, transparent) 29%, color-mix(in srgb, var(--ink) 45.88%, transparent) 45%, color-mix(in srgb, var(--ink) 8.24%, transparent) 68%, transparent 83%); }
+  .archive-list-hero .hero-shade { background: linear-gradient(to bottom, color-mix(in srgb, var(--ink) 79.22%, transparent) 0%, color-mix(in srgb, var(--ink) 56.86%, transparent) 9%, transparent 24%), linear-gradient(to top, var(--ink) 0%, color-mix(in srgb, var(--ink) 96.08%, transparent) 14%, color-mix(in srgb, var(--ink) 85.88%, transparent) 29%, color-mix(in srgb, var(--ink) 45.88%, transparent) 45%, color-mix(in srgb, var(--ink) 8.24%, transparent) 68%, transparent 83%); }
   :is(.archive-hero, .archive-list-hero) :is(.hero-image, .snubs-image) { background-position: var(--cover-mobile-position, 51% center); }
   :is(.archive-hero, .archive-list-hero) .hero-title { padding-bottom: 78px; }
   .archive-hero .hero-bottom { flex-wrap: wrap; gap: 12px; align-items: flex-end; }

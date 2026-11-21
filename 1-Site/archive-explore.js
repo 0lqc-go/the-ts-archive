@@ -102,7 +102,7 @@
     (data.actors ?? []).forEach(entry => record(entry, {kind:'spotlight', category:'Actor of the Decade', selection:'spotlight'}, 'actor-of-the-decade', [entry.name]));
     if (data.watch) record(data.watch, {kind:'watch', category:'Oscar Watch', selection:'watch'}, 'best-supporting-actor');
     // Only actual credited people can be selected under a craft filter.
-    const media = {films:data.media?.films ?? {}, variants:{...data.media?.variants, ...catalog.media?.variants}};
+    const media = {films:data.media?.films ?? {}, sizes:{...data.media?.sizes, ...catalog.media?.sizes}, variants:{...data.media?.variants, ...catalog.media?.variants}};
     return {edition, data, discovery, topics, filmText, personText, awards, records, people, media, snubHref};
   }
 
@@ -194,7 +194,7 @@
   const searchIcon = '<svg viewBox="0 0 20 20" width="19" height="19" fill="none" aria-hidden="true"><circle cx="8.7" cy="8.7" r="5.7" stroke="currentColor" stroke-width="1.55"/><path d="m13 13 4.5 4.5" stroke="currentColor" stroke-width="1.55" stroke-linecap="round"/></svg>';
   const shuffleIcon = '<svg viewBox="0 0 20 20" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 5h2c2.2 0 3.6 2.4 5.5 5s3.3 5 5.5 5h2m0 0-2.6-2.6M17.5 15l-2.6 2.6M2.5 15h2c1.4 0 2.5-1.1 3.6-2.6M12 7.6C13 6 14.2 5 15.5 5h2m0 0-2.6 2.6M17.5 5l-2.6-2.6"/></svg>';
   const chevron = '<svg viewBox="0 0 12 12" width="12" height="12" fill="none" aria-hidden="true"><path d="m2 4 4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  const filterIcon = '<svg viewBox="0 0 18 18" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true"><path d="M2.5 5h13M2.5 13h13"/><circle cx="6" cy="5" r="2" fill="#18191b"/><circle cx="11.5" cy="13" r="2" fill="#18191b"/></svg>';
+  const filterIcon = '<svg viewBox="0 0 18 18" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true"><path d="M2.5 5h13M2.5 13h13"/><circle cx="6" cy="5" r="2" fill="var(--panel)"/><circle cx="11.5" cy="13" r="2" fill="var(--panel)"/></svg>';
   const compareIcon = '<svg viewBox="0 0 18 18" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><rect x="1.5" y="3" width="6" height="12" rx="1"/><rect x="10.5" y="3" width="6" height="12" rx="1"/><path d="M3.5 11.5h2M12.5 11.5h2"/></svg>';
   function searchButton() {
     const masthead = $('.masthead');
@@ -237,6 +237,11 @@
     const filterContext = $('.index-filter-context', dialog);
     const filterCount = $('.index-filter-count', dialog);
     const resetFiltersButton = $('.index-reset-filters', dialog);
+    const resultNav = document.createElement('nav');
+    resultNav.className = 'index-result-nav';
+    resultNav.setAttribute('aria-label','Jump to result type');
+    resultNav.hidden = true;
+    results.before(resultNav);
     function setFiltersOpen(open) {
       filterPanel.hidden = !open;
       filterToggle.setAttribute('aria-expanded', String(open));
@@ -279,6 +284,8 @@
       const searched = models.map(model => searchModel(model, state));
       pool = searched.flatMap(({model,filmRows}) => filmRows.map(([slug]) => ({model,slug})));
       discover.disabled = !pool.length;
+      resultNav.hidden = true;
+      resultNav.replaceChildren();
       if (idle && current && chapterIndex) { results.innerHTML = chapterIndex(); return; }
       const globalBrowse = !current && idle;
       const local = model => pageActions?.editionId === model.edition.id;
@@ -286,7 +293,7 @@
       const filmRows = searched.flatMap(({model,filmRows}) => (state.query.trim() || state.year !== null || state.selection !== 'all' || state.role !== 'all' || globalBrowse || !chapterIndex ? filmRows : []).map(([slug,info]) => {
         const href = dossierHref(model.edition, 'film', slug);
         const attrs = local(model) ? ` data-film-file="${esc(slug)}" aria-haspopup="dialog"` : '';
-        return `<a class="index-row film-index-row" href="${esc(href)}" data-result-edition="${esc(model.edition.id)}" data-result-film="${esc(slug)}"${attrs}>${indexPoster(model,slug)}<span><strong>${esc(info.title)}</strong><small>${esc(info.year)}</small></span></a>`;
+        return `<a class="index-row film-index-row" href="${esc(href)}" data-result-edition="${esc(model.edition.id)}" data-result-film="${esc(slug)}"${attrs}>${indexPoster(model,slug)}<span><strong>${esc(info.title)}</strong><small>${esc(info.year + period(model))}</small></span></a>`;
       }));
       const artistRows = searched.flatMap(({model,people}) => people.map(person => {
         const name = `<span><strong>${esc(person.name)}</strong><small>${esc(person.count + (person.count === 1 ? ' film' : ' films') + period(model))}</small></span>`;
@@ -310,8 +317,19 @@
         const slug = snub.entry.films[0];
         return `<a class="index-row archive-snub-row" data-result-edition="${esc(model.edition.id)}" href="${esc(model.snubHref(snub))}">${indexPoster(model,slug)}<span><strong>${esc(snub.entry.title)}</strong><small>${esc(snub.name + period(model))}</small></span><b aria-hidden="true">↗</b></a>`;
       }));
-      const group = (label, rows) => rows.length ? `<p class="index-match-heading">${label} · ${rows.length}</p>${rows.join('')}` : '';
-      const content = group('Artists',artistRows) + group('Films',filmRows) + group('Awards',awardRows) + group('Oscar Snubs',snubRows);
+      const groups = [
+        {id:'artists', label:'Artists', rows:artistRows},
+        {id:'films', label:'Films', rows:filmRows},
+        {id:'awards', label:'Awards', rows:awardRows},
+        {id:'snubs', label:'Oscar Snubs', rows:snubRows}
+      ].filter(group => group.rows.length);
+      const content = groups.map(({id,label,rows}) => `<section class="index-result-group" aria-labelledby="index-group-${id}"><h3 class="index-match-heading" id="index-group-${id}" tabindex="-1">${label} · ${rows.length}</h3>${rows.join('')}</section>`).join('');
+      // At rest the original index stays compact. When filtering/searching,
+      // show only result types that actually contain matching records.
+      if ((!idle || state.scope !== resetScope) && groups.length) {
+        resultNav.innerHTML = groups.map(({id,label,rows}) => `<button type="button" data-index-group-target="${id}" aria-controls="index-group-${id}" aria-label="${label}, ${rows.length} matching results">${label} <b>${rows.length}</b></button>`).join('');
+        resultNav.hidden = false;
+      }
       const chapter = models[0]?.data.chapters.find(item => item.id === state.chapter);
       const context = state.chapter ? `<div class="index-chapter-context"><button type="button" data-index-chapter="">All chapters</button><span>${esc(chapter?.name ?? 'All awards')}</span></div>` : '';
       results.innerHTML = context + (content || '<p class="empty-index">No matches. Try another film, person, award or mood, or clear a filter.</p>');
@@ -326,6 +344,7 @@
       updateFilterSummary();
       onRefresh?.();
       results.scrollTop = 0;
+      resultNav.hidden = true;
       if (models) { render(models,rebuildControls); return; }
       results.innerHTML = '<p class="empty-index" role="status">Loading the archive…</p>';
       engine.load(state.scope).then(loaded => {
@@ -351,6 +370,17 @@
       $('#index-role-select',dialog).value = 'all';
       refresh(true);
     }
+    function setTopic(topic) {
+      resetScope = 'all';
+      state.scope = 'all';
+      state.year = null; state.chapter = null; state.selection = 'all'; state.role = 'all';
+      if ($('#index-edition-select',dialog)) $('#index-edition-select',dialog).value = 'all';
+      $('#index-selection-select',dialog).value = 'all';
+      $('#index-role-select',dialog).value = 'all';
+      search.value = topic;
+      setFiltersOpen(false);
+      refresh(true);
+    }
     function chooseFilm() {
       if (!pool.length) return;
       const candidates = pool.length > 1 ? pool.filter(({model,slug}) => model.edition.id + '/' + slug !== lastDiscovery) : pool;
@@ -369,6 +399,12 @@
       else if (button.matches('.index-filters-done')) { setFiltersOpen(false); filterToggle.focus({preventScroll:true}); }
       else if (button === resetFiltersButton) resetFilters();
       else if (button.matches('[data-index-chapter]')) { state.chapter = button.dataset.indexChapter || null; refresh(); results.querySelector('button')?.focus({preventScroll:true}); }
+      else if (button.matches('[data-index-group-target]')) {
+        const heading = $('#index-group-' + button.dataset.indexGroupTarget, results);
+        if (!heading) return;
+        results.scrollTop += heading.getBoundingClientRect().top - results.getBoundingClientRect().top;
+        heading.focus({preventScroll:true});
+      }
       else if (button === discover) chooseFilm();
       else if (button.matches('.index-retry')) refresh(true);
     });
@@ -380,7 +416,45 @@
       else if (id === 'index-role-select') { state.role = value; refresh(); }
     });
     setFiltersOpen(false);
-    return {ensure() { if (!rendered) refresh(true); }, global() { if (multi) { resetScope = 'all'; setScope('all'); updateFilterSummary(); } if (!rendered) refresh(true); }, state, refresh};
+    return {ensure() { if (!rendered) refresh(true); }, global() { if (multi) { resetScope = 'all'; setScope('all'); updateFilterSummary(); } if (!rendered) refresh(true); }, setTopic, state, refresh};
+  }
+
+  async function renderMoodCollections(section, engine) {
+    const models = await engine.load('all');
+    // The representative still is curated, but the membership and count
+    // always come from the existing searchable catalogue, not a second list.
+    const collections = ['Obsession','Music','Atmosphere'];
+    const items = collections.map(label => {
+      const state = {scope:'all',query:label,year:null,chapter:null,selection:'all',role:'all'};
+      const pool = models.flatMap(model => searchModel(model,state).filmRows.map(([slug,info]) => ({model,slug,info})));
+      if (!pool.length) return '';
+      let picked, still;
+      const choices = models.flatMap(model => {
+        const art = model.data.editorial?.moodCovers?.[label];
+        return art?.path ? [{...art,editionId:model.edition.id}] : [];
+      }).sort((a,b)=>(a.priority??100)-(b.priority??100));
+      for (const choice of choices) {
+        const candidate = pool.find(item => item.model.edition.id === choice.editionId && item.slug === choice.film);
+        if (!candidate) continue;
+        const path = choice.path;
+        if (path) { picked = candidate; still = path; break; }
+      }
+      if (!picked) {
+        picked = pool.find(({model,slug}) => model.data.galleries?.[slug]?.length || model.media.films[slug]?.backdrop);
+        still = picked?.model.data.galleries?.[picked.slug]?.[0]?.path || picked?.model.media.films[picked.slug]?.backdrop;
+      }
+      if (!still) return '';
+      const variants = picked.model.media.variants[still] ?? [];
+      const srcset = variants.map(item => item.src+' '+item.width+'w').join(', ');
+      const [width,height] = picked.model.media.sizes[still] ?? [960,540];
+      const sizes = '(min-width: 681px) 28vw, 30vw';
+      return `<button type="button" class="mood-collection" data-mood-topic="${esc(label)}" aria-haspopup="dialog" aria-label="Explore ${esc(label)}: ${pool.length} films"><img src="${esc(still)}"${srcset ? ` srcset="${esc(srcset)}" sizes="${sizes}"` : ''} width="${width}" height="${height}" loading="lazy" decoding="async" alt=""><span class="mood-collection-copy"><strong>${esc(label)}</strong><small>${pool.length} ${pool.length === 1 ? 'film' : 'films'}</small></span></button>`;
+    }).filter(Boolean);
+    if (items.length) {
+      $('#mood-collection-grid',section).innerHTML = items.join('');
+      section.hidden = false;
+      if (location.hash === '#moods') requestAnimationFrame(() => section.scrollIntoView({block:'start'}));
+    }
   }
 
   function compareCategory(id) {
@@ -408,7 +482,7 @@
   // On an award page its existing Index hosts the controller instead.
   if (document.body.dataset.page !== 'awards') {
     const trigger = searchButton();
-    let controller, pending, opener;
+    let controller, pending, opener, requestedTopic;
     let contextPromise;
     function archiveContext() {
       if (!contextPromise) contextPromise = site.catalog().then(catalog => ({catalog,engine:createEngine(catalog)})).catch(error => { contextPromise = null; throw error; });
@@ -419,16 +493,17 @@
     dialog.setAttribute('aria-labelledby','index-title');
     dialog.innerHTML = `<div class="index-header"><h2 id="index-title" tabindex="-1">The index.</h2><button type="button" class="dialog-close" aria-label="Close index">✕</button></div><label class="search-label" for="category-search">Search films, people, awards or moods</label><input id="category-search" type="search" placeholder="Film, person, award or mood…" autocomplete="off"><div id="index-results" role="region" aria-label="Index results"><p class="empty-index" role="status">Loading the archive…</p></div>`;
     document.body.append(dialog);
-    function open(button) {
+    function open(button, topic = '') {
       if (dialog.open) return;
       opener = button;
+      requestedTopic = topic;
       dialog.showModal(); document.body.classList.add('dialog-open');
       $('#category-search',dialog).focus({preventScroll:true});
-      if (controller) { controller.ensure(); return; }
+      if (controller) { if (topic) controller.setTopic(topic); else controller.ensure(); return; }
       if (pending) return;
       pending = archiveContext().then(({catalog,engine}) => {
         controller = createIndex({dialog, catalog, engine});
-        if (dialog.open) controller.ensure();
+        if (dialog.open) { if (requestedTopic) controller.setTopic(requestedTopic); else controller.ensure(); }
       }).catch(() => { $('#index-results',dialog).innerHTML = '<p class="empty-index">The archive could not be loaded. Close the index and try again.</p>'; }).finally(() => { pending = null; });
     }
     bindSearchShortcut(trigger,open);
@@ -438,6 +513,17 @@
       if (!$('dialog[open]')) document.body.classList.remove('dialog-open');
       opener?.focus({preventScroll:true});
     });
+
+    const moodSection = $('#moods');
+    if (moodSection) {
+      moodSection.addEventListener('click', event => {
+        const button = event.target.closest('[data-mood-topic]');
+        if (button) open(button,button.dataset.moodTopic);
+      });
+      const loadMoods = () => archiveContext().then(({engine}) => renderMoodCollections(moodSection,engine)).catch(() => {});
+      if ('requestIdleCallback' in window) requestIdleCallback(loadMoods,{timeout:1400});
+      else setTimeout(loadMoods,100);
+    }
 
     const homeDiscover = $('[data-home-discover]');
     if (homeDiscover) {

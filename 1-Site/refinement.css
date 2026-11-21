@@ -28,19 +28,19 @@ body { -webkit-font-smoothing: antialiased; }
 .award-card .frame-image.wide img { object-fit: contain; }
 .award-card .winner-copy, .feature-card .winner-copy { position: relative; display: block; inset: auto; padding: 15px 46px 0 1px; }
 .award-card .winner-title { font: 600 var(--type-winner)/1.06 var(--display); letter-spacing: -.006em; text-wrap: pretty; overflow-wrap: anywhere; }
-.award-card .winner-detail { font-size: .89rem; color: #b7b8bc; margin-top: 8px; line-height: 1.42; }
+.award-card .winner-detail { font-size: .89rem; color: var(--muted); margin-top: 8px; line-height: 1.42; }
 .award-card .line-of-dialogue, .feature-card.quote-card .line-of-dialogue { font: 400 clamp(1.35rem,1.9vw,1.7rem)/1.2 var(--serif); color: var(--text); max-width: 48ch; }
 .award-card .star { width: 28px; height: 28px; top: 12px; left: 12px; z-index: 1; font-size: .86rem; }
 .award-card .frame-open { bottom: 4px; right: 1px; background: transparent; border-color: #65615b; }
 .award-card .shortlist { min-width: 0; width: 100%; align-self: start; padding: 3px 0 0; }
-.shortlist > .micro { font-size: var(--type-meta); font-weight: 500; letter-spacing: .09em; color: #b9b4ae; }
+.shortlist > .micro { font-size: var(--type-meta); font-weight: 500; letter-spacing: .09em; color: var(--muted); }
 .award-card .nominee-art { max-width: none; }
 .award-card .nominee-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px 12px; overflow: visible; }
 .award-card .nominee-grid[style*="--count:4"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .award-card .nominee { display: block; min-height: 0; align-content: start; }
 .award-card .nominee-poster { width: 76px; max-width: 100%; }
 .award-card .nominee strong { margin-top: 8px; font-size: .79rem; font-weight: 500; line-height: 1.35; overflow-wrap: anywhere; }
-.award-card .nominee small { font-size: .7rem; line-height: 1.35; margin-top: 4px; color: #a5a5ab; }
+.award-card .nominee small { font-size: .7rem; line-height: 1.35; margin-top: 4px; color: var(--muted); }
 .award-card .multi-poster .nominee-poster { width: 36px; }
 #director-of-the-decade .nominee-grid { grid-template-columns: 1fr; gap: 16px; }
 #director-of-the-decade .nominee { display: grid; grid-template-columns: 116px minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 13px; align-content: center; }
@@ -50,7 +50,7 @@ body { -webkit-font-smoothing: antialiased; }
 .poster { border-radius: 3px; }
 .edition-quote.interlude { border: 0; border-left: 1px solid #65615b; background: transparent; padding: 26px 7%; text-align: left; width: 86%; margin: 0 auto; }
 .edition-quote.interlude blockquote { margin: 0; font-size: clamp(1.5rem,2.36vw,2.125rem); max-width: 32ch; }
-.edition-quote figcaption { font-size: var(--type-meta); letter-spacing: .075em; font-weight: 500; color: #a79f95; }
+.edition-quote figcaption { font-size: var(--type-meta); letter-spacing: .075em; font-weight: 500; color: var(--muted); }
 .section-heading h2 { font: 400 var(--type-section)/1.06 var(--serif); letter-spacing: -.012em; }
 .section-heading h2 em { font-size: 1em; line-height: inherit; }
 .section-aside { font-size: var(--type-meta); font-weight: 500; letter-spacing: .07em; }
