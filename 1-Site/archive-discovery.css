@@ -71,8 +71,8 @@ body[data-award-view="cinematic"] .chapter + .chapter {
 .copy-award-link {
   display: grid;
   place-items: center;
-  width: 30px;
-  height: 34px;
+  width: max(30px, calc(var(--control-height) - 5px));
+  height: var(--control-height);
   padding: 0;
   border: 0;
   border-radius: 3px;
@@ -80,6 +80,7 @@ body[data-award-view="cinematic"] .chapter + .chapter {
   color: #8d949b;
   cursor: pointer;
 }
+.copy-award-link svg { width: var(--control-icon); height: var(--control-icon); }
 .copy-award-link:hover, .copy-award-link:focus-visible { color: var(--text); background: #ffffff10; }
 .copy-award-link.is-copied { color: var(--paper-accent); }
 .award-share-status:empty { display: none; }
@@ -105,13 +106,13 @@ body[data-award-view="cinematic"] .chapter + .chapter {
   background: var(--deep);
 }
 
-.index-year-filter { margin: 4px 20px 13px; }
+.index-year-filter { margin: 4px var(--index-inset) 13px; }
 body[data-award-view] #index-dialog[open] { display: flex; flex-direction: column; }
 body[data-award-view] #index-dialog > :not(#index-results) { flex: none; }
 body[data-award-view] #index-results { min-height: 0; }
 .index-year-label {
   color: #b5b7b9;
-  font: 500 .75rem/1.4 var(--body);
+  font: 500 max(.8125rem, var(--type-utility))/1.4 var(--body);
   margin-bottom: 6px;
 }
 .index-years {
@@ -126,9 +127,10 @@ body[data-award-view] #index-results { min-height: 0; }
 .index-years button {
   flex: 0 0 auto;
   color: #b9bdc0;
-  font: 500 .8rem/1.2 var(--body);
+  font: 500 var(--type-control)/1.25 var(--body);
   padding: 7px 9px;
   min-width: 42px;
+  min-height: var(--control-height);
   border: 1px solid transparent;
   background: transparent;
   border-radius: 3px;
@@ -144,7 +146,7 @@ body[data-award-view] #index-results { min-height: 0; }
 .index-year-select-wrap { position: relative; display: inline-flex; align-items: center; }
 #index-year-select {
   min-width: 84px;
-  min-height: 35px;
+  min-height: var(--control-height);
   margin: 0;
   padding: 6px 27px 6px 11px;
   appearance: none;
@@ -152,7 +154,7 @@ body[data-award-view] #index-results { min-height: 0; }
   border-radius: 3px;
   background: #262729;
   color: var(--text);
-  font: 500 .83rem/1.3 var(--body);
+  font: 500 var(--type-control)/1.3 var(--body);
   cursor: pointer;
   color-scheme: dark;
 }
@@ -177,7 +179,7 @@ body[data-award-view] #index-results { min-height: 0; }
 .snub-spotlight-copy .eyebrow { color: #b7b2aa; margin-bottom: 9px; }
 .snub-spotlight-copy h2 {
   color: var(--text);
-  font: 400 clamp(2.2rem, 5vw, 4.3rem)/1.06 var(--serif);
+  font: 400 clamp(1.875rem, 3.05vw, 2.75rem)/1.1 var(--serif);
   margin: 0 0 9px;
   letter-spacing: -.02em;
 }
@@ -204,7 +206,6 @@ body[data-award-view] #index-results { min-height: 0; }
   .award-stills { padding-inline: 13px; padding-bottom: 21px; }
   .award-stills-track { gap: 10px; }
   .award-still { flex-basis: 168px; }
-  .index-year-filter { margin-inline: 20px; }
   .index-year-label, .index-years { display: none; }
   .index-year-compact { display: inline-flex; align-items: center; gap: 10px; color: #b9bdc0; font: 500 .82rem/1.3 var(--body); }
   .snub-spotlight-feature { grid-template-columns: minmax(0, 1fr); gap: 18px; }
@@ -298,7 +299,7 @@ body[data-award-view] .artist-name-button.person-link { text-decoration: none; }
 body[data-award-view="compact"] .enhanced-card .portfolio-compact-actions { display: flex !important; }
 body[data-award-view="compact"] .winner-credit-line { margin: 4px 0 0 67px; font-size: .8rem; }
 #person-dialog {
-  width: min(640px, calc(100% - 30px));
+  width: min(clamp(640px, 44.5vw, 920px), calc(100% - 30px));
   max-width: none;
   max-height: calc(100dvh - 28px);
   border: 1px solid #ffffff29;
@@ -306,12 +307,12 @@ body[data-award-view="compact"] .winner-credit-line { margin: 4px 0 0 67px; font
 }
 #person-dialog[open] { display: flex; flex-direction: column; }
 #person-dialog .film-file-header h2 {
-  font: 600 clamp(1.3rem, 2.5vw, 1.85rem)/1.23 var(--body);
-  letter-spacing: -.02em;
+  font: 600 var(--type-dialog)/1.25 var(--body);
+  letter-spacing: -.015em;
 }
 #person-dialog .dialog-close, #frame-dialog .dialog-close {
-  width: 36px;
-  height: 36px;
+  width: max(36px, var(--control-height));
+  height: max(36px, var(--control-height));
   flex: none;
   border: 0;
   border-radius: 3px;
@@ -353,7 +354,7 @@ body[data-award-view="compact"] .compact-mentions-toggle {
   border: 0;
   background: transparent;
   color: #bfc4c9;
-  font: 500 .75rem/1.4 var(--body);
+  font: 500 .8125rem/1.4 var(--body);
   white-space: nowrap;
 }
 .compact-mentions-toggle svg { transition: transform .15s; }
@@ -391,29 +392,28 @@ body[data-award-view="compact"] .enhanced-card[data-mentions-open="true"] > .art
 body[data-award-view="compact"] .enhanced-card[data-mentions-open="true"] > .artist-shortlist .nominee small { grid-area: 3 / 1; }
 
 /* The chapter index, mood shortcuts and artist search. */
-body[data-award-view] #index-results { max-height: min(58dvh, 640px); }
+body[data-award-view] #index-results { max-height: min(58dvh, 860px); }
 #index-dialog .index-header { padding-block: 13px 10px; }
-#index-dialog .index-header h2 { font-size: clamp(2rem, 3.5vw, 2.8rem); line-height: 1; }
 #index-dialog .index-view-switch { margin-bottom: 11px; }
 #index-dialog .index-year-filter { margin-bottom: 9px; }
 .index-header h2:focus { outline: none; }
-.index-discovery { padding: 13px 20px 22px; }
+.index-discovery { padding: 13px var(--index-inset) 22px; }
 .index-suggestions {
   display: flex;
   flex-wrap: wrap;
   min-width: 0;
   gap: 5px;
-  margin: -5px 20px 10px;
+  margin: -5px var(--index-inset) 10px;
 }
 .index-suggestions button {
   flex: none;
   padding: 5px 9px;
-  min-height: 30px;
+  min-height: max(30px, calc(var(--control-height) - 4px));
   border: 1px solid #ffffff23;
   border-radius: 3px;
   background: transparent;
   color: #bfc4c9;
-  font: 500 .75rem/1.35 var(--body);
+  font: 500 max(.8125rem, var(--type-utility))/1.4 var(--body);
   white-space: nowrap;
 }
 .index-suggestions button:hover, .index-suggestions button:focus-visible { background: #ffffff0c; color: var(--text); border-color: #ffffff50; }
@@ -424,7 +424,7 @@ body[data-award-view] #index-results { max-height: min(58dvh, 640px); }
   justify-content: space-between;
   gap: 12px;
   color: #b8b9b7;
-  font: 500 .8rem/1.4 var(--body);
+  font: 500 max(.8rem, var(--type-utility))/1.4 var(--body);
 }
 .index-chapters-heading { margin-bottom: 11px; }
 .index-chapters-heading button, .index-chapter-context button {
@@ -433,7 +433,7 @@ body[data-award-view] #index-results { max-height: min(58dvh, 640px); }
   border: 0;
   background: transparent;
   color: #c8cbce;
-  font: 500 .76rem/1.35 var(--body);
+  font: 500 max(.76rem, var(--type-utility))/1.35 var(--body);
   text-decoration: underline;
   text-decoration-color: #ffffff37;
   text-underline-offset: 3px;
@@ -457,9 +457,9 @@ body[data-award-view] #index-results { max-height: min(58dvh, 640px); }
 }
 .index-chapter:hover .index-chapter-art, .index-chapter:focus-visible .index-chapter-art { box-shadow: 0 0 0 1.5px var(--paper-accent); }
 .index-chapter-label { display: grid; gap: 2px; margin-top: 6px; }
-.index-chapter-label strong { font: 600 .88rem/1.35 var(--body); }
-.index-chapter-label small { font: 400 .72rem/1.35 var(--body); color: #aeb2b8; }
-.index-chapter-context { margin: 0; padding: 9px 20px; border-bottom: 1px solid #ffffff19; }
+.index-chapter-label strong { font: 600 max(.88rem, var(--type-control))/1.35 var(--body); }
+.index-chapter-label small { font: 400 var(--type-utility)/1.4 var(--body); color: #aeb2b8; }
+.index-chapter-context { margin: 0; padding: 9px var(--index-inset); border-bottom: 1px solid #ffffff19; }
 .index-chapter-context > span { color: var(--text); text-align: right; }
 .film-index-row { grid-template-columns: 32px minmax(0, 1fr); padding-block: 8px; }
 .film-index-row > span:last-child, .person-index-row > span { min-width: 0; overflow-wrap: anywhere; }
@@ -475,7 +475,7 @@ body[data-award-view] #index-results { max-height: min(58dvh, 640px); }
   border-radius: 3px;
   background: none;
   color: #bfc4c9;
-  font: 500 .78rem/1.4 var(--body);
+  font: 500 max(.8125rem, var(--type-utility))/1.4 var(--body);
 }
 .wall-order button[aria-pressed="true"] { color: var(--text); background: #353638; }
 .wall-order button:hover { color: var(--text); }
@@ -494,7 +494,7 @@ body[data-award-view] #index-results { max-height: min(58dvh, 640px); }
 }
 .double-feature[hidden] { display: none; }
 .double-feature-copy > .eyebrow { color: #b7b2aa; font-weight: 500; margin-bottom: 12px; }
-.double-feature-copy > h2 { font: 400 clamp(2.1rem, 4.1vw, 3.45rem)/1.05 var(--serif); letter-spacing: -.01em; }
+.double-feature-copy > h2 { font: 400 clamp(1.875rem, 3.05vw, 2.75rem)/1.1 var(--serif); letter-spacing: -.01em; }
 .double-feature-films { display: grid; grid-template-columns: repeat(2, minmax(0, 116px)); gap: 15px; align-items: start; }
 .double-feature-film { display: block; min-width: 0; }
 .double-feature-film > .poster { width: min(116px, 100%); transition: box-shadow .17s; }
@@ -560,11 +560,9 @@ body[data-award-view="compact"] .double-feature { padding-block: 48px; }
   .person-films { padding-inline: 13px; }
   .person-film { grid-template-columns: 58px minmax(0, 1fr); gap: 12px; }
   body[data-award-view="compact"] .enhanced-card[data-mentions-open="true"] > .shortlist { grid-column: 1; padding-left: 0; }
-  .index-discovery { padding-inline: 13px; }
-  .index-suggestions button { min-height: 34px; padding-inline: 8px; font-size: .78rem; }
+  .index-suggestions button { min-height: 34px; padding-inline: 8px; }
   .index-chapter-grid { gap: 13px 10px; }
   .index-chapter-label strong { font-size: .82rem; }
-  .index-chapter-context { padding-inline: 13px; }
   .wall-year { grid-template-columns: 1fr; gap: 12px; }
   .wall-year > .wall-year-films { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }

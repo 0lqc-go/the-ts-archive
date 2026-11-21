@@ -18,7 +18,7 @@
 .archive-list-hero .snubs-image { background-position: var(--cover-position, 50% center); }
 .archive-hero .hero-image { background-image: none; }
 :is(.archive-hero, .archive-list-hero) .hero-title { padding: 84px var(--gutter) 91px; }
-:is(.archive-hero, .archive-list-hero) h1 { font-size: clamp(3.87rem, 7.82vw, 7.86rem); }
+:is(.archive-hero, .archive-list-hero) h1 { font: 700 clamp(2.875rem, 6.12vw, 5.5rem)/.94 var(--display); letter-spacing: -.018em; }
 :is(.archive-hero, .archive-list-hero) .hero-foot { border: 0; padding-top: 0; }
 :is(.archive-hero, .archive-list-hero) .hero-topline { text-shadow: 0 1px 9px #1012149c; }
 .archive-hero .archive-enter {
@@ -28,7 +28,7 @@
   color: var(--text);
   padding: 7px 0;
   min-height: 42px;
-  font: 600 .82rem/1.3 var(--body);
+  font: 600 max(.82rem, var(--type-utility))/1.3 var(--body);
   letter-spacing: .045em;
   text-decoration: underline;
   text-decoration-color: #ffffff66;
@@ -38,7 +38,7 @@
 .archive-hero .archive-enter:hover { color: var(--paper-accent); background: transparent; text-decoration-color: currentColor; }
 .archive-list-hero .hero-caption { position: static; white-space: nowrap; font-size: inherit; letter-spacing: inherit; }
 .archive-list-hero .hero-bottom > p { max-width: min(100%, 45ch); }
-.archive-list-hero #snubs-title { margin: 0; line-height: .79; }
+.archive-list-hero #snubs-title { margin: 0; line-height: .94; }
 
 /* Archive directory — the image and the title carry the hierarchy. */
 .archive-directory { padding-block: clamp(48px, 7vw, 100px); }
@@ -49,26 +49,26 @@
 .archive-card > img { aspect-ratio: 2.1; border-radius: 3px; object-fit: cover; transition: box-shadow .18s ease; }
 .archive-card-copy { padding: 13px 1px 0; }
 .archive-card-copy .eyebrow { font-weight: 500; letter-spacing: .1em; }
-.archive-card h3 { font: 600 clamp(1.55rem, 2.6vw, 2.35rem)/1.08 var(--display); margin: 7px 0 5px; }
+.archive-card h3 { font: 600 clamp(1.375rem, 2vw, 1.8rem)/1.14 var(--display); margin: 7px 0 5px; }
 .archive-card-copy p:last-of-type { color: #aeb2b8; font-size: .91rem; line-height: 1.48; }
 .archive-card:hover img, .archive-card:focus-visible img { box-shadow: 0 0 0 1.5px var(--paper-accent); }
 .archive-card:hover h3 { color: var(--paper-accent); }
 
 /* List covers use the same cinematic composition, including coverless lists. */
-.collection-hero #list-title { max-width: min(100%, 17ch); width: auto; line-height: .94; text-wrap: balance; overflow-wrap: anywhere; }
+.collection-hero #list-title { max-width: min(100%, 17ch); width: auto; line-height: 1; text-wrap: balance; overflow-wrap: anywhere; }
 .collection-hero #list-description { margin: 0; color: #f4f0e8; }
 .collection-hero[data-has-cover="false"] { min-height: 0; }
 .collection-hero[data-has-cover="false"] :is(.hero-image, .hero-shade, .hero-foot) { display: none; }
 .collection-hero[data-has-cover="false"] .hero-title { padding: 92px var(--gutter) 28px; }
-.collection-hero[data-has-cover="false"] #list-title { font-size: clamp(2.8rem, 6vw, 5rem); }
+.collection-hero[data-has-cover="false"] #list-title { font-size: var(--type-section); }
 .collection-hero[data-has-cover="false"] #list-description { font: 400 1rem/1.55 var(--body); color: #aeb2b8; }
 
 /* A unified, compact option across film lists, without oversized cards. */
-:is(.snub-list, .collection) { padding-block: clamp(45px, 6.5vw, 88px); max-width: var(--width); }
+:is(.snub-list, .collection) { padding-block: clamp(45px, 6.5vw, 88px); }
 .snub-list .section-heading { margin-bottom: 23px; }
 .list-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin: 0 0 clamp(20px, 3vw, 31px); }
-.list-count { color: #aeb2b8; font-size: .85rem; }
-.list-view-toggle { min-height: 35px; }
+.list-count { color: #aeb2b8; font-size: var(--type-control); }
+.list-view-toggle { min-height: var(--control-height); }
 .list-view-toggle .nav-view-label { display: inline; }
 body[data-list-view="compact"] .list-view-toggle .view-icon-list { display: none; }
 body[data-list-view="compact"] .list-view-toggle .view-icon-cinematic { display: block; }
@@ -91,7 +91,7 @@ body[data-list-view="compact"] .list-view-toggle .view-icon-cinematic { display:
 .list-poster-link .poster { transition: box-shadow .17s ease; }
 .list-poster-link:hover .poster, .list-poster-link:focus-visible .poster { box-shadow: 0 0 0 1.5px var(--paper-accent); }
 .snub-card h3, .collection-entry h2 { font: 600 clamp(1.03rem, 1.6vw, 1.2rem)/1.33 var(--body); letter-spacing: -.015em; margin: 3px 0 4px; overflow-wrap: anywhere; }
-.snub-card .eyebrow { color: var(--paper-accent); font: 500 .68rem/1.35 var(--body); letter-spacing: .075em; }
+.snub-card .eyebrow { color: var(--paper-accent); font: 500 var(--type-meta)/1.4 var(--body); letter-spacing: .06em; }
 .snub-card p:not(.eyebrow), .collection-entry p { color: #b2b6bb; font-size: .89rem; line-height: 1.43; margin-top: 4px; overflow-wrap: anywhere; }
 .snub-card small, .collection-entry h2 small { color: #a9b2bb; font: 400 .77rem/1.4 var(--body); }
 .snub-card small { margin-top: 6px; }
@@ -112,7 +112,7 @@ body[data-list-view="compact"] :is(.snub-card p:not(.eyebrow), .collection-entry
 .watch-frame .split-media { display: grid; grid-template-columns: var(--frame-columns); }
 .watch-frame .frame-image img { object-fit: contain; }
 .watch-frame .winner-copy { position: relative; inset: auto; padding: 14px 0 3px; }
-.watch-frame .winner-title { font: 600 clamp(1.6rem, 2.65vw, 2.2rem)/1.2 var(--body); }
+.watch-frame .winner-title { font: 600 clamp(1.5rem, 2vw, 1.8rem)/1.25 var(--body); }
 .watch-frame .winner-detail { color: #b2b6bb; font-size: .95rem; }
 .watch-frame .watch-note { color: #aeb2b8; font-size: .86rem; }
 .watch-frame .film-link { color: #bfc4c9; text-decoration: underline; text-decoration-color: #ffffff27; text-underline-offset: 4px; }
@@ -120,11 +120,11 @@ body[data-list-view="compact"] :is(.snub-card p:not(.eyebrow), .collection-entry
 .spotlight-card { border-top: 0; }
 .spotlight-card h3 { padding-top: 0; }
 .spotlight-visual .winner-copy { min-height: 0; padding-bottom: 13px; }
-.spotlight-visual .winner-title { font-size: clamp(1.9rem, 3.1vw, 2.8rem); }
+.spotlight-visual .winner-title { font: 600 var(--type-winner)/1.06 var(--display); overflow-wrap: anywhere; }
 .spotlight-list li { border-top-color: #ffffff12; }
 .wall-tile .poster { transition: box-shadow .17s ease; }
 .wall-tile:hover .poster, .wall-tile:focus-visible .poster { box-shadow: 0 0 0 1.5px var(--paper-accent); }
-#film-file-dialog .film-file-header h2 { font: 600 clamp(1.3rem,2.5vw,1.85rem)/1.23 var(--body); letter-spacing: -.02em; }
+#film-file-dialog .film-file-header h2 { font: 600 var(--type-dialog)/1.25 var(--body); letter-spacing: -.015em; }
 #film-file-dialog .dialog-close { border: 0; border-radius: 3px; background: transparent; color: #c4c4c4; width: 34px; height: 34px; }
 #film-file-dialog .dialog-close:hover { background: #ffffff10; color: var(--text); }
 
@@ -133,7 +133,6 @@ body[data-list-view="compact"] :is(.snub-card p:not(.eyebrow), .collection-entry
   :is(.archive-hero, .archive-list-hero) .hero-shade { background: linear-gradient(to top, #18191b 0%, #18191bf5 14%, #18191bdb 29%, #18191b75 45%, #18191b15 68%, transparent 83%); }
   .archive-list-hero .hero-shade { background: linear-gradient(to bottom, #18191bca 0%, #18191b91 9%, transparent 24%), linear-gradient(to top, #18191b 0%, #18191bf5 14%, #18191bdb 29%, #18191b75 45%, #18191b15 68%, transparent 83%); }
   :is(.archive-hero, .archive-list-hero) :is(.hero-image, .snubs-image) { background-position: var(--cover-mobile-position, 51% center); }
-  :is(.archive-hero, .archive-list-hero) h1 { font-size: clamp(3.35rem, 10.9vw, 4.6rem); }
   :is(.archive-hero, .archive-list-hero) .hero-title { padding-bottom: 78px; }
   .archive-hero .hero-bottom { flex-wrap: wrap; gap: 12px; align-items: flex-end; }
   .archive-hero .archive-enter { min-height: 35px; font-size: .71rem; }
@@ -146,7 +145,6 @@ body[data-list-view="compact"] :is(.snub-card p:not(.eyebrow), .collection-entry
 @media (max-width: 480px) {
   :is(.archive-hero, .archive-list-hero) .hero-title { padding-bottom: 96px; }
   :is(.archive-hero, .archive-list-hero) .hero-bottom { flex-direction: column; align-items: flex-start; gap: 5px; }
-  :is(.archive-hero, .archive-list-hero) .hero-bottom > p { font-size: clamp(1.25rem, 5.5vw, 1.55rem); }
   :is(.archive-hero, .archive-list-hero) .hero-foot { display: grid; grid-template-columns: minmax(0,1fr); gap: 7px; bottom: 16px; }
   :is(.archive-hero, .archive-list-hero) .hero-caption { white-space: normal; }
 }

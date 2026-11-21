@@ -78,7 +78,7 @@
   function archiveCard(item, url, label, media) {
     const cover = item.cardImage || item.cover;
     return `<a class="archive-card" href="${escape(url)}">
-      ${cover ? artworkMarkup(cover, media, '(min-width: 1450px) 610px, (min-width: 681px) 44vw, 90vw') : ''}
+      ${cover ? artworkMarkup(cover, media, '(min-width: 681px) 44vw, 88vw') : ''}
       <div class="archive-card-copy">
         <p class="eyebrow">${escape(label)}</p>
         <h3>${escape(item.title)}</h3>

@@ -6,8 +6,8 @@
 body { --current-accent: #c0b3a1; transition: --current-accent .62s ease; }
 .reading-progress { background: var(--current-accent); }
 .masthead { border-bottom-color: color-mix(in srgb, var(--current-accent) 25%, #242528); }
-.profile { gap: 11px; font-size: 1.06rem; }
-.avatar { width: 46px; height: 46px; border-color: #a19b91; }
+.profile { gap: 11px; font-size: clamp(1.06rem, .9vw, 1.25rem); }
+.avatar { width: clamp(46px, 2.9vw, 58px); height: clamp(46px, 2.9vw, 58px); border-color: #a19b91; }
 .chapter-nav { border-bottom-color: color-mix(in srgb, var(--current-accent) 30%, #292929); }
 .chapter-link[aria-current], .chapter-link:hover { border-color: var(--current-accent); }
 .chapter-link[aria-current] { color: var(--text); }
@@ -32,7 +32,7 @@ body { --current-accent: #c0b3a1; transition: --current-accent .62s ease; }
 .ceremony-progress { background: var(--accent); }
 .line-of-dialogue { max-width: 32ch; }
 .edition-quote { margin: 0; border-block: 1px solid #f2e9dc21; padding: clamp(32px, 5vw, 68px) clamp(10px, 4vw, 55px); text-align: center; }
-.edition-quote blockquote { margin: 0 auto; max-width: 29ch; font: italic 400 clamp(1.85rem, 4.3vw, 4.25rem)/1.04 var(--serif); text-wrap: balance; }
+.edition-quote blockquote { margin: 0 auto; max-width: 29ch; font: italic 400 clamp(1.625rem, 2.78vw, 2.5rem)/1.12 var(--serif); text-wrap: balance; }
 .edition-quote figcaption { margin-top: 16px; color: #c0b3a1; font-size: .72rem; font-weight: 700; letter-spacing: .115em; }
 .edition-quote.opening, .edition-quote.closing { width: min(900px, calc(100% - 2 * var(--gutter))); margin: clamp(52px, 8vw, 114px) auto; }
 .edition-quote.interlude { margin-block: 0; background: #1b1b1c; border-color: #f2e9dc14; }

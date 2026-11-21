@@ -157,10 +157,11 @@
       sizes: ratios.map(ratio => {
         const share = ratio / frameRatio;
         if (layout === 'dialog') return enhanced
-          ? `(min-width: 900px) ${Math.ceil(800 * share)}px, ${Math.ceil(94 * share)}vw`
+          ? `(min-width: 2070px) ${Math.ceil(1136 * share)}px, (min-width: 1450px) ${Math.ceil(57 * share)}vw, (min-width: 900px) ${Math.ceil(800 * share)}px, ${Math.ceil(94 * share)}vw`
           : `(min-width: 1150px) ${Math.ceil(1052 * share)}px, ${Math.ceil(94 * share)}vw`;
-        if (layout === 'feature') return `(min-width: 1450px) ${Math.ceil(1248 * share)}px, ${Math.ceil(90 * share)}vw`;
-        return `(min-width: 1450px) ${Math.ceil(790 * share)}px, (min-width: 850px) ${Math.ceil(60 * share)}vw, ${Math.ceil(90 * share)}vw`;
+        if (layout === 'feature') return `${Math.ceil(88 * share)}vw`;
+        if (layout === 'artist') return `(min-width: 1450px) ${Math.ceil(620 * share)}px, (min-width: 681px) ${Math.ceil(48 * share)}vw, ${Math.ceil(88 * share)}vw`;
+        return `(min-width: 850px) ${Math.ceil(60 * share)}vw, ${Math.ceil(88 * share)}vw`;
       })
     };
   }
@@ -396,7 +397,7 @@
       : '';
     const winnerSummary = performance ? performanceName(performance) + ' — ' + workNames(award.winner) : award.winner.text;
     const winner = `<button class="winner-frame" data-award="${award.number - 1}" aria-haspopup="dialog" aria-label="Open ${esc(award.name)}: ${esc(winnerSummary)}">
-        ${renderFrames(awardFrames(award), feature, featured && !artist ? 'feature' : 'card')}${enhanced ? compactArtwork(award, artist) : ''}${winnerBadge(award)}
+        ${renderFrames(awardFrames(award), feature, artist ? 'artist' : featured ? 'feature' : 'card')}${enhanced ? compactArtwork(award, artist) : ''}${winnerBadge(award)}
         ${performance ? '' : `<span class="winner-copy"><span class="winner-title">${artist ? esc(artistName(award.winner)) : title(award.winner)}</span>${detail && !linkedCredit ? `<span class="winner-detail${artist ? ' portfolio-summary' : quote ? ' line-of-dialogue' : ''}">${esc(detail)}</span>` : ''}${enhanced && !artist && award.winner.films.length === 1 ? `<span class="compact-year">${esc(film(award.winner.films[0]).year)}</span>` : ''}</span>`}${enhanced ? '' : '<span class="frame-open" aria-hidden="true">↗</span>'}
       </button>`;
     const actions = musicActions(award);
@@ -454,7 +455,8 @@
       }
     }
     const ranked = [...collected.entries()].sort((a, b) => b[1].length - a[1].length);
-    const tile = ([slug, filmAwards]) => `<a class="wall-tile" data-wall-film="${esc(slug)}" href="${esc(film(slug).url)}" ${external} ${filmAttributes(slug)} title="${esc(filmAwards.join(' · '))}">${poster(slug, false, '150px')}<span><strong>${esc(film(slug).title)}</strong><small>${filmAwards.length} ${filmAwards.length === 1 ? 'AWARD' : 'AWARDS'} <b>↗</b></small></span></a>`;
+    const wallPosterSizes = order === 'year' ? '(max-width: 560px) 28vw, 116px' : '(max-width: 680px) 28vw, (max-width: 900px) 16vw, 175px';
+    const tile = ([slug, filmAwards]) => `<a class="wall-tile" data-wall-film="${esc(slug)}" href="${esc(film(slug).url)}" ${external} ${filmAttributes(slug)} title="${esc(filmAwards.join(' · '))}">${poster(slug, false, wallPosterSizes)}<span><strong>${esc(film(slug).title)}</strong><small>${filmAwards.length} ${filmAwards.length === 1 ? 'AWARD' : 'AWARDS'} <b>↗</b></small></span></a>`;
     const wall = $('#film-wall');
     wall.dataset.order = order;
     if (order === 'year') {
@@ -883,8 +885,8 @@
     $('#film-file-title').textContent = info.title;
     $('#film-file-content').innerHTML = `
       ${dossierStill ? frameDialog
-        ? frameButton(dossierStill, info.title, 'film-file-frame', imageMarkup(dossierStill, true, '(min-width: 920px) 820px, 90vw'))
-        : `<div class="film-file-frame">${imageMarkup(dossierStill, true, '(min-width: 920px) 820px, 90vw')}</div>` : ''}
+        ? frameButton(dossierStill, info.title, 'film-file-frame', imageMarkup(dossierStill, true, '(min-width: 1971px) 1080px, (min-width: 1440px) 55vw, (min-width: 920px) 790px, 90vw'))
+        : `<div class="film-file-frame">${imageMarkup(dossierStill, true, '(min-width: 1971px) 1080px, (min-width: 1440px) 55vw, (min-width: 920px) 790px, 90vw')}</div>` : ''}
       <div class="film-file-meta"><div class="file-poster">${poster(slug,true,'96px')}</div><div><p class="file-year">${esc(info.year)}${director ? ` · ${personLink(director)}` : ''}</p><p class="file-tally">${esc(winText)} <span>· ${mentions.length} ${mentions.length === 1 ? 'honorable mention' : 'honorable mentions'}</span></p><a class="file-letterboxd" href="${esc(info.url)}" ${external}>View on Letterboxd</a></div></div>
       ${awardStillGallery(slug)}
       <div class="film-file-sections">
@@ -1076,7 +1078,7 @@
         .map(id => awardsById.get(id)).filter(award => award?.chapter.id === chapter.id);
       const frame = candidates.flatMap(award => awardFrames(award)).find(item => item.path);
       return `<button type="button" class="index-chapter" data-index-chapter="${esc(chapter.id)}">
-        ${frame ? `<span class="index-chapter-art"${frame.focal ? ` style="--focal-x:${esc(frame.focal)}"` : ''}>${imageMarkup(frame.path, false, '(min-width: 700px) 270px, 42vw')}</span>` : ''}
+        ${frame ? `<span class="index-chapter-art"${frame.focal ? ` style="--focal-x:${esc(frame.focal)}"` : ''}>${imageMarkup(frame.path, false, '(min-width: 2447px) 328px, (min-width: 1450px) 14vw, (min-width: 681px) 192px, 44vw')}</span>` : ''}
         <span class="index-chapter-label"><strong>${esc(chapter.name)}</strong><small>${chapter.awards.length} ${chapter.awards.length === 1 ? 'award' : 'awards'}</small></span>
       </button>`;
     }).join('');

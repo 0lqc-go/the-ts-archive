@@ -1,40 +1,39 @@
 
 /* Archive layout, artwork proportions, and presentation motion. */
-:root { --width: 1248px; --gutter: clamp(22px, 5.4vw, 88px); --nav: 52px; }
 body { -webkit-font-smoothing: antialiased; }
 .chapter-nav { background: color-mix(in srgb, var(--current-accent) 5%, #151618f7); }
 .hero { min-height: clamp(570px, 76svh, 800px); }
 .hero-title { padding-bottom: 102px; }
 .hero h1 { font-size: clamp(6.3rem, 11.6vw, 11.5rem); }
-.hero-bottom > p { font-size: clamp(1.65rem, 2.35vw, 2.5rem); }
+.hero-bottom > p { font-size: clamp(1.25rem, 1.95vw, 1.75rem); line-height: 1.14; }
 .hero-image { background-position: 54% 58%; }
 .edition-quote.opening { margin-block: 52px; border: 0; padding-block: 12px; }
-.edition-quote.opening blockquote { font-size: clamp(1.8rem, 3vw, 2.85rem); max-width: 30ch; }
+.edition-quote.opening blockquote { font-size: clamp(1.5rem, 2.36vw, 2.125rem); max-width: 30ch; }
 .edition-quote.opening figcaption { margin-top: 13px; }
 .edition-strip { padding-block: 18px; }
 .edition-strip strong { font-size: clamp(1.6rem, 2.75vw, 2.55rem); }
 .chapter { padding-top: clamp(60px, 7.8vw, 112px); }
 .chapter-heading { gap: 22px; padding-bottom: 27px; margin-bottom: 34px; }
-.chapter-heading h2 { font: 400 clamp(2.8rem, 5vw, 4.8rem)/.96 var(--serif); letter-spacing: -.018em; }
+.chapter-heading h2 { font: 400 var(--type-section)/1.06 var(--serif); letter-spacing: -.012em; }
 .chapter-number { font: 500 clamp(1.1rem, 1.9vw, 1.65rem)/1 var(--body); align-self: flex-start; padding-top: 5px; letter-spacing: .03em; }
 .chapter-number span { display: none; }
-.chapter-heading .eyebrow { font-size: .63rem; margin-bottom: 11px; font-weight: 500; }
+.chapter-heading .eyebrow { font-size: var(--type-meta); margin-bottom: 8px; font-weight: 500; }
 .award-grid { gap: clamp(50px, 6.7vw, 96px); }
 .award-card .award-heading { padding: 15px 0 19px; border-top-color: color-mix(in srgb, var(--accent) 27%, #292a2b); }
-.award-heading h3 { font: 600 clamp(1.08rem, 1.7vw, 1.5rem)/1.2 var(--body); letter-spacing: -.025em; }
+.award-heading h3 { font: 600 var(--type-category)/1.28 var(--body); letter-spacing: -.012em; }
 .award-card .winner-frame, .award-card:has(.shortlist) .winner-frame, .feature-card.quote-card > .winner-frame { aspect-ratio: auto; min-height: 0; height: auto; overflow: visible; background: transparent; border-radius: 0; }
 .award-card .winner-frame > .frame-media { position: relative; display: block; inset: auto; width: 100%; aspect-ratio: var(--image-ratio, 2.1); border-radius: 3px; overflow: hidden; z-index: 0; background: #0d1012; }
 .award-card .winner-frame > .frame-media.split-media { display: grid; grid-template-columns: var(--frame-columns); }
 .frame-image.wide img { object-position: var(--focal-x, 50%) center; }
 .award-card .frame-image.wide img { object-fit: contain; }
 .award-card .winner-copy, .feature-card .winner-copy { position: relative; display: block; inset: auto; padding: 15px 46px 0 1px; }
-.award-card .winner-title { font: 600 clamp(2.2rem, 3.5vw, 3.6rem)/.94 var(--display); letter-spacing: -.006em; text-wrap: pretty; }
+.award-card .winner-title { font: 600 var(--type-winner)/1.06 var(--display); letter-spacing: -.006em; text-wrap: pretty; overflow-wrap: anywhere; }
 .award-card .winner-detail { font-size: .89rem; color: #b7b8bc; margin-top: 8px; line-height: 1.42; }
-.award-card .line-of-dialogue, .feature-card.quote-card .line-of-dialogue { font: 400 clamp(1.35rem,2.2vw,2.1rem)/1.15 var(--serif); color: var(--text); max-width: 48ch; }
+.award-card .line-of-dialogue, .feature-card.quote-card .line-of-dialogue { font: 400 clamp(1.35rem,1.9vw,1.7rem)/1.2 var(--serif); color: var(--text); max-width: 48ch; }
 .award-card .star { width: 28px; height: 28px; top: 12px; left: 12px; z-index: 1; font-size: .86rem; }
 .award-card .frame-open { bottom: 4px; right: 1px; background: transparent; border-color: #65615b; }
 .award-card .shortlist { min-width: 0; width: 100%; align-self: start; padding: 3px 0 0; }
-.shortlist > .micro { font-size: .61rem; font-weight: 500; letter-spacing: .13em; color: #b9b4ae; }
+.shortlist > .micro { font-size: var(--type-meta); font-weight: 500; letter-spacing: .09em; color: #b9b4ae; }
 .award-card .nominee-art { max-width: none; }
 .award-card .nominee-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px 12px; overflow: visible; }
 .award-card .nominee-grid[style*="--count:4"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -50,12 +49,12 @@ body { -webkit-font-smoothing: antialiased; }
 #director-of-the-decade .nominee small { grid-column: 2; align-self: start; }
 .poster { border-radius: 3px; }
 .edition-quote.interlude { border: 0; border-left: 1px solid #65615b; background: transparent; padding: 26px 7%; text-align: left; width: 86%; margin: 0 auto; }
-.edition-quote.interlude blockquote { margin: 0; font-size: clamp(1.8rem,3.2vw,3.1rem); max-width: 32ch; }
-.edition-quote figcaption { font-size: .64rem; letter-spacing: .12em; font-weight: 500; color: #a79f95; }
-.section-heading h2 { font: 400 clamp(3rem, 5.2vw, 5rem)/.96 var(--serif); letter-spacing: -.015em; }
-.section-heading h2 em { font-size: 1em; }
-.section-aside { font-size: .61rem; font-weight: 500; }
-.section-heading .eyebrow { font-size: .62rem; font-weight: 500; margin-bottom: 14px; }
+.edition-quote.interlude blockquote { margin: 0; font-size: clamp(1.5rem,2.36vw,2.125rem); max-width: 32ch; }
+.edition-quote figcaption { font-size: var(--type-meta); letter-spacing: .075em; font-weight: 500; color: #a79f95; }
+.section-heading h2 { font: 400 var(--type-section)/1.06 var(--serif); letter-spacing: -.012em; }
+.section-heading h2 em { font-size: 1em; line-height: inherit; }
+.section-aside { font-size: var(--type-meta); font-weight: 500; letter-spacing: .07em; }
+.section-heading .eyebrow { font-size: var(--type-meta); font-weight: 500; margin-bottom: 10px; }
 .spotlight-card h3 { font: 600 clamp(1.13rem, 1.8vw, 1.45rem)/1.25 var(--body); letter-spacing: -.02em; padding-top: 18px; }
 .spotlight-method { font-size: .77rem; margin-bottom: 18px; min-height: 22px; }
 .spotlight-visual .winner-title { font-size: clamp(2.05rem,3.7vw,3.55rem); }
@@ -68,12 +67,12 @@ body { -webkit-font-smoothing: antialiased; }
 .spotlight-list li > .poster { width: 38px; }
 .film-wall { gap: 26px 16px; }
 .wall-tile strong { font-size: .79rem; line-height: 1.32; font-weight: 500; }
-.wall-tile small { font-size: .59rem; font-weight: 500; }
+.wall-tile small { font-size: var(--type-meta); font-weight: 500; letter-spacing: .04em; }
 .edition-quote.closing { margin-block: 85px; }
 #award-dialog { width: min(1100px, calc(100% - 48px)); }
 .ceremony-header h2 { font: 600 clamp(1.18rem,2vw,1.65rem)/1.2 var(--body); letter-spacing: -.025em; }
 .ceremony-header { padding: 17px 22px; }
-.ceremony-header .eyebrow { font-size: .6rem; font-weight: 500; margin-bottom: 6px; }
+.ceremony-header .eyebrow { font-size: var(--type-meta); font-weight: 500; margin-bottom: 6px; }
 .ceremony-frame .frame-image.wide img { object-fit: contain; }
 .ceremony-frame .split-media .frame-image img { object-fit: cover; }
 .ceremony-frame { height: min(44dvh, 490px); background: #0d1011; }
@@ -109,36 +108,36 @@ body { -webkit-font-smoothing: antialiased; }
 @media (max-width: 960px) {
  .masthead { gap: 15px; }
  .topnav { gap: 18px; }
- .topnav a { font-size: .6rem; }
+ .topnav a { font-size: var(--type-meta); }
  .award-card .nominee-poster { width: 68px; }
+}
+@media (min-width: 681px) and (max-width: 760px) {
+ .masthead { gap: 10px; }
+ .topnav { gap: 10px; }
+ .topnav a { letter-spacing: .045em; }
+ .wordmark b { font-size: 1.15rem; }
+ .profile { gap: 7px; font-size: .95rem; }
+ .avatar { width: 40px; height: 40px; }
 }
 @media (max-width: 849px) {
  .award-card .shortlist { padding: 20px 0 0; }
  .award-card .nominee-grid, .award-card .nominee-grid[style*="--count:4"] { grid-template-columns: repeat(var(--count),minmax(0,1fr)); gap: 13px; }
  .award-card .multi-poster .nominee-poster { width: 40px; }
- .award-card .winner-title { font-size: clamp(2.25rem, 5.5vw, 3.3rem); }
 }
 @media (max-width: 680px) {
  .hero { min-height: max(510px,min(650px,76svh)); }
  .hero h1 { font-size: clamp(4.3rem,18vw,7.1rem); }
  .hero-title { padding-top: 100px; padding-bottom: 84px; }
- .hero-bottom > p { font-size: 1.6rem; }
  .round-link span { white-space: nowrap; }
- .hero-topline { font-size: .51rem; }
- .hero-foot { font-size: .53rem; }
  .wordmark b { font-size: 1.15rem; }
  .chapter-heading { gap: 17px; }
- .chapter-heading h2 { font-size: clamp(2.5rem,10vw,3.4rem); }
  .chapter-number { padding-top: 3px; }
  .award-card .nominee-grid, .award-card .nominee-grid[style*="--count:4"] { grid-template-columns: repeat(var(--count),minmax(78px,1fr)); overflow-x: auto; padding-bottom: 12px; }
  .award-card .nominee-poster { width: 74px; }
  .award-card .winner-copy { padding-top: 13px; }
- .award-card .winner-title { font-size: clamp(2rem,8vw,2.8rem); }
  .award-card .winner-detail { font-size: .82rem; }
  .award-card .star { width: 25px; height: 25px; top: 9px; left: 9px; font-size: .8rem; }
- .award-card .line-of-dialogue { font-size: 1.35rem; }
  .edition-quote.interlude { width: 94%; padding: 19px 22px; }
- .edition-quote.interlude blockquote { font-size: 1.9rem; }
  .spotlight-grid { gap: 50px; }
  .spotlight-visual .winner-title { font-size: 2.2rem; }
  .spotlight-visual .winner-copy { min-height: 0; }
