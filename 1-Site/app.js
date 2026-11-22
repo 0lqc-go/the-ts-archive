@@ -314,19 +314,22 @@
   }
 
   function nomination(entry, eager = false, artist = false, category = '') {
-    const posterSize = entry.films.length > 1 ? (enhanced ? '40px' : '50px') : enhanced ? '72px' : '82px';
+    const posterSize = entry.films.length > 1 ? (enhanced ? '40px' : '50px') : enhanced ? (eager ? '(max-width: 680px) 68px, 84px' : '72px') : '82px';
     const posters = entry.films.map(slug => `<a class="nominee-poster" href="${esc(film(slug).url)}" ${external} ${filmAttributes(slug)}>${poster(slug, eager, posterSize)}</a>`).join('');
     const detail = artist ? workNames(entry) : entry.detail;
     const credit = creditFor(entry, category);
     const performance = !artist && performanceCredit(entry, category);
     const name = artist ? creditMarkup(credit, artistName(entry)) : performance ? performanceNameMarkup(performance) : title(entry);
-    const caption = artist ? esc(detail) : performance ? performanceFilmLine(entry, performance) : creditMarkup(credit, detail);
+    const character = eager && !artist && !performance && credit?.suffix === ')' && credit.prefix.endsWith('(');
+    const caption = artist ? esc(detail) : performance ? performanceFilmLine(entry, performance) : character
+      ? `<span class="nominee-character">${esc(credit.prefix.slice(0,-1).trim())}</span><span class="nominee-actor">${creditMarkup({...credit,prefix:'',suffix:''},'')}</span>`
+      : creditMarkup(credit, detail);
     return `<li class="nominee${performance ? ' performance-nominee' : ''}"><div class="nominee-art${entry.films.length > 1 ? ' multi-poster' : ''}">${posters}</div><strong>${name}</strong>${detail || performance ? `<small>${caption}</small>` : ''}</li>`;
   }
 
   function nominations(entries, eager = false, artist = false, category = '', listId = '') {
     if (!entries.length) return '';
-    return `<div class="shortlist${artist ? ' artist-shortlist' : ''}"${listId ? ` id="${esc(listId)}"` : ''}><p class="micro">Honorable mentions <span>${pad(entries.length)}</span></p><ul class="nominee-grid" aria-label="Honorable mentions" style="--count:${entries.length}">${entries.map(entry => nomination(entry, eager, artist, category)).join('')}</ul></div>`;
+    return `<div class="shortlist${artist ? ' artist-shortlist' : ''}"${listId ? ` id="${esc(listId)}"` : ''}><p class="micro">Honorable mentions <span>${pad(entries.length)}</span></p><ul class="nominee-grid" aria-label="Honorable mentions" data-count="${entries.length}" style="--count:${entries.length}">${entries.map(entry => nomination(entry, eager, artist, category)).join('')}</ul></div>`;
   }
 
   function artistWorks(entry) {
@@ -828,7 +831,6 @@
   site.setText('.hero-edition-period', 'The ' + selected.period);
   site.setText('#award-count', awards.length);
   site.setText('#chapter-count', archive.chapters.length);
-  site.setText('#dialog-total', pad(awards.length));
   renderChapters();
   if (hasSpotlights) renderSpotlights();
   renderFilmWall();
@@ -1109,7 +1111,7 @@
       ${dossierStill ? frameDialog
         ? frameButton(dossierStill, info.title, 'film-file-frame', imageMarkup(dossierStill, true, '(min-width: 1971px) 1080px, (min-width: 1440px) 55vw, (min-width: 920px) 790px, 96vw'), ` data-film="${esc(slug)}" tabindex="-1"`)
         : `<div class="film-file-frame">${imageMarkup(dossierStill, true, '(min-width: 1971px) 1080px, (min-width: 1440px) 55vw, (min-width: 920px) 790px, 96vw')}</div>` : ''}
-      <div class="film-file-meta"><div class="file-poster">${poster(slug,true,'96px')}</div><div class="file-meta-copy"><h2 id="film-file-title" tabindex="-1">${esc(info.title)}</h2><p class="file-year">${esc(info.year)}${director ? ` · ${personLink(director)}` : ''}</p><p class="file-tally">${esc(winText)} <span>· ${mentions.length} ${mentions.length === 1 ? 'honorable mention' : 'honorable mentions'}</span></p></div>${dossierActions(slug,info,dossierStill)}</div>
+      <div class="film-file-meta"><div class="file-poster">${poster(slug,true,'(max-width: 680px) 54px, 68px')}</div><div class="file-meta-copy"><h2 id="film-file-title" tabindex="-1">${esc(info.title)}</h2><p class="file-year">${esc(info.year)}${director ? ` · ${personLink(director)}` : ''}</p><div class="file-meta-bottom"><p class="file-tally"><span class="file-tally-wide">${esc(winText)} <span class="file-mention-count">· ${mentions.length} ${mentions.length === 1 ? 'honorable mention' : 'honorable mentions'}</span></span><span class="file-tally-narrow">${wins.length} ${wins.length === 1 ? 'win' : 'wins'} <span class="file-mention-count">· ${mentions.length} ${mentions.length === 1 ? 'mention' : 'mentions'}</span></span></p>${dossierActions(slug,info,dossierStill)}</div></div></div>
       <div class="film-file-sections file-dossier-accordion">
       ${wonAwardsSection(wins)}
       ${mentionsGroup}${dossierFrames(slug,gallery)}${groups.join('')}
@@ -1170,11 +1172,15 @@
     clearTimeout(copyNoticeTimer);
     shareStatus.replaceChildren();
     copyButton.classList.remove('is-copied');
-    $('#dialog-number').textContent = pad(index + 1);
     $('.ceremony-progress', awardDialog).style.setProperty('--progress', `${percent}%`);
-    $('.ceremony-prev', awardDialog).disabled = index === 0;
-    nextButton.innerHTML = next ? `<span>Next award →</span><small>${esc(next.name)}</small>` : '<span>Finish ✓</span>';
+    const previousButton = $('.ceremony-prev', awardDialog);
+    previousButton.disabled = index === 0;
+    previousButton.title = index > 0 ? `Previous award: ${awards[index-1].name}` : 'Previous award';
+    nextButton.innerHTML = next
+      ? '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>'
+      : '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>';
     nextButton.setAttribute('aria-label', next ? `Next award: ${next.name}` : 'Finish awards presentation');
+    nextButton.title = next ? `Next award: ${next.name}` : 'Finish awards presentation';
     const frames = renderFrames(awardFrames(award, 'dialog'), true, 'dialog');
     const frameClass = `ceremony-frame${artist ? ' portfolio-frame' : ''}${award.winnerArtwork ? ' portrait-frame' : ''}`;
     const winnerTitle = artist ? creditMarkup(credit, artistName(award.winner)) : performance ? performanceNameMarkup(performance) : title(award.winner);

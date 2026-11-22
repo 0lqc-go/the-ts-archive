@@ -27,7 +27,8 @@ body[data-award-view] #award-dialog .ceremony-header {
   position: absolute;
   inset: 0 0 auto;
   z-index: 4;
-  padding-inline: var(--ceremony-gutter);
+  padding: 9px var(--ceremony-gutter) 8px;
+  gap: 7px;
   background-color: transparent;
   background-image: linear-gradient(to bottom,
     color-mix(in srgb,var(--panel) 48%,transparent),
@@ -35,6 +36,18 @@ body[data-award-view] #award-dialog .ceremony-header {
   text-shadow: 0 1px 8px #000b;
   transition: background-color .15s;
 }
+body[data-award-view] #award-dialog .ceremony-heading { flex: 1 1 auto; min-width: 0; }
+body[data-award-view] #award-dialog .ceremony-heading .eyebrow { margin-bottom: 3px; }
+body[data-award-view] #award-dialog .ceremony-heading h2 { text-wrap: pretty; }
+body[data-award-view] #award-dialog .ceremony-tools { display: flex; align-items: center; gap: 4px; flex: none; }
+body[data-award-view] #award-dialog .ceremony-tools .award-share { gap: 1px; }
+body[data-award-view] #award-dialog .ceremony-tools :is(.copy-award-link,.save-award-card,.dialog-close) {
+  width: 30px; height: 32px; padding: 0; border: 0;
+  display: inline-grid; place-items: center; background: transparent; color: var(--muted);
+}
+body[data-award-view] #award-dialog .ceremony-tools :is(.copy-award-link,.save-award-card,.dialog-close) svg { width: 15px; height: 15px; }
+body[data-award-view] #award-dialog .ceremony-tools :is(.copy-award-link,.save-award-card,.dialog-close):is(:hover,:focus-visible) { background: var(--surface-hover); color: var(--text); }
+body[data-award-view] #award-dialog .ceremony-tools .copy-award-link.is-copied { color: var(--paper-accent); }
 body[data-award-view] #award-dialog.ceremony-scrolled .ceremony-header {
   background-color: var(--panel);
   text-shadow: none;
@@ -122,6 +135,41 @@ body[data-award-view] #award-dialog .ceremony-artist-context {
 body[data-award-view] #award-dialog .ceremony-artist-context .ceremony-winner-meta {
   margin-top: 0;
 }
+/* Keep the mentions as a compact, left-aligned poster collection. Room for
+   captions is shared across a row rather than splitting an actor's name. */
+body[data-award-view] #award-dialog .ceremony-body .shortlist { margin-top: 23px; }
+body[data-award-view] #award-dialog .ceremony-body .shortlist > .micro { margin-bottom: 10px; }
+body[data-award-view] #award-dialog .ceremony-body .shortlist:not(.artist-shortlist) .nominee-grid {
+  grid-template-columns: repeat(var(--count),minmax(0,132px));
+  gap: 6px 16px;
+  align-items: start;
+}
+body[data-award-view] #award-dialog .ceremony-body .shortlist:not(.artist-shortlist) .nominee-art:not(.multi-poster) .nominee-poster { width: min(80px,100%); }
+body[data-award-view] #award-dialog .ceremony-body .nominee strong { font: 500 .8rem/1.35 var(--body); margin-top: 6px; overflow-wrap: break-word; text-wrap: pretty; }
+body[data-award-view] #award-dialog .ceremony-body .nominee small { font: 400 .75rem/1.4 var(--body); margin-top: 3px; overflow-wrap: break-word; text-wrap: pretty; }
+body[data-award-view] #award-dialog .ceremony-body .nominee :is(.nominee-character,.nominee-actor) { display: block; }
+body[data-award-view] #award-dialog .ceremony-body .nominee .nominee-actor { margin-top: 2px; }
+body[data-award-view] #award-dialog .ceremony-body .nominee .person-link { text-decoration-color: var(--surface-border); }
+body[data-award-view] #award-dialog .ceremony-body .nominee .person-link:is(:hover,:focus-visible) { text-decoration-color: currentColor; }
+@supports (grid-template-rows: subgrid) {
+  body[data-award-view] #award-dialog .ceremony-body .shortlist:not(.artist-shortlist) .nominee {
+    display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: 5px; min-width: 0; padding-bottom: 6px;
+  }
+  body[data-award-view] #award-dialog .ceremony-body .shortlist:not(.artist-shortlist) .nominee-art { grid-row: 1; align-self: start; }
+  body[data-award-view] #award-dialog .ceremony-body .shortlist:not(.artist-shortlist) .nominee strong { grid-row: 2; margin: 0; }
+  body[data-award-view] #award-dialog .ceremony-body .shortlist:not(.artist-shortlist) .nominee small { grid-row: 3; margin: 0; }
+}
+/* A small navigation rail: next/previous remain at the edges and the index
+   stays centered. The next category is available to assistive technology. */
+body[data-award-view] #award-dialog .ceremony-footer { padding: 3px var(--ceremony-gutter); gap: 4px; }
+body[data-award-view] #award-dialog .ceremony-footer :is(.ceremony-prev,.ceremony-index,.ceremony-next) {
+  display: grid; place-items: center; padding: 0; width: 36px; min-width: 36px; max-width: 36px;
+  height: 34px; min-height: 34px; color: var(--muted); border: 0;
+}
+body[data-award-view] #award-dialog .ceremony-footer .ceremony-next { justify-self: end; }
+body[data-award-view] #award-dialog .ceremony-footer button:not(:disabled):is(:hover,:focus-visible) { background: var(--surface-hover); color: var(--text); }
+body[data-award-view] #award-dialog .ceremony-footer button:focus-visible { outline: 2px solid var(--paper-accent); outline-offset: 1px; }
+body[data-award-view] #award-dialog .ceremony-footer button svg { width: 18px; height: 18px; }
 @media (max-width: 680px) {
   body[data-award-view] #award-dialog {
     --ceremony-wide-ratio: 2;
@@ -142,8 +190,22 @@ body[data-award-view] #award-dialog .ceremony-artist-context .ceremony-winner-me
       color-mix(in srgb,var(--panel) 50%,transparent) 77%,
       color-mix(in srgb,var(--panel) 89%,transparent) 91%, var(--panel) 100%);
   }
-  body[data-award-view] #award-dialog .ceremony-header { padding-inline: var(--ceremony-gutter); align-items: flex-start; }
-  body[data-award-view] #award-dialog .ceremony-counter { margin-top: 7px; }
+  body[data-award-view] #award-dialog .ceremony-header { padding: 6px var(--ceremony-gutter) 6px; display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 0 5px; }
+  body[data-award-view] #award-dialog .ceremony-heading { display: contents; }
+  body[data-award-view] #award-dialog .ceremony-heading .eyebrow { grid-row: 1; grid-column: 1; margin: 0; font-size: .73rem; }
+  body[data-award-view] #award-dialog .ceremony-heading h2 { grid-row: 2; grid-column: 1/-1; font-size: clamp(1rem,4vw,1.25rem); line-height: 1.3; }
+  body[data-award-view] #award-dialog .ceremony-tools { grid-row: 1; grid-column: 2; gap: 0; }
+  body[data-award-view] #award-dialog .ceremony-tools .award-share { gap: 0; }
+  body[data-award-view] #award-dialog .ceremony-tools :is(.copy-award-link,.save-award-card,.dialog-close) { width: 35px; height: 36px; }
+  body[data-award-view] #award-dialog .ceremony-body .shortlist { margin-top: 19px; }
+  body[data-award-view] #award-dialog .ceremony-body .shortlist:not(.artist-shortlist) .nominee-grid,
+  body[data-award-view] #award-dialog .ceremony-body .shortlist:not(.artist-shortlist) .nominee-grid[style*="--count:4"] { grid-template-columns: repeat(3,minmax(0,112px)); gap: 6px 13px; }
+  body[data-award-view] #award-dialog .ceremony-body .shortlist:not(.artist-shortlist) .nominee-grid:is([data-count="2"],[data-count="4"]) { grid-template-columns: repeat(2,minmax(0,132px)); }
+  body[data-award-view] #award-dialog .ceremony-body .shortlist:not(.artist-shortlist) .nominee-grid[data-count="1"] { grid-template-columns: minmax(0,140px); }
+  body[data-award-view] #award-dialog .ceremony-body .shortlist:not(.artist-shortlist) .nominee-art:not(.multi-poster) .nominee-poster { width: min(68px,100%); }
+  body[data-award-view] #award-dialog .ceremony-body .nominee strong { font-size: .79rem; }
+  body[data-award-view] #award-dialog .ceremony-body .nominee small { font-size: .75rem; }
+  body[data-award-view] #award-dialog .ceremony-footer { padding: 2px var(--ceremony-gutter); }
   body[data-award-view] #award-dialog .ceremony-body { padding: 0 var(--ceremony-gutter) 16px; }
   /* Leave a short blended top zone for the mobile controls without
      cropping a landscape still into a much narrower portrait. */
@@ -170,6 +232,13 @@ body[data-award-view] #award-dialog .ceremony-artist-context .ceremony-winner-me
     aspect-ratio: 2.1;
   }
   body[data-award-view] #award-dialog .ceremony-frame .split-media > .frame-image:not(:last-child) .frame-expand-icon { right: var(--ceremony-gutter); bottom: 10px; }
+}
+@media (max-width: 355px) {
+  body[data-award-view] #award-dialog .ceremony-body .shortlist:not(.artist-shortlist) .nominee-grid:not([data-count="1"]) { grid-template-columns: repeat(2,minmax(0,132px)); }
+}
+@media (pointer: coarse) {
+  body[data-award-view] #award-dialog .ceremony-tools :is(.copy-award-link,.save-award-card,.dialog-close) { width: 44px; height: 44px; }
+  body[data-award-view] #award-dialog .ceremony-footer :is(.ceremony-prev,.ceremony-index,.ceremony-next) { width: 44px; min-width: 44px; max-width: 44px; height: 44px; min-height: 44px; }
 }
 @media (prefers-reduced-motion: reduce) {
   body[data-award-view] #award-dialog .ceremony-header { transition: none; }

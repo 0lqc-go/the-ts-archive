@@ -21,11 +21,11 @@
   <link rel="stylesheet" href="archive-explore.css?v=editorial-2">
   <link rel="stylesheet" href="archive-editorial.css?v=editorial-2">
   <link rel="stylesheet" href="film-file-refinement.css?v=filmfile-4">
-  <link rel="stylesheet" href="award-widescreen.css?v=backdrop-2">
-  <link rel="stylesheet" href="film-file-backdrop.css?v=file-backdrop-5">
+  <link rel="stylesheet" href="award-widescreen.css?v=backdrop-3">
+  <link rel="stylesheet" href="film-file-backdrop.css?v=file-backdrop-6">
   <script src="archive-site.js?v=editorial-2" defer></script>
   <script src="archive-explore.js?v=editorial-2" defer></script>
-  <script src="app.js?v=file-backdrop-3" defer></script>
+  <script src="app.js?v=file-backdrop-4" defer></script>
 </head>
 <body data-page="awards">
 
@@ -75,21 +75,22 @@
   <dialog id="award-dialog" aria-labelledby="dialog-category">
     <div id="dialog-content">
       <div class="ceremony-header">
-        <div><p class="eyebrow" id="dialog-chapter"></p><h2 id="dialog-category" tabindex="-1"></h2></div>
-        <span class="ceremony-counter"><span id="dialog-number"></span> <b>/</b> <span id="dialog-total"></span></span>
+        <div class="ceremony-heading"><p class="eyebrow" id="dialog-chapter"></p><h2 id="dialog-category" tabindex="-1"></h2></div>
+        <div class="ceremony-tools">
         <div class="award-share">
           <button type="button" class="copy-award-link" data-copy-award="" aria-label="Copy award link" title="Copy award link"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button>
           <a class="save-award-card" data-save-award-card download aria-label="Save award image card" title="Save award image card (JPG)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M13.5 3.5H5.5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2v-6"/><circle cx="8" cy="8" r="1.5"/><path d="m4 16.5 4.8-4.9c.4-.4 1-.4 1.4 0l4.4 4.5 1.8-1.8 4.1 4.2M18.5 2.5v8m-3-3 3 3 3-3"/></svg></a>
           <span class="award-share-status" role="status"></span>
         </div>
-        <button class="dialog-close" aria-label="Close awards presentation">✕</button>
+        <button class="dialog-close" aria-label="Close awards presentation" title="Close awards presentation"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+        </div>
         <span class="ceremony-progress" aria-hidden="true"></span>
       </div>
       <div class="ceremony-scroll" tabindex="0" aria-label="Award details. Swipe horizontally to move between awards."></div>
       <div class="ceremony-footer">
-        <button class="ceremony-prev" aria-label="Previous award">← <span>Previous</span></button>
-        <button class="ceremony-index" aria-haspopup="dialog" title="Open award index">Index</button>
-        <button class="ceremony-next"></button>
+        <button class="ceremony-prev" type="button" aria-label="Previous award" title="Previous award"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m6 6-6-6 6-6"/></svg></button>
+        <button class="ceremony-index" type="button" aria-label="Open award index" aria-haspopup="dialog" title="Open award index"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6h1M4 12h1M4 18h1"/></svg></button>
+        <button class="ceremony-next" type="button" aria-label="Next award"></button>
       </div>
     </div>
   </dialog>
