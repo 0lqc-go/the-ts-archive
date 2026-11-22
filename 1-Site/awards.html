@@ -21,9 +21,11 @@
   <link rel="stylesheet" href="archive-explore.css?v=editorial-2">
   <link rel="stylesheet" href="archive-editorial.css?v=editorial-2">
   <link rel="stylesheet" href="film-file-refinement.css?v=filmfile-4">
+  <link rel="stylesheet" href="award-widescreen.css?v=backdrop-2">
+  <link rel="stylesheet" href="film-file-backdrop.css?v=file-backdrop-5">
   <script src="archive-site.js?v=editorial-2" defer></script>
   <script src="archive-explore.js?v=editorial-2" defer></script>
-  <script src="app.js?v=filmfile-4" defer></script>
+  <script src="app.js?v=file-backdrop-3" defer></script>
 </head>
 <body data-page="awards">
 
@@ -92,7 +94,7 @@
     </div>
   </dialog>
   <dialog id="index-dialog" aria-labelledby="index-title"><div class="index-header"><h2 id="index-title" tabindex="-1">The index.</h2><div class="view-switch index-view-switch" role="group" aria-label="Award display mode" hidden><button type="button" data-view="cinematic" aria-pressed="true">Cinematic</button><button type="button" data-view="compact" aria-pressed="false">Compact</button></div><button class="dialog-close" aria-label="Close index">✕</button></div><label class="search-label" for="category-search">Search films, people, awards or moods</label><input id="category-search" type="search" placeholder="Film, person, award or mood…" autocomplete="off"><div id="index-results" role="region" aria-label="Index results"></div></dialog>
-  <dialog id="film-file-dialog" aria-labelledby="film-file-title"><div class="film-file-header"><div><p class="eyebrow">Film file</p><h2 id="film-file-title" tabindex="-1"></h2></div><button class="dialog-close" aria-label="Close film file">✕</button></div><div class="film-file-scroll" id="film-file-content"></div></dialog>
+  <dialog id="film-file-dialog" aria-labelledby="film-file-title"><div class="film-file-header"><div class="file-header-label"><p class="eyebrow">Film file</p><span class="file-header-name" aria-hidden="true"></span></div><button class="dialog-close" aria-label="Close film file">✕</button></div><div class="film-file-scroll" id="film-file-content"></div></dialog>
   <dialog id="person-dialog" aria-labelledby="person-title">
     <div class="film-file-header person-header"><div><p class="eyebrow">Artist file</p><h2 id="person-title" tabindex="-1"></h2></div><button class="dialog-close" aria-label="Close artist file">✕</button></div>
     <div class="person-scroll" id="person-content"></div>

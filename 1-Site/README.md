@@ -6,6 +6,7 @@ A personal cinema archive by [0lqc](https://letterboxd.com/0lqc/). Browse the [p
 
 - [content/catalog.json](content/catalog.json) controls the homepage. Register each edition or list here. `featuredEdition` selects the featured awards link, while `homeCover` independently sets the homepage photograph, credit and crop. Each edition keeps its own cover.
 - [content/2020-2026.json](content/2020-2026.json) holds the 2020–2026 ballot, film links, stills, and quotes.
+- [content/2010-2019.json](content/2010-2019.json) holds the 2010–2019 ballot and its accompanying Oscar Snubs list.
 - [assets/films](assets/films/) holds film artwork. Record any new still's width and height in the edition's `media.sizes`, and give the source or curator credit in `stills`.
 - `media.films` defines the poster and landscape image for each film file. `content/artwork-variants.json` lists optimized sizes for responsive loading; the original images remain the main references. Every new edition automatically inherits the shared cinematic/compact layouts, award index and film dossiers.
 - `galleries` records the verified contact sheets (3–7 stills per film), their source credits, dimensions, and responsive thumbnail paths. `editorial.chapterOpeners` and `editorial.moodCovers` select artwork for the cinematic chapter headings and visual mood collections.

@@ -162,7 +162,7 @@
       sizes: ratios.map(ratio => {
         const share = ratio / frameRatio;
         if (layout === 'dialog') return enhanced
-          ? `(min-width: 2070px) ${Math.ceil(1136 * share)}px, (min-width: 1450px) ${Math.ceil(57 * share)}vw, (min-width: 900px) ${Math.ceil(800 * share)}px, ${Math.ceil(94 * share)}vw`
+          ? `(max-width: 680px) 94vw, (min-width: 2070px) ${Math.ceil(1136 * share)}px, (min-width: 1450px) ${Math.ceil(57 * share)}vw, (min-width: 900px) ${Math.ceil(800 * share)}px, ${Math.ceil(94 * share)}vw`
           : `(min-width: 1150px) ${Math.ceil(1052 * share)}px, ${Math.ceil(94 * share)}vw`;
         if (layout === 'feature') return `${Math.ceil(88 * share)}vw`;
         if (layout === 'artist') return `(min-width: 1450px) ${Math.ceil(620 * share)}px, (min-width: 681px) ${Math.ceil(48 * share)}vw, ${Math.ceil(88 * share)}vw`;
@@ -855,6 +855,16 @@
   const dialogContent = $('#dialog-content');
   const dialogScroll = $('.ceremony-scroll', awardDialog);
   const dialogTitle = $('#dialog-category');
+  const ceremonyHeader = $('.ceremony-header', awardDialog);
+  function syncCeremonyBackdrop() {
+    const height = Math.ceil(ceremonyHeader.getBoundingClientRect().height);
+    if (height > 0 && awardDialog.style.getPropertyValue('--ceremony-header-height') !== height + 'px') {
+      awardDialog.style.setProperty('--ceremony-header-height', height + 'px');
+    }
+    awardDialog.classList.toggle('ceremony-scrolled', dialogScroll.scrollTop > 12);
+  }
+  dialogScroll.addEventListener('scroll', syncCeremonyBackdrop, {passive:true});
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(syncCeremonyBackdrop).observe(ceremonyHeader);
   const nextButton = $('.ceremony-next', awardDialog);
   const indexResults = $('#index-results');
   let current = 0;
@@ -982,7 +992,20 @@
     const grid = rows.length > 1 && rows.every(row => row.frame?.path);
     const sizes = grid ? '(max-width: 680px) 44vw, (min-width: 1971px) 320px, 260px' : '160px';
     const items = `<ul class="file-won-list" data-layout="${grid ? 'grid' : 'rows'}">${rows.map(({award,detail,frame}) => `<li><a class="file-won-award${frame?.path ? ' has-file-frame' : ''}" href="${esc(directAwardHref(award.id))}" data-frame-award="${esc(award.id)}">${dossierFrameMarkup(frame,sizes)}<span class="file-won-copy"><strong>${esc(award.name)}</strong>${detail ? `<small>${esc(detail)}</small>` : ''}</span></a></li>`).join('')}</ul>`;
-    return dossierDisclosure('awards','Awards won',rows.length,items,true,'file-won-awards');
+    return dossierDisclosure('awards','Awards won',rows.length,items,false,'file-won-awards');
+  }
+
+  function dossierFrames(slug, gallery) {
+    if (!gallery.length || !frameDialog) return '';
+    const sizes = '(max-width: 680px) 44vw, (min-width: 1971px) 336px, 240px';
+    const thumbnails = gallery.map((frame, index) => `<li><button type="button" class="file-frame-thumbnail frame-enlarge" data-full-frame="${esc(frame.src)}" data-frame-path="${esc(frame.path)}" data-frame-label="${esc(frame.label)}" data-film="${esc(slug)}" aria-label="View frame ${index+1}: ${esc(frame.context || frame.label)}" title="${esc(frame.context || frame.label)}" aria-haspopup="dialog">${imageMarkup(frame.path,false,sizes)}</button></li>`).join('');
+    return dossierDisclosure('frames','Selected frames',gallery.length,`<ul class="file-frames-grid">${thumbnails}</ul>`,false,'film-file-section file-frames');
+  }
+
+  function dossierActions(slug, info, still) {
+    const letterboxd = `<a class="file-action file-letterboxd file-letterboxd-icon" href="${esc(info.url)}" ${external} aria-label="View ${esc(info.title)} on Letterboxd" title="View on Letterboxd"><svg viewBox="0 0 26 12" width="25" height="12" aria-hidden="true"><circle cx="5" cy="6" r="4.8" fill="#dc985e"/><circle cx="13" cy="6" r="4.8" fill="#60bd88"/><circle cx="21" cy="6" r="4.8" fill="#6cb5d0"/><path fill="#e5e2d8" d="M9 3.35a4.8 4.8 0 0 1 0 5.3 4.8 4.8 0 0 1 0-5.3Zm8 0a4.8 4.8 0 0 1 0 5.3 4.8 4.8 0 0 1 0-5.3Z"/></svg></a>`;
+    const enlarge = still && frameDialog ? frameButton(still,info.title,'file-action file-cover-expand','',` data-film="${esc(slug)}"`) : '';
+    return `<div class="file-meta-actions">${letterboxd}${enlarge}</div>`;
   }
 
   // Only one primary section expands at a time. The native details name
@@ -995,6 +1018,27 @@
       }
     }
   }, true);
+
+  // The cover, poster and heading scroll together. Keep just the small
+  // navigation row available, adding the film name once it scrolls away.
+  function syncFilmFileBackdrop() {
+    if (!filmDialog?.open) return;
+    const scroller = $('#film-file-content', filmDialog);
+    const header = $('.film-file-header', filmDialog);
+    const heading = $('#film-file-title', filmDialog);
+    const bounds = header.getBoundingClientRect();
+    const height = Math.ceil(bounds.height);
+    if (height && filmDialog.style.getPropertyValue('--file-header-height') !== height + 'px') {
+      filmDialog.style.setProperty('--file-header-height', height + 'px');
+    }
+    const scrolled = scroller.scrollTop > 12;
+    filmDialog.classList.toggle('file-scrolled', scrolled);
+    filmDialog.classList.toggle('file-title-scrolled', Boolean(scrolled && heading && heading.getBoundingClientRect().bottom <= bounds.bottom + 6));
+  }
+  if (filmDialog) {
+    $('#film-file-content', filmDialog).addEventListener('scroll', syncFilmFileBackdrop, {passive:true});
+    if (typeof ResizeObserver !== 'undefined') new ResizeObserver(syncFilmFileBackdrop).observe($('.film-file-header',filmDialog));
+  }
 
   function creditedPeople(slug) {
     const ids = peopleByFilm.get(slug);
@@ -1047,28 +1091,33 @@
     const winText = `${wins.length} ${wins.length === 1 ? 'award won' : 'awards won'}`;
     const artists = creditedPeople(slug);
     const music = listening.length ? `<section class="film-file-section file-music"><h3>Film music</h3><ul>${listening.map(item => `<li><a href="${esc(item.url)}" class="music-link file-music-link" ${external}>${esc(item.title)}</a></li>`).join('')}</ul></section>` : '';
-    // The awards and their frames share a single, initially expanded group.
-    // Films without wins have no empty winner group; the other sections stay closed.
-    const groups = [dossierSection('mentions','Honorable mentions',mentions), dossierSection('portfolio','Body of work',portfolios), dossierSection('editorial','Editorial selections',selected)].filter(Boolean);
+    // Every film starts with the same quiet, collapsed dossier. Won awards
+    // retain their dedicated frames, independently of the film's still gallery.
+    const mentionsGroup = dossierSection('mentions','Honorable mentions',mentions);
+    const groups = [dossierSection('portfolio','Body of work',portfolios), dossierSection('editorial','Editorial selections',selected)].filter(Boolean);
     const snubRows = `<ul>${snubs.map(item => `<li>${academyComparison(item,'film-file') || `<div class="file-snub-summary"><strong class="file-snub-name">${esc(item.name)}</strong><span class="file-snub-status">${esc(item.status)}</span></div>`}</li>`).join('')}</ul>${snubList ? `<a class="file-letterboxd file-ballot-link" href="${esc(site.listHref(snubList))}">Alternate ballot</a>` : ''}`;
     const snubSection = snubs.length ? dossierDisclosure('snubs','Oscar Snubs',snubs.length,snubRows,false,'film-file-section file-snubs') : '';
     const bothCredits = Boolean(artists && music);
     const creditLabel = artists ? 'Cast & crew' : 'Film music';
     const creditCount = artists ? peopleByFilm.get(slug)?.size : listening.length;
     const creditSection = artists || music ? dossierDisclosure('credits',creditLabel,creditCount,`<div class="file-credit-content" data-credit-sections="${bothCredits ? 2 : 1}">${artists}${music}</div>`,false,'file-credits') : '';
-    $('#film-file-title').textContent = info.title;
+    filmDialog.dataset.film = slug;
+    filmDialog.classList.toggle('file-has-backdrop',Boolean(dossierStill));
+    filmDialog.classList.remove('file-scrolled','file-title-scrolled');
+    $('.file-header-name',filmDialog).textContent = info.title;
     $('#film-file-content').innerHTML = `
       ${dossierStill ? frameDialog
-        ? frameButton(dossierStill, info.title, 'film-file-frame', imageMarkup(dossierStill, true, '(min-width: 1971px) 1080px, (min-width: 1440px) 55vw, (min-width: 920px) 790px, 90vw'), ` data-film="${esc(slug)}"`)
-        : `<div class="film-file-frame">${imageMarkup(dossierStill, true, '(min-width: 1971px) 1080px, (min-width: 1440px) 55vw, (min-width: 920px) 790px, 90vw')}</div>` : ''}
-      <div class="film-file-meta"><div class="file-poster">${poster(slug,true,'96px')}</div><div><p class="file-year">${esc(info.year)}${director ? ` · ${personLink(director)}` : ''}</p><p class="file-tally">${esc(winText)} <span>· ${mentions.length} ${mentions.length === 1 ? 'honorable mention' : 'honorable mentions'}</span></p><div class="file-links">${gallery.length > 1 && frameDialog ? `<button class="film-gallery-open" type="button" data-full-frame="${esc(gallery[0].src)}" data-frame-path="${esc(gallery[0].path)}" data-frame-label="${esc(info.title)}" data-film="${esc(slug)}" data-open-contact-sheet="true" aria-haspopup="dialog" aria-label="Browse ${gallery.length} film stills"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><rect x="1.5" y="2.5" width="5.5" height="4" rx=".6"/><rect x="9" y="2.5" width="5.5" height="4" rx=".6"/><rect x="1.5" y="9.5" width="5.5" height="4" rx=".6"/><rect x="9" y="9.5" width="5.5" height="4" rx=".6"/></svg>${gallery.length} stills</button>` : ''}<a class="file-letterboxd" href="${esc(info.url)}" ${external}>View on Letterboxd</a></div></div></div>
+        ? frameButton(dossierStill, info.title, 'film-file-frame', imageMarkup(dossierStill, true, '(min-width: 1971px) 1080px, (min-width: 1440px) 55vw, (min-width: 920px) 790px, 96vw'), ` data-film="${esc(slug)}" tabindex="-1"`)
+        : `<div class="film-file-frame">${imageMarkup(dossierStill, true, '(min-width: 1971px) 1080px, (min-width: 1440px) 55vw, (min-width: 920px) 790px, 96vw')}</div>` : ''}
+      <div class="film-file-meta"><div class="file-poster">${poster(slug,true,'96px')}</div><div class="file-meta-copy"><h2 id="film-file-title" tabindex="-1">${esc(info.title)}</h2><p class="file-year">${esc(info.year)}${director ? ` · ${personLink(director)}` : ''}</p><p class="file-tally">${esc(winText)} <span>· ${mentions.length} ${mentions.length === 1 ? 'honorable mention' : 'honorable mentions'}</span></p></div>${dossierActions(slug,info,dossierStill)}</div>
       <div class="film-file-sections file-dossier-accordion">
       ${wonAwardsSection(wins)}
-      ${groups.join('')}
+      ${mentionsGroup}${dossierFrames(slug,gallery)}${groups.join('')}
       ${snubSection}${creditSection}
-      ${!wins.length && !groups.length && !snubs.length ? '<p class="empty-index">No selections in this edition.</p>' : ''}</div>`;
+      ${!wins.length && !mentionsGroup && !groups.length && !snubs.length ? '<p class="empty-index">No selections in this edition.</p>' : ''}</div>`;
     $('#film-file-content').scrollTop = 0;
     openDialog(filmDialog, '#film-file-title', trigger);
+    syncFilmFileBackdrop();
   }
 
   function jumpToAward(id) {
@@ -1150,13 +1199,14 @@
     const lead = artist
       ? `<div class="ceremony-artist-lead">${compactFrame}<div class="ceremony-artist-context">${compactMeta}${detailSections}</div></div>`
       : winnerMarkup + detailSections;
-    dialogScroll.innerHTML = `<div class="ceremony-body${artist ? ' portfolio-presentation' : ''} ${direction < 0 ? 'slide-back' : 'slide-in'}">
+    dialogScroll.innerHTML = `<div class="ceremony-body${artist ? ' portfolio-presentation' : ''} ${direction < 0 ? 'slide-back' : 'slide-in'}" data-award-id="${esc(award.id)}">
       ${lead}
       ${nominations(award.nominees, true, artist, award.id)}
       ${catalog.editions.length > 1 ? '<div class="award-comparison-slot"></div>' : ''}
     </div>`;
     explore.renderComparison($('.award-comparison-slot', dialogScroll), exploreEngine, award, editionId, catalog);
     dialogScroll.scrollTop = 0;
+    syncCeremonyBackdrop();
     if (awardDialog.open) dialogTitle.focus({preventScroll: true});
     prepareAward(index + 1);
     prepareAward(index - 1);
@@ -1172,6 +1222,7 @@
     cancelSceneChange();
     renderAward(index);
     if (!awardDialog.open) openDialog(awardDialog, '#dialog-category', trigger);
+    syncCeremonyBackdrop();
   }
 
   function prepareOfflineShare(awardId) {

@@ -25,6 +25,19 @@
       "coverYear": 2022,
       "coverSource": "https://www.focusfeatures.com/tar",
       "content": "content/2020-2026.json"
+    },
+    {
+      "id": "2010-2019",
+      "title": "The 2010–2019 Awards",
+      "period": "2010–2019",
+      "description": "A decade of ambition, obsession, and lives we might have lived.",
+      "cover": "assets/films/whiplash-decade-cover.webp",
+      "cardImage": "assets/films/whiplash-decade-cover.webp",
+      "coverFilm": "Whiplash",
+      "coverYear": 2014,
+      "coverSource": "https://film-grab.com/2015/05/22/whiplash/",
+      "content": "content/2010-2019.json",
+      "coverPosition": "38% 38%"
     }
   ],
   "lists": [
@@ -39,6 +52,18 @@
       "edition": "2020-2026",
       "kind": "snubs",
       "spotlight": {"film": "the-batman", "category": "Best Cinematography"}
+    },
+    {
+      "id": "oscar-snubs-2010-2019",
+      "title": "Oscar Snubs",
+      "subtitle": "2010–2019",
+      "description": "Eighteen choices the Academy passed over.",
+      "cover": "assets/films/la-la-land-wide.webp",
+      "coverFilm": "La La Land",
+      "coverYear": 2016,
+      "edition": "2010-2019",
+      "kind": "snubs",
+      "spotlight": {"film": "first-man", "category": "Best Original Score"}
     }
   ]
 }

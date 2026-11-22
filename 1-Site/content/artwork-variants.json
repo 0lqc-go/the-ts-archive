@@ -1,1 +1,5090 @@
-{"sizes":{"assets/films/a-complete-unknown-film-file.webp":[1680,945],"assets/films/a-complete-unknown-poster.webp":[300,450],"assets/films/aftersun-film-file.webp":[1680,945],"assets/films/aftersun-poster.webp":[300,450],"assets/films/anatomy-of-a-fall-piano.webp":[1456,779],"assets/films/anatomy-of-a-fall-poster.webp":[300,450],"assets/films/anatomy-of-a-fall-wide.webp":[1920,1080],"assets/films/asteroid-city-film-file.webp":[1680,945],"assets/films/asteroid-city-poster.webp":[300,450],"assets/films/babylon-2022-poster.webp":[300,450],"assets/films/babylon-2022-wide.webp":[1920,1080],"assets/films/challengers-film-file.webp":[1680,945],"assets/films/challengers-poster.webp":[300,450],"assets/films/decision-to-leave-poster.webp":[380,570],"assets/films/decision-to-leave-seo-rae.webp":[1920,804],"assets/films/decision-to-leave-wide.webp":[1920,1080],"assets/films/dont-look-up-2021-alt-01.webp":[1800,1200],"assets/films/dont-look-up-2021-poster.webp":[300,450],"assets/films/drive-my-car-poster.webp":[300,450],"assets/films/drive-my-car-wide.webp":[1920,1080],"assets/films/dune-2021-film-file.webp":[1680,700],"assets/films/dune-2021-poster.webp":[380,570],"assets/films/dune-part-two-final-duel.webp":[1300,659],"assets/films/dune-part-two-poster.webp":[300,450],"assets/films/dune-part-two-sardaukar.webp":[1536,768],"assets/films/dune-part-two-wide.webp":[1920,1080],"assets/films/elvis-2022-poster.webp":[300,450],"assets/films/elvis-2022-wide.webp":[1920,1080],"assets/films/extraction-2020-film-file.webp":[1680,945],"assets/films/extraction-2020-poster.webp":[300,450],"assets/films/hamnet-poster.webp":[300,450],"assets/films/hamnet-wide.webp":[1920,1080],"assets/films/inside-llewyn-davis-home.webp":[1280,690],"assets/films/killers-of-the-flower-moon-alt-01.webp":[1802,1200],"assets/films/killers-of-the-flower-moon-poster.webp":[300,450],"assets/films/la-chimera-film-file.webp":[1680,945],"assets/films/la-chimera-poster.webp":[300,450],"assets/films/marty-supreme-film-file.webp":[1680,945],"assets/films/marty-supreme-poster.webp":[300,450],"assets/films/materialists-film-file.webp":[1680,945],"assets/films/materialists-poster.webp":[300,450],"assets/films/may-december-film-file.webp":[1680,945],"assets/films/may-december-poster.webp":[300,450],"assets/films/mickey-17-film-file.webp":[1680,945],"assets/films/mickey-17-poster.webp":[300,450],"assets/films/nightmare-alley-2021-lilith-cabaret.webp":[1200,646],"assets/films/nightmare-alley-2021-poster.webp":[300,450],"assets/films/nightmare-alley-2021-wide.webp":[1920,1080],"assets/films/no-other-choice-2025-poster.webp":[300,450],"assets/films/no-other-choice-2025-wide.webp":[1920,1080],"assets/films/one-battle-after-another-alt-02.webp":[780,438],"assets/films/one-battle-after-another-poster.webp":[300,450],"assets/films/one-battle-after-another-sean-penn.webp":[1536,768],"assets/films/one-battle-after-another-wide.webp":[1920,1080],"assets/films/oppenheimer-2023-film-file.webp":[1680,945],"assets/films/oppenheimer-2023-poster.webp":[300,450],"assets/films/past-lives-film-file.webp":[1680,945],"assets/films/past-lives-poster.webp":[300,450],"assets/films/peaky-blinders-the-immortal-man-film-file.webp":[1680,945],"assets/films/peaky-blinders-the-immortal-man-poster.webp":[300,450],"assets/films/poor-things-2023-film-file.webp":[1680,945],"assets/films/poor-things-2023-poster.webp":[300,450],"assets/films/promising-young-woman-film-file.webp":[1680,945],"assets/films/promising-young-woman-poster.webp":[300,450],"assets/films/sentimental-value-2025-film-file.webp":[1680,945],"assets/films/sentimental-value-2025-poster.webp":[300,450],"assets/films/tar-2022-alt-02.webp":[1024,576],"assets/films/tar-2022-alt-04.webp":[1920,804],"assets/films/tar-2022-best-picture.webp":[1671,880],"assets/films/tar-2022-lydia-conducting.webp":[1920,804],"assets/films/tar-2022-lydia-running.webp":[1920,804],"assets/films/tar-2022-poster.webp":[300,450],"assets/films/tar-2022-records.webp":[1920,804],"assets/films/tar-2022-wide.webp":[1680,840],"assets/films/tenet-alt-01.webp":[1250,703],"assets/films/tenet-curator-editing.webp":[2160,1217],"assets/films/tenet-poster.webp":[380,570],"assets/films/tenet-wide.webp":[1920,1080],"assets/films/the-assessment-2024-film-file.webp":[1680,945],"assets/films/the-assessment-2024-poster.webp":[300,450],"assets/films/the-banshees-of-inisherin-poster.webp":[300,450],"assets/films/the-banshees-of-inisherin-siobhan-ferry.webp":[1920,804],"assets/films/the-banshees-of-inisherin-wide.webp":[1920,1080],"assets/films/the-batman-poster.webp":[300,450],"assets/films/the-batman-wide.webp":[1920,1080],"assets/films/the-beast-2023-film-file.webp":[1680,945],"assets/films/the-beast-2023-janus-poster.webp":[440,652],"assets/films/the-brutalist-alt-01.webp":[1920,1080],"assets/films/the-brutalist-alt-02.webp":[1920,1079],"assets/films/the-brutalist-poster.webp":[300,450],"assets/films/the-brutalist-wide.webp":[1920,1080],"assets/films/the-count-of-monte-cristo-2024-costume.webp":[2160,910],"assets/films/the-count-of-monte-cristo-2024-poster.webp":[300,450],"assets/films/the-count-of-monte-cristo-2024-screenplay.webp":[2160,908],"assets/films/the-count-of-monte-cristo-2024-underrated.webp":[2160,906],"assets/films/the-count-of-monte-cristo-2024-wide.webp":[1920,1080],"assets/films/the-flash-film-file.webp":[1200,675],"assets/films/the-flash-poster.webp":[300,450],"assets/films/the-french-dispatch-of-the-liberty-kansas-film-file.webp":[1680,945],"assets/films/the-french-dispatch-of-the-liberty-kansas-poster.webp":[300,450],"assets/films/the-menu-2022-film-file.webp":[1680,945],"assets/films/the-menu-2022-poster.webp":[300,450],"assets/films/the-novice-film-file.webp":[1680,945],"assets/films/the-novice-poster.webp":[380,570],"assets/films/the-odyssey-2026-poster.webp":[300,450],"assets/films/the-odyssey-2026-wide.webp":[1920,1080],"assets/films/the-power-of-the-dog-film-file.webp":[1680,945],"assets/films/the-power-of-the-dog-poster.webp":[300,450],"assets/films/the-worst-person-in-the-world-aksel-julie.webp":[1920,1038],"assets/films/the-worst-person-in-the-world-poster.webp":[300,450],"assets/films/the-worst-person-in-the-world-wide.webp":[1920,1080],"assets/films/tick-tick-boom-2021-film-file.webp":[1680,945],"assets/films/tick-tick-boom-2021-poster.webp":[300,450],"assets/films/wuthering-heights-2026-poster.webp":[300,450],"assets/films/wuthering-heights-2026-veil.webp":[2048,1152],"assets/films/wuthering-heights-2026-wide.webp":[1920,1080]},"variants":{"assets/films/a-complete-unknown-film-file.webp":[{"src":"assets/films/responsive/a-complete-unknown-film-file-640w.webp","width":640},{"src":"assets/films/responsive/a-complete-unknown-film-file-960w.webp","width":960},{"src":"assets/films/responsive/a-complete-unknown-film-file-1280w.webp","width":1280},{"src":"assets/films/a-complete-unknown-film-file.webp","width":1680}],"assets/films/a-complete-unknown-poster.webp":[{"src":"assets/films/responsive/a-complete-unknown-poster-128w.webp","width":128},{"src":"assets/films/responsive/a-complete-unknown-poster-176w.webp","width":176},{"src":"assets/films/a-complete-unknown-poster.webp","width":300}],"assets/films/aftersun-film-file.webp":[{"src":"assets/films/responsive/aftersun-film-file-640w.webp","width":640},{"src":"assets/films/responsive/aftersun-film-file-960w.webp","width":960},{"src":"assets/films/responsive/aftersun-film-file-1280w.webp","width":1280},{"src":"assets/films/aftersun-film-file.webp","width":1680}],"assets/films/aftersun-poster.webp":[{"src":"assets/films/responsive/aftersun-poster-128w.webp","width":128},{"src":"assets/films/responsive/aftersun-poster-176w.webp","width":176},{"src":"assets/films/aftersun-poster.webp","width":300}],"assets/films/anatomy-of-a-fall-piano.webp":[{"src":"assets/films/responsive/anatomy-of-a-fall-piano-640w.webp","width":640},{"src":"assets/films/responsive/anatomy-of-a-fall-piano-960w.webp","width":960},{"src":"assets/films/anatomy-of-a-fall-piano.webp","width":1456}],"assets/films/anatomy-of-a-fall-poster.webp":[{"src":"assets/films/responsive/anatomy-of-a-fall-poster-128w.webp","width":128},{"src":"assets/films/responsive/anatomy-of-a-fall-poster-176w.webp","width":176},{"src":"assets/films/anatomy-of-a-fall-poster.webp","width":300}],"assets/films/anatomy-of-a-fall-wide.webp":[{"src":"assets/films/responsive/anatomy-of-a-fall-wide-640w.webp","width":640},{"src":"assets/films/responsive/anatomy-of-a-fall-wide-960w.webp","width":960},{"src":"assets/films/responsive/anatomy-of-a-fall-wide-1280w.webp","width":1280},{"src":"assets/films/anatomy-of-a-fall-wide.webp","width":1920}],"assets/films/asteroid-city-film-file.webp":[{"src":"assets/films/responsive/asteroid-city-film-file-640w.webp","width":640},{"src":"assets/films/responsive/asteroid-city-film-file-960w.webp","width":960},{"src":"assets/films/responsive/asteroid-city-film-file-1280w.webp","width":1280},{"src":"assets/films/asteroid-city-film-file.webp","width":1680}],"assets/films/asteroid-city-poster.webp":[{"src":"assets/films/responsive/asteroid-city-poster-128w.webp","width":128},{"src":"assets/films/responsive/asteroid-city-poster-176w.webp","width":176},{"src":"assets/films/asteroid-city-poster.webp","width":300}],"assets/films/babylon-2022-poster.webp":[{"src":"assets/films/responsive/babylon-2022-poster-128w.webp","width":128},{"src":"assets/films/responsive/babylon-2022-poster-176w.webp","width":176},{"src":"assets/films/babylon-2022-poster.webp","width":300}],"assets/films/babylon-2022-wide.webp":[{"src":"assets/films/responsive/babylon-2022-wide-640w.webp","width":640},{"src":"assets/films/responsive/babylon-2022-wide-960w.webp","width":960},{"src":"assets/films/responsive/babylon-2022-wide-1280w.webp","width":1280},{"src":"assets/films/babylon-2022-wide.webp","width":1920}],"assets/films/challengers-film-file.webp":[{"src":"assets/films/responsive/challengers-film-file-640w.webp","width":640},{"src":"assets/films/responsive/challengers-film-file-960w.webp","width":960},{"src":"assets/films/responsive/challengers-film-file-1280w.webp","width":1280},{"src":"assets/films/challengers-film-file.webp","width":1680}],"assets/films/challengers-poster.webp":[{"src":"assets/films/responsive/challengers-poster-128w.webp","width":128},{"src":"assets/films/responsive/challengers-poster-176w.webp","width":176},{"src":"assets/films/challengers-poster.webp","width":300}],"assets/films/decision-to-leave-poster.webp":[{"src":"assets/films/responsive/decision-to-leave-poster-128w.webp","width":128},{"src":"assets/films/responsive/decision-to-leave-poster-176w.webp","width":176},{"src":"assets/films/responsive/decision-to-leave-poster-272w.webp","width":272},{"src":"assets/films/decision-to-leave-poster.webp","width":380}],"assets/films/decision-to-leave-seo-rae.webp":[{"src":"assets/films/responsive/decision-to-leave-seo-rae-640w.webp","width":640},{"src":"assets/films/responsive/decision-to-leave-seo-rae-960w.webp","width":960},{"src":"assets/films/responsive/decision-to-leave-seo-rae-1280w.webp","width":1280},{"src":"assets/films/decision-to-leave-seo-rae.webp","width":1920}],"assets/films/decision-to-leave-wide.webp":[{"src":"assets/films/responsive/decision-to-leave-wide-640w.webp","width":640},{"src":"assets/films/responsive/decision-to-leave-wide-960w.webp","width":960},{"src":"assets/films/responsive/decision-to-leave-wide-1280w.webp","width":1280},{"src":"assets/films/decision-to-leave-wide.webp","width":1920}],"assets/films/dont-look-up-2021-alt-01.webp":[{"src":"assets/films/responsive/dont-look-up-2021-alt-01-640w.webp","width":640},{"src":"assets/films/responsive/dont-look-up-2021-alt-01-960w.webp","width":960},{"src":"assets/films/responsive/dont-look-up-2021-alt-01-1280w.webp","width":1280},{"src":"assets/films/dont-look-up-2021-alt-01.webp","width":1800}],"assets/films/dont-look-up-2021-poster.webp":[{"src":"assets/films/responsive/dont-look-up-2021-poster-128w.webp","width":128},{"src":"assets/films/responsive/dont-look-up-2021-poster-176w.webp","width":176},{"src":"assets/films/dont-look-up-2021-poster.webp","width":300}],"assets/films/drive-my-car-poster.webp":[{"src":"assets/films/responsive/drive-my-car-poster-128w.webp","width":128},{"src":"assets/films/responsive/drive-my-car-poster-176w.webp","width":176},{"src":"assets/films/drive-my-car-poster.webp","width":300}],"assets/films/drive-my-car-wide.webp":[{"src":"assets/films/responsive/drive-my-car-wide-640w.webp","width":640},{"src":"assets/films/responsive/drive-my-car-wide-960w.webp","width":960},{"src":"assets/films/responsive/drive-my-car-wide-1280w.webp","width":1280},{"src":"assets/films/drive-my-car-wide.webp","width":1920}],"assets/films/dune-2021-film-file.webp":[{"src":"assets/films/responsive/dune-2021-film-file-640w.webp","width":640},{"src":"assets/films/responsive/dune-2021-film-file-960w.webp","width":960},{"src":"assets/films/responsive/dune-2021-film-file-1280w.webp","width":1280},{"src":"assets/films/dune-2021-film-file.webp","width":1680}],"assets/films/dune-2021-poster.webp":[{"src":"assets/films/responsive/dune-2021-poster-128w.webp","width":128},{"src":"assets/films/responsive/dune-2021-poster-176w.webp","width":176},{"src":"assets/films/responsive/dune-2021-poster-272w.webp","width":272},{"src":"assets/films/dune-2021-poster.webp","width":380}],"assets/films/dune-part-two-final-duel.webp":[{"src":"assets/films/responsive/dune-part-two-final-duel-640w.webp","width":640},{"src":"assets/films/responsive/dune-part-two-final-duel-960w.webp","width":960},{"src":"assets/films/dune-part-two-final-duel.webp","width":1300}],"assets/films/dune-part-two-poster.webp":[{"src":"assets/films/responsive/dune-part-two-poster-128w.webp","width":128},{"src":"assets/films/responsive/dune-part-two-poster-176w.webp","width":176},{"src":"assets/films/dune-part-two-poster.webp","width":300}],"assets/films/dune-part-two-sardaukar.webp":[{"src":"assets/films/responsive/dune-part-two-sardaukar-640w.webp","width":640},{"src":"assets/films/responsive/dune-part-two-sardaukar-960w.webp","width":960},{"src":"assets/films/dune-part-two-sardaukar.webp","width":1536}],"assets/films/dune-part-two-wide.webp":[{"src":"assets/films/responsive/dune-part-two-wide-640w.webp","width":640},{"src":"assets/films/responsive/dune-part-two-wide-960w.webp","width":960},{"src":"assets/films/responsive/dune-part-two-wide-1280w.webp","width":1280},{"src":"assets/films/dune-part-two-wide.webp","width":1920}],"assets/films/elvis-2022-poster.webp":[{"src":"assets/films/responsive/elvis-2022-poster-128w.webp","width":128},{"src":"assets/films/responsive/elvis-2022-poster-176w.webp","width":176},{"src":"assets/films/elvis-2022-poster.webp","width":300}],"assets/films/elvis-2022-wide.webp":[{"src":"assets/films/responsive/elvis-2022-wide-640w.webp","width":640},{"src":"assets/films/responsive/elvis-2022-wide-960w.webp","width":960},{"src":"assets/films/responsive/elvis-2022-wide-1280w.webp","width":1280},{"src":"assets/films/elvis-2022-wide.webp","width":1920}],"assets/films/extraction-2020-film-file.webp":[{"src":"assets/films/responsive/extraction-2020-film-file-640w.webp","width":640},{"src":"assets/films/responsive/extraction-2020-film-file-960w.webp","width":960},{"src":"assets/films/responsive/extraction-2020-film-file-1280w.webp","width":1280},{"src":"assets/films/extraction-2020-film-file.webp","width":1680}],"assets/films/extraction-2020-poster.webp":[{"src":"assets/films/responsive/extraction-2020-poster-128w.webp","width":128},{"src":"assets/films/responsive/extraction-2020-poster-176w.webp","width":176},{"src":"assets/films/extraction-2020-poster.webp","width":300}],"assets/films/hamnet-poster.webp":[{"src":"assets/films/responsive/hamnet-poster-128w.webp","width":128},{"src":"assets/films/responsive/hamnet-poster-176w.webp","width":176},{"src":"assets/films/hamnet-poster.webp","width":300}],"assets/films/hamnet-wide.webp":[{"src":"assets/films/responsive/hamnet-wide-640w.webp","width":640},{"src":"assets/films/responsive/hamnet-wide-960w.webp","width":960},{"src":"assets/films/responsive/hamnet-wide-1280w.webp","width":1280},{"src":"assets/films/hamnet-wide.webp","width":1920}],"assets/films/inside-llewyn-davis-home.webp":[{"src":"assets/films/responsive/inside-llewyn-davis-home-640w.webp","width":640},{"src":"assets/films/responsive/inside-llewyn-davis-home-960w.webp","width":960},{"src":"assets/films/inside-llewyn-davis-home.webp","width":1280}],"assets/films/killers-of-the-flower-moon-alt-01.webp":[{"src":"assets/films/responsive/killers-of-the-flower-moon-alt-01-640w.webp","width":640},{"src":"assets/films/responsive/killers-of-the-flower-moon-alt-01-960w.webp","width":960},{"src":"assets/films/responsive/killers-of-the-flower-moon-alt-01-1280w.webp","width":1280},{"src":"assets/films/killers-of-the-flower-moon-alt-01.webp","width":1802}],"assets/films/killers-of-the-flower-moon-poster.webp":[{"src":"assets/films/responsive/killers-of-the-flower-moon-poster-128w.webp","width":128},{"src":"assets/films/responsive/killers-of-the-flower-moon-poster-176w.webp","width":176},{"src":"assets/films/killers-of-the-flower-moon-poster.webp","width":300}],"assets/films/la-chimera-film-file.webp":[{"src":"assets/films/responsive/la-chimera-film-file-640w.webp","width":640},{"src":"assets/films/responsive/la-chimera-film-file-960w.webp","width":960},{"src":"assets/films/responsive/la-chimera-film-file-1280w.webp","width":1280},{"src":"assets/films/la-chimera-film-file.webp","width":1680}],"assets/films/la-chimera-poster.webp":[{"src":"assets/films/responsive/la-chimera-poster-128w.webp","width":128},{"src":"assets/films/responsive/la-chimera-poster-176w.webp","width":176},{"src":"assets/films/la-chimera-poster.webp","width":300}],"assets/films/marty-supreme-film-file.webp":[{"src":"assets/films/responsive/marty-supreme-film-file-640w.webp","width":640},{"src":"assets/films/responsive/marty-supreme-film-file-960w.webp","width":960},{"src":"assets/films/responsive/marty-supreme-film-file-1280w.webp","width":1280},{"src":"assets/films/marty-supreme-film-file.webp","width":1680}],"assets/films/marty-supreme-poster.webp":[{"src":"assets/films/responsive/marty-supreme-poster-128w.webp","width":128},{"src":"assets/films/responsive/marty-supreme-poster-176w.webp","width":176},{"src":"assets/films/marty-supreme-poster.webp","width":300}],"assets/films/materialists-film-file.webp":[{"src":"assets/films/responsive/materialists-film-file-640w.webp","width":640},{"src":"assets/films/responsive/materialists-film-file-960w.webp","width":960},{"src":"assets/films/responsive/materialists-film-file-1280w.webp","width":1280},{"src":"assets/films/materialists-film-file.webp","width":1680}],"assets/films/materialists-poster.webp":[{"src":"assets/films/responsive/materialists-poster-128w.webp","width":128},{"src":"assets/films/responsive/materialists-poster-176w.webp","width":176},{"src":"assets/films/materialists-poster.webp","width":300}],"assets/films/may-december-film-file.webp":[{"src":"assets/films/responsive/may-december-film-file-640w.webp","width":640},{"src":"assets/films/responsive/may-december-film-file-960w.webp","width":960},{"src":"assets/films/responsive/may-december-film-file-1280w.webp","width":1280},{"src":"assets/films/may-december-film-file.webp","width":1680}],"assets/films/may-december-poster.webp":[{"src":"assets/films/responsive/may-december-poster-128w.webp","width":128},{"src":"assets/films/responsive/may-december-poster-176w.webp","width":176},{"src":"assets/films/may-december-poster.webp","width":300}],"assets/films/mickey-17-film-file.webp":[{"src":"assets/films/responsive/mickey-17-film-file-640w.webp","width":640},{"src":"assets/films/responsive/mickey-17-film-file-960w.webp","width":960},{"src":"assets/films/responsive/mickey-17-film-file-1280w.webp","width":1280},{"src":"assets/films/mickey-17-film-file.webp","width":1680}],"assets/films/mickey-17-poster.webp":[{"src":"assets/films/responsive/mickey-17-poster-128w.webp","width":128},{"src":"assets/films/responsive/mickey-17-poster-176w.webp","width":176},{"src":"assets/films/mickey-17-poster.webp","width":300}],"assets/films/nightmare-alley-2021-lilith-cabaret.webp":[{"src":"assets/films/responsive/nightmare-alley-2021-lilith-cabaret-640w.webp","width":640},{"src":"assets/films/responsive/nightmare-alley-2021-lilith-cabaret-960w.webp","width":960},{"src":"assets/films/nightmare-alley-2021-lilith-cabaret.webp","width":1200}],"assets/films/nightmare-alley-2021-poster.webp":[{"src":"assets/films/responsive/nightmare-alley-2021-poster-128w.webp","width":128},{"src":"assets/films/responsive/nightmare-alley-2021-poster-176w.webp","width":176},{"src":"assets/films/nightmare-alley-2021-poster.webp","width":300}],"assets/films/nightmare-alley-2021-wide.webp":[{"src":"assets/films/responsive/nightmare-alley-2021-wide-640w.webp","width":640},{"src":"assets/films/responsive/nightmare-alley-2021-wide-960w.webp","width":960},{"src":"assets/films/responsive/nightmare-alley-2021-wide-1280w.webp","width":1280},{"src":"assets/films/nightmare-alley-2021-wide.webp","width":1920}],"assets/films/no-other-choice-2025-poster.webp":[{"src":"assets/films/responsive/no-other-choice-2025-poster-128w.webp","width":128},{"src":"assets/films/responsive/no-other-choice-2025-poster-176w.webp","width":176},{"src":"assets/films/no-other-choice-2025-poster.webp","width":300}],"assets/films/no-other-choice-2025-wide.webp":[{"src":"assets/films/responsive/no-other-choice-2025-wide-640w.webp","width":640},{"src":"assets/films/responsive/no-other-choice-2025-wide-960w.webp","width":960},{"src":"assets/films/responsive/no-other-choice-2025-wide-1280w.webp","width":1280},{"src":"assets/films/no-other-choice-2025-wide.webp","width":1920}],"assets/films/one-battle-after-another-alt-02.webp":[{"src":"assets/films/responsive/one-battle-after-another-alt-02-640w.webp","width":640},{"src":"assets/films/one-battle-after-another-alt-02.webp","width":780}],"assets/films/one-battle-after-another-poster.webp":[{"src":"assets/films/responsive/one-battle-after-another-poster-128w.webp","width":128},{"src":"assets/films/responsive/one-battle-after-another-poster-176w.webp","width":176},{"src":"assets/films/one-battle-after-another-poster.webp","width":300}],"assets/films/one-battle-after-another-sean-penn.webp":[{"src":"assets/films/responsive/one-battle-after-another-sean-penn-640w.webp","width":640},{"src":"assets/films/responsive/one-battle-after-another-sean-penn-960w.webp","width":960},{"src":"assets/films/one-battle-after-another-sean-penn.webp","width":1536}],"assets/films/one-battle-after-another-wide.webp":[{"src":"assets/films/responsive/one-battle-after-another-wide-640w.webp","width":640},{"src":"assets/films/responsive/one-battle-after-another-wide-960w.webp","width":960},{"src":"assets/films/responsive/one-battle-after-another-wide-1280w.webp","width":1280},{"src":"assets/films/one-battle-after-another-wide.webp","width":1920}],"assets/films/oppenheimer-2023-film-file.webp":[{"src":"assets/films/responsive/oppenheimer-2023-film-file-640w.webp","width":640},{"src":"assets/films/responsive/oppenheimer-2023-film-file-960w.webp","width":960},{"src":"assets/films/responsive/oppenheimer-2023-film-file-1280w.webp","width":1280},{"src":"assets/films/oppenheimer-2023-film-file.webp","width":1680}],"assets/films/oppenheimer-2023-poster.webp":[{"src":"assets/films/responsive/oppenheimer-2023-poster-128w.webp","width":128},{"src":"assets/films/responsive/oppenheimer-2023-poster-176w.webp","width":176},{"src":"assets/films/oppenheimer-2023-poster.webp","width":300}],"assets/films/past-lives-film-file.webp":[{"src":"assets/films/responsive/past-lives-film-file-640w.webp","width":640},{"src":"assets/films/responsive/past-lives-film-file-960w.webp","width":960},{"src":"assets/films/responsive/past-lives-film-file-1280w.webp","width":1280},{"src":"assets/films/past-lives-film-file.webp","width":1680}],"assets/films/past-lives-poster.webp":[{"src":"assets/films/responsive/past-lives-poster-128w.webp","width":128},{"src":"assets/films/responsive/past-lives-poster-176w.webp","width":176},{"src":"assets/films/past-lives-poster.webp","width":300}],"assets/films/peaky-blinders-the-immortal-man-film-file.webp":[{"src":"assets/films/responsive/peaky-blinders-the-immortal-man-film-file-640w.webp","width":640},{"src":"assets/films/responsive/peaky-blinders-the-immortal-man-film-file-960w.webp","width":960},{"src":"assets/films/responsive/peaky-blinders-the-immortal-man-film-file-1280w.webp","width":1280},{"src":"assets/films/peaky-blinders-the-immortal-man-film-file.webp","width":1680}],"assets/films/peaky-blinders-the-immortal-man-poster.webp":[{"src":"assets/films/responsive/peaky-blinders-the-immortal-man-poster-128w.webp","width":128},{"src":"assets/films/responsive/peaky-blinders-the-immortal-man-poster-176w.webp","width":176},{"src":"assets/films/peaky-blinders-the-immortal-man-poster.webp","width":300}],"assets/films/poor-things-2023-film-file.webp":[{"src":"assets/films/responsive/poor-things-2023-film-file-640w.webp","width":640},{"src":"assets/films/responsive/poor-things-2023-film-file-960w.webp","width":960},{"src":"assets/films/responsive/poor-things-2023-film-file-1280w.webp","width":1280},{"src":"assets/films/poor-things-2023-film-file.webp","width":1680}],"assets/films/poor-things-2023-poster.webp":[{"src":"assets/films/responsive/poor-things-2023-poster-128w.webp","width":128},{"src":"assets/films/responsive/poor-things-2023-poster-176w.webp","width":176},{"src":"assets/films/poor-things-2023-poster.webp","width":300}],"assets/films/promising-young-woman-film-file.webp":[{"src":"assets/films/responsive/promising-young-woman-film-file-640w.webp","width":640},{"src":"assets/films/responsive/promising-young-woman-film-file-960w.webp","width":960},{"src":"assets/films/responsive/promising-young-woman-film-file-1280w.webp","width":1280},{"src":"assets/films/promising-young-woman-film-file.webp","width":1680}],"assets/films/promising-young-woman-poster.webp":[{"src":"assets/films/responsive/promising-young-woman-poster-128w.webp","width":128},{"src":"assets/films/responsive/promising-young-woman-poster-176w.webp","width":176},{"src":"assets/films/promising-young-woman-poster.webp","width":300}],"assets/films/sentimental-value-2025-film-file.webp":[{"src":"assets/films/responsive/sentimental-value-2025-film-file-640w.webp","width":640},{"src":"assets/films/responsive/sentimental-value-2025-film-file-960w.webp","width":960},{"src":"assets/films/responsive/sentimental-value-2025-film-file-1280w.webp","width":1280},{"src":"assets/films/sentimental-value-2025-film-file.webp","width":1680}],"assets/films/sentimental-value-2025-poster.webp":[{"src":"assets/films/responsive/sentimental-value-2025-poster-128w.webp","width":128},{"src":"assets/films/responsive/sentimental-value-2025-poster-176w.webp","width":176},{"src":"assets/films/sentimental-value-2025-poster.webp","width":300}],"assets/films/tar-2022-alt-02.webp":[{"src":"assets/films/responsive/tar-2022-alt-02-640w.webp","width":640},{"src":"assets/films/tar-2022-alt-02.webp","width":1024}],"assets/films/tar-2022-alt-04.webp":[{"src":"assets/films/responsive/tar-2022-alt-04-640w.webp","width":640},{"src":"assets/films/responsive/tar-2022-alt-04-960w.webp","width":960},{"src":"assets/films/responsive/tar-2022-alt-04-1280w.webp","width":1280},{"src":"assets/films/tar-2022-alt-04.webp","width":1920}],"assets/films/tar-2022-best-picture.webp":[{"src":"assets/films/responsive/tar-2022-best-picture-640w.webp","width":640},{"src":"assets/films/responsive/tar-2022-best-picture-960w.webp","width":960},{"src":"assets/films/responsive/tar-2022-best-picture-1280w.webp","width":1280},{"src":"assets/films/tar-2022-best-picture.webp","width":1671}],"assets/films/tar-2022-lydia-conducting.webp":[{"src":"assets/films/responsive/tar-2022-lydia-conducting-640w.webp","width":640},{"src":"assets/films/responsive/tar-2022-lydia-conducting-960w.webp","width":960},{"src":"assets/films/responsive/tar-2022-lydia-conducting-1280w.webp","width":1280},{"src":"assets/films/tar-2022-lydia-conducting.webp","width":1920}],"assets/films/tar-2022-lydia-running.webp":[{"src":"assets/films/responsive/tar-2022-lydia-running-640w.webp","width":640},{"src":"assets/films/responsive/tar-2022-lydia-running-960w.webp","width":960},{"src":"assets/films/responsive/tar-2022-lydia-running-1280w.webp","width":1280},{"src":"assets/films/tar-2022-lydia-running.webp","width":1920}],"assets/films/tar-2022-poster.webp":[{"src":"assets/films/responsive/tar-2022-poster-128w.webp","width":128},{"src":"assets/films/responsive/tar-2022-poster-176w.webp","width":176},{"src":"assets/films/tar-2022-poster.webp","width":300}],"assets/films/tar-2022-records.webp":[{"src":"assets/films/responsive/tar-2022-records-640w.webp","width":640},{"src":"assets/films/responsive/tar-2022-records-960w.webp","width":960},{"src":"assets/films/responsive/tar-2022-records-1280w.webp","width":1280},{"src":"assets/films/tar-2022-records.webp","width":1920}],"assets/films/tar-2022-wide.webp":[{"src":"assets/films/responsive/tar-2022-wide-640w.webp","width":640},{"src":"assets/films/responsive/tar-2022-wide-960w.webp","width":960},{"src":"assets/films/responsive/tar-2022-wide-1280w.webp","width":1280},{"src":"assets/films/tar-2022-wide.webp","width":1680}],"assets/films/tenet-alt-01.webp":[{"src":"assets/films/responsive/tenet-alt-01-640w.webp","width":640},{"src":"assets/films/responsive/tenet-alt-01-960w.webp","width":960},{"src":"assets/films/tenet-alt-01.webp","width":1250}],"assets/films/tenet-curator-editing.webp":[{"src":"assets/films/responsive/tenet-curator-editing-640w.webp","width":640},{"src":"assets/films/responsive/tenet-curator-editing-960w.webp","width":960},{"src":"assets/films/responsive/tenet-curator-editing-1280w.webp","width":1280},{"src":"assets/films/tenet-curator-editing.webp","width":2160}],"assets/films/tenet-poster.webp":[{"src":"assets/films/responsive/tenet-poster-128w.webp","width":128},{"src":"assets/films/responsive/tenet-poster-176w.webp","width":176},{"src":"assets/films/responsive/tenet-poster-272w.webp","width":272},{"src":"assets/films/tenet-poster.webp","width":380}],"assets/films/tenet-wide.webp":[{"src":"assets/films/responsive/tenet-wide-640w.webp","width":640},{"src":"assets/films/responsive/tenet-wide-960w.webp","width":960},{"src":"assets/films/responsive/tenet-wide-1280w.webp","width":1280},{"src":"assets/films/tenet-wide.webp","width":1920}],"assets/films/the-assessment-2024-film-file.webp":[{"src":"assets/films/responsive/the-assessment-2024-film-file-640w.webp","width":640},{"src":"assets/films/responsive/the-assessment-2024-film-file-960w.webp","width":960},{"src":"assets/films/responsive/the-assessment-2024-film-file-1280w.webp","width":1280},{"src":"assets/films/the-assessment-2024-film-file.webp","width":1680}],"assets/films/the-assessment-2024-poster.webp":[{"src":"assets/films/responsive/the-assessment-2024-poster-128w.webp","width":128},{"src":"assets/films/responsive/the-assessment-2024-poster-176w.webp","width":176},{"src":"assets/films/the-assessment-2024-poster.webp","width":300}],"assets/films/the-banshees-of-inisherin-poster.webp":[{"src":"assets/films/responsive/the-banshees-of-inisherin-poster-128w.webp","width":128},{"src":"assets/films/responsive/the-banshees-of-inisherin-poster-176w.webp","width":176},{"src":"assets/films/the-banshees-of-inisherin-poster.webp","width":300}],"assets/films/the-banshees-of-inisherin-siobhan-ferry.webp":[{"src":"assets/films/responsive/the-banshees-of-inisherin-siobhan-ferry-640w.webp","width":640},{"src":"assets/films/responsive/the-banshees-of-inisherin-siobhan-ferry-960w.webp","width":960},{"src":"assets/films/responsive/the-banshees-of-inisherin-siobhan-ferry-1280w.webp","width":1280},{"src":"assets/films/the-banshees-of-inisherin-siobhan-ferry.webp","width":1920}],"assets/films/the-banshees-of-inisherin-wide.webp":[{"src":"assets/films/responsive/the-banshees-of-inisherin-wide-640w.webp","width":640},{"src":"assets/films/responsive/the-banshees-of-inisherin-wide-960w.webp","width":960},{"src":"assets/films/responsive/the-banshees-of-inisherin-wide-1280w.webp","width":1280},{"src":"assets/films/the-banshees-of-inisherin-wide.webp","width":1920}],"assets/films/the-batman-poster.webp":[{"src":"assets/films/responsive/the-batman-poster-128w.webp","width":128},{"src":"assets/films/responsive/the-batman-poster-176w.webp","width":176},{"src":"assets/films/the-batman-poster.webp","width":300}],"assets/films/the-batman-wide.webp":[{"src":"assets/films/responsive/the-batman-wide-640w.webp","width":640},{"src":"assets/films/responsive/the-batman-wide-960w.webp","width":960},{"src":"assets/films/responsive/the-batman-wide-1280w.webp","width":1280},{"src":"assets/films/the-batman-wide.webp","width":1920}],"assets/films/the-beast-2023-film-file.webp":[{"src":"assets/films/responsive/the-beast-2023-film-file-640w.webp","width":640},{"src":"assets/films/responsive/the-beast-2023-film-file-960w.webp","width":960},{"src":"assets/films/responsive/the-beast-2023-film-file-1280w.webp","width":1280},{"src":"assets/films/the-beast-2023-film-file.webp","width":1680}],"assets/films/the-beast-2023-janus-poster.webp":[{"src":"assets/films/responsive/the-beast-2023-janus-poster-128w.webp","width":128},{"src":"assets/films/responsive/the-beast-2023-janus-poster-176w.webp","width":176},{"src":"assets/films/responsive/the-beast-2023-janus-poster-272w.webp","width":272},{"src":"assets/films/the-beast-2023-janus-poster.webp","width":440}],"assets/films/the-brutalist-alt-01.webp":[{"src":"assets/films/responsive/the-brutalist-alt-01-640w.webp","width":640},{"src":"assets/films/responsive/the-brutalist-alt-01-960w.webp","width":960},{"src":"assets/films/responsive/the-brutalist-alt-01-1280w.webp","width":1280},{"src":"assets/films/the-brutalist-alt-01.webp","width":1920}],"assets/films/the-brutalist-alt-02.webp":[{"src":"assets/films/responsive/the-brutalist-alt-02-640w.webp","width":640},{"src":"assets/films/responsive/the-brutalist-alt-02-960w.webp","width":960},{"src":"assets/films/responsive/the-brutalist-alt-02-1280w.webp","width":1280},{"src":"assets/films/the-brutalist-alt-02.webp","width":1920}],"assets/films/the-brutalist-poster.webp":[{"src":"assets/films/responsive/the-brutalist-poster-128w.webp","width":128},{"src":"assets/films/responsive/the-brutalist-poster-176w.webp","width":176},{"src":"assets/films/the-brutalist-poster.webp","width":300}],"assets/films/the-brutalist-wide.webp":[{"src":"assets/films/responsive/the-brutalist-wide-640w.webp","width":640},{"src":"assets/films/responsive/the-brutalist-wide-960w.webp","width":960},{"src":"assets/films/responsive/the-brutalist-wide-1280w.webp","width":1280},{"src":"assets/films/the-brutalist-wide.webp","width":1920}],"assets/films/the-count-of-monte-cristo-2024-costume.webp":[{"src":"assets/films/responsive/the-count-of-monte-cristo-2024-costume-640w.webp","width":640},{"src":"assets/films/responsive/the-count-of-monte-cristo-2024-costume-960w.webp","width":960},{"src":"assets/films/responsive/the-count-of-monte-cristo-2024-costume-1280w.webp","width":1280},{"src":"assets/films/the-count-of-monte-cristo-2024-costume.webp","width":2160}],"assets/films/the-count-of-monte-cristo-2024-poster.webp":[{"src":"assets/films/responsive/the-count-of-monte-cristo-2024-poster-128w.webp","width":128},{"src":"assets/films/responsive/the-count-of-monte-cristo-2024-poster-176w.webp","width":176},{"src":"assets/films/the-count-of-monte-cristo-2024-poster.webp","width":300}],"assets/films/the-count-of-monte-cristo-2024-screenplay.webp":[{"src":"assets/films/responsive/the-count-of-monte-cristo-2024-screenplay-640w.webp","width":640},{"src":"assets/films/responsive/the-count-of-monte-cristo-2024-screenplay-960w.webp","width":960},{"src":"assets/films/responsive/the-count-of-monte-cristo-2024-screenplay-1280w.webp","width":1280},{"src":"assets/films/the-count-of-monte-cristo-2024-screenplay.webp","width":2160}],"assets/films/the-count-of-monte-cristo-2024-underrated.webp":[{"src":"assets/films/responsive/the-count-of-monte-cristo-2024-underrated-640w.webp","width":640},{"src":"assets/films/responsive/the-count-of-monte-cristo-2024-underrated-960w.webp","width":960},{"src":"assets/films/responsive/the-count-of-monte-cristo-2024-underrated-1280w.webp","width":1280},{"src":"assets/films/the-count-of-monte-cristo-2024-underrated.webp","width":2160}],"assets/films/the-count-of-monte-cristo-2024-wide.webp":[{"src":"assets/films/responsive/the-count-of-monte-cristo-2024-wide-640w.webp","width":640},{"src":"assets/films/responsive/the-count-of-monte-cristo-2024-wide-960w.webp","width":960},{"src":"assets/films/responsive/the-count-of-monte-cristo-2024-wide-1280w.webp","width":1280},{"src":"assets/films/the-count-of-monte-cristo-2024-wide.webp","width":1920}],"assets/films/the-flash-film-file.webp":[{"src":"assets/films/responsive/the-flash-film-file-640w.webp","width":640},{"src":"assets/films/responsive/the-flash-film-file-960w.webp","width":960},{"src":"assets/films/the-flash-film-file.webp","width":1200}],"assets/films/the-flash-poster.webp":[{"src":"assets/films/responsive/the-flash-poster-128w.webp","width":128},{"src":"assets/films/responsive/the-flash-poster-176w.webp","width":176},{"src":"assets/films/the-flash-poster.webp","width":300}],"assets/films/the-french-dispatch-of-the-liberty-kansas-film-file.webp":[{"src":"assets/films/responsive/the-french-dispatch-of-the-liberty-kansas-film-file-640w.webp","width":640},{"src":"assets/films/responsive/the-french-dispatch-of-the-liberty-kansas-film-file-960w.webp","width":960},{"src":"assets/films/responsive/the-french-dispatch-of-the-liberty-kansas-film-file-1280w.webp","width":1280},{"src":"assets/films/the-french-dispatch-of-the-liberty-kansas-film-file.webp","width":1680}],"assets/films/the-french-dispatch-of-the-liberty-kansas-poster.webp":[{"src":"assets/films/responsive/the-french-dispatch-of-the-liberty-kansas-poster-128w.webp","width":128},{"src":"assets/films/responsive/the-french-dispatch-of-the-liberty-kansas-poster-176w.webp","width":176},{"src":"assets/films/the-french-dispatch-of-the-liberty-kansas-poster.webp","width":300}],"assets/films/the-menu-2022-film-file.webp":[{"src":"assets/films/responsive/the-menu-2022-film-file-640w.webp","width":640},{"src":"assets/films/responsive/the-menu-2022-film-file-960w.webp","width":960},{"src":"assets/films/responsive/the-menu-2022-film-file-1280w.webp","width":1280},{"src":"assets/films/the-menu-2022-film-file.webp","width":1680}],"assets/films/the-menu-2022-poster.webp":[{"src":"assets/films/responsive/the-menu-2022-poster-128w.webp","width":128},{"src":"assets/films/responsive/the-menu-2022-poster-176w.webp","width":176},{"src":"assets/films/the-menu-2022-poster.webp","width":300}],"assets/films/the-novice-film-file.webp":[{"src":"assets/films/responsive/the-novice-film-file-640w.webp","width":640},{"src":"assets/films/responsive/the-novice-film-file-960w.webp","width":960},{"src":"assets/films/responsive/the-novice-film-file-1280w.webp","width":1280},{"src":"assets/films/the-novice-film-file.webp","width":1680}],"assets/films/the-novice-poster.webp":[{"src":"assets/films/responsive/the-novice-poster-128w.webp","width":128},{"src":"assets/films/responsive/the-novice-poster-176w.webp","width":176},{"src":"assets/films/responsive/the-novice-poster-272w.webp","width":272},{"src":"assets/films/the-novice-poster.webp","width":380}],"assets/films/the-odyssey-2026-poster.webp":[{"src":"assets/films/responsive/the-odyssey-2026-poster-128w.webp","width":128},{"src":"assets/films/responsive/the-odyssey-2026-poster-176w.webp","width":176},{"src":"assets/films/the-odyssey-2026-poster.webp","width":300}],"assets/films/the-odyssey-2026-wide.webp":[{"src":"assets/films/responsive/the-odyssey-2026-wide-640w.webp","width":640},{"src":"assets/films/responsive/the-odyssey-2026-wide-960w.webp","width":960},{"src":"assets/films/responsive/the-odyssey-2026-wide-1280w.webp","width":1280},{"src":"assets/films/the-odyssey-2026-wide.webp","width":1920}],"assets/films/the-power-of-the-dog-film-file.webp":[{"src":"assets/films/responsive/the-power-of-the-dog-film-file-640w.webp","width":640},{"src":"assets/films/responsive/the-power-of-the-dog-film-file-960w.webp","width":960},{"src":"assets/films/responsive/the-power-of-the-dog-film-file-1280w.webp","width":1280},{"src":"assets/films/the-power-of-the-dog-film-file.webp","width":1680}],"assets/films/the-power-of-the-dog-poster.webp":[{"src":"assets/films/responsive/the-power-of-the-dog-poster-128w.webp","width":128},{"src":"assets/films/responsive/the-power-of-the-dog-poster-176w.webp","width":176},{"src":"assets/films/the-power-of-the-dog-poster.webp","width":300}],"assets/films/the-worst-person-in-the-world-aksel-julie.webp":[{"src":"assets/films/responsive/the-worst-person-in-the-world-aksel-julie-640w.webp","width":640},{"src":"assets/films/responsive/the-worst-person-in-the-world-aksel-julie-960w.webp","width":960},{"src":"assets/films/responsive/the-worst-person-in-the-world-aksel-julie-1280w.webp","width":1280},{"src":"assets/films/the-worst-person-in-the-world-aksel-julie.webp","width":1920}],"assets/films/the-worst-person-in-the-world-poster.webp":[{"src":"assets/films/responsive/the-worst-person-in-the-world-poster-128w.webp","width":128},{"src":"assets/films/responsive/the-worst-person-in-the-world-poster-176w.webp","width":176},{"src":"assets/films/the-worst-person-in-the-world-poster.webp","width":300}],"assets/films/the-worst-person-in-the-world-wide.webp":[{"src":"assets/films/responsive/the-worst-person-in-the-world-wide-640w.webp","width":640},{"src":"assets/films/responsive/the-worst-person-in-the-world-wide-960w.webp","width":960},{"src":"assets/films/responsive/the-worst-person-in-the-world-wide-1280w.webp","width":1280},{"src":"assets/films/the-worst-person-in-the-world-wide.webp","width":1920}],"assets/films/tick-tick-boom-2021-film-file.webp":[{"src":"assets/films/responsive/tick-tick-boom-2021-film-file-640w.webp","width":640},{"src":"assets/films/responsive/tick-tick-boom-2021-film-file-960w.webp","width":960},{"src":"assets/films/responsive/tick-tick-boom-2021-film-file-1280w.webp","width":1280},{"src":"assets/films/tick-tick-boom-2021-film-file.webp","width":1680}],"assets/films/tick-tick-boom-2021-poster.webp":[{"src":"assets/films/responsive/tick-tick-boom-2021-poster-128w.webp","width":128},{"src":"assets/films/responsive/tick-tick-boom-2021-poster-176w.webp","width":176},{"src":"assets/films/tick-tick-boom-2021-poster.webp","width":300}],"assets/films/wuthering-heights-2026-poster.webp":[{"src":"assets/films/responsive/wuthering-heights-2026-poster-128w.webp","width":128},{"src":"assets/films/responsive/wuthering-heights-2026-poster-176w.webp","width":176},{"src":"assets/films/wuthering-heights-2026-poster.webp","width":300}],"assets/films/wuthering-heights-2026-veil.webp":[{"src":"assets/films/responsive/wuthering-heights-2026-veil-640w.webp","width":640},{"src":"assets/films/responsive/wuthering-heights-2026-veil-960w.webp","width":960},{"src":"assets/films/responsive/wuthering-heights-2026-veil-1280w.webp","width":1280},{"src":"assets/films/wuthering-heights-2026-veil.webp","width":2048}],"assets/films/wuthering-heights-2026-wide.webp":[{"src":"assets/films/responsive/wuthering-heights-2026-wide-640w.webp","width":640},{"src":"assets/films/responsive/wuthering-heights-2026-wide-960w.webp","width":960},{"src":"assets/films/responsive/wuthering-heights-2026-wide-1280w.webp","width":1280},{"src":"assets/films/wuthering-heights-2026-wide.webp","width":1920}]}}
+{
+  "sizes": {
+    "assets/films/1917-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/1917-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/a-complete-unknown-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/aftersun-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/anatomy-of-a-fall-piano.webp": [
+      1456,
+      779
+    ],
+    "assets/films/anatomy-of-a-fall-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/anatomy-of-a-fall-wide.webp": [
+      1920,
+      1080
+    ],
+    "assets/films/anna-karenina-2012-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/anna-karenina-2012-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/anna-karenina-best-costume-design.webp": [
+      1280,
+      534
+    ],
+    "assets/films/anna-karenina-production-design-curator.webp": [
+      1280,
+      536
+    ],
+    "assets/films/arrival-2016-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/arrival-2016-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/asteroid-city-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/avengers-endgame-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/avengers-endgame-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/avengers-infinity-war-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/avengers-infinity-war-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/babylon-2022-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/babylon-2022-wide.webp": [
+      1920,
+      1080
+    ],
+    "assets/films/before-midnight-best-line-of-dialogue-2010s.webp": [
+      1280,
+      688
+    ],
+    "assets/films/before-midnight-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/before-midnight-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/black-swan-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/black-swan-the-price-of-perfection-2010s.webp": [
+      1023,
+      427
+    ],
+    "assets/films/black-swan-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/blade-runner-2049-best-cinematography.webp": [
+      1280,
+      546
+    ],
+    "assets/films/blade-runner-2049-ceremony-cinematography.webp": [
+      1280,
+      546
+    ],
+    "assets/films/blade-runner-2049-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/blade-runner-2049-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/burning-2018-best-adapted-screenplay-2010s.webp": [
+      1280,
+      536
+    ],
+    "assets/films/burning-2018-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/burning-2018-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/certified-copy-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/certified-copy-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/challengers-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/christopher-nolan-curator-portrait.webp": [
+      1680,
+      1112
+    ],
+    "assets/films/coco-2017-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/coco-2017-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/decision-to-leave-poster.webp": [
+      380,
+      570
+    ],
+    "assets/films/decision-to-leave-seo-rae.webp": [
+      1920,
+      804
+    ],
+    "assets/films/decision-to-leave-wide.webp": [
+      1920,
+      1080
+    ],
+    "assets/films/dont-look-up-2021-alt-01.webp": [
+      1800,
+      1200
+    ],
+    "assets/films/dont-look-up-2021-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/drive-2011-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/drive-2011-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/drive-my-car-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/drive-my-car-wide.webp": [
+      1920,
+      1080
+    ],
+    "assets/films/dune-2021-poster.webp": [
+      380,
+      570
+    ],
+    "assets/films/dune-part-two-final-duel.webp": [
+      1300,
+      659
+    ],
+    "assets/films/dune-part-two-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/dune-part-two-sardaukar.webp": [
+      1536,
+      768
+    ],
+    "assets/films/dune-part-two-wide.webp": [
+      1920,
+      1080
+    ],
+    "assets/films/dunkirk-2017-director-of-the-decade-2010s.webp": [
+      1280,
+      720
+    ],
+    "assets/films/dunkirk-2017-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/dunkirk-2017-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/elvis-2022-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/elvis-2022-wide.webp": [
+      1920,
+      1080
+    ],
+    "assets/films/extraction-2020-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/first-man-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/first-man-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/gone-girl-most-overrated-movie-2010s.webp": [
+      1152,
+      480
+    ],
+    "assets/films/gone-girl-poster.webp": [
+      300,
+      442
+    ],
+    "assets/films/gone-girl-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/hamnet-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/hamnet-wide.webp": [
+      1920,
+      1080
+    ],
+    "assets/films/her-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/her-the-cruellest-month-award-2010s.webp": [
+      1280,
+      688
+    ],
+    "assets/films/her-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/if-beale-street-could-talk-poster.webp": [
+      300,
+      445
+    ],
+    "assets/films/if-beale-street-could-talk-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/inception-best-opening-sequence-2010s.webp": [
+      1023,
+      428
+    ],
+    "assets/films/inception-best-original-screenplay.webp": [
+      1023,
+      428
+    ],
+    "assets/films/inception-best-picture-2010s.webp": [
+      1023,
+      428
+    ],
+    "assets/films/inception-best-picture-curator.webp": [
+      1920,
+      803
+    ],
+    "assets/films/inception-best-score-cue-2010s.webp": [
+      1023,
+      428
+    ],
+    "assets/films/inception-best-visual-effects-2010s.webp": [
+      1023,
+      428
+    ],
+    "assets/films/inception-director-of-the-decade-2010s.webp": [
+      1023,
+      428
+    ],
+    "assets/films/inception-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/inception-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/inside-llewyn-davis-music-as-memory.webp": [
+      1280,
+      690
+    ],
+    "assets/films/inside-llewyn-davis-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/inside-llewyn-davis-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/inside-out-2015-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/inside-out-2015-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/interstellar-director-of-the-decade-2010s.webp": [
+      1280,
+      720
+    ],
+    "assets/films/interstellar-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/interstellar-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/killers-of-the-flower-moon-alt-01.webp": [
+      1802,
+      1200
+    ],
+    "assets/films/killers-of-the-flower-moon-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/la-chimera-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/la-la-land-best-actress-ceremony-curator.webp": [
+      1920,
+      750
+    ],
+    "assets/films/la-la-land-best-actress-curator-closeup.webp": [
+      1920,
+      753
+    ],
+    "assets/films/la-la-land-best-original-score-2010s.webp": [
+      1280,
+      504
+    ],
+    "assets/films/la-la-land-best-original-score.webp": [
+      1280,
+      504
+    ],
+    "assets/films/la-la-land-best-scene-epilogue-curator.webp": [
+      1920,
+      753
+    ],
+    "assets/films/la-la-land-city-of-stars-curator.webp": [
+      1920,
+      754
+    ],
+    "assets/films/la-la-land-lives-we-might-have-lived-curator.webp": [
+      1920,
+      755
+    ],
+    "assets/films/la-la-land-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/la-la-land-silent-ending-curator.webp": [
+      1920,
+      753
+    ],
+    "assets/films/la-la-land-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/little-women-2019-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/little-women-2019-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/manchester-by-the-sea-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/manchester-by-the-sea-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/marty-supreme-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/materialists-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/may-december-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/mickey-17-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/midnight-in-paris-best-atmosphere-2010s.webp": [
+      1400,
+      800
+    ],
+    "assets/films/midnight-in-paris-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/midnight-in-paris-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/moneyball-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/moneyball-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/moonlight-2016-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/moonlight-2016-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/nicholas-britell-composer-of-the-decade.webp": [
+      1920,
+      1080
+    ],
+    "assets/films/nightcrawler-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/nightcrawler-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/nightmare-alley-2021-lilith-cabaret.webp": [
+      1200,
+      646
+    ],
+    "assets/films/nightmare-alley-2021-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/nightmare-alley-2021-wide.webp": [
+      1920,
+      1080
+    ],
+    "assets/films/no-other-choice-2025-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/no-other-choice-2025-wide.webp": [
+      1920,
+      1080
+    ],
+    "assets/films/nocturnal-animals-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/nocturnal-animals-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/one-battle-after-another-alt-02.webp": [
+      780,
+      438
+    ],
+    "assets/films/one-battle-after-another-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/one-battle-after-another-sean-penn.webp": [
+      1536,
+      768
+    ],
+    "assets/films/one-battle-after-another-wide.webp": [
+      1920,
+      1080
+    ],
+    "assets/films/oppenheimer-2023-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/oslo-august-31st-official-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/oslo-august-31st-the-hollow-men-award-2010s.webp": [
+      1540,
+      1000
+    ],
+    "assets/films/oslo-august-31st-wide.webp": [
+      1280,
+      720
+    ],
+    "assets/films/past-lives-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/peaky-blinders-the-immortal-man-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/phantom-thread-best-actor-curator.webp": [
+      1280,
+      720
+    ],
+    "assets/films/phantom-thread-best-supporting-actress-2010s.webp": [
+      1280,
+      706
+    ],
+    "assets/films/phantom-thread-ceremony-best-actor.webp": [
+      1280,
+      706
+    ],
+    "assets/films/phantom-thread-ceremony-supporting-actress.webp": [
+      1280,
+      706
+    ],
+    "assets/films/phantom-thread-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/phantom-thread-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/poor-things-2023-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/prisoners-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/prisoners-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/promising-young-woman-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/sentimental-value-2025-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/shame-2011-best-actor.webp": [
+      1024,
+      436
+    ],
+    "assets/films/shame-2011-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/shame-2011-wide.webp": [
+      1280,
+      720
+    ],
+    "assets/films/shutter-island-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/shutter-island-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/sicario-2015-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/sicario-2015-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/steve-jobs-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/steve-jobs-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/tar-2022-alt-02.webp": [
+      1024,
+      576
+    ],
+    "assets/films/tar-2022-alt-04.webp": [
+      1920,
+      804
+    ],
+    "assets/films/tar-2022-best-picture.webp": [
+      1671,
+      880
+    ],
+    "assets/films/tar-2022-lydia-conducting.webp": [
+      1920,
+      804
+    ],
+    "assets/films/tar-2022-lydia-running.webp": [
+      1920,
+      804
+    ],
+    "assets/films/tar-2022-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/tar-2022-records.webp": [
+      1920,
+      804
+    ],
+    "assets/films/tar-2022-wide.webp": [
+      1680,
+      840
+    ],
+    "assets/films/tenet-alt-01.webp": [
+      1250,
+      703
+    ],
+    "assets/films/tenet-curator-editing.webp": [
+      2160,
+      1217
+    ],
+    "assets/films/tenet-poster.webp": [
+      380,
+      570
+    ],
+    "assets/films/tenet-wide.webp": [
+      1920,
+      1080
+    ],
+    "assets/films/testament-of-youth-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/testament-of-youth-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/the-assessment-2024-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/the-banshees-of-inisherin-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/the-banshees-of-inisherin-siobhan-ferry.webp": [
+      1920,
+      804
+    ],
+    "assets/films/the-banshees-of-inisherin-wide.webp": [
+      1920,
+      1080
+    ],
+    "assets/films/the-batman-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/the-batman-wide.webp": [
+      1920,
+      1080
+    ],
+    "assets/films/the-beast-2023-janus-poster.webp": [
+      440,
+      652
+    ],
+    "assets/films/the-brutalist-alt-01.webp": [
+      1920,
+      1080
+    ],
+    "assets/films/the-brutalist-alt-02.webp": [
+      1920,
+      1079
+    ],
+    "assets/films/the-brutalist-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/the-brutalist-wide.webp": [
+      1920,
+      1080
+    ],
+    "assets/films/the-count-of-monte-cristo-2024-costume.webp": [
+      2160,
+      910
+    ],
+    "assets/films/the-count-of-monte-cristo-2024-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/the-count-of-monte-cristo-2024-screenplay.webp": [
+      2160,
+      908
+    ],
+    "assets/films/the-count-of-monte-cristo-2024-underrated.webp": [
+      2160,
+      906
+    ],
+    "assets/films/the-count-of-monte-cristo-2024-wide.webp": [
+      1920,
+      1080
+    ],
+    "assets/films/the-dark-knight-rises-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/the-dark-knight-rises-wide.webp": [
+      1200,
+      675
+    ],
+    "assets/films/the-flash-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/the-french-dispatch-of-the-liberty-kansas-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/the-grand-budapest-hotel-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/the-grand-budapest-hotel-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/the-handmaiden-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/the-handmaiden-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/the-king-2019-poster.webp": [
+      300,
+      445
+    ],
+    "assets/films/the-king-2019-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/the-master-2012-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/the-master-2012-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/the-menu-2022-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/the-novice-poster.webp": [
+      380,
+      570
+    ],
+    "assets/films/the-odyssey-2026-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/the-odyssey-2026-wide.webp": [
+      1920,
+      1080
+    ],
+    "assets/films/the-power-of-the-dog-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/the-social-network-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/the-social-network-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/the-souvenir-most-underrated-movie-2010s.webp": [
+      1680,
+      1010
+    ],
+    "assets/films/the-souvenir-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/the-souvenir-wide.webp": [
+      1280,
+      720
+    ],
+    "assets/films/the-tree-of-life-2011-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/the-tree-of-life-2011-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/the-wolf-of-wall-street-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/the-wolf-of-wall-street-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/the-worst-person-in-the-world-aksel-julie.webp": [
+      1920,
+      1038
+    ],
+    "assets/films/the-worst-person-in-the-world-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/the-worst-person-in-the-world-wide.webp": [
+      1920,
+      1080
+    ],
+    "assets/films/thelma-2017-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/thelma-2017-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/tick-tick-boom-2021-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/uncut-gems-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/uncut-gems-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/whiplash-2014-best-antagonist.webp": [
+      1280,
+      532
+    ],
+    "assets/films/whiplash-2014-best-breakthrough-performance-2010s.webp": [
+      1280,
+      532
+    ],
+    "assets/films/whiplash-2014-best-film-editing-2010s.webp": [
+      1280,
+      532
+    ],
+    "assets/films/whiplash-2014-best-supporting-actor.webp": [
+      1280,
+      532
+    ],
+    "assets/films/whiplash-2014-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/whiplash-2014-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/whiplash-decade-cover.webp": [
+      1280,
+      532
+    ],
+    "assets/films/wuthering-heights-2026-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/wuthering-heights-2026-veil.webp": [
+      2048,
+      1152
+    ],
+    "assets/films/wuthering-heights-2026-wide.webp": [
+      1920,
+      1080
+    ],
+    "assets/films/your-name-poster.webp": [
+      300,
+      450
+    ],
+    "assets/films/your-name-wide.webp": [
+      1680,
+      945
+    ],
+    "assets/films/a-complete-unknown-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/aftersun-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/asteroid-city-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/challengers-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/dune-2021-film-file.webp": [
+      1680,
+      700
+    ],
+    "assets/films/extraction-2020-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/inside-llewyn-davis-home.webp": [
+      1280,
+      690
+    ],
+    "assets/films/la-chimera-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/marty-supreme-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/materialists-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/may-december-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/mickey-17-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/oppenheimer-2023-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/past-lives-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/peaky-blinders-the-immortal-man-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/poor-things-2023-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/promising-young-woman-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/sentimental-value-2025-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/the-assessment-2024-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/the-beast-2023-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/the-flash-film-file.webp": [
+      1200,
+      675
+    ],
+    "assets/films/the-french-dispatch-of-the-liberty-kansas-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/the-menu-2022-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/the-novice-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/the-power-of-the-dog-film-file.webp": [
+      1680,
+      945
+    ],
+    "assets/films/tick-tick-boom-2021-film-file.webp": [
+      1680,
+      945
+    ]
+  },
+  "variants": {
+    "assets/films/1917-poster.webp": [
+      {
+        "src": "assets/films/responsive/1917-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/1917-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/1917-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/1917-wide.webp": [
+      {
+        "src": "assets/films/responsive/1917-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/1917-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/1917-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/1917-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/a-complete-unknown-poster.webp": [
+      {
+        "src": "assets/films/responsive/a-complete-unknown-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/a-complete-unknown-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/a-complete-unknown-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/aftersun-poster.webp": [
+      {
+        "src": "assets/films/responsive/aftersun-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/aftersun-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/aftersun-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/anatomy-of-a-fall-piano.webp": [
+      {
+        "src": "assets/films/responsive/anatomy-of-a-fall-piano-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/anatomy-of-a-fall-piano-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/anatomy-of-a-fall-piano.webp",
+        "width": 1456
+      }
+    ],
+    "assets/films/anatomy-of-a-fall-poster.webp": [
+      {
+        "src": "assets/films/responsive/anatomy-of-a-fall-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/anatomy-of-a-fall-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/anatomy-of-a-fall-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/anatomy-of-a-fall-wide.webp": [
+      {
+        "src": "assets/films/responsive/anatomy-of-a-fall-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/anatomy-of-a-fall-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/anatomy-of-a-fall-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/anatomy-of-a-fall-wide.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/anna-karenina-2012-poster.webp": [
+      {
+        "src": "assets/films/responsive/anna-karenina-2012-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/anna-karenina-2012-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/anna-karenina-2012-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/anna-karenina-2012-wide.webp": [
+      {
+        "src": "assets/films/responsive/anna-karenina-2012-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/anna-karenina-2012-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/anna-karenina-2012-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/anna-karenina-2012-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/anna-karenina-best-costume-design.webp": [
+      {
+        "src": "assets/films/responsive/anna-karenina-best-costume-design-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/anna-karenina-best-costume-design-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/anna-karenina-best-costume-design.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/anna-karenina-production-design-curator.webp": [
+      {
+        "src": "assets/films/responsive/anna-karenina-production-design-curator-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/anna-karenina-production-design-curator-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/anna-karenina-production-design-curator.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/arrival-2016-poster.webp": [
+      {
+        "src": "assets/films/responsive/arrival-2016-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/arrival-2016-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/arrival-2016-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/arrival-2016-wide.webp": [
+      {
+        "src": "assets/films/responsive/arrival-2016-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/arrival-2016-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/arrival-2016-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/arrival-2016-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/asteroid-city-poster.webp": [
+      {
+        "src": "assets/films/responsive/asteroid-city-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/asteroid-city-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/asteroid-city-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/avengers-endgame-poster.webp": [
+      {
+        "src": "assets/films/responsive/avengers-endgame-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/avengers-endgame-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/avengers-endgame-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/avengers-endgame-wide.webp": [
+      {
+        "src": "assets/films/responsive/avengers-endgame-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/avengers-endgame-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/avengers-endgame-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/avengers-endgame-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/avengers-infinity-war-poster.webp": [
+      {
+        "src": "assets/films/responsive/avengers-infinity-war-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/avengers-infinity-war-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/avengers-infinity-war-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/avengers-infinity-war-wide.webp": [
+      {
+        "src": "assets/films/responsive/avengers-infinity-war-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/avengers-infinity-war-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/avengers-infinity-war-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/avengers-infinity-war-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/babylon-2022-poster.webp": [
+      {
+        "src": "assets/films/responsive/babylon-2022-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/babylon-2022-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/babylon-2022-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/babylon-2022-wide.webp": [
+      {
+        "src": "assets/films/responsive/babylon-2022-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/babylon-2022-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/babylon-2022-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/babylon-2022-wide.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/before-midnight-best-line-of-dialogue-2010s.webp": [
+      {
+        "src": "assets/films/responsive/before-midnight-best-line-of-dialogue-2010s-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/before-midnight-best-line-of-dialogue-2010s-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/before-midnight-best-line-of-dialogue-2010s.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/before-midnight-poster.webp": [
+      {
+        "src": "assets/films/responsive/before-midnight-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/before-midnight-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/before-midnight-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/before-midnight-wide.webp": [
+      {
+        "src": "assets/films/responsive/before-midnight-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/before-midnight-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/before-midnight-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/before-midnight-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/black-swan-poster.webp": [
+      {
+        "src": "assets/films/responsive/black-swan-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/black-swan-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/black-swan-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/black-swan-the-price-of-perfection-2010s.webp": [
+      {
+        "src": "assets/films/responsive/black-swan-the-price-of-perfection-2010s-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/black-swan-the-price-of-perfection-2010s.webp",
+        "width": 1023
+      }
+    ],
+    "assets/films/black-swan-wide.webp": [
+      {
+        "src": "assets/films/responsive/black-swan-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/black-swan-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/black-swan-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/black-swan-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/blade-runner-2049-best-cinematography.webp": [
+      {
+        "src": "assets/films/responsive/blade-runner-2049-best-cinematography-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/blade-runner-2049-best-cinematography-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/blade-runner-2049-best-cinematography.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/blade-runner-2049-ceremony-cinematography.webp": [
+      {
+        "src": "assets/films/responsive/blade-runner-2049-ceremony-cinematography-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/blade-runner-2049-ceremony-cinematography-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/blade-runner-2049-ceremony-cinematography.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/blade-runner-2049-poster.webp": [
+      {
+        "src": "assets/films/responsive/blade-runner-2049-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/blade-runner-2049-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/blade-runner-2049-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/blade-runner-2049-wide.webp": [
+      {
+        "src": "assets/films/responsive/blade-runner-2049-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/blade-runner-2049-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/blade-runner-2049-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/blade-runner-2049-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/burning-2018-best-adapted-screenplay-2010s.webp": [
+      {
+        "src": "assets/films/responsive/burning-2018-best-adapted-screenplay-2010s-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/burning-2018-best-adapted-screenplay-2010s-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/burning-2018-best-adapted-screenplay-2010s.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/burning-2018-poster.webp": [
+      {
+        "src": "assets/films/responsive/burning-2018-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/burning-2018-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/burning-2018-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/burning-2018-wide.webp": [
+      {
+        "src": "assets/films/responsive/burning-2018-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/burning-2018-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/burning-2018-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/burning-2018-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/certified-copy-poster.webp": [
+      {
+        "src": "assets/films/responsive/certified-copy-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/certified-copy-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/certified-copy-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/certified-copy-wide.webp": [
+      {
+        "src": "assets/films/responsive/certified-copy-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/certified-copy-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/certified-copy-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/certified-copy-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/challengers-poster.webp": [
+      {
+        "src": "assets/films/responsive/challengers-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/challengers-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/challengers-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/christopher-nolan-curator-portrait.webp": [
+      {
+        "src": "assets/films/responsive/christopher-nolan-curator-portrait-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/christopher-nolan-curator-portrait-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/christopher-nolan-curator-portrait-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/christopher-nolan-curator-portrait.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/coco-2017-poster.webp": [
+      {
+        "src": "assets/films/responsive/coco-2017-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/coco-2017-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/coco-2017-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/coco-2017-wide.webp": [
+      {
+        "src": "assets/films/responsive/coco-2017-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/coco-2017-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/coco-2017-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/coco-2017-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/decision-to-leave-poster.webp": [
+      {
+        "src": "assets/films/responsive/decision-to-leave-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/decision-to-leave-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/responsive/decision-to-leave-poster-272w.webp",
+        "width": 272
+      },
+      {
+        "src": "assets/films/decision-to-leave-poster.webp",
+        "width": 380
+      }
+    ],
+    "assets/films/decision-to-leave-seo-rae.webp": [
+      {
+        "src": "assets/films/responsive/decision-to-leave-seo-rae-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/decision-to-leave-seo-rae-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/decision-to-leave-seo-rae-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/decision-to-leave-seo-rae.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/decision-to-leave-wide.webp": [
+      {
+        "src": "assets/films/responsive/decision-to-leave-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/decision-to-leave-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/decision-to-leave-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/decision-to-leave-wide.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/dont-look-up-2021-alt-01.webp": [
+      {
+        "src": "assets/films/responsive/dont-look-up-2021-alt-01-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/dont-look-up-2021-alt-01-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/dont-look-up-2021-alt-01-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/dont-look-up-2021-alt-01.webp",
+        "width": 1800
+      }
+    ],
+    "assets/films/dont-look-up-2021-poster.webp": [
+      {
+        "src": "assets/films/responsive/dont-look-up-2021-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/dont-look-up-2021-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/dont-look-up-2021-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/drive-2011-poster.webp": [
+      {
+        "src": "assets/films/responsive/drive-2011-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/drive-2011-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/drive-2011-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/drive-2011-wide.webp": [
+      {
+        "src": "assets/films/responsive/drive-2011-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/drive-2011-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/drive-2011-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/drive-2011-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/drive-my-car-poster.webp": [
+      {
+        "src": "assets/films/responsive/drive-my-car-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/drive-my-car-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/drive-my-car-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/drive-my-car-wide.webp": [
+      {
+        "src": "assets/films/responsive/drive-my-car-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/drive-my-car-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/drive-my-car-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/drive-my-car-wide.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/dune-2021-poster.webp": [
+      {
+        "src": "assets/films/responsive/dune-2021-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/dune-2021-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/responsive/dune-2021-poster-272w.webp",
+        "width": 272
+      },
+      {
+        "src": "assets/films/dune-2021-poster.webp",
+        "width": 380
+      }
+    ],
+    "assets/films/dune-part-two-final-duel.webp": [
+      {
+        "src": "assets/films/responsive/dune-part-two-final-duel-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/dune-part-two-final-duel-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/dune-part-two-final-duel.webp",
+        "width": 1300
+      }
+    ],
+    "assets/films/dune-part-two-poster.webp": [
+      {
+        "src": "assets/films/responsive/dune-part-two-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/dune-part-two-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/dune-part-two-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/dune-part-two-sardaukar.webp": [
+      {
+        "src": "assets/films/responsive/dune-part-two-sardaukar-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/dune-part-two-sardaukar-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/dune-part-two-sardaukar.webp",
+        "width": 1536
+      }
+    ],
+    "assets/films/dune-part-two-wide.webp": [
+      {
+        "src": "assets/films/responsive/dune-part-two-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/dune-part-two-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/dune-part-two-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/dune-part-two-wide.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/dunkirk-2017-director-of-the-decade-2010s.webp": [
+      {
+        "src": "assets/films/responsive/dunkirk-2017-director-of-the-decade-2010s-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/dunkirk-2017-director-of-the-decade-2010s-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/dunkirk-2017-director-of-the-decade-2010s.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/dunkirk-2017-poster.webp": [
+      {
+        "src": "assets/films/responsive/dunkirk-2017-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/dunkirk-2017-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/dunkirk-2017-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/dunkirk-2017-wide.webp": [
+      {
+        "src": "assets/films/responsive/dunkirk-2017-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/dunkirk-2017-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/dunkirk-2017-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/dunkirk-2017-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/elvis-2022-poster.webp": [
+      {
+        "src": "assets/films/responsive/elvis-2022-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/elvis-2022-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/elvis-2022-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/elvis-2022-wide.webp": [
+      {
+        "src": "assets/films/responsive/elvis-2022-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/elvis-2022-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/elvis-2022-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/elvis-2022-wide.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/extraction-2020-poster.webp": [
+      {
+        "src": "assets/films/responsive/extraction-2020-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/extraction-2020-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/extraction-2020-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/first-man-poster.webp": [
+      {
+        "src": "assets/films/responsive/first-man-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/first-man-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/first-man-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/first-man-wide.webp": [
+      {
+        "src": "assets/films/responsive/first-man-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/first-man-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/first-man-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/first-man-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/gone-girl-most-overrated-movie-2010s.webp": [
+      {
+        "src": "assets/films/responsive/gone-girl-most-overrated-movie-2010s-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/gone-girl-most-overrated-movie-2010s.webp",
+        "width": 1152
+      }
+    ],
+    "assets/films/gone-girl-poster.webp": [
+      {
+        "src": "assets/films/responsive/gone-girl-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/gone-girl-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/gone-girl-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/gone-girl-wide.webp": [
+      {
+        "src": "assets/films/responsive/gone-girl-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/gone-girl-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/gone-girl-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/gone-girl-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/hamnet-poster.webp": [
+      {
+        "src": "assets/films/responsive/hamnet-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/hamnet-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/hamnet-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/hamnet-wide.webp": [
+      {
+        "src": "assets/films/responsive/hamnet-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/hamnet-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/hamnet-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/hamnet-wide.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/her-poster.webp": [
+      {
+        "src": "assets/films/responsive/her-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/her-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/her-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/her-the-cruellest-month-award-2010s.webp": [
+      {
+        "src": "assets/films/responsive/her-the-cruellest-month-award-2010s-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/her-the-cruellest-month-award-2010s-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/her-the-cruellest-month-award-2010s.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/her-wide.webp": [
+      {
+        "src": "assets/films/responsive/her-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/her-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/her-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/her-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/if-beale-street-could-talk-poster.webp": [
+      {
+        "src": "assets/films/responsive/if-beale-street-could-talk-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/if-beale-street-could-talk-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/if-beale-street-could-talk-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/if-beale-street-could-talk-wide.webp": [
+      {
+        "src": "assets/films/responsive/if-beale-street-could-talk-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/if-beale-street-could-talk-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/if-beale-street-could-talk-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/if-beale-street-could-talk-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/inception-best-opening-sequence-2010s.webp": [
+      {
+        "src": "assets/films/responsive/inception-best-opening-sequence-2010s-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/inception-best-opening-sequence-2010s.webp",
+        "width": 1023
+      }
+    ],
+    "assets/films/inception-best-original-screenplay.webp": [
+      {
+        "src": "assets/films/responsive/inception-best-original-screenplay-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/inception-best-original-screenplay.webp",
+        "width": 1023
+      }
+    ],
+    "assets/films/inception-best-picture-2010s.webp": [
+      {
+        "src": "assets/films/responsive/inception-best-picture-2010s-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/inception-best-picture-2010s.webp",
+        "width": 1023
+      }
+    ],
+    "assets/films/inception-best-picture-curator.webp": [
+      {
+        "src": "assets/films/responsive/inception-best-picture-curator-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/inception-best-picture-curator-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/inception-best-picture-curator-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/inception-best-picture-curator.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/inception-best-score-cue-2010s.webp": [
+      {
+        "src": "assets/films/responsive/inception-best-score-cue-2010s-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/inception-best-score-cue-2010s.webp",
+        "width": 1023
+      }
+    ],
+    "assets/films/inception-best-visual-effects-2010s.webp": [
+      {
+        "src": "assets/films/responsive/inception-best-visual-effects-2010s-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/inception-best-visual-effects-2010s.webp",
+        "width": 1023
+      }
+    ],
+    "assets/films/inception-director-of-the-decade-2010s.webp": [
+      {
+        "src": "assets/films/responsive/inception-director-of-the-decade-2010s-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/inception-director-of-the-decade-2010s.webp",
+        "width": 1023
+      }
+    ],
+    "assets/films/inception-poster.webp": [
+      {
+        "src": "assets/films/responsive/inception-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/inception-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/inception-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/inception-wide.webp": [
+      {
+        "src": "assets/films/responsive/inception-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/inception-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/inception-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/inception-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/inside-llewyn-davis-music-as-memory.webp": [
+      {
+        "src": "assets/films/responsive/inside-llewyn-davis-music-as-memory-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/inside-llewyn-davis-music-as-memory-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/inside-llewyn-davis-music-as-memory.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/inside-llewyn-davis-poster.webp": [
+      {
+        "src": "assets/films/responsive/inside-llewyn-davis-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/inside-llewyn-davis-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/inside-llewyn-davis-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/inside-llewyn-davis-wide.webp": [
+      {
+        "src": "assets/films/responsive/inside-llewyn-davis-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/inside-llewyn-davis-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/inside-llewyn-davis-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/inside-llewyn-davis-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/inside-out-2015-poster.webp": [
+      {
+        "src": "assets/films/responsive/inside-out-2015-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/inside-out-2015-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/inside-out-2015-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/inside-out-2015-wide.webp": [
+      {
+        "src": "assets/films/responsive/inside-out-2015-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/inside-out-2015-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/inside-out-2015-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/inside-out-2015-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/interstellar-director-of-the-decade-2010s.webp": [
+      {
+        "src": "assets/films/responsive/interstellar-director-of-the-decade-2010s-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/interstellar-director-of-the-decade-2010s-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/interstellar-director-of-the-decade-2010s.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/interstellar-poster.webp": [
+      {
+        "src": "assets/films/responsive/interstellar-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/interstellar-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/interstellar-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/interstellar-wide.webp": [
+      {
+        "src": "assets/films/responsive/interstellar-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/interstellar-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/interstellar-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/interstellar-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/killers-of-the-flower-moon-alt-01.webp": [
+      {
+        "src": "assets/films/responsive/killers-of-the-flower-moon-alt-01-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/killers-of-the-flower-moon-alt-01-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/killers-of-the-flower-moon-alt-01-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/killers-of-the-flower-moon-alt-01.webp",
+        "width": 1802
+      }
+    ],
+    "assets/films/killers-of-the-flower-moon-poster.webp": [
+      {
+        "src": "assets/films/responsive/killers-of-the-flower-moon-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/killers-of-the-flower-moon-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/killers-of-the-flower-moon-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/la-chimera-poster.webp": [
+      {
+        "src": "assets/films/responsive/la-chimera-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/la-chimera-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/la-chimera-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/la-la-land-best-actress-ceremony-curator.webp": [
+      {
+        "src": "assets/films/responsive/la-la-land-best-actress-ceremony-curator-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/la-la-land-best-actress-ceremony-curator-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/la-la-land-best-actress-ceremony-curator-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/la-la-land-best-actress-ceremony-curator.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/la-la-land-best-actress-curator-closeup.webp": [
+      {
+        "src": "assets/films/responsive/la-la-land-best-actress-curator-closeup-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/la-la-land-best-actress-curator-closeup-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/la-la-land-best-actress-curator-closeup-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/la-la-land-best-actress-curator-closeup.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/la-la-land-best-original-score-2010s.webp": [
+      {
+        "src": "assets/films/responsive/la-la-land-best-original-score-2010s-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/la-la-land-best-original-score-2010s-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/la-la-land-best-original-score-2010s.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/la-la-land-best-original-score.webp": [
+      {
+        "src": "assets/films/responsive/la-la-land-best-original-score-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/la-la-land-best-original-score-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/la-la-land-best-original-score.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/la-la-land-best-scene-epilogue-curator.webp": [
+      {
+        "src": "assets/films/responsive/la-la-land-best-scene-epilogue-curator-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/la-la-land-best-scene-epilogue-curator-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/la-la-land-best-scene-epilogue-curator-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/la-la-land-best-scene-epilogue-curator.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/la-la-land-city-of-stars-curator.webp": [
+      {
+        "src": "assets/films/responsive/la-la-land-city-of-stars-curator-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/la-la-land-city-of-stars-curator-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/la-la-land-city-of-stars-curator-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/la-la-land-city-of-stars-curator.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/la-la-land-lives-we-might-have-lived-curator.webp": [
+      {
+        "src": "assets/films/responsive/la-la-land-lives-we-might-have-lived-curator-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/la-la-land-lives-we-might-have-lived-curator-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/la-la-land-lives-we-might-have-lived-curator-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/la-la-land-lives-we-might-have-lived-curator.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/la-la-land-poster.webp": [
+      {
+        "src": "assets/films/responsive/la-la-land-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/la-la-land-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/la-la-land-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/la-la-land-silent-ending-curator.webp": [
+      {
+        "src": "assets/films/responsive/la-la-land-silent-ending-curator-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/la-la-land-silent-ending-curator-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/la-la-land-silent-ending-curator-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/la-la-land-silent-ending-curator.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/la-la-land-wide.webp": [
+      {
+        "src": "assets/films/responsive/la-la-land-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/la-la-land-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/la-la-land-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/la-la-land-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/little-women-2019-poster.webp": [
+      {
+        "src": "assets/films/responsive/little-women-2019-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/little-women-2019-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/little-women-2019-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/little-women-2019-wide.webp": [
+      {
+        "src": "assets/films/responsive/little-women-2019-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/little-women-2019-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/little-women-2019-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/little-women-2019-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/manchester-by-the-sea-poster.webp": [
+      {
+        "src": "assets/films/responsive/manchester-by-the-sea-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/manchester-by-the-sea-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/manchester-by-the-sea-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/manchester-by-the-sea-wide.webp": [
+      {
+        "src": "assets/films/responsive/manchester-by-the-sea-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/manchester-by-the-sea-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/manchester-by-the-sea-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/manchester-by-the-sea-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/marty-supreme-poster.webp": [
+      {
+        "src": "assets/films/responsive/marty-supreme-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/marty-supreme-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/marty-supreme-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/materialists-poster.webp": [
+      {
+        "src": "assets/films/responsive/materialists-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/materialists-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/materialists-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/may-december-poster.webp": [
+      {
+        "src": "assets/films/responsive/may-december-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/may-december-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/may-december-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/mickey-17-poster.webp": [
+      {
+        "src": "assets/films/responsive/mickey-17-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/mickey-17-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/mickey-17-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/midnight-in-paris-best-atmosphere-2010s.webp": [
+      {
+        "src": "assets/films/responsive/midnight-in-paris-best-atmosphere-2010s-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/midnight-in-paris-best-atmosphere-2010s-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/midnight-in-paris-best-atmosphere-2010s.webp",
+        "width": 1400
+      }
+    ],
+    "assets/films/midnight-in-paris-poster.webp": [
+      {
+        "src": "assets/films/responsive/midnight-in-paris-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/midnight-in-paris-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/midnight-in-paris-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/midnight-in-paris-wide.webp": [
+      {
+        "src": "assets/films/responsive/midnight-in-paris-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/midnight-in-paris-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/midnight-in-paris-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/midnight-in-paris-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/moneyball-poster.webp": [
+      {
+        "src": "assets/films/responsive/moneyball-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/moneyball-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/moneyball-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/moneyball-wide.webp": [
+      {
+        "src": "assets/films/responsive/moneyball-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/moneyball-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/moneyball-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/moneyball-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/moonlight-2016-poster.webp": [
+      {
+        "src": "assets/films/responsive/moonlight-2016-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/moonlight-2016-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/moonlight-2016-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/moonlight-2016-wide.webp": [
+      {
+        "src": "assets/films/responsive/moonlight-2016-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/moonlight-2016-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/moonlight-2016-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/moonlight-2016-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/nicholas-britell-composer-of-the-decade.webp": [
+      {
+        "src": "assets/films/responsive/nicholas-britell-composer-of-the-decade-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/nicholas-britell-composer-of-the-decade-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/nicholas-britell-composer-of-the-decade-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/nicholas-britell-composer-of-the-decade.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/nightcrawler-poster.webp": [
+      {
+        "src": "assets/films/responsive/nightcrawler-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/nightcrawler-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/nightcrawler-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/nightcrawler-wide.webp": [
+      {
+        "src": "assets/films/responsive/nightcrawler-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/nightcrawler-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/nightcrawler-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/nightcrawler-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/nightmare-alley-2021-lilith-cabaret.webp": [
+      {
+        "src": "assets/films/responsive/nightmare-alley-2021-lilith-cabaret-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/nightmare-alley-2021-lilith-cabaret-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/nightmare-alley-2021-lilith-cabaret.webp",
+        "width": 1200
+      }
+    ],
+    "assets/films/nightmare-alley-2021-poster.webp": [
+      {
+        "src": "assets/films/responsive/nightmare-alley-2021-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/nightmare-alley-2021-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/nightmare-alley-2021-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/nightmare-alley-2021-wide.webp": [
+      {
+        "src": "assets/films/responsive/nightmare-alley-2021-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/nightmare-alley-2021-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/nightmare-alley-2021-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/nightmare-alley-2021-wide.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/no-other-choice-2025-poster.webp": [
+      {
+        "src": "assets/films/responsive/no-other-choice-2025-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/no-other-choice-2025-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/no-other-choice-2025-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/no-other-choice-2025-wide.webp": [
+      {
+        "src": "assets/films/responsive/no-other-choice-2025-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/no-other-choice-2025-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/no-other-choice-2025-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/no-other-choice-2025-wide.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/nocturnal-animals-poster.webp": [
+      {
+        "src": "assets/films/responsive/nocturnal-animals-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/nocturnal-animals-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/nocturnal-animals-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/nocturnal-animals-wide.webp": [
+      {
+        "src": "assets/films/responsive/nocturnal-animals-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/nocturnal-animals-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/nocturnal-animals-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/nocturnal-animals-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/one-battle-after-another-alt-02.webp": [
+      {
+        "src": "assets/films/responsive/one-battle-after-another-alt-02-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/one-battle-after-another-alt-02.webp",
+        "width": 780
+      }
+    ],
+    "assets/films/one-battle-after-another-poster.webp": [
+      {
+        "src": "assets/films/responsive/one-battle-after-another-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/one-battle-after-another-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/one-battle-after-another-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/one-battle-after-another-sean-penn.webp": [
+      {
+        "src": "assets/films/responsive/one-battle-after-another-sean-penn-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/one-battle-after-another-sean-penn-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/one-battle-after-another-sean-penn.webp",
+        "width": 1536
+      }
+    ],
+    "assets/films/one-battle-after-another-wide.webp": [
+      {
+        "src": "assets/films/responsive/one-battle-after-another-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/one-battle-after-another-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/one-battle-after-another-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/one-battle-after-another-wide.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/oppenheimer-2023-poster.webp": [
+      {
+        "src": "assets/films/responsive/oppenheimer-2023-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/oppenheimer-2023-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/oppenheimer-2023-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/oslo-august-31st-official-poster.webp": [
+      {
+        "src": "assets/films/responsive/oslo-august-31st-official-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/oslo-august-31st-official-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/oslo-august-31st-official-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/oslo-august-31st-the-hollow-men-award-2010s.webp": [
+      {
+        "src": "assets/films/responsive/oslo-august-31st-the-hollow-men-award-2010s-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/oslo-august-31st-the-hollow-men-award-2010s-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/oslo-august-31st-the-hollow-men-award-2010s.webp",
+        "width": 1540
+      }
+    ],
+    "assets/films/oslo-august-31st-wide.webp": [
+      {
+        "src": "assets/films/responsive/oslo-august-31st-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/oslo-august-31st-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/oslo-august-31st-wide.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/past-lives-poster.webp": [
+      {
+        "src": "assets/films/responsive/past-lives-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/past-lives-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/past-lives-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/peaky-blinders-the-immortal-man-poster.webp": [
+      {
+        "src": "assets/films/responsive/peaky-blinders-the-immortal-man-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/peaky-blinders-the-immortal-man-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/peaky-blinders-the-immortal-man-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/phantom-thread-best-actor-curator.webp": [
+      {
+        "src": "assets/films/responsive/phantom-thread-best-actor-curator-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/phantom-thread-best-actor-curator-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/phantom-thread-best-actor-curator.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/phantom-thread-best-supporting-actress-2010s.webp": [
+      {
+        "src": "assets/films/responsive/phantom-thread-best-supporting-actress-2010s-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/phantom-thread-best-supporting-actress-2010s-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/phantom-thread-best-supporting-actress-2010s.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/phantom-thread-ceremony-best-actor.webp": [
+      {
+        "src": "assets/films/responsive/phantom-thread-ceremony-best-actor-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/phantom-thread-ceremony-best-actor-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/phantom-thread-ceremony-best-actor.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/phantom-thread-ceremony-supporting-actress.webp": [
+      {
+        "src": "assets/films/responsive/phantom-thread-ceremony-supporting-actress-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/phantom-thread-ceremony-supporting-actress-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/phantom-thread-ceremony-supporting-actress.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/phantom-thread-poster.webp": [
+      {
+        "src": "assets/films/responsive/phantom-thread-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/phantom-thread-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/phantom-thread-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/phantom-thread-wide.webp": [
+      {
+        "src": "assets/films/responsive/phantom-thread-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/phantom-thread-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/phantom-thread-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/phantom-thread-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/poor-things-2023-poster.webp": [
+      {
+        "src": "assets/films/responsive/poor-things-2023-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/poor-things-2023-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/poor-things-2023-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/prisoners-poster.webp": [
+      {
+        "src": "assets/films/responsive/prisoners-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/prisoners-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/prisoners-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/prisoners-wide.webp": [
+      {
+        "src": "assets/films/responsive/prisoners-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/prisoners-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/prisoners-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/prisoners-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/promising-young-woman-poster.webp": [
+      {
+        "src": "assets/films/responsive/promising-young-woman-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/promising-young-woman-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/promising-young-woman-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/sentimental-value-2025-poster.webp": [
+      {
+        "src": "assets/films/responsive/sentimental-value-2025-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/sentimental-value-2025-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/sentimental-value-2025-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/shame-2011-best-actor.webp": [
+      {
+        "src": "assets/films/responsive/shame-2011-best-actor-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/shame-2011-best-actor.webp",
+        "width": 1024
+      }
+    ],
+    "assets/films/shame-2011-poster.webp": [
+      {
+        "src": "assets/films/responsive/shame-2011-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/shame-2011-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/shame-2011-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/shame-2011-wide.webp": [
+      {
+        "src": "assets/films/responsive/shame-2011-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/shame-2011-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/shame-2011-wide.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/shutter-island-poster.webp": [
+      {
+        "src": "assets/films/responsive/shutter-island-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/shutter-island-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/shutter-island-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/shutter-island-wide.webp": [
+      {
+        "src": "assets/films/responsive/shutter-island-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/shutter-island-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/shutter-island-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/shutter-island-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/sicario-2015-poster.webp": [
+      {
+        "src": "assets/films/responsive/sicario-2015-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/sicario-2015-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/sicario-2015-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/sicario-2015-wide.webp": [
+      {
+        "src": "assets/films/responsive/sicario-2015-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/sicario-2015-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/sicario-2015-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/sicario-2015-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/steve-jobs-poster.webp": [
+      {
+        "src": "assets/films/responsive/steve-jobs-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/steve-jobs-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/steve-jobs-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/steve-jobs-wide.webp": [
+      {
+        "src": "assets/films/responsive/steve-jobs-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/steve-jobs-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/steve-jobs-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/steve-jobs-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/tar-2022-alt-02.webp": [
+      {
+        "src": "assets/films/responsive/tar-2022-alt-02-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/tar-2022-alt-02.webp",
+        "width": 1024
+      }
+    ],
+    "assets/films/tar-2022-alt-04.webp": [
+      {
+        "src": "assets/films/responsive/tar-2022-alt-04-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-alt-04-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-alt-04-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/tar-2022-alt-04.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/tar-2022-best-picture.webp": [
+      {
+        "src": "assets/films/responsive/tar-2022-best-picture-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-best-picture-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-best-picture-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/tar-2022-best-picture.webp",
+        "width": 1671
+      }
+    ],
+    "assets/films/tar-2022-lydia-conducting.webp": [
+      {
+        "src": "assets/films/responsive/tar-2022-lydia-conducting-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-lydia-conducting-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-lydia-conducting-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/tar-2022-lydia-conducting.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/tar-2022-lydia-running.webp": [
+      {
+        "src": "assets/films/responsive/tar-2022-lydia-running-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-lydia-running-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-lydia-running-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/tar-2022-lydia-running.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/tar-2022-poster.webp": [
+      {
+        "src": "assets/films/responsive/tar-2022-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/tar-2022-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/tar-2022-records.webp": [
+      {
+        "src": "assets/films/responsive/tar-2022-records-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-records-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-records-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/tar-2022-records.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/tar-2022-wide.webp": [
+      {
+        "src": "assets/films/responsive/tar-2022-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/tar-2022-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/tenet-alt-01.webp": [
+      {
+        "src": "assets/films/responsive/tenet-alt-01-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/tenet-alt-01-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/tenet-alt-01.webp",
+        "width": 1250
+      }
+    ],
+    "assets/films/tenet-curator-editing.webp": [
+      {
+        "src": "assets/films/responsive/tenet-curator-editing-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/tenet-curator-editing-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/tenet-curator-editing-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/tenet-curator-editing.webp",
+        "width": 2160
+      }
+    ],
+    "assets/films/tenet-poster.webp": [
+      {
+        "src": "assets/films/responsive/tenet-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/tenet-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/responsive/tenet-poster-272w.webp",
+        "width": 272
+      },
+      {
+        "src": "assets/films/tenet-poster.webp",
+        "width": 380
+      }
+    ],
+    "assets/films/tenet-wide.webp": [
+      {
+        "src": "assets/films/responsive/tenet-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/tenet-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/tenet-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/tenet-wide.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/testament-of-youth-poster.webp": [
+      {
+        "src": "assets/films/responsive/testament-of-youth-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/testament-of-youth-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/testament-of-youth-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/testament-of-youth-wide.webp": [
+      {
+        "src": "assets/films/responsive/testament-of-youth-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/testament-of-youth-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/testament-of-youth-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/testament-of-youth-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/the-assessment-2024-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-assessment-2024-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-assessment-2024-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/the-assessment-2024-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/the-banshees-of-inisherin-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-banshees-of-inisherin-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-banshees-of-inisherin-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/the-banshees-of-inisherin-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/the-banshees-of-inisherin-siobhan-ferry.webp": [
+      {
+        "src": "assets/films/responsive/the-banshees-of-inisherin-siobhan-ferry-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-banshees-of-inisherin-siobhan-ferry-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-banshees-of-inisherin-siobhan-ferry-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-banshees-of-inisherin-siobhan-ferry.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/the-banshees-of-inisherin-wide.webp": [
+      {
+        "src": "assets/films/responsive/the-banshees-of-inisherin-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-banshees-of-inisherin-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-banshees-of-inisherin-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-banshees-of-inisherin-wide.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/the-batman-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-batman-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-batman-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/the-batman-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/the-batman-wide.webp": [
+      {
+        "src": "assets/films/responsive/the-batman-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-batman-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-batman-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-batman-wide.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/the-beast-2023-janus-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-beast-2023-janus-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-beast-2023-janus-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/responsive/the-beast-2023-janus-poster-272w.webp",
+        "width": 272
+      },
+      {
+        "src": "assets/films/the-beast-2023-janus-poster.webp",
+        "width": 440
+      }
+    ],
+    "assets/films/the-brutalist-alt-01.webp": [
+      {
+        "src": "assets/films/responsive/the-brutalist-alt-01-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-brutalist-alt-01-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-brutalist-alt-01-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-brutalist-alt-01.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/the-brutalist-alt-02.webp": [
+      {
+        "src": "assets/films/responsive/the-brutalist-alt-02-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-brutalist-alt-02-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-brutalist-alt-02-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-brutalist-alt-02.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/the-brutalist-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-brutalist-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-brutalist-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/the-brutalist-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/the-brutalist-wide.webp": [
+      {
+        "src": "assets/films/responsive/the-brutalist-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-brutalist-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-brutalist-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-brutalist-wide.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/the-count-of-monte-cristo-2024-costume.webp": [
+      {
+        "src": "assets/films/responsive/the-count-of-monte-cristo-2024-costume-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-count-of-monte-cristo-2024-costume-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-count-of-monte-cristo-2024-costume-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-count-of-monte-cristo-2024-costume.webp",
+        "width": 2160
+      }
+    ],
+    "assets/films/the-count-of-monte-cristo-2024-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-count-of-monte-cristo-2024-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-count-of-monte-cristo-2024-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/the-count-of-monte-cristo-2024-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/the-count-of-monte-cristo-2024-screenplay.webp": [
+      {
+        "src": "assets/films/responsive/the-count-of-monte-cristo-2024-screenplay-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-count-of-monte-cristo-2024-screenplay-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-count-of-monte-cristo-2024-screenplay-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-count-of-monte-cristo-2024-screenplay.webp",
+        "width": 2160
+      }
+    ],
+    "assets/films/the-count-of-monte-cristo-2024-underrated.webp": [
+      {
+        "src": "assets/films/responsive/the-count-of-monte-cristo-2024-underrated-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-count-of-monte-cristo-2024-underrated-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-count-of-monte-cristo-2024-underrated-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-count-of-monte-cristo-2024-underrated.webp",
+        "width": 2160
+      }
+    ],
+    "assets/films/the-count-of-monte-cristo-2024-wide.webp": [
+      {
+        "src": "assets/films/responsive/the-count-of-monte-cristo-2024-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-count-of-monte-cristo-2024-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-count-of-monte-cristo-2024-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-count-of-monte-cristo-2024-wide.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/the-dark-knight-rises-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-dark-knight-rises-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-dark-knight-rises-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/the-dark-knight-rises-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/the-dark-knight-rises-wide.webp": [
+      {
+        "src": "assets/films/responsive/the-dark-knight-rises-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-dark-knight-rises-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/the-dark-knight-rises-wide.webp",
+        "width": 1200
+      }
+    ],
+    "assets/films/the-flash-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-flash-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-flash-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/the-flash-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/the-french-dispatch-of-the-liberty-kansas-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-french-dispatch-of-the-liberty-kansas-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-french-dispatch-of-the-liberty-kansas-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/the-french-dispatch-of-the-liberty-kansas-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/the-grand-budapest-hotel-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-grand-budapest-hotel-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-grand-budapest-hotel-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/the-grand-budapest-hotel-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/the-grand-budapest-hotel-wide.webp": [
+      {
+        "src": "assets/films/responsive/the-grand-budapest-hotel-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-grand-budapest-hotel-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-grand-budapest-hotel-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-grand-budapest-hotel-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/the-handmaiden-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-handmaiden-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-handmaiden-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/the-handmaiden-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/the-handmaiden-wide.webp": [
+      {
+        "src": "assets/films/responsive/the-handmaiden-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-handmaiden-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-handmaiden-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-handmaiden-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/the-king-2019-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-king-2019-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-king-2019-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/the-king-2019-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/the-king-2019-wide.webp": [
+      {
+        "src": "assets/films/responsive/the-king-2019-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-king-2019-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-king-2019-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-king-2019-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/the-master-2012-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-master-2012-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-master-2012-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/the-master-2012-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/the-master-2012-wide.webp": [
+      {
+        "src": "assets/films/responsive/the-master-2012-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-master-2012-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-master-2012-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-master-2012-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/the-menu-2022-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-menu-2022-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-menu-2022-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/the-menu-2022-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/the-novice-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-novice-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-novice-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/responsive/the-novice-poster-272w.webp",
+        "width": 272
+      },
+      {
+        "src": "assets/films/the-novice-poster.webp",
+        "width": 380
+      }
+    ],
+    "assets/films/the-odyssey-2026-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-odyssey-2026-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-odyssey-2026-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/the-odyssey-2026-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/the-odyssey-2026-wide.webp": [
+      {
+        "src": "assets/films/responsive/the-odyssey-2026-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-odyssey-2026-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-odyssey-2026-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-odyssey-2026-wide.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/the-power-of-the-dog-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-power-of-the-dog-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-power-of-the-dog-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/the-power-of-the-dog-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/the-social-network-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-social-network-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-social-network-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/the-social-network-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/the-social-network-wide.webp": [
+      {
+        "src": "assets/films/responsive/the-social-network-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-social-network-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-social-network-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-social-network-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/the-souvenir-most-underrated-movie-2010s.webp": [
+      {
+        "src": "assets/films/responsive/the-souvenir-most-underrated-movie-2010s-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-souvenir-most-underrated-movie-2010s-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-souvenir-most-underrated-movie-2010s-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-souvenir-most-underrated-movie-2010s.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/the-souvenir-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-souvenir-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-souvenir-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/the-souvenir-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/the-souvenir-wide.webp": [
+      {
+        "src": "assets/films/responsive/the-souvenir-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-souvenir-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/the-souvenir-wide.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/the-tree-of-life-2011-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-tree-of-life-2011-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-tree-of-life-2011-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/the-tree-of-life-2011-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/the-tree-of-life-2011-wide.webp": [
+      {
+        "src": "assets/films/responsive/the-tree-of-life-2011-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-tree-of-life-2011-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-tree-of-life-2011-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-tree-of-life-2011-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/the-wolf-of-wall-street-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-wolf-of-wall-street-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-wolf-of-wall-street-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/the-wolf-of-wall-street-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/the-wolf-of-wall-street-wide.webp": [
+      {
+        "src": "assets/films/responsive/the-wolf-of-wall-street-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-wolf-of-wall-street-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-wolf-of-wall-street-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-wolf-of-wall-street-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/the-worst-person-in-the-world-aksel-julie.webp": [
+      {
+        "src": "assets/films/responsive/the-worst-person-in-the-world-aksel-julie-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-worst-person-in-the-world-aksel-julie-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-worst-person-in-the-world-aksel-julie-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-worst-person-in-the-world-aksel-julie.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/the-worst-person-in-the-world-poster.webp": [
+      {
+        "src": "assets/films/responsive/the-worst-person-in-the-world-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/the-worst-person-in-the-world-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/the-worst-person-in-the-world-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/the-worst-person-in-the-world-wide.webp": [
+      {
+        "src": "assets/films/responsive/the-worst-person-in-the-world-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-worst-person-in-the-world-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-worst-person-in-the-world-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-worst-person-in-the-world-wide.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/thelma-2017-poster.webp": [
+      {
+        "src": "assets/films/responsive/thelma-2017-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/thelma-2017-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/thelma-2017-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/thelma-2017-wide.webp": [
+      {
+        "src": "assets/films/responsive/thelma-2017-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/thelma-2017-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/thelma-2017-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/thelma-2017-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/tick-tick-boom-2021-poster.webp": [
+      {
+        "src": "assets/films/responsive/tick-tick-boom-2021-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/tick-tick-boom-2021-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/tick-tick-boom-2021-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/uncut-gems-poster.webp": [
+      {
+        "src": "assets/films/responsive/uncut-gems-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/uncut-gems-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/uncut-gems-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/uncut-gems-wide.webp": [
+      {
+        "src": "assets/films/responsive/uncut-gems-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/uncut-gems-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/uncut-gems-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/uncut-gems-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/whiplash-2014-best-antagonist.webp": [
+      {
+        "src": "assets/films/responsive/whiplash-2014-best-antagonist-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/whiplash-2014-best-antagonist-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/whiplash-2014-best-antagonist.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/whiplash-2014-best-breakthrough-performance-2010s.webp": [
+      {
+        "src": "assets/films/responsive/whiplash-2014-best-breakthrough-performance-2010s-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/whiplash-2014-best-breakthrough-performance-2010s-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/whiplash-2014-best-breakthrough-performance-2010s.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/whiplash-2014-best-film-editing-2010s.webp": [
+      {
+        "src": "assets/films/responsive/whiplash-2014-best-film-editing-2010s-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/whiplash-2014-best-film-editing-2010s-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/whiplash-2014-best-film-editing-2010s.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/whiplash-2014-best-supporting-actor.webp": [
+      {
+        "src": "assets/films/responsive/whiplash-2014-best-supporting-actor-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/whiplash-2014-best-supporting-actor-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/whiplash-2014-best-supporting-actor.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/whiplash-2014-poster.webp": [
+      {
+        "src": "assets/films/responsive/whiplash-2014-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/whiplash-2014-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/whiplash-2014-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/whiplash-2014-wide.webp": [
+      {
+        "src": "assets/films/responsive/whiplash-2014-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/whiplash-2014-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/whiplash-2014-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/whiplash-2014-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/whiplash-decade-cover.webp": [
+      {
+        "src": "assets/films/responsive/whiplash-decade-cover-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/whiplash-decade-cover-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/whiplash-decade-cover.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/wuthering-heights-2026-poster.webp": [
+      {
+        "src": "assets/films/responsive/wuthering-heights-2026-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/wuthering-heights-2026-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/wuthering-heights-2026-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/wuthering-heights-2026-veil.webp": [
+      {
+        "src": "assets/films/responsive/wuthering-heights-2026-veil-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/wuthering-heights-2026-veil-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/wuthering-heights-2026-veil-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/wuthering-heights-2026-veil.webp",
+        "width": 2048
+      }
+    ],
+    "assets/films/wuthering-heights-2026-wide.webp": [
+      {
+        "src": "assets/films/responsive/wuthering-heights-2026-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/wuthering-heights-2026-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/wuthering-heights-2026-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/wuthering-heights-2026-wide.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/your-name-poster.webp": [
+      {
+        "src": "assets/films/responsive/your-name-poster-128w.webp",
+        "width": 128
+      },
+      {
+        "src": "assets/films/responsive/your-name-poster-176w.webp",
+        "width": 176
+      },
+      {
+        "src": "assets/films/your-name-poster.webp",
+        "width": 300
+      }
+    ],
+    "assets/films/your-name-wide.webp": [
+      {
+        "src": "assets/films/responsive/your-name-wide-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/your-name-wide-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/your-name-wide-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/your-name-wide.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/a-complete-unknown-film-file.webp": [
+      {
+        "src": "assets/films/responsive/a-complete-unknown-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/a-complete-unknown-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/a-complete-unknown-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/a-complete-unknown-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/aftersun-film-file.webp": [
+      {
+        "src": "assets/films/responsive/aftersun-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/aftersun-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/aftersun-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/aftersun-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/asteroid-city-film-file.webp": [
+      {
+        "src": "assets/films/responsive/asteroid-city-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/asteroid-city-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/asteroid-city-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/asteroid-city-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/challengers-film-file.webp": [
+      {
+        "src": "assets/films/responsive/challengers-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/challengers-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/challengers-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/challengers-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/dune-2021-film-file.webp": [
+      {
+        "src": "assets/films/responsive/dune-2021-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/dune-2021-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/dune-2021-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/dune-2021-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/extraction-2020-film-file.webp": [
+      {
+        "src": "assets/films/responsive/extraction-2020-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/extraction-2020-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/extraction-2020-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/extraction-2020-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/inside-llewyn-davis-home.webp": [
+      {
+        "src": "assets/films/responsive/inside-llewyn-davis-home-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/inside-llewyn-davis-home-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/inside-llewyn-davis-home.webp",
+        "width": 1280
+      }
+    ],
+    "assets/films/la-chimera-film-file.webp": [
+      {
+        "src": "assets/films/responsive/la-chimera-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/la-chimera-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/la-chimera-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/la-chimera-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/marty-supreme-film-file.webp": [
+      {
+        "src": "assets/films/responsive/marty-supreme-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/marty-supreme-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/marty-supreme-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/marty-supreme-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/materialists-film-file.webp": [
+      {
+        "src": "assets/films/responsive/materialists-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/materialists-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/materialists-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/materialists-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/may-december-film-file.webp": [
+      {
+        "src": "assets/films/responsive/may-december-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/may-december-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/may-december-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/may-december-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/mickey-17-film-file.webp": [
+      {
+        "src": "assets/films/responsive/mickey-17-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/mickey-17-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/mickey-17-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/mickey-17-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/oppenheimer-2023-film-file.webp": [
+      {
+        "src": "assets/films/responsive/oppenheimer-2023-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/oppenheimer-2023-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/oppenheimer-2023-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/oppenheimer-2023-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/past-lives-film-file.webp": [
+      {
+        "src": "assets/films/responsive/past-lives-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/past-lives-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/past-lives-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/past-lives-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/peaky-blinders-the-immortal-man-film-file.webp": [
+      {
+        "src": "assets/films/responsive/peaky-blinders-the-immortal-man-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/peaky-blinders-the-immortal-man-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/peaky-blinders-the-immortal-man-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/peaky-blinders-the-immortal-man-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/poor-things-2023-film-file.webp": [
+      {
+        "src": "assets/films/responsive/poor-things-2023-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/poor-things-2023-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/poor-things-2023-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/poor-things-2023-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/promising-young-woman-film-file.webp": [
+      {
+        "src": "assets/films/responsive/promising-young-woman-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/promising-young-woman-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/promising-young-woman-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/promising-young-woman-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/sentimental-value-2025-film-file.webp": [
+      {
+        "src": "assets/films/responsive/sentimental-value-2025-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/sentimental-value-2025-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/sentimental-value-2025-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/sentimental-value-2025-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/the-assessment-2024-film-file.webp": [
+      {
+        "src": "assets/films/responsive/the-assessment-2024-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-assessment-2024-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-assessment-2024-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-assessment-2024-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/the-beast-2023-film-file.webp": [
+      {
+        "src": "assets/films/responsive/the-beast-2023-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-beast-2023-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-beast-2023-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-beast-2023-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/the-flash-film-file.webp": [
+      {
+        "src": "assets/films/responsive/the-flash-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-flash-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/the-flash-film-file.webp",
+        "width": 1200
+      }
+    ],
+    "assets/films/the-french-dispatch-of-the-liberty-kansas-film-file.webp": [
+      {
+        "src": "assets/films/responsive/the-french-dispatch-of-the-liberty-kansas-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-french-dispatch-of-the-liberty-kansas-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-french-dispatch-of-the-liberty-kansas-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-french-dispatch-of-the-liberty-kansas-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/the-menu-2022-film-file.webp": [
+      {
+        "src": "assets/films/responsive/the-menu-2022-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-menu-2022-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-menu-2022-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-menu-2022-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/the-novice-film-file.webp": [
+      {
+        "src": "assets/films/responsive/the-novice-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-novice-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-novice-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-novice-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/the-power-of-the-dog-film-file.webp": [
+      {
+        "src": "assets/films/responsive/the-power-of-the-dog-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-power-of-the-dog-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-power-of-the-dog-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/the-power-of-the-dog-film-file.webp",
+        "width": 1680
+      }
+    ],
+    "assets/films/tick-tick-boom-2021-film-file.webp": [
+      {
+        "src": "assets/films/responsive/tick-tick-boom-2021-film-file-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/tick-tick-boom-2021-film-file-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/tick-tick-boom-2021-film-file-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/tick-tick-boom-2021-film-file.webp",
+        "width": 1680
+      }
+    ]
+  }
+}

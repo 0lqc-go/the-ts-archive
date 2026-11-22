@@ -1,0 +1,261 @@
+/* Film dossiers share the award presentation's unframed photographic
+   backdrop. The poster and title enter the final, quiet part of the fade. */
+#film-file-dialog {
+  --file-dialog-width: min(clamp(790px, 54.8vw, 1080px), calc(100dvw - 30px));
+  /* Reserve one consistent footprint for the cover and closed disclosures.
+     Opening a section scrolls the body, rather than resizing the dialog. */
+  --file-dialog-reserve: 272px;
+  --file-dialog-viewport-margin: 28px;
+  width: var(--file-dialog-width);
+  height: min(calc(100dvh - var(--file-dialog-viewport-margin)),
+    calc(var(--file-dialog-width) / var(--file-cover-ratio) + var(--file-dialog-reserve)));
+  max-height: calc(100dvh - var(--file-dialog-viewport-margin));
+  --file-gutter: clamp(20px, 2.5vw, 34px);
+  --file-cover-ratio: 2.35;
+  --file-cover-overlap: 42px;
+  --file-header-height: 60px;
+  --file-top-offset: 0px;
+  --file-focal-x: 50%;
+  --file-focal-y: 20%;
+  --file-edge-fade: linear-gradient(90deg,
+    var(--panel) 0%, color-mix(in srgb,var(--panel) 68%,transparent) 3%,
+    color-mix(in srgb,var(--panel) 23%,transparent) 8%, transparent 17%,
+    transparent 83%, color-mix(in srgb,var(--panel) 23%,transparent) 92%,
+    color-mix(in srgb,var(--panel) 68%,transparent) 97%, var(--panel) 100%);
+  --file-vertical-fade: linear-gradient(to bottom,
+    color-mix(in srgb,var(--panel) 49%,transparent) 0%,
+    color-mix(in srgb,var(--panel) 11%,transparent) 19%,
+    transparent 30%, transparent 47%,
+    color-mix(in srgb,var(--panel) 12%,transparent) 57%,
+    color-mix(in srgb,var(--panel) 44%,transparent) 70%,
+    color-mix(in srgb,var(--panel) 83%,transparent) 86%,
+    color-mix(in srgb,var(--panel) 97%,transparent) 96%, var(--panel) 100%);
+}
+#film-file-dialog .film-file-header {
+  align-items: center;
+  gap: 12px;
+  padding: 11px var(--file-gutter);
+  min-height: 54px;
+}
+#film-file-dialog.file-has-backdrop .film-file-header {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 4;
+  background-color: transparent;
+  background-image: linear-gradient(to bottom,
+    color-mix(in srgb,var(--panel) 42%,transparent), transparent);
+  text-shadow: 0 1px 8px #000b;
+  transition: background-color .15s;
+}
+#film-file-dialog.file-has-backdrop.file-scrolled .film-file-header {
+  background-color: var(--panel);
+  text-shadow: none;
+}
+#film-file-dialog .file-header-label {
+  display: flex;
+  align-items: baseline;
+  gap: 11px;
+  min-width: 0;
+}
+#film-file-dialog .file-header-label .eyebrow { flex: none; margin: 0; }
+#film-file-dialog .file-header-name {
+  display: none;
+  min-width: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: var(--text);
+  font: 500 .85rem/1.3 var(--body);
+}
+#film-file-dialog.file-title-scrolled .file-header-name { display: block; }
+#film-file-content {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden auto;
+  scrollbar-gutter: stable;
+  scroll-padding-top: calc(var(--file-header-height) + 8px);
+}
+#film-file-dialog .film-file-frame {
+  position: relative;
+  display: block;
+  box-sizing: content-box;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--file-cover-ratio);
+  padding: var(--file-top-offset) 0 0;
+  background: var(--panel);
+  overflow: hidden;
+  border-radius: 0;
+}
+#film-file-dialog .film-file-frame img {
+  position: absolute;
+  inset: var(--file-top-offset) 0 auto;
+  display: block;
+  width: 100%;
+  height: calc(100% - var(--file-top-offset));
+  max-height: none;
+  object-fit: cover;
+  object-position: var(--file-focal-x) var(--file-focal-y);
+}
+#film-file-dialog .film-file-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: var(--file-vertical-fade), var(--file-edge-fade);
+}
+#film-file-dialog .film-file-frame .frame-expand-icon { display: none; }
+#film-file-dialog .film-file-meta {
+  position: relative;
+  z-index: 2;
+  grid-template-columns: clamp(64px, 5vw, 68px) minmax(0,1fr) auto;
+  align-items: start;
+  gap: 12px;
+  padding: 13px var(--file-gutter) 12px;
+}
+#film-file-dialog.file-has-backdrop .film-file-meta {
+  margin-top: calc(0px - var(--file-cover-overlap));
+  padding-top: 0;
+}
+#film-file-dialog .file-meta-copy { min-width: 0; padding-top: 3px; }
+#film-file-dialog #film-file-title {
+  margin: 0 0 5px;
+  font: 600 clamp(1.125rem, 1.4vw, 1.35rem)/1.25 var(--body);
+  letter-spacing: -.02em;
+  color: var(--text);
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+#film-file-dialog .file-year { font: 400 .78rem/1.45 var(--body); letter-spacing: 0; overflow-wrap: anywhere; }
+#film-file-dialog .file-year .person-link { text-decoration-color: var(--surface-border); }
+#film-file-dialog .file-year .person-link:is(:hover,:focus-visible) { text-decoration-color: currentColor; }
+#film-file-dialog .file-tally { margin-block: 5px 0; font-size: .84rem; font-weight: 500; }
+#film-file-dialog .file-tally span { font-size: .78rem; }
+#film-file-dialog .file-poster .poster { border-radius: 3px; }
+/* Quiet actions below the photograph, aligned to the bottom of the metadata. */
+#film-file-dialog .file-meta-actions {
+  display: flex;
+  align-items: center;
+  justify-self: end;
+  align-self: end;
+  gap: 4px;
+}
+#film-file-dialog .file-meta-actions .file-action {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  color: var(--muted);
+  background: transparent;
+  text-decoration: none;
+  cursor: pointer;
+}
+#film-file-dialog .file-meta-actions .file-action:is(:hover,:focus-visible) { color: var(--text); background: var(--surface-hover); }
+#film-file-dialog .file-meta-actions .file-action:focus-visible { outline: 2px solid var(--paper-accent); outline-offset: 2px; }
+#film-file-dialog .file-letterboxd-icon svg { opacity: .85; }
+#film-file-dialog .file-letterboxd-icon:is(:hover,:focus-visible) svg { opacity: 1; }
+#film-file-dialog .file-cover-expand .frame-expand-icon {
+  position: static;
+  width: 17px;
+  height: 17px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: inherit;
+  background: none;
+  opacity: 1;
+}
+/* All dossiers begin with the same closed sections. Thumbnails stay out of
+   the header and re-use the original high-resolution frame viewer. */
+#film-file-dialog .film-file-sections { padding-bottom: 12px; }
+#film-file-dialog .file-group-summary { padding-block: 5px; min-height: 31px; font: 500 .875rem/1.4 var(--body); }
+#film-file-dialog .file-dossier-content { padding-bottom: 11px; }
+#film-file-dialog .file-frames-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 8px;
+  padding-top: 4px;
+}
+#film-file-dialog .file-frame-thumbnail {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--deep);
+}
+#film-file-dialog .file-frame-thumbnail img { display: block; width: 100%; height: 100%; object-fit: cover; }
+#film-file-dialog .file-frame-thumbnail:focus-visible { outline: 2px solid var(--paper-accent); outline-offset: 2px; }
+@media (hover: hover) {
+  #film-file-dialog .file-frame-thumbnail:hover { outline: 1px solid var(--paper-accent); }
+}
+#film-file-dialog .file-won-list[data-layout="rows"] .file-won-award.has-file-frame {
+  grid-template-columns: clamp(90px, 14vw, 132px) minmax(0,1fr);
+  gap: 11px;
+}
+#film-file-dialog :is(.file-won-copy strong,.film-award-row strong,.file-snub-name) { font: 500 .875rem/1.35 var(--body); }
+#film-file-dialog :is(.file-won-copy small,.film-award-row small,.file-snub-status) { font: 400 .78rem/1.42 var(--body); }
+#film-file-dialog :is(.file-people-list,.file-music ul) { font-size: .82rem; }
+/* These source photographs put hair, hats or raised hands close to the
+   upper edge. Prefer that part of the original composition to the
+   lower region already occupied by the backdrop fade. */
+#film-file-dialog:is(
+  [data-film="the-worst-person-in-the-world"], [data-film="the-brutalist"], [data-film="decision-to-leave"],
+  [data-film="aftersun"], [data-film="dont-look-up-2021"],
+  [data-film="extraction-2020"], [data-film="killers-of-the-flower-moon"],
+  [data-film="la-chimera"], [data-film="marty-supreme"],
+  [data-film="past-lives"], [data-film="promising-young-woman"],
+  [data-film="the-batman"], [data-film="the-beast-2023"],
+  [data-film="tick-tick-boom-2021"], [data-film="inside-llewyn-davis"],
+  [data-film="sicario-2015"], [data-film="before-midnight"],
+  [data-film="moneyball"], [data-film="nightcrawler"],
+  [data-film="the-king-2019"], [data-film="if-beale-street-could-talk"]
+) { --file-focal-y: 5%; }
+@media (max-width: 680px) {
+  #film-file-dialog {
+    --file-dialog-width: calc(100dvw - 16px);
+    --file-dialog-reserve: 370px;
+    --file-dialog-viewport-margin: 16px;
+    --file-gutter: 15px;
+    --file-cover-ratio: 2.15;
+    --file-cover-overlap: 26px;
+    --file-header-height: 54px;
+    --file-top-offset: 18px;
+    --file-edge-fade: linear-gradient(90deg,
+      var(--panel) 0%, color-mix(in srgb,var(--panel) 45%,transparent) 4%,
+      transparent 13%, transparent 87%,
+      color-mix(in srgb,var(--panel) 45%,transparent) 96%, var(--panel) 100%);
+    --file-vertical-fade: linear-gradient(to bottom,
+      var(--panel) 0, var(--panel) var(--file-top-offset),
+      color-mix(in srgb,var(--panel) 34%,transparent) calc(var(--file-top-offset) + 16px),
+      transparent calc(var(--file-top-offset) + 36px), transparent 51%,
+      color-mix(in srgb,var(--panel) 13%,transparent) 61%,
+      color-mix(in srgb,var(--panel) 50%,transparent) 77%,
+      color-mix(in srgb,var(--panel) 90%,transparent) 91%, var(--panel) 100%);
+  }
+  #film-file-dialog .film-file-header { padding-block: 9px; }
+  #film-file-dialog .film-file-meta {
+    grid-template-columns: 56px minmax(0,1fr);
+    gap: 3px 12px;
+    padding-bottom: 12px;
+  }
+  #film-file-dialog .file-poster { grid-row: 1 / span 2; }
+  #film-file-dialog .file-meta-actions { grid-column: 2; }
+  #film-file-dialog #film-file-title { font-size: 1.0625rem; line-height: 1.28; margin-bottom: 5px; }
+  #film-file-dialog .file-meta-copy { padding-top: 1px; }
+  #film-file-dialog .file-tally { margin-block: 4px 0; }
+  #film-file-dialog .file-frames-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (pointer: coarse) {
+  #film-file-dialog { --file-dialog-reserve: 370px; }
+  #film-file-dialog .file-group-summary { min-height: 44px; }
+  #film-file-dialog .file-meta-actions .file-action { width: 44px; height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #film-file-dialog .film-file-header { transition: none; }
+}

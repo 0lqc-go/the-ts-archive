@@ -1,0 +1,176 @@
+/* A real backdrop, not a framed photograph. The hero runs underneath the
+   header, fades into the panel on three sides, and continues behind the
+   winner's name. Only the presentation is composed this way; the original
+   still remains available in the full-frame viewer. */
+body[data-award-view] #award-dialog {
+  --ceremony-wide-ratio: 2.12;
+  --ceremony-focal-y: 35%;
+  --ceremony-gutter: clamp(24px, 2.4vw, 36px);
+  --ceremony-header-height: 76px;
+  --ceremony-overlap: 42px;
+  --ceremony-edge-fade: linear-gradient(90deg,
+    var(--panel) 0%, color-mix(in srgb,var(--panel) 68%,transparent) 3%,
+    color-mix(in srgb,var(--panel) 23%,transparent) 8%, transparent 17%,
+    transparent 83%, color-mix(in srgb,var(--panel) 23%,transparent) 92%,
+    color-mix(in srgb,var(--panel) 68%,transparent) 97%, var(--panel) 100%);
+  --ceremony-vertical-fade: linear-gradient(to bottom,
+    color-mix(in srgb,var(--panel) 52%,transparent) 0%,
+    color-mix(in srgb,var(--panel) 13%,transparent) 20%,
+    transparent 32%, transparent 49%,
+    color-mix(in srgb,var(--panel) 12%,transparent) 59%,
+    color-mix(in srgb,var(--panel) 42%,transparent) 72%,
+    color-mix(in srgb,var(--panel) 81%,transparent) 87%,
+    color-mix(in srgb,var(--panel) 97%,transparent) 96%, var(--panel) 100%);
+}
+body[data-award-view] #award-dialog #dialog-content { position: relative; }
+body[data-award-view] #award-dialog .ceremony-header {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 4;
+  padding-inline: var(--ceremony-gutter);
+  background-color: transparent;
+  background-image: linear-gradient(to bottom,
+    color-mix(in srgb,var(--panel) 48%,transparent),
+    color-mix(in srgb,var(--panel) 25%,transparent) 65%, transparent);
+  text-shadow: 0 1px 8px #000b;
+  transition: background-color .15s;
+}
+body[data-award-view] #award-dialog.ceremony-scrolled .ceremony-header {
+  background-color: var(--panel);
+  text-shadow: none;
+}
+body[data-award-view] #award-dialog .ceremony-progress { top: 0; bottom: auto; opacity: .55; }
+body[data-award-view] #award-dialog .ceremony-scroll {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  scroll-padding-top: calc(var(--ceremony-header-height) + 8px);
+}
+body[data-award-view] #award-dialog .ceremony-body {
+  max-width: 100%;
+  padding: 0 var(--ceremony-gutter) 17px;
+}
+body[data-award-view] #award-dialog .ceremony-frame {
+  margin-inline: calc(0px - var(--ceremony-gutter));
+}
+body[data-award-view] #award-dialog .ceremony-frame .frame-media {
+  width: 100%;
+  aspect-ratio: var(--ceremony-wide-ratio);
+  min-height: calc(var(--ceremony-header-height) + 144px);
+  margin: 0;
+  border-radius: 0;
+  background: var(--panel);
+}
+body[data-award-view] #award-dialog .ceremony-frame .frame-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: var(--ceremony-vertical-fade), var(--ceremony-edge-fade);
+}
+body[data-award-view] #award-dialog .ceremony-frame .frame-image img {
+  object-fit: cover;
+  object-position: var(--focal-x, 50%) var(--ceremony-focal-y, 35%);
+}
+body[data-award-view] #award-dialog .ceremony-frame .frame-expand-icon {
+  z-index: 2;
+  right: var(--ceremony-gutter);
+  bottom: calc(var(--ceremony-overlap) + 11px);
+}
+/* Two selected films remain a single full-bleed landscape montage rather
+   than a pair of isolated cards. */
+body[data-award-view] #award-dialog .ceremony-frame .split-media {
+  aspect-ratio: 3.1;
+  gap: 2px;
+}
+body[data-award-view] #award-dialog .ceremony-frame .split-media > .frame-image:not(:last-child) .frame-expand-icon { right: 10px; }
+body[data-award-view] #award-dialog .ceremony-frame.portrait-frame { --ceremony-focal-y: 27%; }
+/* Frame-specific placement, not a content or artwork change. Preserve
+   the actor's face, set detail, or full silhouette within the crop. */
+body[data-edition="2020-2026"] #award-dialog .ceremony-body[data-award-id="best-actor"] {
+  --ceremony-focal-y: 4%;
+}
+body[data-edition="2020-2026"] #award-dialog .ceremony-body[data-award-id="best-picture"] { --ceremony-focal-y: 74%; }
+body[data-edition="2020-2026"] #award-dialog .ceremony-body[data-award-id="best-production-design"] { --ceremony-focal-y: 12%; }
+body[data-edition="2020-2026"] #award-dialog .ceremony-body[data-award-id="best-original-screenplay"] { --ceremony-focal-y: 52%; }
+body[data-edition="2020-2026"] #award-dialog .ceremony-body[data-award-id="best-cinematography"] { --ceremony-focal-y: 85%; }
+body[data-edition="2020-2026"] #award-dialog .ceremony-body[data-award-id="most-overrated-movie"] { --ceremony-focal-y: 65%; }
+body[data-edition="2020-2026"] #award-dialog .ceremony-body[data-award-id="lives-we-might-have-lived"] { --ceremony-focal-y: 10%; }
+body[data-edition="2010-2019"] #award-dialog .ceremony-body[data-award-id="the-cruellest-month-award"] { --ceremony-focal-y: 4%; }
+body[data-edition="2010-2019"] #award-dialog .ceremony-body[data-award-id="the-hollow-men-award"] { --ceremony-focal-y: 65%; }
+
+/* Artist awards use the same complete-width photographic lead. The
+   credited films remain just beneath the artist's name. */
+body[data-award-view] #award-dialog .ceremony-artist-lead {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+}
+body[data-award-view] #award-dialog .ceremony-winner-meta {
+  position: relative;
+  z-index: 2;
+  margin-top: calc(0px - var(--ceremony-overlap));
+  text-shadow: 0 1px 10px #0006;
+}
+body[data-award-view] #award-dialog .ceremony-artist-context {
+  position: relative;
+  z-index: 2;
+  margin-top: calc(0px - var(--ceremony-overlap));
+}
+body[data-award-view] #award-dialog .ceremony-artist-context .ceremony-winner-meta {
+  margin-top: 0;
+}
+@media (max-width: 680px) {
+  body[data-award-view] #award-dialog {
+    --ceremony-wide-ratio: 2;
+    --ceremony-gutter: 15px;
+    --ceremony-overlap: 24px;
+    --ceremony-header-height: 70px;
+    --ceremony-mobile-top: calc(var(--ceremony-header-height) * .48);
+    --ceremony-edge-fade: linear-gradient(90deg,
+      var(--panel) 0%, color-mix(in srgb,var(--panel) 45%,transparent) 4%,
+      transparent 13%, transparent 87%,
+      color-mix(in srgb,var(--panel) 45%,transparent) 96%, var(--panel) 100%);
+    --ceremony-vertical-fade: linear-gradient(to bottom,
+      var(--panel) 0, var(--panel) var(--ceremony-mobile-top),
+      color-mix(in srgb,var(--panel) 60%,transparent) calc(var(--ceremony-mobile-top) + 8px),
+      color-mix(in srgb,var(--panel) 18%,transparent) calc(var(--ceremony-mobile-top) + 22px),
+      transparent calc(var(--ceremony-mobile-top) + 34px), transparent 53%,
+      color-mix(in srgb,var(--panel) 13%,transparent) 62%,
+      color-mix(in srgb,var(--panel) 50%,transparent) 77%,
+      color-mix(in srgb,var(--panel) 89%,transparent) 91%, var(--panel) 100%);
+  }
+  body[data-award-view] #award-dialog .ceremony-header { padding-inline: var(--ceremony-gutter); align-items: flex-start; }
+  body[data-award-view] #award-dialog .ceremony-counter { margin-top: 7px; }
+  body[data-award-view] #award-dialog .ceremony-body { padding: 0 var(--ceremony-gutter) 16px; }
+  /* Leave a short blended top zone for the mobile controls without
+     cropping a landscape still into a much narrower portrait. */
+  body[data-award-view] #award-dialog .ceremony-frame .frame-media {
+    box-sizing: content-box;
+    min-height: 0;
+    padding-top: var(--ceremony-mobile-top);
+  }
+  body[data-award-view] #award-dialog .ceremony-frame .frame-media:not(.split-media) > .frame-image {
+    top: var(--ceremony-mobile-top);
+    height: calc(100% - var(--ceremony-mobile-top));
+  }
+  body[data-award-view] #award-dialog .ceremony-frame .split-media {
+    aspect-ratio: auto;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-columns: auto;
+    grid-auto-flow: row;
+  }
+  body[data-award-view] #award-dialog .ceremony-frame .split-media > .frame-image {
+    position: relative;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2.1;
+  }
+  body[data-award-view] #award-dialog .ceremony-frame .split-media > .frame-image:not(:last-child) .frame-expand-icon { right: var(--ceremony-gutter); bottom: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body[data-award-view] #award-dialog .ceremony-header { transition: none; }
+}
