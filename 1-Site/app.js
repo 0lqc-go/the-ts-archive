@@ -929,54 +929,77 @@
     return credit ? artistName(credit) : '';
   }
 
+  // Prefer the frame chosen for this award and film rather than a random
+  // gallery still. Where no dedicated frame exists, use the winner card's
+  // existing film artwork, keeping the film and award attribution intact.
+  function dossierAwardFrame(slug, award, allowFallback = false) {
+    const dedicated = (alternates[slug] ?? []).find(still => still.award === award.id && still.path)
+      ?? (archive.galleries?.[slug] ?? []).find(still => still.award === award.id && still.path);
+    if (dedicated) return dedicated;
+    const presentation = edition.presentationStills?.[award.id];
+    if (presentation?.film === slug && presentation.path) return presentation;
+    return allowFallback && art(slug).backdrop ? {path: art(slug).backdrop} : null;
+  }
+
   function dossierEntries(slug) {
     const wins = [], mentions = [], portfolios = [], selected = [];
     for (const award of awards) {
       const winner = award.winner.films.includes(slug);
       const nominated = award.nominees.filter(entry => entry.films.includes(slug));
       if (award.honorsPortfolio) {
-        if (winner) portfolios.push({award,detail: `Winning body of work · ${artistName(award.winner)}`});
+        if (winner) portfolios.push({award,detail: `Winning body of work · ${artistName(award.winner)}`,frame: dossierAwardFrame(slug,award)});
         nominated.forEach(entry => portfolios.push({award,detail: `Honorable mention · ${artistName(entry)}`}));
       } else {
-        if (winner) (negative.has(award.id) ? selected : wins).push({award,detail: award.winner.detail});
+        if (winner) {
+          const editorial = negative.has(award.id);
+          (editorial ? selected : wins).push({award,detail: award.winner.detail,frame: dossierAwardFrame(slug,award,!editorial)});
+        }
         nominated.forEach(entry => mentions.push({award,detail: entry.detail}));
       }
     }
     return {wins,mentions,portfolios,selected};
   }
 
-  function dossierSection(label, rows) {
+  function dossierDisclosure(key, label, count, body, open = false, classes = '') {
+    const tally = count == null ? '' : `<span class="file-group-count">${pad(count)}</span>`;
+    return `<details class="file-dossier-group ${classes}" name="film-dossier-sections" data-file-group="${esc(key)}"${open ? ' open' : ''}><summary class="file-group-summary"><span class="file-group-heading"><span class="file-group-label">${esc(label)}</span>${tally}</span><svg width="14" height="14" viewBox="0 0 12 12" aria-hidden="true"><path d="m2 4 4 4 4-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"/></svg></summary><div class="file-dossier-content">${body}</div></details>`;
+  }
+
+  function dossierFrameMarkup(frame, sizes) {
+    if (!frame?.path) return '';
+    const focal = frame.focal ? ` style="--file-focal:${esc(frame.focal)}"` : '';
+    return `<span class="file-award-image"${focal}>${imageMarkup(frame.path,false,sizes)}</span>`;
+  }
+
+  function dossierSection(key, label, rows) {
     if (!rows.length) return '';
-    return `<section class="film-file-section file-award-group"><h3>${esc(label)} <span>${pad(rows.length)}</span></h3><ul>${rows.map(({award,detail}) => `<li><button type="button" class="film-award-row" data-jump-award="${esc(award.id)}"><span class="file-award-copy"><strong>${esc(award.name)}</strong>${detail ? `<small>${esc(detail)}</small>` : ''}</span></button></li>`).join('')}</ul></section>`;
+    const rowsMarkup = `<ul>${rows.map(({award,detail,frame}) => `<li><button type="button" class="film-award-row${frame ? ' has-file-frame' : ''}" data-jump-award="${esc(award.id)}">${dossierFrameMarkup(frame,'112px')}<span class="file-award-copy"><strong>${esc(award.name)}</strong>${detail ? `<small>${esc(detail)}</small>` : ''}</span></button></li>`).join('')}</ul>`;
+    return dossierDisclosure(key,label,rows.length,rowsMarkup,false,'film-file-section file-award-group');
   }
 
-  function awardStillGallery(slug) {
-    const seen = new Set();
-    const frames = (alternates[slug] ?? []).filter(still => {
-      const award = awardsById.get(still.award);
-      if (!still.path || seen.has(still.award) || !award?.winner.films.includes(slug)) return false;
-      seen.add(still.award);
-      return true;
-    }).sort((a, b) => awardsById.get(a.award).number - awardsById.get(b.award).number);
-    if (frames.length < 2) return '';
-    return `<details class="award-stills film-award-frames"><summary><span>Award frames <b>${pad(frames.length)}</b></span><svg width="14" height="14" viewBox="0 0 12 12" aria-hidden="true"><path d="m2 4 4 4 4-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"/></svg></summary><div class="award-stills-track" aria-label="Award frames"></div><template>${frames.map(still => `<a class="award-still" href="${esc(directAwardHref(still.award))}" data-frame-award="${esc(still.award)}">${imageMarkup(still.path, false, '(max-width: 680px) 44vw, (min-width: 1971px) 320px, 250px')}<span>${esc(awardsById.get(still.award).name)}</span></a>`).join('')}</template></details>`;
+  function wonAwardsSection(rows) {
+    if (!rows.length) return '';
+    const grid = rows.length > 1 && rows.every(row => row.frame?.path);
+    const sizes = grid ? '(max-width: 680px) 44vw, (min-width: 1971px) 320px, 260px' : '160px';
+    const items = `<ul class="file-won-list" data-layout="${grid ? 'grid' : 'rows'}">${rows.map(({award,detail,frame}) => `<li><a class="file-won-award${frame?.path ? ' has-file-frame' : ''}" href="${esc(directAwardHref(award.id))}" data-frame-award="${esc(award.id)}">${dossierFrameMarkup(frame,sizes)}<span class="file-won-copy"><strong>${esc(award.name)}</strong>${detail ? `<small>${esc(detail)}</small>` : ''}</span></a></li>`).join('')}</ul>`;
+    return dossierDisclosure('awards','Awards won',rows.length,items,true,'file-won-awards');
   }
 
-  // No duplicate award thumbnails are requested until this optional view is opened.
+  // Only one primary section expands at a time. The native details name
+  // handles modern browsers; this also covers older mobile browsers.
   filmDialog?.addEventListener('toggle', event => {
     const details = event.target;
-    if (!details.matches?.('.film-award-frames[open]')) return;
-    const content = details.querySelector('template');
-    if (content) {
-      details.querySelector('.award-stills-track').append(content.content.cloneNode(true));
-      content.remove();
+    if (details.matches?.('.file-dossier-group[open]')) {
+      for (const other of details.parentElement.querySelectorAll(':scope > .file-dossier-group[open]')) {
+        if (other !== details) other.open = false;
+      }
     }
   }, true);
 
   function creditedPeople(slug) {
     const ids = peopleByFilm.get(slug);
     if (!ids?.size || !personDialog) return '';
-    return `<section class="film-file-section file-people"><h3>Artists</h3><div class="file-people-list">${[...ids].map(id => personLink(people.get(id).name)).join('')}</div></section>`;
+    return `<section class="film-file-section file-people"><h3>Credits</h3><div class="file-people-list">${[...ids].map(id => personLink(people.get(id).name)).join('')}</div></section>`;
   }
 
   function personAppearanceLink(appearance) {
@@ -1021,22 +1044,29 @@
     const dossierStill = gallery[0]?.path || movieArt.backdrop || alternates[slug]?.find(still => still.path)?.path;
     const listening = awards.flatMap(award => (award.listen ?? []).filter(item => item.film === slug));
     const snubs = (archive.snubs ?? []).filter(item => item.entry.films.includes(slug));
-    const winText = `${wins.length} ${wins.length === 1 ? 'award' : 'awards'}`;
-    const groups = [dossierSection('Awards',wins), dossierSection('Honorable mentions',mentions), dossierSection('Body of work',portfolios), dossierSection('Editorial selections',selected)].filter(Boolean);
+    const winText = `${wins.length} ${wins.length === 1 ? 'award won' : 'awards won'}`;
     const artists = creditedPeople(slug);
     const music = listening.length ? `<section class="film-file-section file-music"><h3>Film music</h3><ul>${listening.map(item => `<li><a href="${esc(item.url)}" class="music-link file-music-link" ${external}>${esc(item.title)}</a></li>`).join('')}</ul></section>` : '';
-    const snubSection = snubs.length ? `<section class="film-file-section file-snubs"><div class="file-snubs-heading"><h3>Oscar Snubs <span>${pad(snubs.length)}</span></h3>${snubList ? `<a class="file-letterboxd file-ballot-link" href="${esc(site.listHref(snubList))}">Alternate ballot</a>` : ''}</div><ul>${snubs.map(item => `<li>${academyComparison(item,'film-file') || `<div class="file-snub-summary"><strong class="file-snub-name">${esc(item.name)}</strong><span class="file-snub-status">${esc(item.status)}</span></div>`}</li>`).join('')}</ul></section>` : '';
+    // The awards and their frames share a single, initially expanded group.
+    // Films without wins have no empty winner group; the other sections stay closed.
+    const groups = [dossierSection('mentions','Honorable mentions',mentions), dossierSection('portfolio','Body of work',portfolios), dossierSection('editorial','Editorial selections',selected)].filter(Boolean);
+    const snubRows = `<ul>${snubs.map(item => `<li>${academyComparison(item,'film-file') || `<div class="file-snub-summary"><strong class="file-snub-name">${esc(item.name)}</strong><span class="file-snub-status">${esc(item.status)}</span></div>`}</li>`).join('')}</ul>${snubList ? `<a class="file-letterboxd file-ballot-link" href="${esc(site.listHref(snubList))}">Alternate ballot</a>` : ''}`;
+    const snubSection = snubs.length ? dossierDisclosure('snubs','Oscar Snubs',snubs.length,snubRows,false,'film-file-section file-snubs') : '';
+    const bothCredits = Boolean(artists && music);
+    const creditLabel = artists ? 'Cast & crew' : 'Film music';
+    const creditCount = artists ? peopleByFilm.get(slug)?.size : listening.length;
+    const creditSection = artists || music ? dossierDisclosure('credits',creditLabel,creditCount,`<div class="file-credit-content" data-credit-sections="${bothCredits ? 2 : 1}">${artists}${music}</div>`,false,'file-credits') : '';
     $('#film-file-title').textContent = info.title;
     $('#film-file-content').innerHTML = `
       ${dossierStill ? frameDialog
         ? frameButton(dossierStill, info.title, 'film-file-frame', imageMarkup(dossierStill, true, '(min-width: 1971px) 1080px, (min-width: 1440px) 55vw, (min-width: 920px) 790px, 90vw'), ` data-film="${esc(slug)}"`)
         : `<div class="film-file-frame">${imageMarkup(dossierStill, true, '(min-width: 1971px) 1080px, (min-width: 1440px) 55vw, (min-width: 920px) 790px, 90vw')}</div>` : ''}
       <div class="film-file-meta"><div class="file-poster">${poster(slug,true,'96px')}</div><div><p class="file-year">${esc(info.year)}${director ? ` · ${personLink(director)}` : ''}</p><p class="file-tally">${esc(winText)} <span>· ${mentions.length} ${mentions.length === 1 ? 'honorable mention' : 'honorable mentions'}</span></p><div class="file-links">${gallery.length > 1 && frameDialog ? `<button class="film-gallery-open" type="button" data-full-frame="${esc(gallery[0].src)}" data-frame-path="${esc(gallery[0].path)}" data-frame-label="${esc(info.title)}" data-film="${esc(slug)}" data-open-contact-sheet="true" aria-haspopup="dialog" aria-label="Browse ${gallery.length} film stills"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><rect x="1.5" y="2.5" width="5.5" height="4" rx=".6"/><rect x="9" y="2.5" width="5.5" height="4" rx=".6"/><rect x="1.5" y="9.5" width="5.5" height="4" rx=".6"/><rect x="9" y="9.5" width="5.5" height="4" rx=".6"/></svg>${gallery.length} stills</button>` : ''}<a class="file-letterboxd" href="${esc(info.url)}" ${external}>View on Letterboxd</a></div></div></div>
-      <div class="film-file-sections">
-      ${groups.length ? `<div class="file-award-groups" data-groups="${groups.length}">${groups.join('')}</div>` : ''}
-      ${awardStillGallery(slug)}
-      ${artists || music || snubSection ? `<div class="file-secondary">${artists}${music}${snubSection}</div>` : ''}
-      ${!groups.length && !snubs.length ? '<p class="empty-index">No selections in this edition.</p>' : ''}</div>`;
+      <div class="film-file-sections file-dossier-accordion">
+      ${wonAwardsSection(wins)}
+      ${groups.join('')}
+      ${snubSection}${creditSection}
+      ${!wins.length && !groups.length && !snubs.length ? '<p class="empty-index">No selections in this edition.</p>' : ''}</div>`;
     $('#film-file-content').scrollTop = 0;
     openDialog(filmDialog, '#film-file-title', trigger);
   }
