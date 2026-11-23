@@ -110,8 +110,10 @@ body[data-edition="2020-2026"] #award-dialog .ceremony-body[data-award-id="best-
 body[data-edition="2020-2026"] #award-dialog .ceremony-body[data-award-id="best-cinematography"] { --ceremony-focal-y: 85%; }
 body[data-edition="2020-2026"] #award-dialog .ceremony-body[data-award-id="most-overrated-movie"] { --ceremony-focal-y: 65%; }
 body[data-edition="2020-2026"] #award-dialog .ceremony-body[data-award-id="lives-we-might-have-lived"] { --ceremony-focal-y: 10%; }
-body[data-edition="2010-2019"] #award-dialog .ceremony-body[data-award-id="the-cruellest-month-award"] { --ceremony-focal-y: 4%; }
-body[data-edition="2010-2019"] #award-dialog .ceremony-body[data-award-id="the-hollow-men-award"] { --ceremony-focal-y: 65%; }
+body[data-edition="2010-2019"] #award-dialog .ceremony-body[data-award-id="the-cruellest-month-award"] { --ceremony-focal-y: 40%; }
+body[data-edition="2010-2019"] #award-dialog .ceremony-body[data-award-id="the-hollow-men-award"] { --ceremony-focal-y: 14%; }
+body[data-edition="2010-2019"] #award-dialog .ceremony-body[data-award-id="best-line-of-dialogue"] { --ceremony-focal-y: 15%; }
+body[data-edition="2010-2019"] #award-dialog .ceremony-body[data-award-id="best-score-cue"] { --ceremony-focal-y: 20%; }
 
 /* Artist awards use the same complete-width photographic lead. The
    credited films remain just beneath the artist's name. */

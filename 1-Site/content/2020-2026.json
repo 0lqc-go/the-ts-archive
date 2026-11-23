@@ -9781,6 +9781,14 @@
         "path": "assets/films/decision-to-leave-seo-rae.webp",
         "priority": 2
       }
+    },
+    "presentationStills": {
+      "director-of-the-decade": {
+        "film": "decision-to-leave",
+        "path": "assets/films/decision-to-leave-seo-rae.webp",
+        "credit": "Stills supplied by the curator",
+        "allLayouts": true
+      }
     }
   },
   "stills": {

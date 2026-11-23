@@ -138,8 +138,8 @@
   }
 
   function awardFrames(award, layout = 'card') {
-    const presentation = enhanced && layout === 'dialog' ? edition.presentationStills?.[award.id] : null;
-    if (!award.winnerArtwork && presentation && award.winner.films.includes(presentation.film)) {
+    const presentation = enhanced ? edition.presentationStills?.[award.id] : null;
+    if (!award.winnerArtwork && presentation && (layout === 'dialog' || presentation.allLayouts) && award.winner.films.includes(presentation.film)) {
       return [{slug: presentation.film, path: presentation.path, label: film(presentation.film).title,
         shape: 'wide', focal: presentation.focal}];
     }

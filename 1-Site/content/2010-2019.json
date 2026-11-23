@@ -1106,11 +1106,11 @@
           "name": "Best Visual Effects",
           "feature": false,
           "winner": {
-            "text": "Inception",
-            "title": "Inception",
+            "text": "Blade Runner 2049",
+            "title": "Blade Runner 2049",
             "detail": "",
             "films": [
-              "inception"
+              "blade-runner-2049"
             ]
           },
           "nominees": [
@@ -1123,11 +1123,11 @@
               ]
             },
             {
-              "text": "Blade Runner 2049",
-              "title": "Blade Runner 2049",
+              "text": "Inception",
+              "title": "Inception",
               "detail": "",
               "films": [
-                "blade-runner-2049"
+                "inception"
               ]
             },
             {
@@ -1257,14 +1257,22 @@
         {
           "id": "best-score-cue",
           "winner": {
-            "text": "Inception — “Time” · Hans Zimmer",
-            "title": "Inception",
-            "detail": "“Time” · Hans Zimmer",
+            "text": "If Beale Street Could Talk — “Eros” · Nicholas Britell",
+            "title": "If Beale Street Could Talk",
+            "detail": "“Eros” · Nicholas Britell",
             "films": [
-              "inception"
+              "if-beale-street-could-talk"
             ]
           },
           "nominees": [
+            {
+              "text": "Inception — “Time” · Hans Zimmer",
+              "title": "Inception",
+              "detail": "“Time” · Hans Zimmer",
+              "films": [
+                "inception"
+              ]
+            },
             {
               "text": "Interstellar — “Cornfield Chase” · Hans Zimmer",
               "title": "Interstellar",
@@ -1294,10 +1302,10 @@
           "description": "A single piece of instrumental film music.",
           "listen": [
             {
-              "film": "inception",
-              "label": "Listen to Time",
-              "title": "Time — Hans Zimmer",
-              "url": "https://music.apple.com/us/song/time/380350246"
+              "film": "if-beale-street-could-talk",
+              "label": "Listen to Eros",
+              "title": "Eros — Nicholas Britell",
+              "url": "https://music.apple.com/us/song/1440307646"
             }
           ],
           "accent": "#b6c3cd"
@@ -5947,6 +5955,230 @@
       "assets/gallery/2010-2019/if-beale-street-could-talk/30bcca813b79-768w.webp": [
         768,
         384
+      ],
+      "assets/films/oslo-august-31st-the-hollow-men-award-hd.webp": [
+        1920,
+        1080
+      ],
+      "assets/gallery/2010-2019/thumbs/oslo-august-31st-the-hollow-men-award-hd-320w.webp": [
+        320,
+        180
+      ],
+      "assets/films/responsive/oslo-august-31st-the-hollow-men-award-hd-640w.webp": [
+        640,
+        360
+      ],
+      "assets/films/responsive/oslo-august-31st-the-hollow-men-award-hd-960w.webp": [
+        960,
+        540
+      ],
+      "assets/films/responsive/oslo-august-31st-the-hollow-men-award-hd-1280w.webp": [
+        1280,
+        720
+      ],
+      "assets/films/her-the-cruellest-month-award-hd.webp": [
+        2400,
+        1350
+      ],
+      "assets/gallery/2010-2019/thumbs/her-the-cruellest-month-award-hd-320w.webp": [
+        320,
+        180
+      ],
+      "assets/films/responsive/her-the-cruellest-month-award-hd-640w.webp": [
+        640,
+        360
+      ],
+      "assets/films/responsive/her-the-cruellest-month-award-hd-960w.webp": [
+        960,
+        540
+      ],
+      "assets/films/responsive/her-the-cruellest-month-award-hd-1280w.webp": [
+        1280,
+        720
+      ],
+      "assets/films/responsive/her-the-cruellest-month-award-hd-1920w.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/gone-girl-most-overrated-movie-hd.webp": [
+        1920,
+        1080
+      ],
+      "assets/gallery/2010-2019/thumbs/gone-girl-most-overrated-movie-hd-320w.webp": [
+        320,
+        180
+      ],
+      "assets/films/responsive/gone-girl-most-overrated-movie-hd-640w.webp": [
+        640,
+        360
+      ],
+      "assets/films/responsive/gone-girl-most-overrated-movie-hd-960w.webp": [
+        960,
+        540
+      ],
+      "assets/films/responsive/gone-girl-most-overrated-movie-hd-1280w.webp": [
+        1280,
+        720
+      ],
+      "assets/films/the-souvenir-most-underrated-movie-hd.webp": [
+        1920,
+        1080
+      ],
+      "assets/gallery/2010-2019/thumbs/the-souvenir-most-underrated-movie-hd-320w.webp": [
+        320,
+        180
+      ],
+      "assets/films/responsive/the-souvenir-most-underrated-movie-hd-640w.webp": [
+        640,
+        360
+      ],
+      "assets/films/responsive/the-souvenir-most-underrated-movie-hd-960w.webp": [
+        960,
+        540
+      ],
+      "assets/films/responsive/the-souvenir-most-underrated-movie-hd-1280w.webp": [
+        1280,
+        720
+      ],
+      "assets/films/if-beale-street-could-talk-best-score-cue-hd.webp": [
+        1920,
+        1080
+      ],
+      "assets/gallery/2010-2019/thumbs/if-beale-street-could-talk-best-score-cue-hd-320w.webp": [
+        320,
+        180
+      ],
+      "assets/films/responsive/if-beale-street-could-talk-best-score-cue-hd-640w.webp": [
+        640,
+        360
+      ],
+      "assets/films/responsive/if-beale-street-could-talk-best-score-cue-hd-960w.webp": [
+        960,
+        540
+      ],
+      "assets/films/responsive/if-beale-street-could-talk-best-score-cue-hd-1280w.webp": [
+        1280,
+        720
+      ],
+      "assets/films/blade-runner-2049-best-visual-effects-hd.webp": [
+        3840,
+        2160
+      ],
+      "assets/gallery/2010-2019/thumbs/blade-runner-2049-best-visual-effects-hd-320w.webp": [
+        320,
+        180
+      ],
+      "assets/films/responsive/blade-runner-2049-best-visual-effects-hd-640w.webp": [
+        640,
+        360
+      ],
+      "assets/films/responsive/blade-runner-2049-best-visual-effects-hd-960w.webp": [
+        960,
+        540
+      ],
+      "assets/films/responsive/blade-runner-2049-best-visual-effects-hd-1280w.webp": [
+        1280,
+        720
+      ],
+      "assets/films/responsive/blade-runner-2049-best-visual-effects-hd-1920w.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/responsive/blade-runner-2049-best-visual-effects-hd-2560w.webp": [
+        2560,
+        1440
+      ],
+      "assets/films/whiplash-2014-best-film-editing-hd.webp": [
+        1920,
+        798
+      ],
+      "assets/gallery/2010-2019/thumbs/whiplash-2014-best-film-editing-hd-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/whiplash-2014-best-film-editing-hd-640w.webp": [
+        640,
+        266
+      ],
+      "assets/films/responsive/whiplash-2014-best-film-editing-hd-960w.webp": [
+        960,
+        399
+      ],
+      "assets/films/responsive/whiplash-2014-best-film-editing-hd-1280w.webp": [
+        1280,
+        532
+      ],
+      "assets/films/inception-best-opening-sequence-hd.webp": [
+        3840,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/inception-best-opening-sequence-hd-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/inception-best-opening-sequence-hd-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/inception-best-opening-sequence-hd-960w.webp": [
+        960,
+        400
+      ],
+      "assets/films/responsive/inception-best-opening-sequence-hd-1280w.webp": [
+        1280,
+        533
+      ],
+      "assets/films/responsive/inception-best-opening-sequence-hd-1920w.webp": [
+        1920,
+        800
+      ],
+      "assets/films/responsive/inception-best-opening-sequence-hd-2560w.webp": [
+        2560,
+        1067
+      ],
+      "assets/films/before-midnight-best-line-of-dialogue-hd.webp": [
+        2048,
+        1365
+      ],
+      "assets/gallery/2010-2019/thumbs/before-midnight-best-line-of-dialogue-hd-320w.webp": [
+        320,
+        213
+      ],
+      "assets/films/responsive/before-midnight-best-line-of-dialogue-hd-640w.webp": [
+        640,
+        427
+      ],
+      "assets/films/responsive/before-midnight-best-line-of-dialogue-hd-960w.webp": [
+        960,
+        640
+      ],
+      "assets/films/responsive/before-midnight-best-line-of-dialogue-hd-1280w.webp": [
+        1280,
+        853
+      ],
+      "assets/films/responsive/before-midnight-best-line-of-dialogue-hd-1920w.webp": [
+        1920,
+        1280
+      ],
+      "assets/films/burning-2018-best-adapted-screenplay-hd.webp": [
+        1920,
+        1080
+      ],
+      "assets/gallery/2010-2019/thumbs/burning-2018-best-adapted-screenplay-hd-320w.webp": [
+        320,
+        180
+      ],
+      "assets/films/responsive/burning-2018-best-adapted-screenplay-hd-640w.webp": [
+        640,
+        360
+      ],
+      "assets/films/responsive/burning-2018-best-adapted-screenplay-hd-960w.webp": [
+        960,
+        540
+      ],
+      "assets/films/responsive/burning-2018-best-adapted-screenplay-hd-1280w.webp": [
+        1280,
+        720
       ]
     },
     "variants": {
@@ -10343,6 +10575,250 @@
           "src": "assets/gallery/2010-2019/if-beale-street-could-talk/30bcca813b79.webp",
           "width": 1280
         }
+      ],
+      "assets/films/oslo-august-31st-the-hollow-men-award-hd.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/oslo-august-31st-the-hollow-men-award-hd-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/oslo-august-31st-the-hollow-men-award-hd-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/oslo-august-31st-the-hollow-men-award-hd-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/oslo-august-31st-the-hollow-men-award-hd-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/oslo-august-31st-the-hollow-men-award-hd.webp",
+          "width": 1920
+        }
+      ],
+      "assets/films/her-the-cruellest-month-award-hd.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/her-the-cruellest-month-award-hd-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/her-the-cruellest-month-award-hd-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/her-the-cruellest-month-award-hd-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/her-the-cruellest-month-award-hd-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/responsive/her-the-cruellest-month-award-hd-1920w.webp",
+          "width": 1920
+        },
+        {
+          "src": "assets/films/her-the-cruellest-month-award-hd.webp",
+          "width": 2400
+        }
+      ],
+      "assets/films/gone-girl-most-overrated-movie-hd.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/gone-girl-most-overrated-movie-hd-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/gone-girl-most-overrated-movie-hd-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/gone-girl-most-overrated-movie-hd-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/gone-girl-most-overrated-movie-hd-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/gone-girl-most-overrated-movie-hd.webp",
+          "width": 1920
+        }
+      ],
+      "assets/films/the-souvenir-most-underrated-movie-hd.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/the-souvenir-most-underrated-movie-hd-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/the-souvenir-most-underrated-movie-hd-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/the-souvenir-most-underrated-movie-hd-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/the-souvenir-most-underrated-movie-hd-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/the-souvenir-most-underrated-movie-hd.webp",
+          "width": 1920
+        }
+      ],
+      "assets/films/if-beale-street-could-talk-best-score-cue-hd.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/if-beale-street-could-talk-best-score-cue-hd-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/if-beale-street-could-talk-best-score-cue-hd-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/if-beale-street-could-talk-best-score-cue-hd-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/if-beale-street-could-talk-best-score-cue-hd-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/if-beale-street-could-talk-best-score-cue-hd.webp",
+          "width": 1920
+        }
+      ],
+      "assets/films/blade-runner-2049-best-visual-effects-hd.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/blade-runner-2049-best-visual-effects-hd-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-best-visual-effects-hd-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-best-visual-effects-hd-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-best-visual-effects-hd-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-best-visual-effects-hd-1920w.webp",
+          "width": 1920
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-best-visual-effects-hd-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/blade-runner-2049-best-visual-effects-hd.webp",
+          "width": 3840
+        }
+      ],
+      "assets/films/whiplash-2014-best-film-editing-hd.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/whiplash-2014-best-film-editing-hd-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/whiplash-2014-best-film-editing-hd-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/whiplash-2014-best-film-editing-hd-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/whiplash-2014-best-film-editing-hd-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/whiplash-2014-best-film-editing-hd.webp",
+          "width": 1920
+        }
+      ],
+      "assets/films/inception-best-opening-sequence-hd.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/inception-best-opening-sequence-hd-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/inception-best-opening-sequence-hd-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/inception-best-opening-sequence-hd-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/inception-best-opening-sequence-hd-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/responsive/inception-best-opening-sequence-hd-1920w.webp",
+          "width": 1920
+        },
+        {
+          "src": "assets/films/responsive/inception-best-opening-sequence-hd-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/inception-best-opening-sequence-hd.webp",
+          "width": 3840
+        }
+      ],
+      "assets/films/before-midnight-best-line-of-dialogue-hd.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/before-midnight-best-line-of-dialogue-hd-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/before-midnight-best-line-of-dialogue-hd-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/before-midnight-best-line-of-dialogue-hd-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/before-midnight-best-line-of-dialogue-hd-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/responsive/before-midnight-best-line-of-dialogue-hd-1920w.webp",
+          "width": 1920
+        },
+        {
+          "src": "assets/films/before-midnight-best-line-of-dialogue-hd.webp",
+          "width": 2048
+        }
+      ],
+      "assets/films/burning-2018-best-adapted-screenplay-hd.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/burning-2018-best-adapted-screenplay-hd-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/burning-2018-best-adapted-screenplay-hd-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/burning-2018-best-adapted-screenplay-hd-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/burning-2018-best-adapted-screenplay-hd-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/burning-2018-best-adapted-screenplay-hd.webp",
+          "width": 1920
+        }
       ]
     }
   },
@@ -10363,9 +10839,10 @@
       },
       {
         "award": "best-opening-sequence",
-        "path": "assets/films/inception-best-opening-sequence-2010s.webp",
-        "source": "https://film-grab.com/2012/11/23/inception/",
-        "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/07%20(496).jpg?bwg=1547222345"
+        "path": "assets/films/inception-best-opening-sequence-hd.webp",
+        "source": "https://movie-screencaps.com/inception-2010-4k/",
+        "imageUrl": "https://i0.wp.com/imgs.screencaps.us/201/4k-0-inception/full/inception4k-movie-screencaps.com-90.jpg?ssl=1",
+        "label": "The first extraction"
       },
       {
         "award": "best-visual-effects",
@@ -10424,9 +10901,10 @@
       },
       {
         "award": "best-film-editing",
-        "path": "assets/films/whiplash-2014-best-film-editing-2010s.webp",
-        "source": "https://film-grab.com/2015/05/22/whiplash/",
-        "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/52%20(1260).jpg?bwg=1547480992"
+        "path": "assets/films/whiplash-2014-best-film-editing-hd.webp",
+        "source": "https://www.imdb.com/title/tt2582802/mediaviewer/rm3150018560/",
+        "imageUrl": "https://m.media-amazon.com/images/M/MV5BODJkNzI4YjMtMzc0YS00ZGYxLWEwZTItNTYzYTQ4MjdkODk4XkEyXkFqcGc%40._V1_.jpg",
+        "label": "Andrew under the stage lights"
       }
     ],
     "phantom-thread": [
@@ -10489,6 +10967,13 @@
         "award": "best-cinematography",
         "source": "https://film-grab.com/2019/05/24/blade-runner-2049/",
         "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/bladerunner042.jpg?bwg=1551282394"
+      },
+      {
+        "award": "best-visual-effects",
+        "path": "assets/films/blade-runner-2049-best-visual-effects-hd.webp",
+        "source": "https://www.dneg.com/news/blade-runner-2049-wins-the-oscar-r",
+        "imageUrl": "https://images.ctfassets.net/3sjsytt3tkv5/75icNGByCv0QxLB9nXdNo8/0e19f1d54fc07a059e37c1c9b05f78aa/Blade-Runner-2049-wins-an-Oscar4.jpg",
+        "label": "Los Angeles cityscape"
       }
     ],
     "inside-llewyn-davis": [
@@ -10515,49 +11000,57 @@
     "burning-2018": [
       {
         "award": "best-adapted-screenplay",
-        "path": "assets/films/burning-2018-best-adapted-screenplay-2010s.webp",
-        "source": "https://film-grab.com/2019/12/10/burning/",
-        "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/Burning_035.jpg?bwg=1569398319"
+        "path": "assets/films/burning-2018-best-adapted-screenplay-hd.webp",
+        "source": "https://letterboxd.com/film/burning-2018/",
+        "imageUrl": "https://a.ltrbxd.com/resized/sm/upload/92/vq/bo/xe/burning-2018-1920-1920-1080-1080-crop-000000.jpg?v=1af4ed84b4",
+        "label": "Jong-su, Hae-mi and Ben",
+        "credit": "Frame selected by the curator; higher-resolution matching Letterboxd backdrop"
       }
     ],
     "before-midnight": [
       {
         "award": "best-line-of-dialogue",
-        "path": "assets/films/before-midnight-best-line-of-dialogue-2010s.webp",
-        "source": "https://film-grab.com/2014/01/02/before-midnight/",
-        "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/42%20(130).jpg?bwg=1547149406"
+        "path": "assets/films/before-midnight-best-line-of-dialogue-hd.webp",
+        "source": "https://www.timeout.com/fr/cinema/before-midnight",
+        "imageUrl": "https://media.timeout.com/images/100686393/image.jpg",
+        "label": "Jesse and Céline by the water"
       }
     ],
     "the-souvenir": [
       {
         "award": "most-underrated-movie",
-        "path": "assets/films/the-souvenir-most-underrated-movie-2010s.webp",
-        "source": "https://film-grab.com/2024/07/10/the-souvenir/",
-        "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/The_Souvenir_64.jpg?bwg=1701090817"
+        "path": "assets/films/the-souvenir-most-underrated-movie-hd.webp",
+        "source": "https://letterboxd.com/film/the-souvenir/",
+        "imageUrl": "https://a.ltrbxd.com/resized/sm/upload/ex/gq/g4/sz/the-souvenir-1920-1920-1080-1080-crop-000000.jpg?v=101b35f919",
+        "label": "Julie and Anthony at the table"
       }
     ],
     "gone-girl": [
       {
         "award": "most-overrated-movie",
-        "path": "assets/films/gone-girl-most-overrated-movie-2010s.webp",
-        "source": "https://film-grab.com/2015/02/13/gone-girl/",
-        "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/63%20(325).jpg?bwg=1547218861"
+        "path": "assets/films/gone-girl-most-overrated-movie-hd.webp",
+        "source": "https://letterboxd.com/film/gone-girl/",
+        "imageUrl": "https://a.ltrbxd.com/resized/sm/upload/6g/ja/bv/xf/gone-girl-1920-1920-1080-1080-crop-000000.jpg?v=19f256dfa8",
+        "label": "Amy and Nick",
+        "credit": "Letterboxd promotional backdrop"
       }
     ],
     "her": [
       {
         "award": "the-cruellest-month-award",
-        "path": "assets/films/her-the-cruellest-month-award-2010s.webp",
-        "source": "https://film-grab.com/2014/05/06/her/",
-        "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/58%20(412).jpg?bwg=1547220404"
+        "path": "assets/films/her-the-cruellest-month-award-hd.webp",
+        "source": "https://shot.cafe/movie/her-2013",
+        "imageUrl": "https://shot.cafe/images/o/her-2013-2931.jpg",
+        "label": "Theodore alone above the city"
       }
     ],
     "oslo-august-31st": [
       {
         "award": "the-hollow-men-award",
-        "path": "assets/films/oslo-august-31st-the-hollow-men-award-2010s.webp",
-        "source": "https://strandreleasing.com/films/oslo-august-31st/",
-        "imageUrl": "https://strandreleasing.com/wp-content/uploads/bfi_thumb/ANDERS_STREET_202011cmyk-nrybdpdvszv14r479drnp8qrl1r8lg5rhjhg773l00.jpg"
+        "path": "assets/films/oslo-august-31st-the-hollow-men-award-hd.webp",
+        "source": "https://letterboxd.com/film/oslo-august-31st/",
+        "imageUrl": "https://a.ltrbxd.com/resized/sm/upload/cb/ch/lf/md/oslo-august-31-1920-1920-1080-1080-crop-000000.jpg?v=7c1ec0ceeb",
+        "label": "Anders on the night ride"
       }
     ],
     "black-swan": [
@@ -10574,6 +11067,15 @@
         "path": "assets/films/midnight-in-paris-best-atmosphere-2010s.webp",
         "source": "https://www.sonyclassics.com/midnightinparis/gallery.html",
         "imageUrl": "https://www.sonyclassics.com/midnightinparis/images/background/gallery1.jpg"
+      }
+    ],
+    "if-beale-street-could-talk": [
+      {
+        "award": "best-score-cue",
+        "path": "assets/films/if-beale-street-could-talk-best-score-cue-hd.webp",
+        "source": "https://letterboxd.com/film/if-beale-street-could-talk/",
+        "imageUrl": "https://a.ltrbxd.com/resized/sm/upload/rh/y8/3d/0o/if-beale-street-could-talk-1920-1920-1080-1080-crop-000000.jpg?v=1871a1c7ad",
+        "label": "Tish and Fonny"
       }
     ]
   },
@@ -10672,12 +11174,12 @@
         "focal": "65%"
       },
       "writing": {
-        "path": "assets/films/burning-2018-best-adapted-screenplay-2010s.webp",
+        "path": "assets/films/burning-2018-best-adapted-screenplay-hd.webp",
         "film": "burning-2018",
         "focal": "52%"
       },
       "scenes-moments": {
-        "path": "assets/films/inception-best-opening-sequence-2010s.webp",
+        "path": "assets/films/inception-best-opening-sequence-hd.webp",
         "film": "inception",
         "focal": "48%"
       },
@@ -10755,6 +11257,10 @@
     {
       "title": "Nicholas Britell · Moonlight, The King & If Beale Street Could Talk",
       "url": "https://www.nicholasbritell.com/"
+    },
+    {
+      "title": "If Beale Street Could Talk · Eros by Nicholas Britell (Apple Music)",
+      "url": "https://music.apple.com/us/song/1440307646"
     }
   ],
   "galleries": {
@@ -10781,11 +11287,12 @@
         "focal": "58%"
       },
       {
-        "path": "assets/films/inception-best-opening-sequence-2010s.webp",
-        "thumbnail": "assets/gallery/2010-2019/thumbs/inception-cd3022e87acc-320w.webp",
+        "path": "assets/films/inception-best-opening-sequence-hd.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/inception-best-opening-sequence-hd-320w.webp",
         "award": "best-opening-sequence",
-        "source": "https://film-grab.com/2012/11/23/inception/",
-        "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/07%20(496).jpg?bwg=1547222345"
+        "source": "https://movie-screencaps.com/inception-2010-4k/",
+        "imageUrl": "https://i0.wp.com/imgs.screencaps.us/201/4k-0-inception/full/inception4k-movie-screencaps.com-90.jpg?ssl=1",
+        "label": "The first extraction"
       },
       {
         "path": "assets/films/inception-best-visual-effects-2010s.webp",
@@ -10889,11 +11396,12 @@
         "context": "Film still"
       },
       {
-        "path": "assets/films/oslo-august-31st-the-hollow-men-award-2010s.webp",
-        "thumbnail": "assets/gallery/2010-2019/thumbs/oslo-august-31st-607689934f5a-320w.webp",
+        "path": "assets/films/oslo-august-31st-the-hollow-men-award-hd.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/oslo-august-31st-the-hollow-men-award-hd-320w.webp",
         "award": "the-hollow-men-award",
-        "source": "https://strandreleasing.com/films/oslo-august-31st/",
-        "imageUrl": "https://strandreleasing.com/wp-content/uploads/bfi_thumb/ANDERS_STREET_202011cmyk-nrybdpdvszv14r479drnp8qrl1r8lg5rhjhg773l00.jpg"
+        "source": "https://letterboxd.com/film/oslo-august-31st/",
+        "imageUrl": "https://a.ltrbxd.com/resized/sm/upload/cb/ch/lf/md/oslo-august-31-1920-1920-1080-1080-crop-000000.jpg?v=7c1ec0ceeb",
+        "label": "Anders on the night ride"
       },
       {
         "path": "assets/gallery/2010-2019/oslo-august-31st/4b1df909d940.webp",
@@ -11198,6 +11706,14 @@
         "label": "K in the falling snow",
         "source": "https://film-grab.com/2019/05/24/blade-runner-2049/",
         "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/bladerunner062.jpg?bwg=1551282394"
+      },
+      {
+        "path": "assets/films/blade-runner-2049-best-visual-effects-hd.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/blade-runner-2049-best-visual-effects-hd-320w.webp",
+        "award": "best-visual-effects",
+        "source": "https://www.dneg.com/news/blade-runner-2049-wins-the-oscar-r",
+        "imageUrl": "https://images.ctfassets.net/3sjsytt3tkv5/75icNGByCv0QxLB9nXdNo8/0e19f1d54fc07a059e37c1c9b05f78aa/Blade-Runner-2049-wins-an-Oscar4.jpg",
+        "label": "Los Angeles cityscape"
       }
     ],
     "whiplash-2014": [
@@ -11229,11 +11745,12 @@
         "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/29%20(1319).jpg?bwg=1547480992"
       },
       {
-        "path": "assets/films/whiplash-2014-best-film-editing-2010s.webp",
-        "thumbnail": "assets/gallery/2010-2019/thumbs/whiplash-2014-7b7b510bd8ca-320w.webp",
+        "path": "assets/films/whiplash-2014-best-film-editing-hd.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/whiplash-2014-best-film-editing-hd-320w.webp",
         "award": "best-film-editing",
-        "source": "https://film-grab.com/2015/05/22/whiplash/",
-        "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/52%20(1260).jpg?bwg=1547480992"
+        "source": "https://www.imdb.com/title/tt2582802/mediaviewer/rm3150018560/",
+        "imageUrl": "https://m.media-amazon.com/images/M/MV5BODJkNzI4YjMtMzc0YS00ZGYxLWEwZTItNTYzYTQ4MjdkODk4XkEyXkFqcGc%40._V1_.jpg",
+        "label": "Andrew under the stage lights"
       },
       {
         "path": "assets/films/whiplash-decade-cover.webp",
@@ -11369,11 +11886,13 @@
         "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/39%20(426).jpg?bwg=1547218861"
       },
       {
-        "path": "assets/films/gone-girl-most-overrated-movie-2010s.webp",
-        "thumbnail": "assets/gallery/2010-2019/thumbs/gone-girl-abf4b2c6af49-320w.webp",
+        "path": "assets/films/gone-girl-most-overrated-movie-hd.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/gone-girl-most-overrated-movie-hd-320w.webp",
         "award": "most-overrated-movie",
-        "source": "https://film-grab.com/2015/02/13/gone-girl/",
-        "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/63%20(325).jpg?bwg=1547218861"
+        "source": "https://letterboxd.com/film/gone-girl/",
+        "imageUrl": "https://a.ltrbxd.com/resized/sm/upload/6g/ja/bv/xf/gone-girl-1920-1920-1080-1080-crop-000000.jpg?v=19f256dfa8",
+        "label": "Amy and Nick",
+        "credit": "Letterboxd promotional backdrop"
       },
       {
         "path": "assets/gallery/2010-2019/gone-girl/5efacbaddf73.webp",
@@ -11700,11 +12219,13 @@
         "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/Burning_027.jpg?bwg=1569398319"
       },
       {
-        "path": "assets/films/burning-2018-best-adapted-screenplay-2010s.webp",
-        "thumbnail": "assets/gallery/2010-2019/thumbs/burning-2018-b1550998d660-320w.webp",
+        "path": "assets/films/burning-2018-best-adapted-screenplay-hd.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/burning-2018-best-adapted-screenplay-hd-320w.webp",
         "award": "best-adapted-screenplay",
-        "source": "https://film-grab.com/2019/12/10/burning/",
-        "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/Burning_035.jpg?bwg=1569398319"
+        "source": "https://letterboxd.com/film/burning-2018/",
+        "imageUrl": "https://a.ltrbxd.com/resized/sm/upload/92/vq/bo/xe/burning-2018-1920-1920-1080-1080-crop-000000.jpg?v=1af4ed84b4",
+        "label": "Jong-su, Hae-mi and Ben",
+        "credit": "Frame selected by the curator; higher-resolution matching Letterboxd backdrop"
       },
       {
         "path": "assets/gallery/2010-2019/burning-2018/9e94df89a80a.webp",
@@ -11810,11 +12331,12 @@
         "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/02%20(454).jpg?bwg=1547220404"
       },
       {
-        "path": "assets/films/her-the-cruellest-month-award-2010s.webp",
-        "thumbnail": "assets/gallery/2010-2019/thumbs/her-8d8885982c86-320w.webp",
+        "path": "assets/films/her-the-cruellest-month-award-hd.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/her-the-cruellest-month-award-hd-320w.webp",
         "award": "the-cruellest-month-award",
-        "source": "https://film-grab.com/2014/05/06/her/",
-        "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/58%20(412).jpg?bwg=1547220404"
+        "source": "https://shot.cafe/movie/her-2013",
+        "imageUrl": "https://shot.cafe/images/o/her-2013-2931.jpg",
+        "label": "Theodore alone above the city"
       },
       {
         "path": "assets/gallery/2010-2019/her/2d049c4d2748.webp",
@@ -11847,11 +12369,12 @@
         "context": "Film still"
       },
       {
-        "path": "assets/films/before-midnight-best-line-of-dialogue-2010s.webp",
-        "thumbnail": "assets/gallery/2010-2019/thumbs/before-midnight-7e9a5026e0a1-320w.webp",
+        "path": "assets/films/before-midnight-best-line-of-dialogue-hd.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/before-midnight-best-line-of-dialogue-hd-320w.webp",
         "award": "best-line-of-dialogue",
-        "source": "https://film-grab.com/2014/01/02/before-midnight/",
-        "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/42%20(130).jpg?bwg=1547149406"
+        "source": "https://www.timeout.com/fr/cinema/before-midnight",
+        "imageUrl": "https://media.timeout.com/images/100686393/image.jpg",
+        "label": "Jesse and Céline by the water"
       },
       {
         "path": "assets/gallery/2010-2019/before-midnight/d3b4b7e45143.webp",
@@ -12114,11 +12637,12 @@
         "context": "Film still"
       },
       {
-        "path": "assets/films/the-souvenir-most-underrated-movie-2010s.webp",
-        "thumbnail": "assets/gallery/2010-2019/thumbs/the-souvenir-577bb98904ad-320w.webp",
+        "path": "assets/films/the-souvenir-most-underrated-movie-hd.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/the-souvenir-most-underrated-movie-hd-320w.webp",
         "award": "most-underrated-movie",
-        "source": "https://film-grab.com/2024/07/10/the-souvenir/",
-        "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/The_Souvenir_64.jpg?bwg=1701090817"
+        "source": "https://letterboxd.com/film/the-souvenir/",
+        "imageUrl": "https://a.ltrbxd.com/resized/sm/upload/ex/gq/g4/sz/the-souvenir-1920-1920-1080-1080-crop-000000.jpg?v=101b35f919",
+        "label": "Julie and Anthony at the table"
       },
       {
         "path": "assets/gallery/2010-2019/the-souvenir/746d2137fb9e.webp",
@@ -12522,6 +13046,14 @@
         "thumbnail": "assets/gallery/2010-2019/thumbs/if-beale-street-could-talk-30bcca813b79-320w.webp",
         "source": "https://film-grab.com/2019/11/04/if-beale-street-could-talk/",
         "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/If_Beale_Street_Could_Talk_034.jpg?bwg=1569593217"
+      },
+      {
+        "path": "assets/films/if-beale-street-could-talk-best-score-cue-hd.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/if-beale-street-could-talk-best-score-cue-hd-320w.webp",
+        "award": "best-score-cue",
+        "source": "https://letterboxd.com/film/if-beale-street-could-talk/",
+        "imageUrl": "https://a.ltrbxd.com/resized/sm/upload/rh/y8/3d/0o/if-beale-street-could-talk-1920-1920-1080-1080-crop-000000.jpg?v=1871a1c7ad",
+        "label": "Tish and Fonny"
       }
     ]
   }

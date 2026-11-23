@@ -24,7 +24,7 @@
   };
 
   async function read(file) {
-    const response = await fetch(file);
+    const response = await fetch(file, {cache: 'no-cache'});
     if (!response.ok) throw new Error('Could not load ' + file);
     return response.json();
   }
