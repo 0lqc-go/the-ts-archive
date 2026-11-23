@@ -349,6 +349,7 @@
   function awardCard(award) {
     const feature = award.feature;
     const artist = enhanced && portfolioPresentation(award);
+    const widePortfolio = artist && edition.presentationStills?.[award.id]?.allLayouts === true;
     const featured = enhanced && (feature || artist || award.id === 'best-performances-of-the-decade');
     const quote = award.winner.detail?.startsWith('“') && award.chapter.id !== 'film-music';
     const detail = artist ? workNames(award.winner) : award.winner.detail;
@@ -360,7 +361,7 @@
       : '';
     const winnerSummary = performance ? performanceName(performance) + ' — ' + workNames(award.winner) : award.winner.text;
     const winner = `<button class="winner-frame" data-award="${award.number - 1}" aria-haspopup="dialog" aria-label="Open ${esc(award.name)}: ${esc(winnerSummary)}">
-        ${renderFrames(awardFrames(award), feature, artist ? 'artist' : featured ? 'feature' : 'card')}${enhanced ? compactArtwork(award, artist) : ''}${winnerBadge(award)}
+        ${renderFrames(awardFrames(award), feature, artist && !widePortfolio ? 'artist' : featured ? 'feature' : 'card')}${enhanced ? compactArtwork(award, artist) : ''}${winnerBadge(award)}
         ${performance ? '' : `<span class="winner-copy"><span class="winner-title">${artist ? esc(artistName(award.winner)) : title(award.winner)}</span>${detail && !linkedCredit ? `<span class="winner-detail${artist ? ' portfolio-summary' : quote ? ' line-of-dialogue' : ''}">${esc(detail)}</span>` : ''}${enhanced && !artist && award.winner.films.length === 1 ? `<span class="compact-year">${esc(film(award.winner.films[0]).year)}</span>` : ''}</span>`}${enhanced ? '' : '<span class="frame-open" aria-hidden="true">↗</span>'}
       </button>`;
     const actions = musicActions(award);
@@ -374,7 +375,7 @@
     const artistContext = artist
       ? `<div class="artist-context">${artistHeading}${artistWorks(award.winner)}${actions ? `<div class="winner-actions">${actions}</div>` : ''}</div>${artistAction || mentionsToggle ? `<div class="winner-actions portfolio-compact-actions">${artistAction}${mentionsToggle}</div>` : ''}`
       : `${caption}${linkedCredit ? `<p class="winner-credit-line">${creditMarkup(credit, detail)}</p>` : ''}${actions || mentionsToggle ? `<div class="winner-actions${actions ? '' : ' compact-only'}">${actions}${mentionsToggle}</div>` : ''}`;
-    return `<article class="award-card${feature ? ' feature-card' : ''}${quote ? ' quote-card' : ''}${artist ? ' portfolio-card' : ''}${enhanced ? ' enhanced-card' : ''}${featured ? ' featured-award' : ''}" id="${award.id}" data-accent="${award.accent}" style="--accent:${award.accent}" aria-labelledby="heading-${award.id}">
+    return `<article class="award-card${feature ? ' feature-card' : ''}${quote ? ' quote-card' : ''}${artist ? ' portfolio-card' : ''}${widePortfolio ? ' portfolio-wide-lead' : ''}${enhanced ? ' enhanced-card' : ''}${featured ? ' featured-award' : ''}" id="${award.id}" data-accent="${award.accent}" style="--accent:${award.accent}" aria-labelledby="heading-${award.id}">
       <div class="award-heading"><div><h3 id="heading-${award.id}">${esc(award.name)}</h3>${award.description ? `<p class="award-description">${esc(award.description)}</p>` : ''}</div><span class="award-number" aria-label="Award ${award.number}">${pad(award.number)}</span></div>
       ${enhanced ? `<div class="winner-block${artist ? ' artist-winner-block' : performance ? ' performance-winner-block' : ''}">${winner}${artistContext}</div>` : winner}
       ${nominations(award.nominees, false, artist, award.id, mentionsId)}

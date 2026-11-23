@@ -102,18 +102,19 @@ body[data-award-view] #award-dialog .ceremony-frame.portrait-frame { --ceremony-
 /* Frame-specific placement, not a content or artwork change. Preserve
    the actor's face, set detail, or full silhouette within the crop. */
 body[data-edition="2020-2026"] #award-dialog .ceremony-body[data-award-id="best-actor"] {
-  --ceremony-focal-y: 4%;
+  --ceremony-focal-y: 22%;
 }
 body[data-edition="2020-2026"] #award-dialog .ceremony-body[data-award-id="best-picture"] { --ceremony-focal-y: 74%; }
 body[data-edition="2020-2026"] #award-dialog .ceremony-body[data-award-id="best-production-design"] { --ceremony-focal-y: 12%; }
 body[data-edition="2020-2026"] #award-dialog .ceremony-body[data-award-id="best-original-screenplay"] { --ceremony-focal-y: 52%; }
+body[data-edition="2020-2026"] #award-dialog .ceremony-body[data-award-id="the-tattoo-line-award"] { --ceremony-focal-y: 18%; }
 body[data-edition="2020-2026"] #award-dialog .ceremony-body[data-award-id="best-cinematography"] { --ceremony-focal-y: 85%; }
 body[data-edition="2020-2026"] #award-dialog .ceremony-body[data-award-id="most-overrated-movie"] { --ceremony-focal-y: 65%; }
 body[data-edition="2020-2026"] #award-dialog .ceremony-body[data-award-id="lives-we-might-have-lived"] { --ceremony-focal-y: 10%; }
 body[data-edition="2010-2019"] #award-dialog .ceremony-body[data-award-id="the-cruellest-month-award"] { --ceremony-focal-y: 40%; }
 body[data-edition="2010-2019"] #award-dialog .ceremony-body[data-award-id="the-hollow-men-award"] { --ceremony-focal-y: 14%; }
-body[data-edition="2010-2019"] #award-dialog .ceremony-body[data-award-id="best-line-of-dialogue"] { --ceremony-focal-y: 15%; }
-body[data-edition="2010-2019"] #award-dialog .ceremony-body[data-award-id="best-score-cue"] { --ceremony-focal-y: 20%; }
+body[data-edition="2010-2019"] #award-dialog .ceremony-body[data-award-id="best-line-of-dialogue"] { --ceremony-focal-y: 32%; }
+body[data-edition="2010-2019"] #award-dialog .ceremony-body[data-award-id="best-score-cue"] { --ceremony-focal-y: 44%; }
 
 /* Artist awards use the same complete-width photographic lead. The
    credited films remain just beneath the artist's name. */

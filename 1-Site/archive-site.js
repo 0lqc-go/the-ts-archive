@@ -96,12 +96,6 @@
     }
     displayProfile(index);
     const featured = index.editions.find(item => item.id === index.featuredEdition);
-    const featureLink = $('#featured-edition');
-    if (featured) {
-      featureLink.href = editionHref(featured.id);
-      featureLink.hidden = false;
-      setText('#featured-period', featured.period + ' AWARDS');
-    }
     const homeCover = index.homeCover ?? featured;
     if (homeCover?.cover) {
       setCover($('.hero-image'), homeCover.cover, homeCover, index.media);

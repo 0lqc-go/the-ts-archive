@@ -1255,6 +1255,150 @@
     "assets/films/responsive/burning-2018-best-adapted-screenplay-hd-1280w.webp": [
       1280,
       720
+    ],
+    "assets/films/before-midnight-best-line-of-dialogue-cinematic-r2.webp": [
+      1920,
+      1037
+    ],
+    "assets/gallery/2010-2019/thumbs/before-midnight-best-line-of-dialogue-cinematic-r2-320w.webp": [
+      320,
+      173
+    ],
+    "assets/films/responsive/before-midnight-best-line-of-dialogue-cinematic-r2-640w.webp": [
+      640,
+      346
+    ],
+    "assets/films/responsive/before-midnight-best-line-of-dialogue-cinematic-r2-960w.webp": [
+      960,
+      518
+    ],
+    "assets/films/responsive/before-midnight-best-line-of-dialogue-cinematic-r2-1280w.webp": [
+      1280,
+      691
+    ],
+    "assets/films/if-beale-street-could-talk-best-score-cue-cinematic-r2.webp": [
+      1920,
+      1080
+    ],
+    "assets/gallery/2010-2019/thumbs/if-beale-street-could-talk-best-score-cue-cinematic-r2-320w.webp": [
+      320,
+      180
+    ],
+    "assets/films/responsive/if-beale-street-could-talk-best-score-cue-cinematic-r2-640w.webp": [
+      640,
+      360
+    ],
+    "assets/films/responsive/if-beale-street-could-talk-best-score-cue-cinematic-r2-960w.webp": [
+      960,
+      540
+    ],
+    "assets/films/responsive/if-beale-street-could-talk-best-score-cue-cinematic-r2-1280w.webp": [
+      1280,
+      720
+    ],
+    "assets/films/blade-runner-2049-best-visual-effects-cinematic-r2.webp": [
+      3840,
+      1600
+    ],
+    "assets/gallery/2010-2019/thumbs/blade-runner-2049-best-visual-effects-cinematic-r2-320w.webp": [
+      320,
+      133
+    ],
+    "assets/films/responsive/blade-runner-2049-best-visual-effects-cinematic-r2-640w.webp": [
+      640,
+      267
+    ],
+    "assets/films/responsive/blade-runner-2049-best-visual-effects-cinematic-r2-960w.webp": [
+      960,
+      400
+    ],
+    "assets/films/responsive/blade-runner-2049-best-visual-effects-cinematic-r2-1280w.webp": [
+      1280,
+      533
+    ],
+    "assets/films/responsive/blade-runner-2049-best-visual-effects-cinematic-r2-1920w.webp": [
+      1920,
+      800
+    ],
+    "assets/films/responsive/blade-runner-2049-best-visual-effects-cinematic-r2-2560w.webp": [
+      2560,
+      1067
+    ],
+    "assets/films/the-brutalist-best-actor-cinematic-r2.webp": [
+      3840,
+      2158
+    ],
+    "assets/gallery/2020-2026/thumbs/the-brutalist-best-actor-cinematic-r2-320w.webp": [
+      320,
+      180
+    ],
+    "assets/films/responsive/the-brutalist-best-actor-cinematic-r2-640w.webp": [
+      640,
+      360
+    ],
+    "assets/films/responsive/the-brutalist-best-actor-cinematic-r2-960w.webp": [
+      960,
+      540
+    ],
+    "assets/films/responsive/the-brutalist-best-actor-cinematic-r2-1280w.webp": [
+      1280,
+      719
+    ],
+    "assets/films/responsive/the-brutalist-best-actor-cinematic-r2-1920w.webp": [
+      1920,
+      1079
+    ],
+    "assets/films/responsive/the-brutalist-best-actor-cinematic-r2-2560w.webp": [
+      2560,
+      1439
+    ],
+    "assets/films/the-brutalist-the-tattoo-line-award-cinematic-r2.webp": [
+      3584,
+      2160
+    ],
+    "assets/gallery/2020-2026/thumbs/the-brutalist-the-tattoo-line-award-cinematic-r2-320w.webp": [
+      320,
+      193
+    ],
+    "assets/films/responsive/the-brutalist-the-tattoo-line-award-cinematic-r2-640w.webp": [
+      640,
+      386
+    ],
+    "assets/films/responsive/the-brutalist-the-tattoo-line-award-cinematic-r2-960w.webp": [
+      960,
+      579
+    ],
+    "assets/films/responsive/the-brutalist-the-tattoo-line-award-cinematic-r2-1280w.webp": [
+      1280,
+      771
+    ],
+    "assets/films/responsive/the-brutalist-the-tattoo-line-award-cinematic-r2-1920w.webp": [
+      1920,
+      1157
+    ],
+    "assets/films/responsive/the-brutalist-the-tattoo-line-award-cinematic-r2-2560w.webp": [
+      2560,
+      1543
+    ],
+    "assets/films/tar-2022-best-scene-cinematic-r2.webp": [
+      1920,
+      804
+    ],
+    "assets/gallery/2020-2026/thumbs/tar-2022-best-scene-cinematic-r2-320w.webp": [
+      320,
+      134
+    ],
+    "assets/films/responsive/tar-2022-best-scene-cinematic-r2-640w.webp": [
+      640,
+      268
+    ],
+    "assets/films/responsive/tar-2022-best-scene-cinematic-r2-960w.webp": [
+      960,
+      402
+    ],
+    "assets/films/responsive/tar-2022-best-scene-cinematic-r2-1280w.webp": [
+      1280,
+      536
     ]
   },
   "variants": {
@@ -5551,6 +5695,162 @@
       },
       {
         "src": "assets/films/burning-2018-best-adapted-screenplay-hd.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/before-midnight-best-line-of-dialogue-cinematic-r2.webp": [
+      {
+        "src": "assets/gallery/2010-2019/thumbs/before-midnight-best-line-of-dialogue-cinematic-r2-320w.webp",
+        "width": 320
+      },
+      {
+        "src": "assets/films/responsive/before-midnight-best-line-of-dialogue-cinematic-r2-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/before-midnight-best-line-of-dialogue-cinematic-r2-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/before-midnight-best-line-of-dialogue-cinematic-r2-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/before-midnight-best-line-of-dialogue-cinematic-r2.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/if-beale-street-could-talk-best-score-cue-cinematic-r2.webp": [
+      {
+        "src": "assets/gallery/2010-2019/thumbs/if-beale-street-could-talk-best-score-cue-cinematic-r2-320w.webp",
+        "width": 320
+      },
+      {
+        "src": "assets/films/responsive/if-beale-street-could-talk-best-score-cue-cinematic-r2-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/if-beale-street-could-talk-best-score-cue-cinematic-r2-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/if-beale-street-could-talk-best-score-cue-cinematic-r2-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/if-beale-street-could-talk-best-score-cue-cinematic-r2.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/blade-runner-2049-best-visual-effects-cinematic-r2.webp": [
+      {
+        "src": "assets/gallery/2010-2019/thumbs/blade-runner-2049-best-visual-effects-cinematic-r2-320w.webp",
+        "width": 320
+      },
+      {
+        "src": "assets/films/responsive/blade-runner-2049-best-visual-effects-cinematic-r2-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/blade-runner-2049-best-visual-effects-cinematic-r2-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/blade-runner-2049-best-visual-effects-cinematic-r2-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/responsive/blade-runner-2049-best-visual-effects-cinematic-r2-1920w.webp",
+        "width": 1920
+      },
+      {
+        "src": "assets/films/responsive/blade-runner-2049-best-visual-effects-cinematic-r2-2560w.webp",
+        "width": 2560
+      },
+      {
+        "src": "assets/films/blade-runner-2049-best-visual-effects-cinematic-r2.webp",
+        "width": 3840
+      }
+    ],
+    "assets/films/the-brutalist-best-actor-cinematic-r2.webp": [
+      {
+        "src": "assets/gallery/2020-2026/thumbs/the-brutalist-best-actor-cinematic-r2-320w.webp",
+        "width": 320
+      },
+      {
+        "src": "assets/films/responsive/the-brutalist-best-actor-cinematic-r2-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-brutalist-best-actor-cinematic-r2-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-brutalist-best-actor-cinematic-r2-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/responsive/the-brutalist-best-actor-cinematic-r2-1920w.webp",
+        "width": 1920
+      },
+      {
+        "src": "assets/films/responsive/the-brutalist-best-actor-cinematic-r2-2560w.webp",
+        "width": 2560
+      },
+      {
+        "src": "assets/films/the-brutalist-best-actor-cinematic-r2.webp",
+        "width": 3840
+      }
+    ],
+    "assets/films/the-brutalist-the-tattoo-line-award-cinematic-r2.webp": [
+      {
+        "src": "assets/gallery/2020-2026/thumbs/the-brutalist-the-tattoo-line-award-cinematic-r2-320w.webp",
+        "width": 320
+      },
+      {
+        "src": "assets/films/responsive/the-brutalist-the-tattoo-line-award-cinematic-r2-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/the-brutalist-the-tattoo-line-award-cinematic-r2-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/the-brutalist-the-tattoo-line-award-cinematic-r2-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/responsive/the-brutalist-the-tattoo-line-award-cinematic-r2-1920w.webp",
+        "width": 1920
+      },
+      {
+        "src": "assets/films/responsive/the-brutalist-the-tattoo-line-award-cinematic-r2-2560w.webp",
+        "width": 2560
+      },
+      {
+        "src": "assets/films/the-brutalist-the-tattoo-line-award-cinematic-r2.webp",
+        "width": 3584
+      }
+    ],
+    "assets/films/tar-2022-best-scene-cinematic-r2.webp": [
+      {
+        "src": "assets/gallery/2020-2026/thumbs/tar-2022-best-scene-cinematic-r2-320w.webp",
+        "width": 320
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-best-scene-cinematic-r2-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-best-scene-cinematic-r2-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-best-scene-cinematic-r2-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/tar-2022-best-scene-cinematic-r2.webp",
         "width": 1920
       }
     ]

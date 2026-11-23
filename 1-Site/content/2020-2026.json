@@ -5764,6 +5764,82 @@
       "assets/gallery/2020-2026/wuthering-heights-2026/ff0608421066-1280w.webp": [
         1280,
         692
+      ],
+      "assets/films/the-brutalist-best-actor-cinematic-r2.webp": [
+        3840,
+        2158
+      ],
+      "assets/gallery/2020-2026/thumbs/the-brutalist-best-actor-cinematic-r2-320w.webp": [
+        320,
+        180
+      ],
+      "assets/films/responsive/the-brutalist-best-actor-cinematic-r2-640w.webp": [
+        640,
+        360
+      ],
+      "assets/films/responsive/the-brutalist-best-actor-cinematic-r2-960w.webp": [
+        960,
+        540
+      ],
+      "assets/films/responsive/the-brutalist-best-actor-cinematic-r2-1280w.webp": [
+        1280,
+        719
+      ],
+      "assets/films/responsive/the-brutalist-best-actor-cinematic-r2-1920w.webp": [
+        1920,
+        1079
+      ],
+      "assets/films/responsive/the-brutalist-best-actor-cinematic-r2-2560w.webp": [
+        2560,
+        1439
+      ],
+      "assets/films/the-brutalist-the-tattoo-line-award-cinematic-r2.webp": [
+        3584,
+        2160
+      ],
+      "assets/gallery/2020-2026/thumbs/the-brutalist-the-tattoo-line-award-cinematic-r2-320w.webp": [
+        320,
+        193
+      ],
+      "assets/films/responsive/the-brutalist-the-tattoo-line-award-cinematic-r2-640w.webp": [
+        640,
+        386
+      ],
+      "assets/films/responsive/the-brutalist-the-tattoo-line-award-cinematic-r2-960w.webp": [
+        960,
+        579
+      ],
+      "assets/films/responsive/the-brutalist-the-tattoo-line-award-cinematic-r2-1280w.webp": [
+        1280,
+        771
+      ],
+      "assets/films/responsive/the-brutalist-the-tattoo-line-award-cinematic-r2-1920w.webp": [
+        1920,
+        1157
+      ],
+      "assets/films/responsive/the-brutalist-the-tattoo-line-award-cinematic-r2-2560w.webp": [
+        2560,
+        1543
+      ],
+      "assets/films/tar-2022-best-scene-cinematic-r2.webp": [
+        1920,
+        804
+      ],
+      "assets/gallery/2020-2026/thumbs/tar-2022-best-scene-cinematic-r2-320w.webp": [
+        320,
+        134
+      ],
+      "assets/films/responsive/tar-2022-best-scene-cinematic-r2-640w.webp": [
+        640,
+        268
+      ],
+      "assets/films/responsive/tar-2022-best-scene-cinematic-r2-960w.webp": [
+        960,
+        402
+      ],
+      "assets/films/responsive/tar-2022-best-scene-cinematic-r2-1280w.webp": [
+        1280,
+        536
       ]
     },
     "variants": {
@@ -9654,6 +9730,88 @@
           "src": "assets/gallery/2020-2026/wuthering-heights-2026/ff0608421066.webp",
           "width": 1920
         }
+      ],
+      "assets/films/the-brutalist-best-actor-cinematic-r2.webp": [
+        {
+          "src": "assets/gallery/2020-2026/thumbs/the-brutalist-best-actor-cinematic-r2-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/the-brutalist-best-actor-cinematic-r2-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/the-brutalist-best-actor-cinematic-r2-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/the-brutalist-best-actor-cinematic-r2-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/responsive/the-brutalist-best-actor-cinematic-r2-1920w.webp",
+          "width": 1920
+        },
+        {
+          "src": "assets/films/responsive/the-brutalist-best-actor-cinematic-r2-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/the-brutalist-best-actor-cinematic-r2.webp",
+          "width": 3840
+        }
+      ],
+      "assets/films/the-brutalist-the-tattoo-line-award-cinematic-r2.webp": [
+        {
+          "src": "assets/gallery/2020-2026/thumbs/the-brutalist-the-tattoo-line-award-cinematic-r2-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/the-brutalist-the-tattoo-line-award-cinematic-r2-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/the-brutalist-the-tattoo-line-award-cinematic-r2-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/the-brutalist-the-tattoo-line-award-cinematic-r2-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/responsive/the-brutalist-the-tattoo-line-award-cinematic-r2-1920w.webp",
+          "width": 1920
+        },
+        {
+          "src": "assets/films/responsive/the-brutalist-the-tattoo-line-award-cinematic-r2-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/the-brutalist-the-tattoo-line-award-cinematic-r2.webp",
+          "width": 3584
+        }
+      ],
+      "assets/films/tar-2022-best-scene-cinematic-r2.webp": [
+        {
+          "src": "assets/gallery/2020-2026/thumbs/tar-2022-best-scene-cinematic-r2-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/tar-2022-best-scene-cinematic-r2-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/tar-2022-best-scene-cinematic-r2-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/tar-2022-best-scene-cinematic-r2-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/tar-2022-best-scene-cinematic-r2.webp",
+          "width": 1920
+        }
       ]
     }
   },
@@ -9799,10 +9957,11 @@
         "award": "best-actress"
       },
       {
-        "path": "assets/films/tar-2022-alt-02.webp",
-        "source": "https://www.scannain.com/featured/opinion-piece/the-clock-comes-to-cancel-time-and-the-loss-of-control-in-tar/",
-        "imageUrl": "https://www.scannain.com/media/tar-scene1-videoSixteenByNine1050-1024x576.png",
-        "award": "best-scene"
+        "award": "best-scene",
+        "path": "assets/films/tar-2022-best-scene-cinematic-r2.webp",
+        "source": "https://shot.cafe/movie/tar-2022-283/class",
+        "imageUrl": "https://shot.cafe/images/o/tr-2022-283-20417.jpg",
+        "label": "Lydia confronts Max during the Juilliard lecture"
       },
       {
         "path": "assets/films/tar-2022-records.webp",
@@ -9835,10 +9994,18 @@
         "award": "best-production-design"
       },
       {
-        "path": "assets/films/the-brutalist-alt-02.webp",
+        "award": "the-tattoo-line-award",
+        "path": "assets/films/the-brutalist-the-tattoo-line-award-cinematic-r2.webp",
+        "source": "https://www.scenestill.com/films/549509",
+        "imageUrl": "https://www.scenestill.com/storage/film-stills/full/The_Brutalist_2024_screencap_010_full.png",
+        "label": "Light through the monumental chapel ceiling"
+      },
+      {
+        "award": "best-actor",
+        "path": "assets/films/the-brutalist-best-actor-cinematic-r2.webp",
         "source": "https://a24films.com/films/the-brutalist",
         "imageUrl": "https://api-asset-production.s3.amazonaws.com/media/images/TBR_LP_Rec709_UHD_FLAT_3840X2160_20_PM_20240911.00_24_22_06.Still048_CropEdit.jpg",
-        "award": "the-tattoo-line-award"
+        "label": "László against the sparks"
       }
     ],
     "the-count-of-monte-cristo-2024": [
@@ -11055,11 +11222,12 @@
         "credit": "Stills supplied by the curator"
       },
       {
-        "path": "assets/films/tar-2022-alt-02.webp",
-        "thumbnail": "assets/gallery/2020-2026/thumbs/tar-2022-db39fe4c49cf-320w.webp",
+        "path": "assets/films/tar-2022-best-scene-cinematic-r2.webp",
+        "thumbnail": "assets/gallery/2020-2026/thumbs/tar-2022-best-scene-cinematic-r2-320w.webp",
         "award": "best-scene",
-        "source": "https://www.scannain.com/featured/opinion-piece/the-clock-comes-to-cancel-time-and-the-loss-of-control-in-tar/",
-        "imageUrl": "https://www.scannain.com/media/tar-scene1-videoSixteenByNine1050-1024x576.png"
+        "source": "https://shot.cafe/movie/tar-2022-283/class",
+        "imageUrl": "https://shot.cafe/images/o/tr-2022-283-20417.jpg",
+        "label": "Lydia confronts Max during the Juilliard lecture"
       },
       {
         "path": "assets/films/tar-2022-records.webp",
@@ -11284,11 +11452,12 @@
         "imageUrl": "https://api-asset-production.s3.amazonaws.com/media/images/TheBrutalist_16x9_Trailer3_Thubmnail.jpg"
       },
       {
-        "path": "assets/films/the-brutalist-alt-02.webp",
-        "thumbnail": "assets/gallery/2020-2026/thumbs/the-brutalist-cd8ceb26bb73-320w.webp",
-        "award": "the-tattoo-line-award",
+        "path": "assets/films/the-brutalist-best-actor-cinematic-r2.webp",
+        "thumbnail": "assets/gallery/2020-2026/thumbs/the-brutalist-best-actor-cinematic-r2-320w.webp",
+        "award": "best-actor",
         "source": "https://a24films.com/films/the-brutalist",
-        "imageUrl": "https://api-asset-production.s3.amazonaws.com/media/images/TBR_LP_Rec709_UHD_FLAT_3840X2160_20_PM_20240911.00_24_22_06.Still048_CropEdit.jpg"
+        "imageUrl": "https://api-asset-production.s3.amazonaws.com/media/images/TBR_LP_Rec709_UHD_FLAT_3840X2160_20_PM_20240911.00_24_22_06.Still048_CropEdit.jpg",
+        "label": "László against the sparks"
       },
       {
         "path": "assets/gallery/2020-2026/the-brutalist/8e1f7477ceb5.webp",
@@ -11312,11 +11481,12 @@
         "imageUrl": "https://www.scenestill.com/storage/film-stills/full/The_Brutalist_2024_screencap_066_full.png"
       },
       {
-        "path": "assets/gallery/2020-2026/the-brutalist/7ed204da4bda.webp",
-        "thumbnail": "assets/gallery/2020-2026/thumbs/the-brutalist-7ed204da4bda-320w.webp",
-        "label": "The monumental interior",
+        "path": "assets/films/the-brutalist-the-tattoo-line-award-cinematic-r2.webp",
+        "thumbnail": "assets/gallery/2020-2026/thumbs/the-brutalist-the-tattoo-line-award-cinematic-r2-320w.webp",
+        "award": "the-tattoo-line-award",
         "source": "https://www.scenestill.com/films/549509",
-        "imageUrl": "https://www.scenestill.com/storage/film-stills/full/The_Brutalist_2024_screencap_010_full.png"
+        "imageUrl": "https://www.scenestill.com/storage/film-stills/full/The_Brutalist_2024_screencap_010_full.png",
+        "label": "Light through the monumental chapel ceiling"
       }
     ],
     "the-count-of-monte-cristo-2024": [

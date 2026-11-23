@@ -193,6 +193,14 @@ body[data-award-view] .artist-shortlist .nominee small { grid-area: 2 / 2; align
   body[data-award-view="cinematic"] .artist-winner-block { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); align-items: center; gap: clamp(22px,4.1vw,58px); }
   body[data-award-view="cinematic"] #composer-of-the-decade .artist-winner-block { grid-template-columns: minmax(0,1.16fr) minmax(0,1fr); }
   body[data-award-view="cinematic"] .artist-winner-block > .winner-frame { max-width: 620px; }
+  /* A single curated cinematic frame is a feature, not half a montage.
+     Keep the complete scope image at the same width as the chapter and move
+     the artist's selected films into a compact caption row beneath it. */
+  body[data-award-view="cinematic"] .portfolio-wide-lead .artist-winner-block { grid-template-columns: minmax(0,1fr); align-items: start; gap: clamp(16px,2vw,26px); }
+  body[data-award-view="cinematic"] .portfolio-wide-lead .artist-winner-block > .winner-frame { width:100%; max-width:none; }
+  body[data-award-view="cinematic"] .portfolio-wide-lead .artist-context { display:flex; justify-content:space-between; align-items:flex-start; gap:clamp(20px,3vw,40px); }
+  body[data-award-view="cinematic"] .portfolio-wide-lead .artist-context .artist-name-button { width:auto; min-width:0; flex:1 1 auto; }
+  body[data-award-view="cinematic"] .portfolio-wide-lead .artist-context .artist-works { flex:0 1 auto; margin-top:0; }
   body[data-award-view="cinematic"] .artist-winner-block .winner-copy { display: none; }
   body[data-award-view="cinematic"] .artist-name-button { display: block; width: 100%; text-align: left; background: none; border: 0; padding: 0; color: var(--text); font: 600 var(--type-winner)/1.06 var(--display); letter-spacing: -.012em; text-wrap: balance; overflow-wrap: anywhere; }
   body[data-award-view="cinematic"] .artist-name-button:hover { color: var(--accent); }
