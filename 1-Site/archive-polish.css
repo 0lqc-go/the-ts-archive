@@ -1,0 +1,38 @@
+/* Quiet motion across the established archive. The images themselves keep
+   their actual composition; no extra zoom, parallax or scroll trapping. */
+@keyframes archive-crossfade { from { opacity: .72; } to { opacity: 1; } }
+@keyframes archive-cover-fade { from { opacity: .55; } to { opacity: 1; } }
+.hero-image { animation: archive-cover-fade .65s ease-out both; }
+.hero-title { animation: archive-crossfade .34s ease-out both; }
+.motion-reveal.is-visible { animation: archive-crossfade .28s ease-out both; }
+.award-card.in-frame .winner-frame { animation: archive-crossfade .24s ease-out both; }
+body[data-award-view] .ceremony-body.slide-in,
+body[data-award-view] .ceremony-body.slide-back { animation: archive-crossfade .2s ease-out both; }
+.winner-frame:hover .frame-image img, .nominee-poster:hover img, .wall-tile:hover img { transform: none; }
+.nominee-poster:hover img, .wall-tile:hover img { filter: brightness(1.055); }
+body[data-award-view="cinematic"] .award-grid { row-gap: clamp(56px, 6vw, 88px); }
+:is(.archive-search-open,.index-open,.nav-view-toggle,.ceremony-prev,.ceremony-next,.ceremony-index,.file-action,.sr-answer,.sr-primary,.sr-secondary,.sr-ballot-choice,.sr-match-choice,.sr-journey-control) { touch-action: manipulation; }
+:is(.archive-card,.file-won-award,.sr-answer,.sr-ballot-choice,.sr-match-choice,.sr-journey-control,.sr-journey-tile):focus-visible { outline: 2px solid var(--paper-accent); outline-offset: 3px; }
+
+/* Related films in the existing, collapsed film dossier. The display is small
+   and follows its existing poster/title pattern rather than adding more chrome. */
+#film-file-dialog .file-connections .file-dossier-content { padding-bottom: 10px; }
+.file-connection-status { color: var(--muted); font: 400 .85rem/1.45 var(--body); padding: 3px 0 9px; }
+.file-connection-list { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 11px; padding: 0; margin: 0; list-style: none; }
+.file-connection-link { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; min-width: 0; padding: 0 0 5px; }
+.file-connection-link img { display: block; width: clamp(58px,5.7vw,83px); height: auto; aspect-ratio: 2/3; object-fit: cover; border-radius: 3px; border: 1px solid var(--surface-border); }
+.file-connection-link strong { color: var(--text); font: 500 clamp(.82rem,1.1vw,.97rem)/1.28 var(--body); overflow-wrap: anywhere; }
+.file-connection-link small { display: block; color: var(--muted); font: 400 .76rem/1.35 var(--body); overflow-wrap: anywhere; }
+.file-connection-link:hover strong { color: var(--paper-accent); }
+.file-connection-link:hover img { border-color: var(--paper-accent); }
+.file-connection-link .connection-reason { color: var(--paper-accent); }
+@media (max-width:680px) {
+  body[data-award-view="cinematic"] .award-grid { row-gap: 54px; }
+  .file-connection-list { gap: 9px; }
+  .file-connection-link img { width: 58px; }
+  .file-connection-link strong { font-size: .81rem; }
+  .file-connection-link small { font-size: .75rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(.hero-image,.hero-title,.motion-reveal.is-visible,.award-card.in-frame .winner-frame,.ceremony-body.slide-in,.ceremony-body.slide-back) { animation: none !important; }
+}

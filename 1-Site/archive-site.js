@@ -90,7 +90,7 @@
   async function renderHome() {
     const index = await catalog();
     const hash = location.hash;
-    if (hash && !['#top', '#decades', '#moods', '#lists', '#toggle-goatcounter'].includes(hash)) {
+    if (hash && !['#top', '#decades', '#moods', '#lists', '#screening-room', '#toggle-goatcounter'].includes(hash)) {
       location.replace(editionHref(index.featuredEdition) + hash);
       return;
     }

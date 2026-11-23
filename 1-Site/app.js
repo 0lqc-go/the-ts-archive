@@ -825,6 +825,22 @@
   document.title = (onSnubs ? 'Oscar Snubs · ' + selected.period : selected.title) + ' — The T.S. Archive';
   $('#content-status').hidden = true;
   $('main').hidden = false;
+  let connectionArchive;
+  // Film dossiers are shared by the awards and Oscar Snubs pages. Install
+  // their disclosure and backdrop behavior before the awards-only setup.
+  filmDialog?.addEventListener('toggle', event => {
+    const details = event.target;
+    if (details.matches?.('.file-dossier-group[open]')) {
+      for (const other of details.parentElement.querySelectorAll(':scope > .file-dossier-group[open]')) {
+        if (other !== details) other.open = false;
+      }
+      if (details.dataset.fileGroup === 'connections') fillFilmConnections(details);
+    }
+  }, true);
+  if (filmDialog) {
+    $('#film-file-content', filmDialog).addEventListener('scroll', syncFilmFileBackdrop, {passive:true});
+    if (typeof ResizeObserver !== 'undefined') new ResizeObserver(syncFilmFileBackdrop).observe($('.film-file-header',filmDialog));
+  }
   if (onSnubs && location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
   if (!$('#chapter-content')) return;
   if (edition.opening) $('#opening-line').innerHTML = quotePanel(edition.opening, 'opening');
@@ -1011,16 +1027,28 @@
     return `<div class="file-meta-actions">${letterboxd}${enlarge}</div>`;
   }
 
-  // Only one primary section expands at a time. The native details name
-  // handles modern browsers; this also covers older mobile browsers.
-  filmDialog?.addEventListener('toggle', event => {
-    const details = event.target;
-    if (details.matches?.('.file-dossier-group[open]')) {
-      for (const other of details.parentElement.querySelectorAll(':scope > .file-dossier-group[open]')) {
-        if (other !== details) other.open = false;
-      }
-    }
-  }, true);
+  async function fillFilmConnections(details) {
+    if (details.dataset.connectionLoaded === 'true' || details.dataset.connectionLoading === 'true') return;
+    const library = window.ArchiveScreeningData;
+    if (!library) return;
+    const slug = filmDialog.dataset.film;
+    const content = $('.file-dossier-content',details);
+    details.dataset.connectionLoading = 'true';
+    content.innerHTML = '<p class="file-connection-status" role="status">Finding related films…</p>';
+    try {
+      connectionArchive ??= exploreEngine.load('all').then(models=>library.makeArchive(models)).catch(error=>{connectionArchive=null;throw error;});
+      const connected = await connectionArchive;
+      if (!details.isConnected || filmDialog.dataset.film !== slug) return;
+      const results = library.connectionFilms(connected,`${editionId}/${slug}`,3);
+      content.innerHTML = results.length ? `<ul class="file-connection-list">${results.map(({film:related,reason}) => {
+        const local = related.editionId === editionId;
+        return `<li><a class="file-connection-link" href="${esc(related.href)}"${local ? ` data-film-file="${esc(related.slug)}" aria-haspopup="dialog"` : ''}>${related.poster ? `<img src="${esc(related.poster)}" alt="" width="84" height="126" loading="lazy" decoding="async">` : ''}<div><strong>${esc(related.title)}</strong><small>${esc(related.year)}</small><small class="connection-reason">${esc(reason)}</small></div></a></li>`;
+      }).join('')}</ul>` : '<p class="file-connection-status">No related selections yet.</p>';
+      details.dataset.connectionLoaded = 'true';
+    } catch {
+      if (details.isConnected) content.innerHTML = '<p class="file-connection-status">Related films could not be loaded. Close and reopen this section to try again.</p>';
+    } finally { delete details.dataset.connectionLoading; }
+  }
 
   // The cover, poster and heading scroll together. Keep just the small
   // navigation row available, adding the film name once it scrolls away.
@@ -1038,11 +1066,6 @@
     filmDialog.classList.toggle('file-scrolled', scrolled);
     filmDialog.classList.toggle('file-title-scrolled', Boolean(scrolled && heading && heading.getBoundingClientRect().bottom <= bounds.bottom + 6));
   }
-  if (filmDialog) {
-    $('#film-file-content', filmDialog).addEventListener('scroll', syncFilmFileBackdrop, {passive:true});
-    if (typeof ResizeObserver !== 'undefined') new ResizeObserver(syncFilmFileBackdrop).observe($('.film-file-header',filmDialog));
-  }
-
   function creditedPeople(slug) {
     const ids = peopleByFilm.get(slug);
     if (!ids?.size || !personDialog) return '';
@@ -1104,6 +1127,7 @@
     const creditLabel = artists ? 'Cast & crew' : 'Film music';
     const creditCount = artists ? peopleByFilm.get(slug)?.size : listening.length;
     const creditSection = artists || music ? dossierDisclosure('credits',creditLabel,creditCount,`<div class="file-credit-content" data-credit-sections="${bothCredits ? 2 : 1}">${artists}${music}</div>`,false,'file-credits') : '';
+    const connectionSection = window.ArchiveScreeningData ? dossierDisclosure('connections','Cinematic connections',null,'<p class="file-connection-status">Related films from the archive.</p>',false,'file-connections') : '';
     filmDialog.dataset.film = slug;
     filmDialog.classList.toggle('file-has-backdrop',Boolean(dossierStill));
     filmDialog.classList.remove('file-scrolled','file-title-scrolled');
@@ -1116,7 +1140,7 @@
       <div class="film-file-sections file-dossier-accordion">
       ${wonAwardsSection(wins)}
       ${mentionsGroup}${dossierFrames(slug,gallery)}${groups.join('')}
-      ${snubSection}${creditSection}
+      ${snubSection}${creditSection}${connectionSection}
       ${!wins.length && !mentionsGroup && !groups.length && !snubs.length ? '<p class="empty-index">No selections in this edition.</p>' : ''}</div>`;
     $('#film-file-content').scrollTop = 0;
     openDialog(filmDialog, '#film-file-title', trigger);
@@ -1322,9 +1346,9 @@
       return;
     }
     const outgoing = scene.animate([
-      {opacity: 1, transform: 'none'},
-      {opacity: .55, transform: `translateX(${direction * -5}px)`}
-    ], {duration: 120, easing: 'ease-in', fill: 'forwards'});
+      {opacity: 1},
+      {opacity: .72}
+    ], {duration: 100, easing: 'ease-in', fill: 'forwards'});
     sceneChange = outgoing;
     let deadline;
     try {
