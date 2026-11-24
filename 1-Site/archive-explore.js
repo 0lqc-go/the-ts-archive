@@ -3,6 +3,14 @@
   const site = window.ArchiveSite;
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  // On cover pages, restore the standard reading chrome once the visitor
+  // starts moving down the page. Pages without a cover keep their normal bar.
+  if ($('main > .hero')) {
+    const syncCoverNav = () => document.body.classList.toggle('archive-nav-scrolled', window.scrollY > 18);
+    syncCoverNav();
+    window.addEventListener('scroll', syncCoverNav, {passive:true});
+    window.addEventListener('pageshow', syncCoverNav);
+  }
   const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   const normal = value => String(value ?? '').normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
   const keyFor = value => normal(value).replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-+|-+$/g, '');
@@ -556,7 +564,9 @@
           const slug = chosen.slugs[Math.floor(Math.random()*chosen.slugs.length)];
           lastHomeFilm = chosen.model.edition.id+'/'+slug;
           try { sessionStorage.setItem('ts-archive-home-discovery', lastHomeFilm); } catch {}
-          location.href = dossierHref(chosen.model.edition,'film',slug);
+          const destination = new URL(dossierHref(chosen.model.edition,'film',slug), location.href);
+          destination.searchParams.set('from','home-discover');
+          location.href = destination.href;
         } catch {
           homeDiscover.disabled = false;
           homeDiscover.removeAttribute('aria-busy');

@@ -547,19 +547,52 @@
     if (focusTo) $(focusTo, dialog)?.focus({preventScroll: true});
   }
 
-  function closeDialog(dialog) {
+  let homeDiscoveryReturn = site.params.get('from') === 'home-discover' && film(site.params.get('film'));
+  function returnToDiscoveryHome() {
+    const home = new URL('index.html#decades', location.href);
+    const directory = new URL('./', home);
+    // Returning through history restores the homepage's exact scroll and
+    // avoids a second homepage entry. Direct links still have a safe fallback.
+    if (document.referrer && history.length > 1) {
+      const previous = new URL(document.referrer);
+      if (previous.origin === home.origin &&
+          (previous.pathname === home.pathname || previous.pathname === directory.pathname)) {
+        history.back();
+        return;
+      }
+    }
+    location.replace(home.href);
+  }
+  function closeDialog(dialog, dismissed = false) {
     if (dialog === indexDialog && dialog.open) saveIndexPosition();
+    if (dialog === filmDialog && dialog.open && homeDiscoveryReturn) {
+      homeDiscoveryReturn = false;
+      if (dismissed) {
+        dialog.close();
+        returnToDiscoveryHome();
+        return;
+      }
+      // An intentional jump to an award ends this discovery visit.
+      const url = new URL(location.href);
+      url.searchParams.delete('from');
+      url.searchParams.delete('film');
+      site.replaceLocation(url);
+    }
     dialog.close();
   }
 
   $$('dialog').filter(dialog => !dialog.classList.contains('archive-standalone-index')).forEach(dialog => {
     dialog.addEventListener('click', event => {
-      if (event.target === dialog || event.target.closest('.dialog-close')) closeDialog(dialog);
+      if (event.target === dialog || event.target.closest('.dialog-close')) closeDialog(dialog, true);
     });
     dialog.addEventListener('keydown', event => {
       if (event.key !== 'Escape') return;
       event.preventDefault();
-      closeDialog(dialog);
+      closeDialog(dialog, true);
+    });
+    dialog.addEventListener('cancel', event => {
+      event.preventDefault();
+      closeDialog(dialog, true);
     });
     dialog.addEventListener('close', () => {
       if (dialog.open) return;

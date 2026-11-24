@@ -4,6 +4,36 @@
 @keyframes archive-cover-fade { from { opacity: .55; } to { opacity: 1; } }
 .hero-image { animation: archive-cover-fade .65s ease-out both; }
 .hero-title { animation: archive-crossfade .34s ease-out both; }
+/* The masthead shares the actual cover photograph, without a seam or a
+   duplicate background. Keep ordinary chrome on coverless pages. */
+body:has(> main:not([hidden]) > .hero:not([data-has-cover="false"])) > main {
+  margin-top: calc(-1 * var(--header));
+}
+body:has(> main:not([hidden]) > .hero:not([data-has-cover="false"])) > main > .hero {
+  padding-top: var(--header);
+}
+body:has(> main:not([hidden]) > .hero:not([data-has-cover="false"])) > main > .hero .hero-topline {
+  top: calc(var(--header) + clamp(20px,2vw,34px));
+}
+body:not(.archive-nav-scrolled):has(> main:not([hidden]) > .hero:not([data-has-cover="false"])) > .masthead {
+  background: transparent;
+  border-bottom-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  color: #f7f3ec;
+  text-shadow: 0 1px 4px #0009;
+}
+body:not(.archive-nav-scrolled):has(> main:not([hidden]) > .hero:not([data-has-cover="false"])) > .masthead::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 -30px;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--ink) 64%, transparent), color-mix(in srgb, var(--ink) 28%, transparent) 60%, transparent);
+}
+body:not(.archive-nav-scrolled):has(> main:not([hidden]) > .hero:not([data-has-cover="false"])) > .masthead :is(.topnav a,.archive-search-open,.external-arrow) {
+  color: #f2eee8;
+}
 .motion-reveal.is-visible { animation: archive-crossfade .28s ease-out both; }
 .award-card.in-frame .winner-frame { animation: archive-crossfade .24s ease-out both; }
 body[data-award-view] .ceremony-body.slide-in,
