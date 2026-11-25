@@ -14,7 +14,7 @@
   <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
   <script src="archive-theme.js?v=editorial-2"></script>
   <script src="archive-features.js?v=archive-refined-1"></script>
-  <script src="archive-continuity.js?v=archive-refined-1" defer></script>
+  <script src="archive-continuity.js?v=archive-flow-2" defer></script>
   <script src="archive-interactions.js?v=archive-refined-1" defer></script>
   <link rel="stylesheet" href="style.css?v=editorial-2">
   <link rel="stylesheet" href="edition.css?v=editorial-2">
@@ -30,21 +30,21 @@
   <link rel="stylesheet" href="archive-polish.css?v=cover-nav-1">
   <link rel="stylesheet" href="cinematic-experience.css?v=cinematic-2">
   <link rel="stylesheet" href="cinematic-round2.css?v=archive-refined-1">
-  <link rel="stylesheet" href="cinematic-round3.css?v=archive-refined-1">
+  <link rel="stylesheet" href="cinematic-round3.css?v=archive-flow-2">
 
-  <script src="archive-site.js?v=archive-refined-1" defer></script>
+  <script src="archive-site.js?v=archive-flow-2" defer></script>
   <script src="cinematic-index.js?v=cinematic-1" defer></script>
   <script src="cinematic-journeys.js?v=cinematic-1" defer></script>
-  <script src="archive-explore.js?v=archive-refined-1" defer></script>
+  <script src="archive-explore.js?v=archive-flow-2" defer></script>
   <script src="screening-data.js?v=archive-refined-1" defer></script>
-  <script src="screening-room.js?v=archive-refined-1" defer></script>
+  <script src="screening-room.js?v=archive-flow-2" defer></script>
 </head>
 <body data-page="home">
 
   <a class="skip" href="#decades">Skip to the decades</a>
   <header class="masthead">
     <a class="wordmark" href="#top" aria-label="The T.S. Archive, home"><b>THE T.S. ARCHIVE</b></a>
-    <nav class="topnav" aria-label="Main navigation"><a href="#decades">DECADES</a><a href="#lists">FILM LISTS</a><a href="screening-room.html">SCREENING ROOM</a></nav>
+    <nav class="topnav" aria-label="Main navigation"><a href="#decades">DECADES</a><a href="#lists">FILM LISTS</a><a href="screening-room.html">SCREENING ROOM</a><a class="nav-cinema-profile" href="cinema-profile.html?home=1" aria-label="Cinema Profile"><span class="nav-profile-label">CINEMA PROFILE</span><span class="nav-profile-short" aria-hidden="true">PROFILE</span></a></nav>
     <a class="profile" href="https://letterboxd.com/0lqc/" target="_blank" rel="noopener noreferrer"><span class="avatar"><span>0</span></span><span class="profile-name">0lqc</span><span class="external-arrow">↗</span></a>
   </header>
   <main id="top">
@@ -65,6 +65,20 @@
       <div class="section-heading home-directory-heading"><h2 id="decades-title">The decades.</h2><div class="home-discovery"><button type="button" class="home-discover" data-home-discover aria-label="Discover a film from the archive" title="Discover a film from the archive"><svg viewBox="0 0 20 20" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 5h2c2.2 0 3.6 2.4 5.5 5s3.3 5 5.5 5h2m0 0-2.6-2.6M17.5 15l-2.6 2.6M2.5 15h2c1.4 0 2.5-1.1 3.6-2.6M12 7.6C13 6 14.2 5 15.5 5h2m0 0-2.6-2.6M17.5 5l-2.6 2.6"/></svg><span>Discover a film</span></button><small id="home-discover-status" role="status" hidden></small><a class="screening-mobile-link" href="screening-room.html">Screening room</a></div></div>
       <div class="archive-card-grid" id="edition-cards"></div>
     </section>
+    <section class="archive-directory section-shell profile-entry" id="cinema-profile" aria-labelledby="experiences-title">
+      <div class="section-heading"><h2 id="experiences-title">More to discover.</h2></div>
+      <div class="archive-card-grid">
+        <a class="archive-card profile-entry-card" href="cinema-profile.html?home=1" aria-labelledby="profile-entry-title">
+          <!-- Her (2013), original press still: https://kg-portal.ru/movies/her/images/3/ -->
+          <img src="assets/films/her-profile-train.jpg" alt="" width="2560" height="1440" loading="lazy" decoding="async">
+          <div class="archive-card-copy"><p class="eyebrow">25 questions</p><h3 id="profile-entry-title">Cinema Profile</h3><p>Personality through film.</p></div>
+        </a>
+        <a class="archive-card journey-entry-card" id="film-journeys" href="screening-room.html?mode=journeys" aria-labelledby="journey-entry-title">
+          <img src="assets/films/anna-karenina-production-design-curator.webp" alt="" width="1280" height="536" loading="lazy" decoding="async">
+          <div class="archive-card-copy"><p class="eyebrow">6 journeys</p><h3 id="journey-entry-title">Film Journeys</h3><p>Films connected by a theme.</p></div>
+        </a>
+      </div>
+    </section>
     <section class="archive-directory section-shell mood-collections" id="moods" aria-labelledby="moods-title" hidden>
       <div class="section-heading"><h2 id="moods-title">Explore by mood.</h2></div>
       <div class="mood-collection-grid" id="mood-collection-grid"></div>
@@ -81,7 +95,6 @@
         <div class="screening-entry-links" aria-label="Screening room experiences">
           <a href="screening-room.html?mode=frame">Quizzes</a>
           <a href="screening-room.html?mode=matchup">This or That</a>
-          <a href="cinema-profile.html">Cinema Profile</a>
           <a href="screening-room.html?mode=ballot">My Ballot</a>
           <a href="screening-room.html?mode=journeys">Film Journeys</a>
         </div>

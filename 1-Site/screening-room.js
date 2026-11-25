@@ -23,7 +23,7 @@
   function still(frame) {
     // The filename, film title, caption and credits are not displayed before
     // answering. The complete image itself is visible and entirely static.
-    return `<div class="sr-still"><img src="${esc(frame.path)}" width="${frame.width}" height="${frame.height}" alt="Film still for the question" loading="eager" decoding="async"><span class="sr-still-message" hidden>The frame could not be loaded. You can skip this question.</span></div>`;
+    return `<div class="sr-still"><img src="${esc(frame.path)}" width="${frame.width}" height="${frame.height}" alt="Film still for the question" loading="eager" decoding="async" fetchpriority="high"><span class="sr-still-message" hidden>The frame could not be loaded. You can skip this question.</span></div>`;
   }
 
   function bindStillErrors(root) {
@@ -60,6 +60,7 @@
           <a class="screening-daily-card" href="${esc(film.href)}" aria-label="Explore ${esc(film.title)} (${esc(film.year)})"><img src="${esc(frame.path)}" width="${frame.width}" height="${frame.height}" alt="" loading="lazy" decoding="async"><span class="screening-daily-caption"><strong>${esc(film.title)}</strong><small>${esc(film.year)}</small></span></a>`;
         const image = $('img', section);
         image.addEventListener('error', () => { image.hidden = true; });
+        window.ArchiveContinuity?.prefetch(film.href,$('.screening-daily-card',section));
       }
       draw();
       window.addEventListener('focus', draw);
@@ -432,7 +433,7 @@
 
     function namedFrame(entry, className = '', lazy = false) {
       const {film,frame} = entry;
-      return `<img class="${className}" src="${esc(frame.path)}" width="${frame.width}" height="${frame.height}" alt="${esc(film.title)}" loading="${lazy?'lazy':'eager'}" decoding="async">`;
+      return `<img class="${className}" src="${esc(frame.path)}" width="${frame.width}" height="${frame.height}" alt="${esc(film.title)}" loading="${lazy?'lazy':'eager'}" decoding="async"${lazy?'':' fetchpriority="high"'}>`;
     }
 
     function renderMatchup() {
@@ -563,6 +564,8 @@
         if(selected&&rail.scrollWidth>rail.clientWidth){const a=selected.getBoundingClientRect(),b=rail.getBoundingClientRect();if(a.right>b.right)rail.scrollLeft+=a.right-b.right+4;else if(a.left<b.left)rail.scrollLeft+=a.left-b.left-4;}
       }
       const stage=$('.sr-journey-stage',activity);
+      const fileLink=$('.ts-journey-title-link, .ts-journey-film-link, .sr-journey-caption a',activity);
+      if(fileLink)window.ArchiveContinuity?.prefetch(fileLink.href,fileLink);
       let touch;
       stage.addEventListener('touchstart',event=>{touch=event.touches.length===1?{x:event.touches[0].clientX,y:event.touches[0].clientY,id:event.touches[0].identifier}:null;},{passive:true});
       stage.addEventListener('touchcancel',()=>{touch=null;},{passive:true});

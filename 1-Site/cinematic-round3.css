@@ -6,20 +6,27 @@
 .ts-r2-05 :is(#film-file-dialog,#person-dialog,#award-dialog,#index-dialog)[open] { animation:ts-archive-layer 200ms ease-out both; }
 /* 05 — A live detail layer leaves the source document and its scroll intact. */
 html.ts-r2-05:not(.ts-archive-embedded) { scrollbar-gutter:stable; }
+/* The chrome was already almost opaque. Avoid re-filtering the entire
+   photograph behind our sticky bars or modal layer on every scroll frame. */
+.ts-r2-05 :is(.masthead,.chapter-nav) { backdrop-filter:none; -webkit-backdrop-filter:none; }
+.ts-r2-05 dialog::backdrop { background:#03070be4; backdrop-filter:none; -webkit-backdrop-filter:none; }
 dialog.archive-detail-layer { position:fixed; inset:0; margin:0; padding:0; border:0; border-radius:0; width:100dvw; height:100dvh; max-width:none; max-height:none; background:transparent; box-shadow:none; overflow:hidden; animation:none; }
+dialog.archive-detail-layer:not([open]) { display:none; }
 dialog.archive-detail-layer[open] { display:block; }
-dialog.archive-detail-layer::backdrop { background:#03070bd0; backdrop-filter:blur(6px); transition:background-color 150ms ease,backdrop-filter 150ms ease; }
-dialog.archive-detail-layer.is-leaving::backdrop { background:#03070b00; backdrop-filter:blur(0); }
-.archive-detail-frame { position:absolute; inset:0; width:100%; height:100%; border:0; background:transparent; opacity:0; transition:opacity 150ms ease; }
+dialog.archive-detail-layer::backdrop { background:#03070be4; opacity:1; transition:opacity 120ms ease; }
+dialog.archive-detail-layer.is-leaving::backdrop { opacity:0; }
+.archive-detail-frame { position:absolute; inset:0; width:100%; height:100%; border:0; background:transparent; opacity:0; transition:opacity 120ms ease; }
 .archive-detail-layer.is-ready .archive-detail-frame { opacity:1; }
 .archive-detail-layer.is-leaving .archive-detail-frame,.archive-detail-layer.is-leaving .archive-layer-wait { opacity:0; }
-.archive-layer-wait { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; gap:12px; color:var(--text); transition:opacity 150ms ease; font:500 .85rem/1.4 var(--body); }
+.archive-layer-wait { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; gap:12px; color:var(--text); transition:opacity 120ms ease; font:500 .85rem/1.4 var(--body); }
 .archive-layer-wait[hidden] { display:none; }
 .archive-layer-wait button { border:1px solid var(--surface-border); width:34px; height:34px; border-radius:3px; background:var(--panel); color:var(--muted); }
 .archive-layer-fallback { color:var(--paper-accent); text-decoration:underline; text-underline-offset:3px; }
 html.ts-archive-embedded,html.ts-archive-embedded body { background:transparent !important; overflow:hidden !important; }
 .ts-archive-embedded body > :not(dialog) { display:none !important; }
 .ts-archive-embedded dialog:not(#frame-dialog)::backdrop { background:transparent; backdrop-filter:none; }
+.ts-archive-embedded :is(#film-file-dialog,#person-dialog,#award-dialog,#index-dialog)[open] { animation:none; }
+.ts-r2-05 #frame-dialog::backdrop { background:#000000ee; }
 .ts-archive-embedded #index-dialog .index-view-switch { display:none !important; }
 @media (prefers-reduced-motion:reduce) {
   .ts-r2-05 :is(#film-file-dialog,#person-dialog,#award-dialog,#index-dialog)[open] { animation:none !important; }
@@ -123,4 +130,49 @@ html.ts-archive-embedded,html.ts-archive-embedded body { background:transparent 
   .ts-r2-09 :is(.archive-card,.mood-collection,.sr-journey-tile,.frame-enlarge,.file-won-award) img,
   .ts-r2-07 .ts-ceremony-reveal,.ts-r2-15 .ts-journey-title-link { transition:none !important; }
   .ts-r2-10 #frame-dialog[open],.ts-r2-10.ts-frame-lens #frame-dialog[open] .full-frame-stage { animation:none !important; }
+}
+
+/* Cinema Profile is an independent editorial destination. Its masthead link
+   stays available on mobile without making the cover/navigation taller. */
+.topnav .nav-cinema-profile { color:var(--paper-accent); }
+.topnav .nav-cinema-profile span { color:inherit; padding-left:0; }
+.topnav .nav-profile-short { display:none; }
+.topnav .nav-cinema-profile[aria-current] { color:var(--text); text-decoration:underline; text-underline-offset:5px; text-decoration-color:var(--paper-accent); }
+.profile-entry { scroll-margin-top:calc(var(--header) + 20px); }
+.cp-route-nav { width:min(1250px,calc(100% - 2 * var(--gutter))); margin:0 auto; min-height:46px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px 13px; border-bottom:1px solid var(--hairline); color:var(--muted); font:500 .81rem/1.35 var(--body); }
+.cp-route-nav :is(a,button) { display:inline-flex; gap:6px; align-items:center; min-height:40px; background:transparent; border:0; padding:4px 0; color:inherit; text-decoration:none; }
+.cp-route-nav :is(a,button):is(:hover,:focus-visible) { color:var(--paper-accent); }
+.cp-route-actions { display:flex; align-items:center; flex-wrap:wrap; gap:8px clamp(12px,3vw,26px); }
+.cp-route-actions[hidden] { display:none; }
+.cp-route-actions button:first-child { color:var(--text); }
+.cp-route-nav[dir="rtl"] { font-family:Tahoma,Arial,sans-serif; }
+.cp-route-nav[dir="rtl"] .cp-route-arrow { transform:scaleX(-1); }
+.cp-framework { display:grid; gap:6px; color:var(--muted); font:400 .86rem/1.5 var(--body); }
+.cp-framework strong { color:var(--cp-accent); font-weight:500; }
+.cp-framework small { font-size:.8rem; line-height:1.45; color:var(--cp-muted); }
+.cp-root[dir="rtl"] .cp-framework { font-family:Tahoma,Arial,sans-serif; }
+@media (max-width:1020px) {
+  .masthead:has(.nav-cinema-profile) .topnav { gap:clamp(9px,1.4vw,18px); }
+  .masthead:has(.nav-cinema-profile) .topnav a { letter-spacing:.035em; }
+  body[data-page="awards"] .topnav a[data-spotlight-link] { display:none; }
+}
+@media (max-width:760px) {
+  .masthead:not(.cp-masthead):has(.nav-cinema-profile) { grid-template-columns:minmax(0,1fr) auto auto; gap:clamp(6px,1.5vw,12px); }
+  .masthead:not(.cp-masthead) .topnav:has(.nav-cinema-profile) { display:flex; gap:0; }
+  .masthead:not(.cp-masthead) .topnav:has(.nav-cinema-profile) a:not(.nav-cinema-profile) { display:none; }
+  .masthead .topnav .nav-profile-label { display:inline; }
+  .masthead .topnav .nav-profile-short { display:none; }
+  .masthead .topnav .nav-cinema-profile { font-size:.72rem; min-height:40px; display:flex; align-items:center; }
+  .masthead:not(.cp-masthead) .masthead-tools :is(.profile-name,.external-arrow) { display:none; }
+  .cp-body .cp-nav { display:none; }
+  .cp-body .cp-masthead { grid-template-columns:minmax(0,1fr) auto; }
+  .cp-route-nav { width:calc(100% - 32px); font-size:.78rem; }
+}
+@media (max-width:380px) {
+  .masthead:not(.cp-masthead):has(.nav-cinema-profile) .wordmark b { font-size:1.05rem; letter-spacing:.027em; }
+  .masthead:not(.cp-masthead):has(.nav-cinema-profile) .topnav .nav-cinema-profile { font-size:.67rem; }
+}
+@media (max-width:350px) {
+  .masthead .topnav .nav-profile-label { display:none; }
+  .masthead .topnav .nav-profile-short { display:inline; }
 }

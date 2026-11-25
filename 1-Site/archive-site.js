@@ -9,27 +9,34 @@
   const listHref = list => list.kind === 'snubs'
     ? 'snubs.html?edition=' + encodeURIComponent(list.edition)
     : 'list.html?list=' + encodeURIComponent(list.id);
-  const catalog = async () => {
-    const [index, shared] = await Promise.all([
+  let catalogPromise;
+  const catalog = () => catalogPromise ??= Promise.all([
       read('content/catalog.json'),
       read('content/artwork-variants.json').catch(() => ({}))
-    ]);
-    return {...index, media: {
+    ]).then(([index, shared]) => ({...index, media: {
       sizes: {...index.media?.sizes, ...shared.sizes},
       variants: {...index.media?.variants, ...shared.variants}
-    }};
-  };
+    }})).catch(error => { catalogPromise = null; throw error; });
   const setText = (selector, value) => {
     for (const node of document.querySelectorAll(selector)) node.textContent = value;
   };
 
-  async function read(file) {
-    const response = await fetch(file, {cache: 'no-cache'});
-    if (!response.ok) throw new Error('Could not load ' + file);
-    return response.json();
+  const localReads = new Map();
+  function read(file) {
+    if (window.ArchiveContinuity?.readContent) return window.ArchiveContinuity.readContent(file);
+    const url = new URL(file, location.href).href;
+    if (!localReads.has(url)) {
+      const request = fetch(url, {cache: 'no-cache'}).then(response => {
+        if (!response.ok) throw new Error('Could not load ' + file);
+        return response.json();
+      }).catch(error => { localReads.delete(url); throw error; });
+      localReads.set(url, request);
+    }
+    return localReads.get(url);
   }
 
   function showError(error) {
+    if (window.ArchiveContinuity?.embedded) window.ArchiveContinuity.layerError?.();
     const status = $('#content-status');
     if (!status) return;
     status.hidden = false;
@@ -91,7 +98,7 @@
   async function renderHome() {
     const index = await catalog();
     const hash = location.hash;
-    if (hash && !['#top', '#decades', '#moods', '#lists', '#screening-room', '#toggle-goatcounter'].includes(hash)) {
+    if (hash && !['#top', '#decades', '#moods', '#lists', '#screening-room', '#cinema-profile', '#toggle-goatcounter'].includes(hash)) {
       location.replace(editionHref(index.featuredEdition) + hash);
       return;
     }
@@ -106,6 +113,11 @@
     $('#list-cards').innerHTML = index.lists.map(item => archiveCard(item, listHref(item), item.subtitle || 'Film list', index.media)).join('');
     $('#lists').hidden = index.lists.length === 0;
     $('#content-status').hidden = true;
+    // The two decade cards above this entry arrive asynchronously. Resolve
+    // a return from the profile after their layout exists, including mobile.
+    if(hash==='#cinema-profile')requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      if(location.hash===hash)$('#cinema-profile')?.scrollIntoView({block:'start',behavior:'instant'});
+    }));
     window.ArchiveContinuity?.register('page',()=>true,()=>{});
     trackVisit();
   }

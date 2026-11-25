@@ -108,11 +108,11 @@
     return (media.variants?.[path] ?? []).map(variant => `${variant.src} ${variant.width}w`).join(', ');
   }
 
-  function imageMarkup(path, eager, sizes, fallback = [16, 9]) {
+  function imageMarkup(path, eager, sizes, fallback = [16, 9], priority = false) {
     const [width, height] = media.sizes?.[path] ?? fallback;
     const srcset = imageSources(path);
     const responsive = srcset ? `srcset="${esc(srcset)}" sizes="${esc(sizes)}" ` : '';
-    return `<img ${responsive}src="${esc(path)}" alt="" width="${width}" height="${height}" loading="${eager ? 'eager' : 'lazy'}" decoding="async">`;
+    return `<img ${responsive}src="${esc(path)}" alt="" width="${width}" height="${height}" loading="${eager ? 'eager' : 'lazy'}" decoding="async"${priority ? ' fetchpriority="high"' : ''}>`;
   }
 
   function largestFrame(path) {
@@ -186,7 +186,7 @@
       if (!frame.path) return `<span class="frame-image blank">${esc(frame.label)}</span>`;
       const position = frame.focal ? ` style="--focal-x:${esc(frame.focal)}"` : '';
       const filmData = frame.slug ? ` data-film="${esc(frame.slug)}"` : '';
-      const markup = imageMarkup(frame.path, eager, sizes[i]);
+      const markup = imageMarkup(frame.path, eager, sizes[i], [16,9], layout === 'dialog' && eager && i === 0);
       return interactive
         ? frameButton(frame.path, frame.label, 'frame-image ' + frame.shape, markup, filmData + position)
         : `<span class="frame-image ${frame.shape}"${filmData}${position}>${markup}</span>`;
@@ -1301,7 +1301,8 @@
     const meta=$('.film-file-meta',body), sections=$('.film-file-sections',body), cover=$('.film-file-frame',body);
     if (!meta || !sections) return;
     const px=value=>Number.parseFloat(value)||0;
-    const metrics=node=>getComputedStyle(node);
+    const styles=new Map();
+    const metrics=node=>{if(!styles.has(node))styles.set(node,getComputedStyle(node));return styles.get(node);};
     const box=(node,props)=>props.reduce((sum,prop)=>sum+px(metrics(node)[prop]),0);
     const outer=node=>node.getBoundingClientRect().height+box(node,['marginTop','marginBottom']);
     const dialogStyle=metrics(filmDialog);
@@ -1322,8 +1323,9 @@
     const minimum=cover?Math.min(natural,Math.max(100,padding+72)):0;
     const coverHeight=cover?Math.min(natural,Math.max(minimum,Math.floor(limit-fixed))):0;
     const fitted=Math.ceil(Math.min(limit,Math.max(natural+reserve,fixed+coverHeight)));
-    filmDialog.style.setProperty('--file-fitted-height',`${fitted}px`);
-    filmDialog.style.setProperty('--file-fitted-art',`${Math.max(1,coverHeight-padding)}px`);
+    const heightValue=`${fitted}px`, artValue=`${Math.max(1,coverHeight-padding)}px`;
+    if(filmDialog.style.getPropertyValue('--file-fitted-height')!==heightValue)filmDialog.style.setProperty('--file-fitted-height',heightValue);
+    if(filmDialog.style.getPropertyValue('--file-fitted-art')!==artValue)filmDialog.style.setProperty('--file-fitted-art',artValue);
     filmDialog.classList.add('ts-film-fitted');
   }
 
@@ -1412,8 +1414,8 @@
     $('.file-header-name',filmDialog).textContent = info.title;
     $('#film-file-content').innerHTML = `
       ${dossierStill ? frameDialog
-        ? frameButton(dossierStill, info.title, 'film-file-frame', imageMarkup(dossierStill, true, '(min-width: 1971px) 1080px, (min-width: 1440px) 55vw, (min-width: 920px) 790px, 96vw'), ` data-film="${esc(slug)}" tabindex="-1"`)
-        : `<div class="film-file-frame">${imageMarkup(dossierStill, true, '(min-width: 1971px) 1080px, (min-width: 1440px) 55vw, (min-width: 920px) 790px, 96vw')}</div>` : ''}
+        ? frameButton(dossierStill, info.title, 'film-file-frame', imageMarkup(dossierStill, true, '(min-width: 1971px) 1080px, (min-width: 1440px) 55vw, (min-width: 920px) 790px, 96vw', [16,9], true), ` data-film="${esc(slug)}" tabindex="-1"`)
+        : `<div class="film-file-frame">${imageMarkup(dossierStill, true, '(min-width: 1971px) 1080px, (min-width: 1440px) 55vw, (min-width: 920px) 790px, 96vw', [16,9], true)}</div>` : ''}
       <div class="film-file-meta"><div class="file-poster">${poster(slug,true,'(max-width: 680px) 54px, 68px')}</div><div class="file-meta-copy"><h2 id="film-file-title" tabindex="-1">${esc(info.title)}</h2><p class="file-year">${esc(info.year)}${director ? ` · ${personLink(director)}` : ''}</p><div class="file-meta-bottom"><p class="file-tally"><span class="file-tally-wide">${esc(winText)} <span class="file-mention-count">· ${mentions.length} ${mentions.length === 1 ? 'honorable mention' : 'honorable mentions'}</span></span><span class="file-tally-narrow">${wins.length} ${wins.length === 1 ? 'win' : 'wins'} <span class="file-mention-count">· ${mentions.length} ${mentions.length === 1 ? 'mention' : 'mentions'}</span></span></p>${dossierActions(slug,info,dossierStill)}</div></div></div>
       <div class="film-file-sections file-dossier-accordion">
       ${wonAwardsSection(wins)}
@@ -1441,7 +1443,7 @@
     requestAnimationFrame(() => target.scrollIntoView({block:'start',behavior: reducedMotion.matches ? 'instant' : 'smooth'}));
   }
 
-  function prepareAward(index) {
+  function prepareAward(index, urgent = false) {
     const award = awards[index];
     if (!award || navigator.connection?.saveData) return Promise.resolve();
     const frames = awardFrames(award, 'dialog');
@@ -1449,6 +1451,7 @@
     return Promise.all(frames.map(({path}, i) => {
       if (!path) return Promise.resolve();
       const image = new Image();
+      image.fetchPriority=urgent?'high':'low';
       const srcset = imageSources(path);
       if (srcset) {
         image.sizes = sizes[i];
@@ -1459,6 +1462,20 @@
     }));
   }
 
+  let adjacentTimer=0,adjacentGeneration=0;
+  function stopAdjacentPreload(){clearTimeout(adjacentTimer);adjacentGeneration++;}
+  function scheduleAdjacentPreload(index) {
+    stopAdjacentPreload();
+    const generation=adjacentGeneration;
+    const hero=$('.ceremony-frame img',dialogScroll);
+    const schedule=()=>{
+      if(generation!==adjacentGeneration)return;
+      adjacentTimer=setTimeout(()=>{if(generation===adjacentGeneration&&awardDialog.open&&current===index&&!ceremonySession){prepareAward(index+1);prepareAward(index-1);}},250);
+    };
+    if(hero&&!hero.complete){hero.addEventListener('load',schedule,{once:true});hero.addEventListener('error',schedule,{once:true});}
+    else schedule();
+  }
+
   function ceremonyProgramme() {
     return `<div class="ts-ceremony-programme" aria-label="Programme, without spoilers">${archive.chapters.map(chapter=>{
       const rows=awards.filter(award=>award.chapter.id===chapter.id);
@@ -1466,6 +1483,7 @@
     }).join('')}</div>`;
   }
   function renderAward(index, direction = 0, requestedPhase = null) {
+    stopAdjacentPreload();
     current = index;
     const award = awards[index];
     const next = awards[index + 1];
@@ -1552,7 +1570,7 @@
     dialogScroll.scrollTop = 0;
     syncCeremonyBackdrop();
     if (awardDialog.open) dialogTitle.focus({preventScroll: true});
-    if (!ceremonySession) { prepareAward(index + 1); prepareAward(index - 1); }
+    if (!ceremonySession) scheduleAdjacentPreload(index);
   }
 
   function cancelSceneChange() {
@@ -1627,7 +1645,7 @@
     try {
       await Promise.all([
         outgoing.finished,
-        Promise.race([prepareAward(next), new Promise(resolve => { deadline = setTimeout(resolve, 210); })])
+        Promise.race([prepareAward(next,true), new Promise(resolve => { deadline = setTimeout(resolve, 210); })])
       ]);
       if (awardDialog.open && sceneChange === outgoing) renderAward(next, direction);
     } catch (error) {
@@ -1640,7 +1658,7 @@
   }
 
   awardDialog.addEventListener('close', () => {
-    if (!awardDialog.open) cancelSceneChange();
+    if (!awardDialog.open) {cancelSceneChange();stopAdjacentPreload();}
     startTouch = null;
     suppressSwipeClickUntil = 0;
   });
@@ -1767,6 +1785,39 @@
       event.preventDefault(); event.stopImmediatePropagation(); suppressSwipeClickUntil = 0;
     }
   }, {capture:true});
+
+  if (continuity?.embedded) {
+    // The foreground dossier is re-selected without a new document load.
+    // Release its old artwork and local navigation stack when parking; the
+    // originating journey/index lives untouched in the parent document.
+    function resetLayer() {
+      visitActive=false;dossierStack.length=0;
+      cancelSceneChange();stopAdjacentPreload();ceremonySession=null;indexReturnAward=null;indexScrollTop=0;
+      clearTimeout(copyNoticeTimer);
+      for (const dialog of [frameDialog,filmDialog,personDialog,awardDialog,indexDialog]) {
+        if (dialog?.open) dialog.close();
+      }
+      const image=$('#full-frame-image',frameDialog);
+      window.ArchiveFrameMotion?.cancel(image);image.removeAttribute('src');
+      frameCollection=[];frameIndex=0;frameTouch=null;setContactSheet(false,true);
+      $('#film-file-content').replaceChildren();$('#person-content').replaceChildren();dialogScroll.replaceChildren();
+      indexController.park();
+      document.body.classList.remove('dialog-open');
+    }
+    function selectLayer(target) {
+      const query=target.searchParams;
+      const directAward=awardsById.get(query.get('award'));
+      const directFilm=query.get('film'),directPerson=query.get('artist');
+      visitActive=true;
+      if (directAward) openAward(directAward.number-1,globalSearchButton,false,true);
+      else if(directFilm&&film(directFilm))openFilmFile(directFilm,globalSearchButton,true);
+      else if(directPerson&&people.has(directPerson))openPersonFile(directPerson,globalSearchButton,true);
+      else return false;
+      return true;
+    }
+    continuity.registerLayerRenderer({open:selectLayer,reset:resetLayer});
+    return;
+  }
 
   const chapters = $$('.chapter');
   const cards = $$('.award-card');

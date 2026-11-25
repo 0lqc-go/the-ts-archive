@@ -11,7 +11,12 @@
   const L = (en,ar) => ({en,ar});
   const strings = {
     title:L("Cinema Profile","ملفّك السينمائي"),
-    intro:L("Choose between films and frames. Discover the patterns in what stays with you.","اختر بين الأفلام والكادرات، واكتشف الأنماط فيما يبقى معك."),
+    intro:L("Choose between films and frames. Discover the patterns behind the stories you return to and the characters you understand.","اختر بين الأفلام والكادرات، واكتشف الأنماط وراء القصص التي تعود إليها والشخصيات التي تفهمها."),
+    frameworkLabel:L("Inspired by","مستوحى من"),
+    frameworks:L("Jungian cognitive functions · MBTI · Objective Personality · Enneagram","وظائف كارل يونغ المعرفية · MBTI · Objective Personality · Enneagram"),
+    frameworkNote:L("An exploratory cinema portrait of cognitive preferences, taste and motives — not an official MBTI assessment.","قراءة سينمائية استكشافية للتفضيلات المعرفية والذائقة والدوافع، وليست اختبار MBTI رسمياً."),
+    profileHome:L("Profile home","بداية الاختبار"),
+    archiveHome:L("The archive","الأرشيف"),
     begin:L("Begin assessment","ابدأ الاختبار"),
     resume:L("Resume assessment","أكمل الاختبار"),
     showResult:L("View saved result","عرض النتيجة المحفوظة"),
@@ -212,6 +217,13 @@
     root.dir=state.locale==="ar"?"rtl":"ltr";
     document.querySelectorAll("[data-lang]").forEach(button=>
       button.setAttribute("aria-pressed",String(button.dataset.lang===state.locale)));
+    const routeNav=document.getElementById('cp-route-nav');
+    routeNav.dir=root.dir;
+    routeNav.querySelector('.cp-route-actions').hidden=state.route==='intro';
+    document.querySelectorAll('[data-profile-label]').forEach(node=>{
+      const key={archive:'archiveHome',home:'profileHome',restart:'restart'}[node.dataset.profileLabel];
+      if(key)node.textContent=t(key);
+    });
     if(state.route==="intro") renderIntro();
     else if(state.route==="quiz") renderQuestion();
     else if(state.route==="counterframe") renderCounterframeQuestion();
@@ -222,19 +234,49 @@
     return '<span class="cp-film-credit" dir="ltr">'+film.year+(film.director?' · '+e(film.director):"")+'</span>';
   }
 
+  function resumeRoute() {
+    if (["quiz","result","counterframe"].includes(state.resumeRoute)) return state.resumeRoute;
+    const count=Object.values(state.answers).filter(answer=>answer.done).length;
+    if(count>=state.limit)return 'result';
+    return count?'quiz':null;
+  }
+  function pauseToIntro() {
+    if(state.route==='intro')return;
+    state.resumeRoute=state.route;
+    if(state.route==='quiz'&&current?.id===D.questions[state.index]?.id&&draft)state.pausedDraft={id:current.id,answer:{...draft}};
+    state.route='intro';persist();render();goTop();
+    root.querySelector('h1')?.focus({preventScroll:true});
+  }
+  function startFromIntro() {
+    const resume=resumeRoute();
+    const paused=state.pausedDraft;
+    state.route=resume||'quiz';
+    if(!resume)state.index=0;
+    delete state.resumeRoute;delete state.pausedDraft;
+    current=null;draft=null;
+    if(state.route==='quiz'&&paused?.id===D.questions[state.index]?.id&&paused.answer&&typeof paused.answer==='object'){
+      current=D.questions[state.index];draft={...paused.answer};
+    }
+    persist();render();goTop();
+  }
+  function restartAssessment() {
+    if(!window.confirm(t('restartConfirm')))return;
+    state=C.createState(state.locale);current=null;draft=null;result=null;persist();render();goTop();
+  }
+
   function renderIntro() {
     const savedCount = Object.values(state.answers).filter(answer=>answer.done).length;
+    const resume=resumeRoute();
     const coverFilms=D.introFilms.map(id=>D.filmById[id]);
-    const gallery=coverFilms.map(film=>'<figure><img src="'+e(artwork(film.still))+'" alt="'+
-      e(film.title)+'" decoding="async"><figcaption><span lang="en">'+e(film.title)+'</span><span>'+film.year+'</span></figcaption></figure>').join("");
+    const gallery=coverFilms.map((film,i)=>'<figure><img src="'+e(artwork(film.still))+'" alt="'+
+      e(film.title)+'" decoding="async"'+(i===0?' fetchpriority="high"':' loading="lazy"')+'><figcaption><span lang="en">'+e(film.title)+'</span><span>'+film.year+'</span></figcaption></figure>').join("");
     root.innerHTML =
       '<section class="cp-wrap-wide cp-hero"><div class="cp-hero-copy"><p class="cp-eyebrow">THE T.S. ARCHIVE</p>'+
-      '<h1 class="cp-display">'+e(t("title"))+'</h1><p class="cp-hero-description">'+e(t("intro"))+'</p>'+
+      '<h1 class="cp-display" tabindex="-1">'+e(t("title"))+'</h1><p class="cp-hero-description">'+e(t("intro"))+'</p>'+
       '<div class="cp-start-card"><div class="cp-start-facts"><strong>'+e(t("time"))+'</strong><span>'+e(t("missing"))+'</span></div>'+
-      '<span class="cp-intro-pairs" aria-label="'+e(state.locale==="ar"?"العدسات السينمائية":"Cinematic lenses")+'">'+Object.keys(C.functionPairs).map(key=>e(C.lensName(key,state.locale))).join(" <i></i> ")+'</span>'+
-      '<span class="cp-intro-families" aria-label="'+e(state.locale==="ar"?"بصمات الأرشيف":"Archive signatures")+'">'+Object.keys(C.familyInfo).map(key=>e(C.familyName(key,state.locale))).join(" <i></i> ")+'</span>'+
-      '<div class="cp-start-actions">'+action("start",savedCount?t("resume"):t("begin"),"cp-button-primary")+
-      (savedCount?'<button type="button" class="cp-text-button" data-action="restart">'+e(t("restart"))+'</button>':"")+'</div></div></div>'+
+      '<div class="cp-framework"><span>'+e(t('frameworkLabel'))+'</span><strong>'+e(t('frameworks'))+'</strong><small>'+e(t('frameworkNote'))+'</small></div>'+
+      '<div class="cp-start-actions">'+action("start",resume==='result'?t('showResult'):resume?t("resume"):t("begin"),"cp-button-primary")+
+      (resume||savedCount?'<button type="button" class="cp-text-button" data-action="restart">'+e(t("restart"))+'</button>':"")+'</div></div></div>'+
       '<div class="cp-hero-art">'+gallery+'</div></section>'+
       '<section class="cp-wrap-wide cp-intro-method">'+methodBlock()+'</section>';
   }
@@ -924,11 +966,10 @@
     const name=button.dataset.action, value=button.dataset.value, film=button.dataset.film;
     if(name.startsWith("cf-")){counterframeAction(name,value);return;}
     if(name==="start"){
-      state.route="quiz";state.index=0;current=null;draft=null;persist();render();goTop();return;
+      startFromIntro();return;
     }
     if(name==="restart"){
-      if(!window.confirm(t("restartConfirm")))return;
-      state=C.createState(state.locale);current=null;draft=null;result=null;persist();render();goTop();return;
+      restartAssessment();return;
     }
     if(name==="deepen"){
       state.limit=D.fullLimit;state.index=D.coreLimit;state.route="quiz";current=null;draft=null;persist();render();goTop();return;
@@ -985,6 +1026,21 @@
   document.querySelectorAll("[data-lang]").forEach(button=>button.addEventListener("click",()=>{
     state.locale=button.dataset.lang;persist();render();
   }));
+
+  document.querySelectorAll('[data-profile-action]').forEach(control=>control.addEventListener('click',event=>{
+    if(event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
+    event.preventDefault();
+    if(control.dataset.profileAction==='home')pauseToIntro();
+    else restartAssessment();
+  }));
+
+  // Entry points from the archive open the introduction, but refreshing a
+  // question without this intent continues the assessment as before.
+  if(new URLSearchParams(location.search).get('home')==='1'){
+    if(state.route!=='intro') {state.resumeRoute=state.route;state.route='intro';persist();}
+    const url=new URL(location.href);url.searchParams.delete('home');
+    try{history.replaceState(history.state,'',url);}catch{}
+  }
 
   render();
 })();

@@ -487,7 +487,21 @@
       setFiltersOpen(Boolean(saved.filtersOpen));
       return refresh(true).then(()=>{results.scrollTop=Number(saved.scroll)||0;});
     }
-    return {ensure() { if (!rendered) refresh(true); }, global() { if (multi) { resetScope = 'all'; setScope('all'); updateFilterSummary(); } if (!rendered) refresh(true); }, setTopic, state, refresh,snapshot,restore};
+    function park() {
+      // A parked dossier shell keeps the controller and cached models but
+      // releases its old result nodes and invalidates any outstanding render.
+      generation++;rendered=false;pool=[];lastDiscovery='';
+      resetScope=defaultScope;
+      Object.assign(state,{scope:defaultScope,query:'',year:null,chapter:null,selection:'all',role:'all'});
+      search.value='';
+      if ($('#index-edition-select',dialog)) $('#index-edition-select',dialog).value=defaultScope;
+      $('#index-selection-select',dialog).value='all';
+      $('#index-role-select',dialog).value='all';
+      setFiltersOpen(false);visual?.clear();results.replaceChildren();results.scrollTop=0;
+      resultNav.replaceChildren();resultNav.hidden=true;discover.disabled=true;
+      suggestionsBox.replaceChildren();yearBox.replaceChildren();updateFilterSummary();
+    }
+    return {ensure() { if (!rendered) refresh(true); }, global() { if (multi) { resetScope = 'all'; setScope('all'); updateFilterSummary(); } if (!rendered) refresh(true); }, setTopic, state, refresh,snapshot,restore,park};
   }
 
   async function renderMoodCollections(section, engine) {
