@@ -56,8 +56,16 @@
         const {film, frame} = current;
         const date = new Intl.DateTimeFormat('en', {day:'numeric', month:'short'}).format(now);
         const dateISO = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
-        section.innerHTML = `<div class="screening-daily-heading"><span>Frame of the day</span><time datetime="${dateISO}">${esc(date)}</time></div>
-          <a class="screening-daily-card" href="${esc(film.href)}" aria-label="Explore ${esc(film.title)} (${esc(film.year)})"><img src="${esc(frame.path)}" width="${frame.width}" height="${frame.height}" alt="" loading="lazy" decoding="async"><span class="screening-daily-caption"><strong>${esc(film.title)}</strong><small>${esc(film.year)}</small></span></a>${frame.credit ? `<small class="screening-daily-credit">${esc(frame.credit)}</small>` : ''}`;
+        const source = frame.credit ? `<details class="screening-daily-source"><summary aria-label="Photo credit"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="6.25"/><path d="M8 7.25v3.75M8 4.7h.01"/></svg></summary><small class="screening-daily-source-popover">${esc(frame.credit)}</small></details>` : '';
+        section.innerHTML = `<div class="screening-daily-heading"><span>Frame of the day</span><div class="screening-daily-meta">${source}<time datetime="${dateISO}">${esc(date)}</time></div></div>
+          <a class="screening-daily-card" href="${esc(film.href)}" aria-label="Explore ${esc(film.title)} (${esc(film.year)})"><img src="${esc(frame.path)}" width="${frame.width}" height="${frame.height}" alt="" loading="lazy" decoding="async"><span class="screening-daily-caption"><strong>${esc(film.title)}</strong><small>${esc(film.year)}</small></span></a>`;
+        const sourceDetails = $('.screening-daily-source',section);
+        sourceDetails?.addEventListener('keydown', event => {
+          if (event.key === 'Escape' && sourceDetails.open) {
+            event.stopPropagation(); sourceDetails.open = false;
+            $('summary',sourceDetails)?.focus();
+          }
+        });
         const image = $('img', section);
         image.addEventListener('error', () => { image.hidden = true; });
         window.ArchiveContinuity?.prefetch(film.href,$('.screening-daily-card',section));
