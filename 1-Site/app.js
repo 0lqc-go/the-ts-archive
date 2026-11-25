@@ -75,10 +75,13 @@
   const film = slug => archive.films[slug];
   const art = slug => media.films?.[slug] || {};
   const {profile} = catalog;
-  site.displayProfile(catalog);
+  if (!window.ArchiveContinuity?.embedded) site.displayProfile(catalog);
   const onSnubs = document.body.dataset.page === 'snubs';
   // All editions share one presentation; decade-specific data stays in JSON.
   const enhanced = !onSnubs;
+  const round2 = window.ArchiveFeatures;
+  const continuity = window.ArchiveContinuity;
+  const editorialComposition = enhanced && round2?.enabled('11');
   const awardDialog = $('#award-dialog');
   const indexDialog = onSnubs ? null : $('#index-dialog');
   const filmDialog = $('#film-file-dialog');
@@ -91,7 +94,7 @@
   site.setText('[data-edition-label]', onSnubs ? 'THE ALTERNATE BALLOT / ' + selected.period : 'THE ' + selected.period + ' EDITION');
   const cover = onSnubs ? snubList : selected;
   const coverImage = $(onSnubs ? '.snubs-image' : '.hero-image');
-  site.setCover(coverImage, cover?.cover, cover, media);
+  if (!continuity?.embedded) site.setCover(coverImage, cover?.cover, cover, media);
   if (cover?.coverFilm) site.setText('#cover-credit', cover.coverFilm + ' / ' + cover.coverYear);
   $$('[data-awards-link]').forEach(link => { link.href = site.editionHref(editionId) + '#awards'; });
   if (snubList && archive.snubs?.length) {
@@ -166,7 +169,10 @@
         if (layout === 'dialog') return enhanced
           ? `(max-width: 680px) 94vw, (min-width: 2070px) ${Math.ceil(1136 * share)}px, (min-width: 1450px) ${Math.ceil(57 * share)}vw, (min-width: 900px) ${Math.ceil(800 * share)}px, ${Math.ceil(94 * share)}vw`
           : `(min-width: 1150px) ${Math.ceil(1052 * share)}px, ${Math.ceil(94 * share)}vw`;
-        if (layout === 'feature') return `${Math.ceil(88 * share)}vw`;
+        if (layout === 'feature') return editorialComposition
+          ? `(min-width: 2440px) ${Math.ceil(1840 * share)}px, (min-width: 1520px) ${Math.ceil(76 * share)}vw, ${Math.ceil(88 * share)}vw`
+          : `${Math.ceil(88 * share)}vw`;
+        if (layout === 'artist-editorial') return `(min-width: 2060px) ${Math.ceil(1000 * share)}px, (min-width: 1520px) ${Math.ceil(46 * share)}vw, (min-width: 850px) ${Math.ceil(54 * share)}vw, ${Math.ceil(88 * share)}vw`;
         if (layout === 'artist') return `(min-width: 1450px) ${Math.ceil(620 * share)}px, (min-width: 681px) ${Math.ceil(48 * share)}vw, ${Math.ceil(88 * share)}vw`;
         return `(min-width: 850px) ${Math.ceil(60 * share)}vw, ${Math.ceil(88 * share)}vw`;
       })
@@ -322,7 +328,7 @@
     const credit = creditFor(entry, category);
     const performance = !artist && performanceCredit(entry, category);
     const name = artist ? creditMarkup(credit, artistName(entry)) : performance ? performanceNameMarkup(performance) : title(entry);
-    const character = eager && !artist && !performance && credit?.suffix === ')' && credit.prefix.endsWith('(');
+    const character = (eager || round2?.enabled('15')) && !artist && !performance && credit?.suffix === ')' && credit.prefix.endsWith('(');
     const caption = artist ? esc(detail) : performance ? performanceFilmLine(entry, performance) : character
       ? `<span class="nominee-character">${esc(credit.prefix.slice(0,-1).trim())}</span><span class="nominee-actor">${creditMarkup({...credit,prefix:'',suffix:''},'')}</span>`
       : creditMarkup(credit, detail);
@@ -353,6 +359,7 @@
     const artist = enhanced && portfolioPresentation(award);
     const widePortfolio = artist && edition.presentationStills?.[award.id]?.allLayouts === true;
     const featured = enhanced && (feature || artist || award.id === 'best-performances-of-the-decade');
+    const sideBaseline = editorialComposition && !feature && !artist && award.nominees.length > 0;
     const quote = award.winner.detail?.startsWith('“') && award.chapter.id !== 'film-music';
     const detail = artist ? workNames(award.winner) : award.winner.detail;
     const credit = creditFor(award.winner, award.id);
@@ -363,7 +370,7 @@
       : '';
     const winnerSummary = performance ? performanceName(performance) + ' — ' + workNames(award.winner) : award.winner.text;
     const winner = `<button class="winner-frame" data-award="${award.number - 1}" aria-haspopup="dialog" aria-label="Open ${esc(award.name)}: ${esc(winnerSummary)}">
-        ${renderFrames(awardFrames(award), feature, artist && !widePortfolio ? 'artist' : featured ? 'feature' : 'card')}${enhanced ? compactArtwork(award, artist) : ''}${winnerBadge(award)}
+        ${renderFrames(awardFrames(award), feature, artist && !widePortfolio ? (editorialComposition ? 'artist-editorial' : 'artist') : featured ? 'feature' : 'card')}${enhanced ? compactArtwork(award, artist) : ''}${winnerBadge(award)}
         ${performance ? '' : `<span class="winner-copy"><span class="winner-title">${artist ? esc(artistName(award.winner)) : title(award.winner)}</span>${detail && !linkedCredit ? `<span class="winner-detail${artist ? ' portfolio-summary' : quote ? ' line-of-dialogue' : ''}">${esc(detail)}</span>` : ''}${enhanced && !artist && award.winner.films.length === 1 ? `<span class="compact-year">${esc(film(award.winner.films[0]).year)}</span>` : ''}</span>`}${enhanced ? '' : '<span class="frame-open" aria-hidden="true">↗</span>'}
       </button>`;
     const actions = musicActions(award);
@@ -377,7 +384,7 @@
     const artistContext = artist
       ? `<div class="artist-context">${artistHeading}${artistWorks(award.winner)}${actions ? `<div class="winner-actions">${actions}</div>` : ''}</div>${artistAction || mentionsToggle ? `<div class="winner-actions portfolio-compact-actions">${artistAction}${mentionsToggle}</div>` : ''}`
       : `${caption}${linkedCredit ? `<p class="winner-credit-line">${creditMarkup(credit, detail)}</p>` : ''}${actions || mentionsToggle ? `<div class="winner-actions${actions ? '' : ' compact-only'}">${actions}${mentionsToggle}</div>` : ''}`;
-    return `<article class="award-card${feature ? ' feature-card' : ''}${quote ? ' quote-card' : ''}${artist ? ' portfolio-card' : ''}${widePortfolio ? ' portfolio-wide-lead' : ''}${enhanced ? ' enhanced-card' : ''}${featured ? ' featured-award' : ''}" id="${award.id}" data-accent="${award.accent}" style="--accent:${award.accent}" aria-labelledby="heading-${award.id}">
+    return `<article class="award-card${feature ? ' feature-card' : ''}${quote ? ' quote-card' : ''}${artist ? ' portfolio-card' : ''}${widePortfolio ? ' portfolio-wide-lead' : ''}${enhanced ? ' enhanced-card' : ''}${featured ? ' featured-award' : ''}${sideBaseline ? ' side-baseline-card' : ''}" id="${award.id}" data-accent="${award.accent}" style="--accent:${award.accent}" aria-labelledby="heading-${award.id}">
       <div class="award-heading"><div><h3 id="heading-${award.id}">${esc(award.name)}</h3>${award.description ? `<p class="award-description">${esc(award.description)}</p>` : ''}</div><span class="award-number" aria-label="Award ${award.number}">${pad(award.number)}</span></div>
       ${enhanced ? `<div class="winner-block${artist ? ' artist-winner-block' : performance ? ' performance-winner-block' : ''}">${winner}${artistContext}</div>` : winner}
       ${nominations(award.nominees, false, artist, award.id, mentionsId)}
@@ -541,6 +548,105 @@
   }
 
   const dialogTriggers = new WeakMap();
+  const dossierStack = [];
+  let visitActive = Boolean(continuity?.hasOrigin);
+  function isDossier(dialog) { return Boolean(dialog && [filmDialog,personDialog,awardDialog,indexDialog].includes(dialog)); }
+  function dossierBody(dialog) {
+    if (dialog === filmDialog) return $('#film-file-content',dialog);
+    if (dialog === personDialog) return $('#person-content',dialog);
+    if (dialog === awardDialog) return $('.ceremony-scroll',dialog);
+    if (dialog === indexDialog) return $('#index-results',dialog);
+    return null;
+  }
+  const dossierControls = 'a[href],button:not([disabled]),summary,input,select';
+  function snapshotDossier(dialog, trigger = document.activeElement, live = true) {
+    if (!isDossier(dialog) || !dialog.open) return null;
+    const body = dossierBody(dialog);
+    const kind = dialog === filmDialog ? 'film' : dialog === personDialog ? 'person' : dialog === awardDialog ? 'award' : 'index';
+    const id = kind === 'film' ? dialog.dataset.film : kind === 'person' ? dialog.dataset.person : kind === 'award' ? awards[current]?.id : null;
+    const state = {kind,id,scroll:body?.scrollTop||0,details:$$('details',body||dialog).flatMap((item,i)=>item.open?[i]:[]),focus: $$(dossierControls,dialog).indexOf(trigger),
+      ceremony:kind==='award'&&ceremonySession?{seen:[...ceremonySession.seen],phase:ceremonySession.phase}:null,
+      index:kind==='index'? indexController.snapshot() : null};
+    if (live) state.live = {opener:dialogTriggers.get(dialog),focus:trigger,nodes:kind!=='index'&&body?[...body.childNodes]:null};
+    return state;
+  }
+  function suspendDossier(trigger) {
+    if (!continuity) return;
+    const source = trigger instanceof Element ? trigger.closest('dialog[open]') : null;
+    const state = snapshotDossier(source,trigger);
+    if (!state) return;
+    dossierStack.push(state);
+    // Keep actual nodes for local returns. Closing a suspended dialog must not
+    // consume a homepage/journey visit or change its URL.
+    source.close();
+  }
+  function updateReturnLabel(dialog) {
+    if (!continuity || !isDossier(dialog)) return;
+    const close = $('.dialog-close',dialog);
+    if (!close) return;
+    const previous = dossierStack.at(-1);
+    const label = previous?.kind==='film' ? film(previous.id)?.title : previous?.kind==='award' ? awardsById.get(previous.id)?.name : previous?.kind==='person' ? people.get(previous.id)?.name : previous?.kind==='index' ? 'the index' : visitActive ? 'the previous page' : '';
+    if (!close.dataset.archiveCloseLabel) close.dataset.archiveCloseLabel = close.getAttribute('aria-label') || 'Close';
+    close.setAttribute('aria-label',label ? `Return to ${label}` : close.dataset.archiveCloseLabel);
+    if (label) close.title=`Return to ${label}`; else close.removeAttribute('title');
+  }
+  function restoreDossier(state) {
+    if (!state) return false;
+    const live = state.live;
+    let dialog;
+    if (state.kind==='film' && film(state.id)) { dialog=filmDialog; openFilmFile(state.id,live?.opener,true); }
+    else if (state.kind==='person' && people.has(state.id)) { dialog=personDialog; openPersonFile(state.id,live?.opener,true); }
+    else if (state.kind==='award' && !onSnubs && awardsById.has(state.id)) { dialog=awardDialog; openAward(awardsById.get(state.id).number-1,live?.opener,false,true,state.ceremony); }
+    else if (state.kind==='index' && indexDialog) { dialog=indexDialog; openIndex(live?.opener,false,true); }
+    if (!dialog) return false;
+    const body = dossierBody(dialog);
+    const settle = () => {
+      if (!dialog.open) return;
+      const details = $$('details',body||dialog);
+      details.forEach((item,i)=>{ item.open=state.details.includes(i); });
+      const activeConnection = details.find(item=>item.open&&item.dataset.fileGroup==='connections');
+      if (activeConnection) fillFilmConnections(activeConnection);
+      if (dialog===filmDialog) fitFilmFileViewport();
+      const focus=live?.focus?.isConnected?live.focus:$$(dossierControls,dialog)[state.focus];
+      if (focus?.getClientRects().length) focus.focus({preventScroll:true});
+      if (body) body.scrollTop=state.scroll;
+      requestAnimationFrame(()=>{
+        if (dialog.open && body) body.scrollTop=state.scroll;
+        if (dialog===filmDialog) syncFilmFileBackdrop();
+        if (dialog===awardDialog) syncCeremonyBackdrop();
+      });
+      updateReturnLabel(dialog);
+    };
+    if (state.kind==='index') {
+      if (state.index) indexController.restore(state.index).then(settle);
+      else settle();
+    } else {
+      // Reattach the exact markup: the still gallery, expanded disclosure,
+      // already-loaded connections and comparison remain the same elements.
+      if (live?.nodes && body) body.replaceChildren(...live.nodes);
+      settle();
+    }
+    return true;
+  }
+  function registerDossierContinuity() {
+    if (!continuity) return;
+    const serial = ({live,...state}) => state;
+    continuity.register('dossiers',trigger=>{
+      const dialog = [filmDialog,personDialog,awardDialog,indexDialog].find(item=>item?.open);
+      const active = snapshotDossier(dialog,trigger,false);
+      return {stack:dossierStack.map(serial),active};
+    },state=>{
+      dossierStack.splice(0,dossierStack.length,...(state.stack||[]));
+      if (state.active) restoreDossier(state.active);
+    });
+  }
+  function abandonDossiers() {
+    if (!continuity) return;
+    dossierStack.length=0;
+    visitActive=false;
+    const url=new URL(location.href);
+    if (url.searchParams.has('visit')) { url.searchParams.delete('visit'); site.replaceLocation(url); }
+  }
   function openDialog(dialog, focusTo, trigger = document.activeElement) {
     if (!dialog.open) {
       dialogTriggers.set(dialog, trigger);
@@ -548,6 +654,8 @@
     }
     document.body.classList.add('dialog-open');
     if (focusTo) $(focusTo, dialog)?.focus({preventScroll: true});
+    updateReturnLabel(dialog);
+    continuity?.ready(dialog);
   }
 
   let homeDiscoveryReturn = site.params.get('from') === 'home-discover' && film(site.params.get('film'));
@@ -580,6 +688,20 @@
   }
   function closeDialog(dialog, dismissed = false) {
     if (dialog === indexDialog && dialog.open) saveIndexPosition();
+    if (continuity && dismissed && dialog.open && isDossier(dialog)) {
+      if (dossierStack.length) {
+        const previous=dossierStack.pop();
+        dialog.close();
+        if (restoreDossier(previous)) return;
+      }
+      if (visitActive && continuity.returnToOrigin()) {
+        // Keep the detail visible until the parent completes its short fade.
+        // The source journey or index never leaves its original document.
+        visitActive=false;
+        if(!continuity.embedded)dialog.close();
+        return;
+      }
+    }
     if (dialog === filmDialog && dialog.open && (homeDiscoveryReturn || journeyReturn)) {
       const visit = journeyReturn;
       journeyReturn = null;
@@ -636,6 +758,7 @@
     });
     frameDialog.addEventListener('close', () => {
       if (!frameDialog.open) {
+        window.ArchiveFrameMotion?.cancel(image);
         setContactSheet(false, true);
         image.removeAttribute('src');
         image.removeAttribute('width'); image.removeAttribute('height');
@@ -752,9 +875,18 @@
   }
 
   function displayFrame() {
+    const frame=frameCollection[frameIndex];
+    if (!frame) return;
+    updateContactSheet();
+    const image=$('#full-frame-image',frameDialog);
+    if (window.ArchiveFrameMotion) {
+      window.ArchiveFrameMotion.present(image,frame.src,()=>paintFrame(frame));
+    } else paintFrame(frame);
+  }
+
+  function paintFrame(frame) {
     const image = $('#full-frame-image', frameDialog);
     const status = $('#full-frame-status', frameDialog);
-    const frame = frameCollection[frameIndex];
     if (!frame) return;
     $('#full-frame-title', frameDialog).textContent = frame.label;
     const context = $('#full-frame-context', frameDialog);
@@ -831,18 +963,25 @@
       event.preventDefault();
       const award = awardsById.get(frameAward.dataset.frameAward);
       if (award) {
-        if (personDialog?.open) closeDialog(personDialog);
-        if (filmDialog.open) closeDialog(filmDialog);
-        if (indexDialog.open) closeDialog(indexDialog);
-        openAward(award.number - 1, document.getElementById(award.id)?.querySelector('.winner-frame'));
+        if (continuity) openAward(award.number-1,frameAward);
+        else {
+          if (personDialog?.open) closeDialog(personDialog);
+          if (filmDialog.open) closeDialog(filmDialog);
+          if (indexDialog.open) closeDialog(indexDialog);
+          openAward(award.number - 1, document.getElementById(award.id)?.querySelector('.winner-frame'));
+        }
       }
       return;
+    }
+    if (onSnubs && continuity && frameAward && normalClick) {
+      event.preventDefault(); continuity.navigate(directAwardHref(frameAward.dataset.frameAward),frameAward); return;
     }
     const anchorLink = event.target.closest('a[data-archive-anchor]');
     if (anchorLink && normalClick) {
       const target = document.getElementById(anchorLink.dataset.archiveAnchor);
       if (target) {
         event.preventDefault();
+        abandonDossiers();
         for (const dialog of [personDialog, filmDialog, awardDialog, indexDialog]) if (dialog?.open) closeDialog(dialog);
         const url = new URL(location.href);
         url.searchParams.delete('award');
@@ -855,19 +994,25 @@
     const movie = event.target.closest('a[data-film-file]');
     if (filmDialog && movie && normalClick) {
       event.preventDefault();
-      const trigger = personDialog?.open ? dialogTriggers.get(personDialog) ?? movie : movie;
-      if (personDialog?.open) closeDialog(personDialog);
+      const trigger = !continuity && personDialog?.open ? dialogTriggers.get(personDialog) ?? movie : movie;
+      if (!continuity && personDialog?.open) closeDialog(personDialog);
       openFilmFile(movie.dataset.filmFile, trigger);
       return;
     }
     const jump = event.target.closest('button[data-jump-award]');
-    if (jump) jumpToAward(jump.dataset.jumpAward);
+    if (jump) {
+      const award=awardsById.get(jump.dataset.jumpAward);
+      if (continuity && award && jump.closest('dialog[open]')) {
+        if (onSnubs) continuity.navigate(directAwardHref(award.id),jump);
+        else openAward(award.number-1,jump);
+      } else jumpToAward(jump.dataset.jumpAward);
+    }
   });
 
   if ($('#snub-entries')) renderSnubs();
   explore.setPageActions({editionId, awards:!onSnubs, openFilm:openFilmFile});
 
-  if ($('#credit-links')) {
+  if ($('#credit-links') && !continuity?.embedded) {
     $('#credit-links').innerHTML = `<p>${selected.coverSource ? `<a href="${esc(selected.coverSource)}" ${external}>${esc(selected.coverFilm)} cover image ↗</a><br>` : ''}<a href="${esc(profile.url)}" ${external}>${esc(profile.name)} · Letterboxd profile artwork ↗</a></p><details class="image-sources"><summary>Film artwork sources</summary><ul>${Object.entries(archive.films).map(([slug, info]) => `<li><a href="${esc(art(slug).source || info.url)}" ${external}>${esc(info.title)} ↗</a>${art(slug).posterSource ? ` · <a href="${esc(art(slug).posterSource)}" ${external}>Poster source</a>` : ''}${art(slug).backdropSource ? ` · <a href="${esc(art(slug).backdropSource)}" ${external}>Film still</a>` : ''}</li>`).join('')}</ul></details>`;
     const sources = Object.entries(archive.films).flatMap(([slug]) => {
       const stills = [...(alternates[slug] ?? []),...(archive.galleries?.[slug] ?? [])];
@@ -917,15 +1062,18 @@
   if (filmDialog) {
     $('#film-file-content', filmDialog).addEventListener('scroll', syncFilmFileBackdrop, {passive:true});
     if (typeof ResizeObserver !== 'undefined') new ResizeObserver(syncFilmFileBackdrop).observe($('.film-file-header',filmDialog));
+    window.addEventListener('resize',()=>{if(filmDialog.open){fitFilmFileViewport();syncFilmFileBackdrop();}},{passive:true});
+    document.fonts?.ready.then(()=>{if(filmDialog.open)fitFilmFileViewport();});
   }
   if (onSnubs && location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
-  if (!$('#chapter-content')) return;
+  if (!$('#chapter-content')) { registerDossierContinuity(); return; }
   if (edition.opening) $('#opening-line').innerHTML = quotePanel(edition.opening, 'opening');
   if (edition.closing) $('#closing-line').innerHTML = quotePanel(edition.closing, 'closing');
   site.setText('.hero-edition-period', selected.id === '2010-2019' ? '2010s' : selected.period);
   $('#hero-title')?.setAttribute('aria-label', selected.title);
   site.setText('#award-count', awards.length);
   site.setText('#chapter-count', archive.chapters.length);
+  if (!continuity?.embedded) {
   renderChapters();
   if (hasSpotlights) renderSpotlights();
   renderFilmWall();
@@ -948,6 +1096,7 @@
       </section>`;
     }
   }
+  }
 
   const dialogContent = $('#dialog-content');
   const dialogScroll = $('.ceremony-scroll', awardDialog);
@@ -965,6 +1114,7 @@
   const nextButton = $('.ceremony-next', awardDialog);
   const indexResults = $('#index-results');
   let current = 0;
+  let ceremonySession = null;
   let startTouch = null;
   let suppressSwipeClickUntil = 0;
   let sceneChange = null;
@@ -988,6 +1138,14 @@
     for (const switcher of $$('.view-switch')) switcher.hidden = false;
     $('[data-view-toggle]').hidden = false;
     syncViewButtons();
+    if (round2?.enabled('07')) {
+      const entry=$('.start-ceremony');
+      if (entry) {
+        $('span',entry).textContent='Start ceremony';
+        entry.setAttribute('aria-label','Start the spoiler-free awards ceremony');
+        entry.title='Reveal the winners one award at a time';
+      }
+    }
   }
 
   function syncViewButtons() {
@@ -1022,7 +1180,7 @@
     else url.searchParams.delete('view');
     if (anchor) url.hash = anchor.id;
     site.replaceLocation(url);
-    if (fromIndex) closeDialog(indexDialog);
+    if (fromIndex) { abandonDossiers(); closeDialog(indexDialog); }
     requestAnimationFrame(() => {
       if (anchor) anchor.scrollIntoView({behavior:'instant',block:'start'});
       onScroll();
@@ -1133,6 +1291,42 @@
 
   // The cover, poster and heading scroll together. Keep just the small
   // navigation row available, adding the film name once it scrolls away.
+  // Fit the CLOSED dossier, not the open accordion's content. Every summary
+  // contributes its actual measured size, so films with more sections receive
+  // enough room beneath the photograph. Expanding a group scrolls inside the
+  // same panel rather than repeatedly changing the dialog's footprint.
+  function fitFilmFileViewport() {
+    if (!round2?.enabled('15') || !filmDialog?.open) return;
+    const body=$('#film-file-content',filmDialog);
+    const meta=$('.film-file-meta',body), sections=$('.film-file-sections',body), cover=$('.film-file-frame',body);
+    if (!meta || !sections) return;
+    const px=value=>Number.parseFloat(value)||0;
+    const metrics=node=>getComputedStyle(node);
+    const box=(node,props)=>props.reduce((sum,prop)=>sum+px(metrics(node)[prop]),0);
+    const outer=node=>node.getBoundingClientRect().height+box(node,['marginTop','marginBottom']);
+    const dialogStyle=metrics(filmDialog);
+    const rowHeight=[...sections.children].reduce((sum,node)=>{
+      const summary=node.matches('details')?$('summary',node):null;
+      return sum+(summary?outer(summary)+box(node,['borderTopWidth','borderBottomWidth','paddingTop','paddingBottom','marginTop','marginBottom']):outer(node));
+    },0);
+    const summaryHeight=rowHeight+box(sections,['paddingTop','paddingBottom','borderTopWidth','borderBottomWidth','marginTop','marginBottom']);
+    const headerHeight=cover?0:outer($('.film-file-header',filmDialog));
+    const fixed=outer(meta)+summaryHeight+headerHeight+box(body,['paddingTop','paddingBottom'])+box(filmDialog,['borderTopWidth','borderBottomWidth'])+5;
+    const limit=px(dialogStyle.maxHeight)||Math.max(160,innerHeight-px(dialogStyle.getPropertyValue('--file-dialog-viewport-margin')));
+    const ratio=px(dialogStyle.getPropertyValue('--file-cover-ratio'))||2.35;
+    const padding=cover?box(cover,['paddingTop','paddingBottom']):0;
+    const natural=cover?Math.ceil(cover.clientWidth/ratio+padding):0;
+    const reserve=px(dialogStyle.getPropertyValue('--file-dialog-reserve'));
+    // Only shorten the art on a genuinely height-constrained viewport. At
+    // normal sizes preserve its original cover ratio and extend the panel.
+    const minimum=cover?Math.min(natural,Math.max(100,padding+72)):0;
+    const coverHeight=cover?Math.min(natural,Math.max(minimum,Math.floor(limit-fixed))):0;
+    const fitted=Math.ceil(Math.min(limit,Math.max(natural+reserve,fixed+coverHeight)));
+    filmDialog.style.setProperty('--file-fitted-height',`${fitted}px`);
+    filmDialog.style.setProperty('--file-fitted-art',`${Math.max(1,coverHeight-padding)}px`);
+    filmDialog.classList.add('ts-film-fitted');
+  }
+
   function syncFilmFileBackdrop() {
     if (!filmDialog?.open) return;
     const scroller = $('#film-file-content', filmDialog);
@@ -1163,9 +1357,11 @@
     return `<a href="${esc(target + '#' + anchor)}" data-archive-anchor="${esc(anchor)}">${label}</a>`;
   }
 
-  function openPersonFile(id, trigger) {
+  function openPersonFile(id, trigger, restoring = false) {
     const person = people.get(id);
     if (!personDialog || !person) return;
+    if (!restoring) suspendDossier(trigger);
+    personDialog.dataset.person=id;
     const grouped = new Map();
     for (const appearance of person.appearances) {
       for (const slug of appearance.films) {
@@ -1185,8 +1381,9 @@
     openDialog(personDialog, '#person-title', trigger);
   }
 
-  function openFilmFile(slug, trigger) {
+  function openFilmFile(slug, trigger, restoring = false) {
     if (!filmDialog || !film(slug)) return;
+    if (!restoring) suspendDossier(trigger);
     const info = film(slug);
     const {wins,mentions,portfolios,selected} = dossierEntries(slug);
     const director = directorFor(slug);
@@ -1211,7 +1408,7 @@
     const connectionSection = window.ArchiveScreeningData ? dossierDisclosure('connections','Cinematic connections',null,'<p class="file-connection-status">Related films from the archive.</p>',false,'file-connections') : '';
     filmDialog.dataset.film = slug;
     filmDialog.classList.toggle('file-has-backdrop',Boolean(dossierStill));
-    filmDialog.classList.remove('file-scrolled','file-title-scrolled');
+    filmDialog.classList.remove('file-scrolled','file-title-scrolled','ts-film-fitted');
     $('.file-header-name',filmDialog).textContent = info.title;
     $('#film-file-content').innerHTML = `
       ${dossierStill ? frameDialog
@@ -1225,6 +1422,7 @@
       ${!wins.length && !mentionsGroup && !groups.length && !snubs.length ? '<p class="empty-index">No selections in this edition.</p>' : ''}</div>`;
     $('#film-file-content').scrollTop = 0;
     openDialog(filmDialog, '#film-file-title', trigger);
+    fitFilmFileViewport();
     syncFilmFileBackdrop();
   }
 
@@ -1234,6 +1432,7 @@
       if (onSnubs && awardsById.has(id)) location.href = site.editionHref(editionId) + '#' + encodeURIComponent(id);
       return;
     }
+    abandonDossiers();
     for (const dialog of [personDialog, filmDialog, awardDialog, indexDialog]) if (dialog?.open) closeDialog(dialog);
     const url = new URL(location.href);
     url.searchParams.delete('award');
@@ -1260,7 +1459,13 @@
     }));
   }
 
-  function renderAward(index, direction = 0) {
+  function ceremonyProgramme() {
+    return `<div class="ts-ceremony-programme" aria-label="Programme, without spoilers">${archive.chapters.map(chapter=>{
+      const rows=awards.filter(award=>award.chapter.id===chapter.id);
+      return `<section class="ts-programme-chapter" style="--programme-accent:${chapterAccent(chapter.id)}"><h3>${esc(chapter.name)}</h3><ul>${rows.map(award=>`<li><button type="button" data-ceremony-jump="${award.number-1}"${award.number-1===current?' aria-current="step"':''}><span>${esc(award.name)}</span>${ceremonySession.seen.has(award.id)?'<small>Revealed</small>':''}</button></li>`).join('')}</ul></section>`;
+    }).join('')}</div>`;
+  }
+  function renderAward(index, direction = 0, requestedPhase = null) {
     current = index;
     const award = awards[index];
     const next = awards[index + 1];
@@ -1287,6 +1492,33 @@
       : '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>';
     nextButton.setAttribute('aria-label', next ? `Next award: ${next.name}` : 'Finish awards presentation');
     nextButton.title = next ? `Next award: ${next.name}` : 'Finish awards presentation';
+    // The guided view is entered explicitly from Start ceremony. Direct award
+    // links, film files and the ordinary visual index remain immediate.
+    const phase=ceremonySession ? (requestedPhase||(ceremonySession.seen.has(award.id)?'revealed':'sealed')) : 'revealed';
+    if (ceremonySession) {ceremonySession.phase=phase; if (phase==='revealed') ceremonySession.seen.add(award.id);}
+    awardDialog.dataset.ceremonyMode=ceremonySession?'guided':'regular';
+    awardDialog.dataset.ceremonyPhase=phase;
+    const programmeButton=$('.ceremony-index',awardDialog);
+    if (ceremonySession) {
+      programmeButton.setAttribute('aria-label',phase==='programme'?'Return to the current award':'Open ceremony programme');
+      programmeButton.title=phase==='programme'?'Return to award':'Programme';
+      programmeButton.setAttribute('aria-pressed',String(phase==='programme'));
+      programmeButton.removeAttribute('aria-haspopup');
+    } else {
+      programmeButton.setAttribute('aria-label','Open award index'); programmeButton.title='Open award index';
+      programmeButton.removeAttribute('aria-pressed'); programmeButton.setAttribute('aria-haspopup','dialog');
+    }
+    shareGroup.hidden=phase!=='revealed';
+    dialogScroll.setAttribute('aria-label',phase==='programme'?'Ceremony programme, without spoilers':phase==='sealed'?'Award announcement. Reveal the winner when ready.':'Award details. Swipe horizontally to move between awards.');
+    if (phase==='sealed' || phase==='programme') {
+      $('#dialog-chapter').textContent='The ceremony';
+      dialogTitle.textContent=phase==='programme'?'Programme':award.name;
+      dialogScroll.innerHTML=phase==='programme'?ceremonyProgramme():`<div class="ts-ceremony-intertitle"><div class="ts-ceremony-title"><p>${esc(award.chapter.name)}</p><h3>${esc(award.name)}</h3><button type="button" class="ts-ceremony-reveal" data-ceremony-reveal>Reveal winner</button></div></div>`;
+      dialogScroll.scrollTop=0;
+      syncCeremonyBackdrop();
+      if (awardDialog.open) (phase==='sealed'?$('.ts-ceremony-reveal',awardDialog):dialogTitle)?.focus({preventScroll:true});
+      return;
+    }
     const frames = renderFrames(awardFrames(award, 'dialog'), true, 'dialog');
     const frameClass = `ceremony-frame${artist ? ' portfolio-frame' : ''}${award.winnerArtwork ? ' portrait-frame' : ''}`;
     const winnerTitle = artist ? creditMarkup(credit, artistName(award.winner)) : performance ? performanceNameMarkup(performance) : title(award.winner);
@@ -1320,8 +1552,7 @@
     dialogScroll.scrollTop = 0;
     syncCeremonyBackdrop();
     if (awardDialog.open) dialogTitle.focus({preventScroll: true});
-    prepareAward(index + 1);
-    prepareAward(index - 1);
+    if (!ceremonySession) { prepareAward(index + 1); prepareAward(index - 1); }
   }
 
   function cancelSceneChange() {
@@ -1329,55 +1560,15 @@
     sceneChange = null;
   }
 
-  function openAward(index, trigger, fromIndex = false) {
+  function openAward(index, trigger, fromIndex = false, restoring = false, presentation = null) {
+    if (!restoring) suspendDossier(trigger);
     indexReturnAward = fromIndex ? index : null;
     cancelSceneChange();
-    renderAward(index);
-    if (!awardDialog.open) openDialog(awardDialog, '#dialog-category', trigger);
+    ceremonySession=round2?.enabled('07')&&presentation?{seen:new Set(presentation.seen||[]),phase:presentation.phase||'sealed'}:null;
+    renderAward(index,0,ceremonySession?.phase);
+    if (!awardDialog.open) openDialog(awardDialog, ceremonySession?.phase==='sealed'?'.ts-ceremony-reveal':'#dialog-category', trigger);
     syncCeremonyBackdrop();
   }
-
-  function prepareOfflineShare(awardId) {
-    const key = editionId + '/' + awardId;
-    return new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      script.src = 'content/local-share-cards/' + encodeURIComponent(editionId) + '/' + encodeURIComponent(awardId) + '.js';
-      script.onload = () => {
-        const payloads = window.__tsArchiveSharePayloads;
-        const data = payloads?.[key];
-        if (payloads) delete payloads[key];
-        script.remove();
-        if (data) resolve(data); else reject(new Error('Local card not found'));
-      };
-      script.onerror = () => { script.remove(); reject(new Error('Local card not found')); };
-      document.head.append(script);
-    });
-  }
-  saveCard.addEventListener('click', async event => {
-    if (location.protocol !== 'file:') return;
-    event.preventDefault();
-    const awardId = copyButton.dataset.copyAward;
-    const filename = saveCard.download;
-    const fileHref = saveCard.href;
-    const status = shareStatus;
-    clearTimeout(copyNoticeTimer);
-    status.textContent = 'Preparing card…';
-    try {
-      const data = await prepareOfflineShare(awardId);
-      const link = document.createElement('a');
-      link.href = data; link.download = filename;
-      awardDialog.append(link); link.click(); link.remove();
-      if (copyButton.dataset.copyAward === awardId) {
-        status.textContent = 'Download started';
-        copyNoticeTimer = setTimeout(() => status.replaceChildren(), 2000);
-      }
-    } catch {
-      if (copyButton.dataset.copyAward !== awardId) return;
-      const link = document.createElement('a');
-      link.href = fileHref; link.target = '_blank'; link.rel = 'noopener'; link.textContent = 'Open JPG';
-      status.replaceChildren(link);
-    }
-  });
 
   async function copyAwardLink(button) {
     const awardId = button.dataset.copyAward;
@@ -1417,10 +1608,11 @@
     if (!awardDialog.open || sceneChange) return;
     const next = current + direction;
     if (next === awards.length) {
-      closeDialog(awardDialog);
+      closeDialog(awardDialog,true);
       return;
     }
     if (next < 0) return;
+    if (ceremonySession) {renderAward(next,direction);return;}
     const scene = $('.ceremony-body', awardDialog);
     if (reducedMotion.matches || !scene.animate) {
       renderAward(next, direction);
@@ -1468,7 +1660,8 @@
     indexScrollTop = indexResults.scrollTop;
   }
 
-  function openIndex(trigger, returnToAward = false) {
+  function openIndex(trigger, returnToAward = false, restoring = false) {
+    if (!restoring) suspendDossier(trigger);
     indexController.ensure();
     openDialog(indexDialog, '#index-title', trigger);
     indexResults.scrollTop = indexScrollTop;
@@ -1492,20 +1685,32 @@
     if (button.matches('[data-view-toggle]')) { setAwardView(button.dataset.nextView, true); return; }
     if (button.matches('[data-view]')) { setAwardView(button.dataset.view); return; }
     if (button.matches('[data-jump-award]')) return;
-    if (button.matches('.start-ceremony')) openAward(0, button);
+    if (button.matches('.start-ceremony')) { openAward(0, button,false,false,{seen:[],phase:'sealed'}); return; }
+    if (button.matches('[data-ceremony-reveal]') && ceremonySession && ceremonySession.phase==='sealed') { renderAward(current,0,'revealed'); return; }
+    if (button.matches('[data-ceremony-jump]') && ceremonySession) {
+      const target=Number(button.dataset.ceremonyJump);
+      if (Number.isInteger(target)&&awards[target]) renderAward(target);
+      return;
+    }
     if (button.matches('.index-open, .edition-index-open')) openIndex(button);
     if (button.matches('[data-award]')) {
       const fromIndex = indexDialog.open && Boolean(button.closest('#index-results'));
-      const trigger = fromIndex ? dialogTriggers.get(indexDialog) : button;
-      if (fromIndex) closeDialog(indexDialog);
+      const trigger = fromIndex && !continuity ? dialogTriggers.get(indexDialog) : button;
+      if (fromIndex && !continuity) closeDialog(indexDialog);
       openAward(Number(button.dataset.award), trigger, fromIndex);
     }
     if (button.matches('.ceremony-prev')) advance(-1);
     if (button.matches('.ceremony-next')) advance(1);
     if (button.matches('.ceremony-index')) {
-      const trigger = dialogTriggers.get(awardDialog);
-      closeDialog(awardDialog);
-      openIndex(trigger, true);
+      if (ceremonySession) {renderAward(current,0,ceremonySession.phase==='programme'?null:'programme');return;}
+      if (continuity) {
+        if (dossierStack.at(-1)?.kind==='index') closeDialog(awardDialog,true);
+        else openIndex(button,true);
+      } else {
+        const trigger = dialogTriggers.get(awardDialog);
+        closeDialog(awardDialog);
+        openIndex(trigger, true);
+      }
     }
   });
 
@@ -1652,7 +1857,10 @@
     if (target) requestAnimationFrame(() => target.scrollIntoView({behavior:'instant'}));
   }
   const directAward = awardsById.get(site.params.get('award'));
-  if (directAward) requestAnimationFrame(() => {
+  registerDossierContinuity();
+  if (continuity?.resuming) { /* Restored the real previous layer above. */ }
+  else if (site.params.get('ceremony')==='1') requestAnimationFrame(()=>openAward(directAward?directAward.number-1:0,$('.start-ceremony'),false,false,{seen:[],phase:'sealed'}));
+  else if (directAward) requestAnimationFrame(() => {
     const card = document.getElementById(directAward.id);
     card?.scrollIntoView({behavior:'instant', block:'start'});
     openAward(directAward.number - 1, card?.querySelector('.winner-frame'));

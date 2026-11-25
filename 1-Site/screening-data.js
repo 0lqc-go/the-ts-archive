@@ -5,6 +5,8 @@
   const negativeAwards = new Set(['worst-picture', 'most-overrated-movie']);
   const actingAwards = new Set(['best-actor', 'best-actress', 'best-supporting-actor', 'best-supporting-actress', 'best-breakthrough-performance']);
   const memoryTypes = ['dialogue', 'music', 'scenes'];
+  const challengeBank = typeof module !== 'undefined' && module.exports
+    ? require('./screening-challenge-bank.js') : globalThis.ArchiveScreeningChallenge;
   // Additional scene-specific stills already in the curated galleries.
   // These are explicit, not guessed from a film's generic background.
   const sceneArtwork = new Map([
@@ -281,7 +283,55 @@
     return unique([...shuffle(preferred, random), ...shuffle(near, random), ...shuffle(sameEra, random), ...shuffle(others, random)], item => normal(item.title)).slice(0,2).map(item => ({key:item.key, label:item.title}));
   }
 
-  function questionChoices(archive, question, scope, random) {
+  function challengeFilmOptions(archive, film, slugs) {
+    const alternatives = (slugs ?? []).map(slug => archive.films.get(filmKey(film.editionId,slug))).filter(item => item && item.key !== film.key && normal(item.title) !== normal(film.title));
+    const distinct = unique(alternatives, item => normal(item.title));
+    return distinct.length === 3 ? distinct.map(item=>({key:item.key,label:item.title})) : null;
+  }
+
+  function challengeFramePool(archive, scope) {
+    return Object.entries(challengeBank?.frames ?? {}).filter(([id]) => inScope(id,scope)).flatMap(([editionId,rows]) => rows.flatMap(([slug,ref,alternatives]) => {
+      const film = archive.films.get(filmKey(editionId,slug));
+      const frame = film?.frames.find(item => item.label === ref || item.path.split('/').at(-1) === ref);
+      const challengeDistractors = film && challengeFilmOptions(archive,film,alternatives);
+      if (!frame || !challengeDistractors) return [];
+      return [{key:`challenge-frame/${film.key}/${frame.path.split('/').at(-1)}`, film, frame, marker:'Film still', prompt:'Name the film.', answerKind:'film', correct:{key:film.key,label:film.title}, challengeDistractors}];
+    }));
+  }
+
+  function challengeMemoryQuestion(archive, question) {
+    if (question.answerKind === 'composer') {
+      // Use actual score and composer credits in this archive (also across
+      // decades if necessary). These are people, not out-of-scope films.
+      const known = new Map(archive.memory.filter(item=>item.answerKind==='composer').map(item=>[item.correct.key,item.correct]));
+      for (const edition of archive.ballotEditions.values()) for (const award of edition.awards.filter(item=>item.id==='composer-of-the-decade')) {
+        for (const candidate of award.candidates) known.set(normal(candidate.title),{key:normal(candidate.title),label:candidate.title});
+      }
+      const alternatives = challengeBank?.composerAlternatives?.[question.correct.label] ?? [];
+      const challengeDistractors = unique(alternatives.map(name=>known.get(normal(name))).filter(item=>item && item.key!==question.correct.key),item=>item.key);
+      return challengeDistractors.length === 3 ? {...question,challengeDistractors} : null;
+    }
+    const slug=question.film.slug;
+    // Exclude ambiguously short quotations and self-answering titles rather
+    // than making a harder quiz unfair. The classic bank is unchanged.
+    if (question.subtype==='dialogue' && (slug==='little-women-2019'||slug==='the-brutalist')) return null;
+    let clue=question.clue;
+    if (question.subtype==='scenes') {
+      clue=challengeBank?.scenePrompts?.[`${question.award.id}/${slug}`];
+      if (!clue) return null;
+    }
+    const keys=challengeBank?.memoryAlternatives;
+    const refs=question.subtype==='music' ? keys?.[`music/${slug}`] : keys?.[slug];
+    const challengeDistractors=challengeFilmOptions(archive,question.film,refs);
+    if (!challengeDistractors) return null;
+    return {...question,clue,subclue:question.subtype==='music'?'':question.subclue,challengeDistractors};
+  }
+
+  function questionChoices(archive, question, scope, random, challenge = false) {
+    if (challenge) {
+      const choices = question.challengeDistractors;
+      return choices?.length===3 ? {...question, choices:shuffle([question.correct,...choices],random)} : null;
+    }
     let distractors;
     if (question.answerKind === 'composer') {
       const pool = archive.memory.filter(item => item.answerKind === 'composer' && inScope(item.film.editionId, scope));
@@ -298,13 +348,15 @@
     return unique([...fresh, ...previous], question => question.film.key).slice(0,length);
   }
 
-  function makeQuiz(archive, mode, {scope='all', category='all', length=5, random=Math.random, avoid=[]} = {}) {
+  function makeQuiz(archive, mode, {scope='all', category='all', difficulty='classic', length=5, random=Math.random, avoid=[]} = {}) {
     let queue = [];
+    const challenge=difficulty==='challenge' && Boolean(challengeBank);
+    const choiceCount=challenge?4:3;
     if (mode === 'winner') {
-      const pool = [...archive.ballotEditions.values()].filter(edition => inScope(edition.id,scope)).flatMap(edition => edition.awards.filter(award => !negativeAwards.has(award.id) && award.candidates.length >= 3).map(award => {
+      const pool = [...archive.ballotEditions.values()].filter(edition => inScope(edition.id,scope)).flatMap(edition => edition.awards.filter(award => !negativeAwards.has(award.id) && award.candidates.length >= choiceCount).map(award => {
         const candidate = award.candidates.find(item => item.key === award.archiveKey);
         if (!candidate?.films.length) return null;
-        const choices = shuffle([candidate, ...shuffle(award.candidates.filter(item => item.key !== award.archiveKey),random).slice(0,2)],random).map(item => ({key:item.key,label:item.title,candidate:item}));
+        const choices = shuffle([candidate, ...shuffle(award.candidates.filter(item => item.key !== award.archiveKey),random).slice(0,choiceCount-1)],random).map(item => ({key:item.key,label:item.title,candidate:item}));
         return {key:`winner/${award.key}`,award,film:candidate.films[0],candidate,marker:edition.period,prompt:'Guess the winner.',correct:{key:candidate.key,label:candidate.title},answerKind:'winner',choices};
       }).filter(Boolean));
       const pick = (items,number) => [...shuffle(items.filter(q=>!avoid.includes(q.key)),random), ...shuffle(items.filter(q=>avoid.includes(q.key)),random)].slice(0,number);
@@ -316,7 +368,7 @@
       }
       return pick(pool,length);
     } else if (mode === 'frame') {
-      const pool = archive.filmList.filter(film => inScope(film.editionId, scope) && film.frames.length).map(film => {
+      const pool = challenge ? challengeFramePool(archive,scope) : archive.filmList.filter(film => inScope(film.editionId, scope) && film.frames.length).map(film => {
         // Prefer a genuine widescreen still of at least 1200px, never an
         // animated reveal, crop or upscaled poster. Every frame stays fixed.
         const frame = film.frames[Math.floor(random() * film.frames.length)];
@@ -330,7 +382,8 @@
         queue = shuffle(queue, random);
       } else queue = pickDistinct(pool, length, random, avoid);
     } else if (mode === 'memory') {
-      const pool = archive.memory.filter(question => inScope(question.film.editionId, scope) && (category === 'all' || question.subtype === category));
+      const base = archive.memory.filter(question => inScope(question.film.editionId, scope) && (category === 'all' || question.subtype === category));
+      const pool = challenge ? base.map(question=>challengeMemoryQuestion(archive,question)).filter(Boolean) : base;
       if (category === 'all') {
         for (const type of memoryTypes) {
           const match = pickDistinct(pool.filter(question => question.subtype === type && !queue.some(pick => pick.film.key === question.film.key)),1,random,avoid)[0];
@@ -344,7 +397,7 @@
         queue.push(...pickDistinct(pool.filter(question => !queue.some(pick => pick.film.key === question.film.key)),length-queue.length,random,avoid));
       } else queue = pickDistinct(pool, length, random, avoid);
     }
-    return queue.map(question => questionChoices(archive, question, scope, random)).filter(Boolean);
+    return queue.map(question => questionChoices(archive, question, scope, random, challenge)).filter(Boolean);
   }
 
   function dailyFrame(archive, date = new Date()) {

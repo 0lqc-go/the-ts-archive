@@ -5,6 +5,8 @@
   const C = globalThis.CinemaProfileCore;
   const CF = globalThis.CinemaCounterframe;
   const root = document.getElementById("cp-root");
+  const round2 = window.ArchiveFeatures;
+  const refinedQuestions = round2?.enabled('12');
   const STORAGE_KEY = "ts-archive-cinema-profile-visual-v5";
   const L = (en,ar) => ({en,ar});
   const strings = {
@@ -159,6 +161,35 @@
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
   }
   function goTop() { window.scrollTo({top:0,behavior:"instant"}); }
+  function settleStage(key, keepScroll) {
+    if (!refinedQuestions) return;
+    const heading=root.querySelector('.cp-question-title');
+    if (!heading) return;
+    heading.tabIndex=-1;
+    if (round2.stageCut(root,key,'.cp-visual-heading') && !keepScroll) heading.focus({preventScroll:true});
+  }
+  function syncFrameChoices(actionName, choice) {
+    const buttons=[...root.querySelectorAll('.cp-visual-select')].filter(button=>button.dataset.action===actionName);
+    for (const button of buttons) {
+      const selected=button.dataset.value===choice;
+      button.classList.toggle('cp-visual-selected',selected);
+      button.setAttribute('aria-pressed',String(selected));
+      const mark=button.querySelector('.cp-visual-check');
+      if(mark)mark.textContent=selected?'✓':'';
+    }
+    return buttons.length>0;
+  }
+  function syncRatingControls(actionName,value) {
+    const buttons=[...root.querySelectorAll('.cp-rating-step')].filter(button=>button.dataset.action===actionName);
+    for(const button of buttons)button.setAttribute('aria-pressed',String(Number(button.dataset.value)===value));
+    return buttons.length>0;
+  }
+  function syncQuestionControls(name) {
+    if(!refinedQuestions)return false;
+    const synced=name==='select'&&current.kind==='visual'?syncFrameChoices('select',draft.choice):name==='rating'&&current.kind==='ending'?syncRatingControls('rating',draft.rating):false;
+    if(synced)root.querySelector('[data-action="next"]').disabled=!canContinue();
+    return synced;
+  }
   function stageLabel(question) {
     if(question.frameFilm)return state.locale==='ar'?"الأساسي · قراءة القصص":"Core · reading stories";
     return t({core:"coreStage",depth:"depthStage",endings:"endingStage",style:"styleStage"}[question.stage]);
@@ -389,6 +420,7 @@
       action("skip",t("skip"),"cp-button-quiet")+
       action("next",state.index===state.limit-1?t("finish"):t("next"),"cp-button-primary",canContinue()?"":"disabled")+
       '</div></div></section>';
+    settleStage('profile:'+current.id, keepScroll);
     if(keepScroll)window.scrollTo({top:y,behavior:"instant"});
   }
 
@@ -518,6 +550,17 @@
     if(!state.counterframe)state.counterframe=CF.create();
     return state.counterframe;
   }
+  function counterframeMeter(chosen,strength,ar){
+    return chosen?'<div class="cp-cf-meter"><p>'+e(ar?"إلى أي مدى يزعجك هذا النوع من الضغط؟":"How strongly does that pressure affect you?")+'</p><div class="cp-rating-steps" role="group" aria-label="'+e(ar?"شدّة الانزعاج":"Intensity of discomfort")+'">'+[1,2,3,4,5].map(n=>'<button type="button" class="cp-rating-step" data-action="cf-strength" data-value="'+n+'" aria-label="'+e((ar?"درجة ":"Intensity ")+n+" / 5")+'" aria-pressed="'+(strength===n)+'"><span class="cp-rating-dot"></span><span>'+n+'</span></button>').join("")+'</div><div class="cp-rating-endpoints"><span>'+e(ar?"خفيف":"Slight")+'</span><span>'+e(ar?"قوي":"Strong")+'</span></div></div>':"";
+  }
+  function syncCounterframeControls(answer) {
+    if(!refinedQuestions || !syncFrameChoices('cf-select',answer.choice))return false;
+    let meter=root.querySelector('.cp-cf-meter');
+    if(!meter && answer.choice){root.querySelector('.cp-visual-grid').insertAdjacentHTML('afterend',counterframeMeter(answer.choice,answer.strength,state.locale==='ar'));meter=root.querySelector('.cp-cf-meter');}
+    if(meter)syncRatingControls('cf-strength',answer.strength);
+    root.querySelector('[data-action="cf-next"]').disabled=!(answer.choice&&answer.strength);
+    return true;
+  }
   function renderCounterframeQuestion(keepScroll=false){
     const y=window.scrollY,ar=state.locale==="ar",cf=counterframeState(),question=CF.questions[cf.index];
     const answer=cf.answers[question.id]||{};
@@ -528,8 +571,9 @@
       const movie=D.filmById[option.filmId],selected=chosen===option.id;
       return '<button type="button" class="cp-visual-select '+(selected?'cp-visual-selected':'')+'" data-action="cf-select" data-value="'+e(option.id)+'" aria-pressed="'+selected+'"><div class="cp-visual-art"><img src="'+e(artwork(option.still))+'" alt="" decoding="async" draggable="false"><span class="cp-visual-check" aria-hidden="true">'+(selected?'✓':'')+'</span></div><div class="cp-visual-meta"><div><strong lang="en" dir="ltr">'+e(movie.title)+'</strong><span class="cp-visual-caption">'+e(loc(option.label))+'</span></div><small>'+movie.year+'</small></div></button>';
     }).join("");
-    const meter=chosen?'<div class="cp-cf-meter"><p>'+e(ar?"إلى أي مدى يزعجك هذا النوع من الضغط؟":"How strongly does that pressure affect you?")+'</p><div class="cp-rating-steps" role="group" aria-label="'+e(ar?"شدّة الانزعاج":"Intensity of discomfort")+'">'+[1,2,3,4,5].map(n=>'<button type="button" class="cp-rating-step" data-action="cf-strength" data-value="'+n+'" aria-label="'+e((ar?"درجة ":"Intensity ")+n+" / 5")+'" aria-pressed="'+(strength===n)+'"><span class="cp-rating-dot"></span><span>'+n+'</span></button>').join("")+'</div><div class="cp-rating-endpoints"><span>'+e(ar?"خفيف":"Slight")+'</span><span>'+e(ar?"قوي":"Strong")+'</span></div></div>':"";
+    const meter=counterframeMeter(chosen,strength,ar);
     root.innerHTML='<section class="cp-wrap cp-quiz cp-cf-quiz"><div class="cp-cf-top"><span class="cp-eyebrow">THE COUNTERFRAME</span>'+action("cf-return",ar?"العودة للنتيجة":"Back to profile","cp-button-quiet")+'</div><div class="cp-progress-row"><span>'+e(ar?"قراءة الضغط · اختيارية":"Pressure reading · Optional")+'</span><span>'+(cf.index+1)+' / '+CF.questions.length+'</span></div><div class="cp-progress-track" role="progressbar" aria-valuenow="'+percent+'" aria-valuemin="0" aria-valuemax="100"><span style="width:'+percent+'%"></span></div><div class="cp-question cp-visual-question"><div class="cp-visual-heading"><h2 class="cp-question-title">'+e(loc(question.prompt))+'</h2><p class="cp-small">'+e(ar?"تخيّل نفسك داخل الموقفين، واختر نوع الضغط لا الفيلم المفضّل. إذا لم تتذكّر الموقفين فبإمكانك التخطّي.":"Imagine yourself in both situations. Choose the pressure, not your favourite film. Skip if either situation is unfamiliar.")+'</p></div><div class="cp-visual-grid" role="group" aria-label="'+e(loc(question.prompt))+'">'+cards+'</div>'+meter+'</div><div class="cp-question-footer cp-cf-footer"><div>'+action("cf-prev",t("back"),"cp-button-outline",cf.index===0?'disabled':'')+'</div><div>'+action("cf-skip",ar?"لا أعرف الموقفين":"Unfamiliar","cp-button-quiet")+action("cf-neutral",ar?"لا فرق واضح":"No clear difference","cp-button-quiet")+action("cf-next",cf.index===CF.questions.length-1?(ar?"عرض القراءة":"View reading"):t("next"),"cp-button-primary",chosen&&strength?'':'disabled')+'</div></div></section>';
+    settleStage('counterframe:'+question.id, keepScroll);
     if(keepScroll)window.scrollTo({top:y,behavior:"instant"});
   }
 
@@ -584,12 +628,12 @@
       if(!question.options.some(o=>o.id===value))return;
       const previous=cf.answers[question.id];
       cf.answers[question.id]={kind:"choice",choice:value,strength:previous?.choice===value?previous.strength:null,done:false};
-      cf.complete=false;persist();renderCounterframeQuestion(true);return;
+      cf.complete=false;persist();if(!syncCounterframeControls(cf.answers[question.id]))renderCounterframeQuestion(true);return;
     }
     if(name==="cf-strength"){
       const answer=cf.answers[question.id],strength=Number(value);
       if(answer?.kind!=="choice"||!Number.isInteger(strength)||strength<1||strength>5)return;
-      answer.strength=strength;answer.done=false;cf.complete=false;persist();renderCounterframeQuestion(true);return;
+      answer.strength=strength;answer.done=false;cf.complete=false;persist();if(!syncCounterframeControls(answer))renderCounterframeQuestion(true);return;
     }
     if(name==="cf-next"){
       const answer=cf.answers[question.id];
@@ -705,7 +749,7 @@
       const films=currentResult.chosenFilms.filter(film=>film.poster).slice(0,4);
       const images=await Promise.all(films.map(movie=>new Promise(resolve=>{
         const image=new Image();image.onload=()=>resolve(image);image.onerror=()=>resolve(null);
-        image.src=location.protocol==='file:'?(globalThis.CinemaProfileLocalPosters?.[movie.poster]||globalThis.__tsArchiveLocalBallotArt?.['assets/films/'+movie.poster]||artwork(movie.poster)):artwork(movie.poster);
+        image.src=artwork(movie.poster);
       })));
       // Rendering is performed locally from the user's actual chosen films.
       // Keep the detailed score card available as a separate export.
@@ -840,7 +884,7 @@
         const image=new Image();
         image.onload=()=>resolve(image);
         image.onerror=()=>resolve(null);
-        image.src=location.protocol==="file:" ? (globalThis.CinemaProfileLocalPosters?.[movie.poster]||globalThis.__tsArchiveLocalBallotArt?.["assets/films/"+movie.poster]||artwork(movie.poster)) : artwork(movie.poster);
+        image.src=artwork(movie.poster);
       });
     }));
     const columnWidth=(width-40)/3;
@@ -924,7 +968,7 @@
     if(name==="watched-mode")resetMode(current.visual==="still"?"image":"compare");
     if(name==="film-watched"){state.familiarity[film]="seen";resetMode("actual");persist();}
     if(name==="film-unseen"){state.familiarity[film]="unseen";commitAnswer(true);return;}
-    renderQuestion(true);
+    if(!syncQuestionControls(name))renderQuestion(true);
   });
   root.addEventListener("change",event=>{
     if(event.target.id==="cp-age"){state.age=event.target.value;persist();}

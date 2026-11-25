@@ -1,0 +1,192 @@
+/* Editorial composition and screening room refinements. */
+
+/* 11 — Editorial image composition. Every side-by-side award shares an
+   actual image baseline, rather than a baseline below the winner caption. */
+@media(min-width:960px) {
+  .ts-r2-11 body[data-award-view="cinematic"] .portfolio-card:not(.portfolio-wide-lead) .artist-winner-block { align-items:end; }
+  .ts-r2-11 body[data-award-view="cinematic"] .portfolio-card:not(.portfolio-wide-lead) .artist-context { align-self:end; min-width:0; }
+}
+@media(min-width:850px) {
+  .ts-r2-11 body[data-award-view="cinematic"] .portfolio-card:not(.portfolio-wide-lead) .artist-winner-block { grid-template-columns:minmax(0,min(61%,1000px)) minmax(0,1fr); gap:clamp(22px,3vw,46px); }
+  .ts-r2-11 body[data-award-view="cinematic"] .portfolio-card .artist-winner-block > .winner-frame { width:100%; max-width:none; }
+  .ts-r2-11 body[data-award-view="cinematic"] .portfolio-card .artist-name-button { font-size:clamp(1.9rem,2.85vw,3rem); line-height:1.07; text-wrap:balance; }
+  .ts-r2-11 body[data-award-view="cinematic"] .portfolio-card .artist-context .artist-works { margin-top:17px; }
+  .ts-r2-11 body[data-award-view="cinematic"] .portfolio-wide-lead .artist-winner-block { gap:17px; }
+  .ts-r2-11 body[data-award-view="cinematic"] .portfolio-wide-lead .artist-context { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:start; gap:18px 28px; padding:3px 0 0; }
+  .ts-r2-11 body[data-award-view="cinematic"] .portfolio-wide-lead .artist-context .artist-works { margin-top:0; min-width:0; }
+  .ts-r2-11 body[data-award-view="cinematic"] .portfolio-card .artist-works ul { grid-template-columns:repeat(var(--work-count,3),minmax(0,102px)); gap:9px 12px; }
+  .ts-r2-11 body[data-award-view="cinematic"] .portfolio-card .artist-film .poster { width:min(68px,100%); }
+  .ts-r2-11 body[data-award-view="cinematic"] .portfolio-card .artist-film > span:last-child { font-size:.8rem; margin-top:5px; }
+  .ts-r2-11 body[data-award-view="cinematic"] .portfolio-card .artist-context .winner-actions { margin-top:14px; }
+  .ts-r2-11 body[data-award-view="cinematic"] .portfolio-card .shortlist { padding-top:23px; }
+}
+@media(min-width:960px) {
+  /* The usual award has the photo and honorable mentions on the same row,
+     and its winner title/credit/music beneath the photo in separate rows.
+     The nested grid retains the original accessible winner button and links. */
+  body[data-award-view="cinematic"] .side-baseline-card > .shortlist { align-self:end; padding-top:0; container:award-side / inline-size; }
+  @supports (grid-template-rows:subgrid) {
+    body[data-award-view="cinematic"] .side-baseline-card { grid-template-rows:auto auto auto auto auto; align-items:start; }
+    body[data-award-view="cinematic"] .side-baseline-card > .award-heading { grid-row:1; }
+    body[data-award-view="cinematic"] .side-baseline-card > .shortlist { grid-row:2; }
+    body[data-award-view="cinematic"] .side-baseline-card > .winner-block { display:grid; grid-row:2 / 6; grid-template-rows:subgrid; grid-template-columns:minmax(0,1fr); align-items:start; align-self:stretch; }
+    body[data-award-view="cinematic"] .side-baseline-card > .winner-block > .winner-frame { grid-row:1; align-self:end; }
+    body[data-award-view="cinematic"] .side-baseline-card > .winner-block > .winner-frame:has(> .winner-copy) { display:grid; grid-row:1 / 3; grid-template-rows:subgrid; grid-template-columns:minmax(0,1fr); align-items:start; align-self:stretch; }
+    body[data-award-view="cinematic"] .side-baseline-card .winner-frame > .frame-media { grid-row:1; align-self:end; }
+    body[data-award-view="cinematic"] .side-baseline-card .winner-frame > .winner-copy { grid-row:2; align-self:start; }
+    body[data-award-view="cinematic"] .side-baseline-card .winner-block > .performance-copy { grid-row:2; align-self:start; }
+    body[data-award-view="cinematic"] .side-baseline-card .winner-block > .winner-credit-line { grid-row:3; }
+    body[data-award-view="cinematic"] .side-baseline-card .winner-block > .winner-actions { grid-row:4; }
+  }
+  /* A four- or five-film row uses the available side width efficiently instead
+     of making the photographic lead drop by the height of an extra poster row. */
+  @container award-side (min-width:305px) {
+    body[data-award-view="cinematic"] .side-baseline-card > .shortlist .nominee-grid[data-count="4"] { grid-template-columns:repeat(4,minmax(0,94px)); gap:12px 9px; }
+  }
+  @container award-side (min-width:360px) {
+    body[data-award-view="cinematic"] .side-baseline-card > .shortlist .nominee-grid[data-count="5"] { grid-template-columns:repeat(5,minmax(0,94px)); gap:10px 8px; }
+  }
+  /* At compact side widths keep four/five names legible beside their small
+     posters, rather than cramming four or five narrow text columns. */
+  @container award-side (width < 305px) {
+    body[data-award-view="cinematic"] .side-baseline-card > .shortlist .nominee-grid[data-count="4"] { grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px 12px; }
+    body[data-award-view="cinematic"] .side-baseline-card .nominee-grid[data-count="4"] .nominee { display:grid; grid-template-columns:40px minmax(0,1fr); grid-template-rows:auto auto; gap:2px 8px; align-content:start; }
+    body[data-award-view="cinematic"] .side-baseline-card .nominee-grid[data-count="4"] .nominee-art { grid-column:1; grid-row:1 / span 2; align-self:start; }
+    body[data-award-view="cinematic"] .side-baseline-card .nominee-grid[data-count="4"] .nominee-art .nominee-poster { width:min(40px,100%); }
+    body[data-award-view="cinematic"] .side-baseline-card .nominee-grid[data-count="4"] .nominee :is(strong,small) { grid-column:2; margin:0; }
+  }
+  @container award-side (width < 360px) {
+    body[data-award-view="cinematic"] .side-baseline-card > .shortlist .nominee-grid[data-count="5"] { grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px 12px; }
+    body[data-award-view="cinematic"] .side-baseline-card .nominee-grid[data-count="5"] .nominee { display:grid; grid-template-columns:38px minmax(0,1fr); grid-template-rows:auto auto; gap:2px 8px; align-content:start; }
+    body[data-award-view="cinematic"] .side-baseline-card .nominee-grid[data-count="5"] .nominee-art { grid-column:1; grid-row:1 / span 2; align-self:start; }
+    body[data-award-view="cinematic"] .side-baseline-card .nominee-grid[data-count="5"] .nominee-art .nominee-poster { width:min(38px,100%); }
+    body[data-award-view="cinematic"] .side-baseline-card .nominee-grid[data-count="5"] .nominee :is(strong,small) { grid-column:2; margin:0; }
+  }
+}
+/* A portrait-sized desktop/tablet and the longest shortlists need room to
+   read. Use the existing below-frame arrangement when a side column would
+   make the winning photograph sink considerably below its heading. */
+@media (850px <= width < 960px) {
+  .ts-r2-11 body[data-award-view="cinematic"] .side-baseline-card { grid-template-columns:minmax(0,1fr); align-items:start; }
+  body[data-award-view="cinematic"] .side-baseline-card > :is(.winner-block,.shortlist) { grid-column:1; }
+  body[data-award-view="cinematic"] .side-baseline-card > .shortlist { align-self:start; padding-top:22px; }
+  body[data-award-view="cinematic"] .side-baseline-card > .shortlist .nominee-grid[data-count] { grid-template-columns:repeat(var(--count),minmax(0,108px)); gap:14px; }
+}
+@media (960px <= width < 1185px) {
+  body[data-award-view="cinematic"] .side-baseline-card:has(> .shortlist .nominee-grid[data-count="5"]) { grid-template-columns:minmax(0,1fr); grid-template-rows:none; }
+  body[data-award-view="cinematic"] .side-baseline-card:has(> .shortlist .nominee-grid[data-count="5"]) > .winner-block { grid-column:1; grid-row:auto; display:block; grid-template-rows:none; align-self:start; }
+  body[data-award-view="cinematic"] .side-baseline-card:has(> .shortlist .nominee-grid[data-count="5"]) .winner-block > .winner-frame { display:block; grid-template-rows:none; }
+  body[data-award-view="cinematic"] .side-baseline-card:has(> .shortlist .nominee-grid[data-count="5"]) > .shortlist { grid-column:1; grid-row:auto; align-self:start; padding-top:22px; }
+}
+@media (681px <= width < 960px) {
+  .ts-r2-11 body[data-award-view="cinematic"] .portfolio-card:not(.portfolio-wide-lead) .artist-winner-block,
+  .ts-r2-11 body[data-award-view="cinematic"] #composer-of-the-decade .artist-winner-block { grid-template-columns:minmax(0,1fr); align-items:start; gap:18px; }
+  .ts-r2-11 body[data-award-view="cinematic"] .portfolio-card:not(.portfolio-wide-lead) .artist-winner-block > .winner-frame { max-width:none; width:100%; }
+}
+.ts-r2-11 body[data-award-view="cinematic"] .portfolio-card .winner-frame > .frame-media:not(.split-media) { aspect-ratio:var(--image-ratio); min-height:0; }
+.ts-r2-11 body[data-award-view="cinematic"] .portfolio-card .winner-frame .frame-image img { object-fit:contain; }
+/* The dialog is still an integrated cinematic cover; on artist awards only,
+   use the source ratio instead of forcing a scope crop across a portrait. */
+.ts-r2-11 body[data-award-view] #award-dialog .ceremony-frame.portfolio-frame .frame-media:not(.split-media) { aspect-ratio:var(--image-ratio); min-height:0; margin-inline:auto; }
+.ts-r2-11 body[data-award-view] #award-dialog .ceremony-frame.portfolio-frame .frame-image img { object-fit:contain; object-position:center; }
+.ts-r2-11 body[data-award-view] #award-dialog .ceremony-frame.portfolio-frame.portrait-frame .frame-media { width:min(100%,calc(min(54dvh,535px) * var(--image-ratio,1.6))); }
+.ts-r2-11 body[data-award-view] #award-dialog .ceremony-frame.portfolio-frame.portrait-frame .frame-media::after { background-image:linear-gradient(to bottom,color-mix(in srgb,var(--panel) 22%,transparent),transparent 19%,transparent 65%,var(--panel) 100%),var(--ceremony-edge-fade); }
+.ts-r2-11 body[data-award-view] #award-dialog .ceremony-artist-context .artist-works ul { gap:8px; }
+@media(max-width:680px) {
+  .ts-r2-11 body[data-award-view] #award-dialog .ceremony-frame.portfolio-frame.portrait-frame .frame-media { width:100%; }
+  .ts-r2-11 body[data-award-view="cinematic"] .portfolio-card .artist-film .poster { width:min(63px,100%); }
+}
+
+/* 12 — One visual stage language for the Screening Room. The frame remains
+   completely still. Fixed image boxes and steady controls prevent new
+   questions and feedback from jostling the layout. */
+@keyframes ts-r2-type-cut { from { opacity:.74; } to { opacity:1; } }
+.ts-r2-12 .ts-question-cut { animation:ts-r2-type-cut .16s ease-out both; }
+.ts-r2-12 .screening-activity h2[tabindex="-1"] { scroll-margin-top:calc(var(--header,64px) + 12px); }
+.ts-r2-12 .sr-quiz-heading { min-height:47px; margin-bottom:15px; align-items:center; }
+.ts-r2-12 .sr-quiz-filters { display:flex; align-items:center; gap:9px 12px; flex-wrap:wrap; }
+.ts-r2-12 .sr-difficulty-field > span:first-child { position:absolute; inline-size:1px; block-size:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+.ts-r2-12 .sr-difficulty-field .sr-select { color:var(--paper-accent); border-color:color-mix(in srgb,var(--paper-accent) 46%,var(--surface-border)); }
+.ts-r2-12 .sr-winner-options.is-challenge .sr-winner-posters.is-portfolio img { width:clamp(28px,3.35vw,56px); }
+@media(min-width:681px) and (max-width:959px) {
+  .ts-r2-12 .sr-winner-options.is-challenge { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media(min-width:681px) {
+  .ts-r2-12 .sr-winner-options.is-challenge .sr-winner-option { min-height:178px; padding:16px 10px 13px; }
+  .ts-r2-12 .sr-winner-options.is-challenge .sr-winner-posters { min-height:0; }
+}
+@media(min-width:960px) {
+  .ts-r2-12 .sr-winner-options.is-challenge { grid-template-columns:repeat(4,minmax(0,1fr)); }
+}
+.ts-r2-12 .sr-progress { gap:3px; }
+.ts-r2-12 .sr-progress-dot,.ts-r2-12 .sr-progress-dot.is-current { width:clamp(7px,.8vw,12px); height:2px; margin:0; border:0; border-radius:0; background:var(--surface-border); }
+.ts-r2-12 .sr-progress-dot.is-done { background:var(--paper-accent); }
+.ts-r2-12 .sr-progress-dot.is-current { background:var(--text); }
+.ts-r2-12 .sr-question-grid { gap:clamp(15px,2.5vw,30px); }
+.ts-r2-12 .sr-still { width:100%; aspect-ratio:2.1; }
+.ts-r2-12 .sr-still img { width:100%; height:100%; max-height:none; object-fit:contain; animation:none!important; transition:none!important; transform:none!important; }
+.ts-r2-12 .sr-memory-prompt { min-height:clamp(210px,25vw,345px); }
+.ts-r2-12 .sr-answer-list { gap:7px; }
+.ts-r2-12 .sr-answer { min-height:50px; font-size:.93rem; }
+.ts-r2-12 .sr-answer-state { font-size:.72rem; font-weight:500; }
+.ts-r2-12 .sr-quiz-actions { min-height:44px; margin-top:13px; }
+.ts-r2-12 .sr-quiz-actions :is(.sr-primary,.sr-text-action) { min-width:95px; text-align:center; }
+.ts-r2-12 .sr-feedback { margin-top:13px; padding-top:12px; }
+.ts-r2-12 .sr-matchup-heading { min-height:79px; margin-bottom:15px; align-items:center; }
+.ts-r2-12 .sr-matchup-heading h2 { font-size:clamp(1.7rem,2.9vw,2.5rem); }
+.ts-r2-12 .sr-match-grid { gap:clamp(10px,1.7vw,20px); }
+.ts-r2-12 .sr-match-image { aspect-ratio:2.1; }
+.ts-r2-12 .sr-match-image img { object-fit:contain; transform:none!important; animation:none!important; }
+.ts-r2-12 .sr-match-copy { align-items:center; padding:10px 12px; min-height:57px; }
+.ts-r2-12 .sr-match-copy strong { font-size:clamp(1rem,1.5vw,1.2rem); }
+.ts-r2-12 .sr-match-footer { display:grid; grid-template-columns:minmax(0,1fr) auto; grid-template-areas:"previous actions" "response response"; gap:8px 12px; align-items:center; margin-top:16px; }
+.ts-r2-12 .sr-match-footer > [data-match-prev] { grid-area:previous; justify-self:start; }
+.ts-r2-12 .sr-match-buttons { grid-area:actions; justify-self:end; }
+.ts-r2-12 .sr-match-response { grid-area:response; text-align:start; font-size:.79rem; }
+.ts-r2-12 .sr-match-response .sr-feedback-links { justify-content:flex-start; }
+.ts-r2-12 .sr-match-note { margin-top:10px; font-size:.76rem; }
+
+.ts-r2-12 .cp-quiz .cp-visual-question { margin-top:clamp(16px,2vw,25px); }
+.ts-r2-12 .cp-visual-heading { display:grid; align-content:center; min-height:78px; margin:0 auto 18px; gap:3px; }
+.ts-r2-12 .cp-visual-heading .cp-question-title { font:400 clamp(1.7rem,2.9vw,2.43rem)/1.14 var(--serif); margin:0 auto 4px; }
+.ts-r2-12 .cp-root[dir="rtl"] .cp-visual-heading .cp-question-title { font:700 clamp(1.3rem,2.25vw,1.9rem)/1.4 Tahoma,Arial,sans-serif; }
+.ts-r2-12 .cp-visual-heading .cp-small { font-size:.84rem; line-height:1.45; }
+.ts-r2-12 .cp-visual-grid { align-items:stretch; gap:clamp(10px,1.7vw,21px); }
+.ts-r2-12 .cp-visual-select { display:grid; grid-template-rows:auto 1fr; border-radius:3px; }
+.ts-r2-12 .cp-visual-art { aspect-ratio:2.1; }
+.ts-r2-12 .cp-visual-art img,.ts-r2-12 .cp-rating-frame > img { object-fit:contain; background:var(--image-matte); animation:none!important; transition:none!important; transform:none!important; }
+.ts-r2-12 .cp-visual-check { width:23px; height:23px; inset-block-start:10px; inset-inline-end:10px; font-size:14px; border-color:#ffffff75; }
+.ts-r2-12 .cp-visual-meta { padding:11px 12px; min-height:61px; align-items:start; }
+.ts-r2-12 .cp-visual-meta > div { gap:3px; }
+.ts-r2-12 .cp-visual-meta strong,.ts-r2-12 .cp-rating-frame strong { font-size:clamp(1rem,1.45vw,1.27rem); }
+.ts-r2-12 .cp-visual-caption { font-size:.8rem; }
+.ts-r2-12 .cp-rating-frame > img { aspect-ratio:2.1; border-radius:3px; }
+.ts-r2-12 .cp-question-footer { min-height:57px; margin-top:18px; padding-top:11px; }
+.ts-r2-12 .cp-visual-heading .cp-question-title:focus { outline:none; }
+@media(max-width:680px) {
+  .ts-r2-12 .sr-quiz-heading { min-height:39px; margin-bottom:10px; }
+  .ts-r2-12 .sr-quiz-heading:has(.sr-frame-tools) { flex-wrap:wrap; gap:9px; }
+  .ts-r2-12 .sr-quiz-heading:has(.sr-frame-tools) .sr-quiz-heading-tools,
+  .ts-r2-12 .sr-winner-heading .sr-quiz-heading-tools { flex:1 1 100%; justify-content:space-between; margin-inline-start:0; }
+  .ts-r2-12 .sr-quiz-filters { gap:7px; }
+  .ts-r2-12 .sr-winner-options.is-challenge .sr-winner-posters.is-portfolio img { width:28px; }
+  .ts-r2-12 .sr-question-grid { gap:11px; }
+  .ts-r2-12 .sr-answer { min-height:46px; font-size:.9rem; padding-block:9px; }
+  .ts-r2-12 .sr-still { aspect-ratio:2.1; }
+  .ts-r2-12 .sr-memory-prompt { min-height:185px; }
+  .ts-r2-12 .sr-matchup-heading { min-height:0; margin-bottom:12px; }
+  .ts-r2-12 .sr-matchup-heading h2 { font-size:clamp(1.65rem,7.2vw,2.25rem); }
+  .ts-r2-12 .sr-match-copy { min-height:48px; padding:8px 10px; }
+  .ts-r2-12 .cp-visual-heading { min-height:0; margin-bottom:14px; }
+  .ts-r2-12 .cp-visual-heading .cp-question-title { font-size:clamp(1.6rem,6.4vw,2rem); }
+  .ts-r2-12 .cp-root[dir="rtl"] .cp-visual-heading .cp-question-title { font-size:clamp(1.18rem,4.7vw,1.6rem); }
+  .ts-r2-12 .cp-visual-art,.ts-r2-12 .cp-cf-quiz .cp-visual-art { aspect-ratio:2.2; }
+  .ts-r2-12 .cp-visual-check { width:21px; height:21px; inset-block-start:8px; inset-inline-end:8px; }
+  .ts-r2-12 .cp-visual-meta { padding:8px 10px; min-height:48px; }
+  .ts-r2-12 .cp-visual-meta strong { font-size:1rem; }
+  .ts-r2-12 .cp-rating-frame > img { aspect-ratio:2.1; }
+  .ts-r2-12 .cp-question-footer { margin-top:14px; padding-top:9px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .ts-r2-12 .ts-question-cut { animation:none!important; }
+}

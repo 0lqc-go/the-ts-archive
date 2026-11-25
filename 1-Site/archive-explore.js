@@ -393,9 +393,9 @@
       onRefresh?.();
       results.scrollTop = 0;
       resultNav.hidden = true;
-      if (models) { render(models,rebuildControls); return; }
+      if (models) { render(models,rebuildControls); return Promise.resolve(); }
       results.innerHTML = '<p class="empty-index" role="status">Loading the archive…</p>';
-      engine.load(state.scope).then(loaded => {
+      return engine.load(state.scope).then(loaded => {
         if (request !== generation) return;
         render(loaded,true);
       }).catch(() => {
@@ -435,8 +435,12 @@
       const item = candidates[Math.floor(Math.random() * candidates.length)];
       lastDiscovery = item.model.edition.id + '/' + item.slug;
       if (onDiscover) onDiscover(item, discover);
+      else if (window.ArchiveContinuity) window.ArchiveContinuity.navigate(dossierHref(item.model.edition,'film',item.slug),discover);
       else if (pageActions?.editionId === item.model.edition.id) pageActions.openFilm(item.slug, discover);
-      else location.href = dossierHref(item.model.edition,'film',item.slug);
+      else {
+        const destination=dossierHref(item.model.edition,'film',item.slug);
+        location.href=window.ArchiveFeatures?.linkSettings(destination)?.href || destination;
+      }
     }
     search.addEventListener('input', () => refresh());
     dialog.addEventListener('click', event => {
@@ -464,7 +468,26 @@
       else if (id === 'index-role-select') { state.role = value; refresh(); }
     });
     setFiltersOpen(false);
-    return {ensure() { if (!rendered) refresh(true); }, global() { if (multi) { resetScope = 'all'; setScope('all'); updateFilterSummary(); } if (!rendered) refresh(true); }, setTopic, state, refresh};
+    function snapshot() {
+      return {...state,resetScope,filtersOpen:!filterPanel.hidden,scroll:results.scrollTop};
+    }
+    function restore(saved) {
+      if (!saved) return Promise.resolve();
+      const scopes=['all',...catalog.editions.map(edition=>edition.id)];
+      state.scope=scopes.includes(saved.scope)?saved.scope:defaultScope;
+      resetScope=scopes.includes(saved.resetScope)?saved.resetScope:defaultScope;
+      state.year=Number.isFinite(saved.year)?saved.year:null;
+      state.chapter=typeof saved.chapter==='string'?saved.chapter:null;
+      state.selection=Object.hasOwn(selections,saved.selection)?saved.selection:'all';
+      state.role=saved.role==='all'||Object.hasOwn(roleNames,saved.role)?saved.role:'all';
+      search.value=typeof saved.query==='string'?saved.query.slice(0,300):'';
+      if ($('#index-edition-select',dialog)) $('#index-edition-select',dialog).value=state.scope;
+      $('#index-selection-select',dialog).value=state.selection;
+      $('#index-role-select',dialog).value=state.role;
+      setFiltersOpen(Boolean(saved.filtersOpen));
+      return refresh(true).then(()=>{results.scrollTop=Number(saved.scroll)||0;});
+    }
+    return {ensure() { if (!rendered) refresh(true); }, global() { if (multi) { resetScope = 'all'; setScope('all'); updateFilterSummary(); } if (!rendered) refresh(true); }, setTopic, state, refresh,snapshot,restore};
   }
 
   async function renderMoodCollections(section, engine) {
@@ -532,7 +555,7 @@
   // On an award page its existing Index hosts the controller instead.
   if (document.body.dataset.page !== 'awards') {
     const trigger = searchButton();
-    let controller, pending, opener, requestedTopic;
+    let controller, pending, opener, requestedTopic, requestedRestore;
     let contextPromise;
     function archiveContext() {
       if (!contextPromise) contextPromise = site.catalog().then(catalog => ({catalog,engine:createEngine(catalog)})).catch(error => { contextPromise = null; throw error; });
@@ -549,11 +572,11 @@
       requestedTopic = topic;
       dialog.showModal(); document.body.classList.add('dialog-open');
       $('#category-search',dialog).focus({preventScroll:true});
-      if (controller) { if (topic) controller.setTopic(topic); else controller.ensure(); return; }
+      if (controller) { if (requestedRestore) restoreIndex(); else if (topic) controller.setTopic(topic); else controller.ensure(); return; }
       if (pending) return;
       pending = archiveContext().then(({catalog,engine}) => {
         controller = createIndex({dialog, catalog, engine});
-        if (dialog.open) { if (requestedTopic) controller.setTopic(requestedTopic); else controller.ensure(); }
+        if (dialog.open) { if (requestedRestore) restoreIndex(); else if (requestedTopic) controller.setTopic(requestedTopic); else controller.ensure(); }
       }).catch(() => { $('#index-results',dialog).innerHTML = '<p class="empty-index">The archive could not be loaded. Close the index and try again.</p>'; }).finally(() => { pending = null; });
     }
     bindSearchShortcut(trigger,open);
@@ -563,6 +586,19 @@
       if (!$('dialog[open]')) document.body.classList.remove('dialog-open');
       opener?.focus({preventScroll:true});
     });
+    function restoreIndex() {
+      const saved=requestedRestore; requestedRestore=null;
+      controller.restore(saved.index).then(()=>{
+        if (!dialog.open) return;
+        const controls=$$('a[href],button:not([disabled]),input,select',dialog);
+        controls[saved.focus]?.focus({preventScroll:true});
+        $('#index-results',dialog).scrollTop=saved.index.scroll||0;
+      });
+    }
+    window.ArchiveContinuity?.register('index',source=>{
+      if (!dialog.open || !controller) return null;
+      return {index:controller.snapshot(),focus:$$('a[href],button:not([disabled]),input,select',dialog).indexOf(source)};
+    },saved=>{requestedRestore=saved; open(trigger);});
 
     const moodSection = $('#moods');
     if (moodSection) {
@@ -612,7 +648,10 @@
           try { sessionStorage.setItem('ts-archive-home-discovery', lastHomeFilm); } catch {}
           const destination = new URL(dossierHref(chosen.model.edition,'film',slug), location.href);
           destination.searchParams.set('from','home-discover');
-          location.href = destination.href;
+          if (window.ArchiveContinuity) window.ArchiveContinuity.navigate(destination,homeDiscover);
+          else location.href=window.ArchiveFeatures?.linkSettings(destination)?.href || destination.href;
+          // An in-place dossier no longer triggers a pageshow event on return.
+          homeDiscover.disabled=false;homeDiscover.removeAttribute('aria-busy');label.textContent='Discover a film';
         } catch {
           homeDiscover.disabled = false;
           homeDiscover.removeAttribute('aria-busy');

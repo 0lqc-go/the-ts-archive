@@ -1,0 +1,126 @@
+/* Round three — isolated studies on the archive's existing palette and type.
+   Focus is 120ms, no image moves or scales, and every disclosure still works
+   with native keyboard, touch and reduced-motion preferences. */
+/* 05 — a short dissolve for the reading layer, never a Match Cut. */
+@keyframes ts-archive-layer { from { opacity:.74; } to { opacity:1; } }
+.ts-r2-05 :is(#film-file-dialog,#person-dialog,#award-dialog,#index-dialog)[open] { animation:ts-archive-layer 200ms ease-out both; }
+/* 05 — A live detail layer leaves the source document and its scroll intact. */
+html.ts-r2-05:not(.ts-archive-embedded) { scrollbar-gutter:stable; }
+dialog.archive-detail-layer { position:fixed; inset:0; margin:0; padding:0; border:0; border-radius:0; width:100dvw; height:100dvh; max-width:none; max-height:none; background:transparent; box-shadow:none; overflow:hidden; animation:none; }
+dialog.archive-detail-layer[open] { display:block; }
+dialog.archive-detail-layer::backdrop { background:#03070bd0; backdrop-filter:blur(6px); transition:background-color 150ms ease,backdrop-filter 150ms ease; }
+dialog.archive-detail-layer.is-leaving::backdrop { background:#03070b00; backdrop-filter:blur(0); }
+.archive-detail-frame { position:absolute; inset:0; width:100%; height:100%; border:0; background:transparent; opacity:0; transition:opacity 150ms ease; }
+.archive-detail-layer.is-ready .archive-detail-frame { opacity:1; }
+.archive-detail-layer.is-leaving .archive-detail-frame,.archive-detail-layer.is-leaving .archive-layer-wait { opacity:0; }
+.archive-layer-wait { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; gap:12px; color:var(--text); transition:opacity 150ms ease; font:500 .85rem/1.4 var(--body); }
+.archive-layer-wait[hidden] { display:none; }
+.archive-layer-wait button { border:1px solid var(--surface-border); width:34px; height:34px; border-radius:3px; background:var(--panel); color:var(--muted); }
+.archive-layer-fallback { color:var(--paper-accent); text-decoration:underline; text-underline-offset:3px; }
+html.ts-archive-embedded,html.ts-archive-embedded body { background:transparent !important; overflow:hidden !important; }
+.ts-archive-embedded body > :not(dialog) { display:none !important; }
+.ts-archive-embedded dialog:not(#frame-dialog)::backdrop { background:transparent; backdrop-filter:none; }
+.ts-archive-embedded #index-dialog .index-view-switch { display:none !important; }
+@media (prefers-reduced-motion:reduce) {
+  .ts-r2-05 :is(#film-file-dialog,#person-dialog,#award-dialog,#index-dialog)[open] { animation:none !important; }
+  dialog.archive-detail-layer::backdrop,.archive-detail-frame,.archive-layer-wait { transition:none; }
+}
+/* 07 — Optional spoiler-free ceremony. The announcement is an intertitle,
+   not a blurred winner image. The programme lists categories only. */
+.ts-r2-07 #award-dialog .award-share[hidden] { display:none !important; }
+.ts-r2-07 body[data-award-view] #award-dialog[data-ceremony-mode="guided"]:is([data-ceremony-phase="sealed"],[data-ceremony-phase="programme"]) #dialog-content { min-height:min(70dvh,630px); }
+.ts-r2-07 body[data-award-view] #award-dialog[data-ceremony-mode="guided"]:is([data-ceremony-phase="sealed"],[data-ceremony-phase="programme"]) .ceremony-header { position:relative; inset:auto; flex:none; background:var(--panel); text-shadow:none; }
+.ts-r2-07 #award-dialog[data-ceremony-phase="sealed"] #dialog-chapter { letter-spacing:.1em; text-transform:uppercase; margin:0; }
+.ts-r2-07 #award-dialog[data-ceremony-phase="sealed"] #dialog-category { position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+.ts-r2-07 #award-dialog[data-ceremony-phase="sealed"] .ceremony-scroll { display:flex; }
+.ts-r2-07 .ts-ceremony-intertitle { width:100%; min-height:min(52dvh,500px); flex:1; display:grid; place-items:center; padding:30px var(--ceremony-gutter,20px); text-align:center; background:radial-gradient(ellipse at center,color-mix(in srgb,var(--accent) 8%,var(--panel)),var(--panel) 74%); }
+.ts-r2-07 .ts-ceremony-title { display:grid; justify-items:center; gap:15px; max-width:100%; }
+.ts-r2-07 .ts-ceremony-title::before { content:""; width:34px; height:1px; background:var(--paper-accent); opacity:.6; margin-bottom:4px; }
+.ts-r2-07 .ts-ceremony-title p { font:500 .83rem/1.4 var(--body); text-transform:uppercase; letter-spacing:.095em; color:var(--accent,var(--paper-accent)); }
+.ts-r2-07 .ts-ceremony-title h3 { font:400 clamp(2.1rem,4.1vw,4.2rem)/1.02 var(--serif); letter-spacing:-.025em; max-width:22ch; text-wrap:balance; overflow-wrap:anywhere; }
+.ts-r2-07 .ts-ceremony-reveal { border:1px solid var(--surface-border); border-radius:3px; background:transparent; color:var(--text); padding:11px 22px; min-height:44px; font:500 .88rem/1.4 var(--body); transition:border-color 120ms,background-color 120ms; margin-top:8px; }
+.ts-r2-07 .ts-ceremony-reveal:is(:hover,:focus-visible) { border-color:var(--paper-accent); background:var(--surface-hover); }
+.ts-r2-07 .ts-ceremony-programme { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:23px 25px; padding:13px var(--ceremony-gutter,20px) 23px; }
+.ts-r2-07 .ts-programme-chapter h3 { color:var(--programme-accent,var(--paper-accent)); font:500 .83rem/1.4 var(--body); padding-bottom:7px; border-bottom:1px solid var(--surface-border); }
+.ts-r2-07 .ts-programme-chapter ul { list-style:none; padding:0; margin:0; }
+.ts-r2-07 .ts-programme-chapter button { width:100%; min-height:40px; display:flex; align-items:center; justify-content:space-between; text-align:start; gap:8px; padding:8px 4px; border:0; border-bottom:1px solid var(--hairline); background:transparent; color:var(--text); font:500 .86rem/1.4 var(--body); }
+.ts-r2-07 .ts-programme-chapter button:is(:hover,[aria-current],:focus-visible) { color:var(--programme-accent,var(--paper-accent)); background:var(--surface-hover); }
+.ts-r2-07 .ts-programme-chapter button small { color:var(--muted); font:400 .72rem/1.3 var(--body); white-space:nowrap; }
+.ts-r2-07 #award-dialog .ceremony-index[aria-pressed="true"] { background:var(--surface-hover); color:var(--paper-accent); }
+@media(max-width:680px) {
+  .ts-r2-07 body[data-award-view] #award-dialog[data-ceremony-mode="guided"]:is([data-ceremony-phase="sealed"],[data-ceremony-phase="programme"]) #dialog-content { min-height:min(75dvh,530px); }
+  .ts-r2-07 .ts-ceremony-intertitle { min-height:min(54dvh,430px); }
+  .ts-r2-07 .ts-ceremony-title h3 { font-size:clamp(2.1rem,8vw,3rem); }
+  .ts-r2-07 .ts-ceremony-programme { grid-template-columns:minmax(0,1fr); gap:18px; }
+  .ts-r2-07 .ts-programme-chapter button { min-height:44px; }
+}
+/* 09 — A quiet selection edge, using the current archive accent. */
+.ts-r2-09 :is(.nominee-poster,.artist-film,.wall-tile,.person-film-poster,.double-feature-film,.list-poster-link) .poster { transition:box-shadow 130ms ease; }
+.ts-r2-09 :is(.archive-card,.mood-collection,.sr-journey-tile) { transition:border-color 130ms ease,color 130ms ease; }
+.ts-r2-09 :is(.nominee-poster,.artist-film,.wall-tile,.person-film-poster,.double-feature-film,.list-poster-link):focus-visible .poster { box-shadow:0 0 0 1.5px var(--paper-accent); }
+.ts-r2-09 :is(.nominee strong,.artist-film > span:last-child,.wall-tile strong,.archive-card h3,.mood-collection strong,.sr-journey-tile strong) { transition:color 130ms ease,text-decoration-color 130ms ease; }
+.ts-r2-09 :is(.file-won-award,.film-award-row,.file-connection-link,.index-row,.person-appearances a):focus-visible { color:var(--paper-accent); }
+@media (hover:hover) and (pointer:fine) {
+  .ts-r2-09 body[data-award-view] :is(.nominee-poster,.artist-film,.wall-tile):hover img,
+  .ts-r2-09 :is(.person-film-poster,.double-feature-film,.list-poster-link,.archive-card,.mood-collection,.sr-journey-tile,.file-won-award):hover img,
+  .ts-r2-09 button[data-full-frame]:hover img { filter:none !important; transform:none !important; }
+  .ts-r2-09 :is(.nominee-poster,.artist-film,.wall-tile,.person-film-poster,.double-feature-film,.list-poster-link):hover .poster { box-shadow:0 0 0 1.5px color-mix(in srgb,var(--paper-accent) 70%,var(--text)); }
+  .ts-r2-09 .archive-card:hover { border-color:color-mix(in srgb,var(--paper-accent) 70%,var(--text)); }
+  .ts-r2-09 :is(.mood-collection,.sr-journey-tile):hover img { box-shadow:0 0 0 1px var(--paper-accent); }
+
+}
+/* 10 — Keep the native contextual magnifier. Animate only the opened
+   lightbox and the selected full-size frame, never the cursor or quiz art. */
+@keyframes ts-lightbox-in { from {opacity:.68} to {opacity:1} }
+@keyframes ts-lens-in { from {opacity:.82;transform:scale(.985)} to {opacity:1;transform:scale(1)} }
+.ts-r2-10 #frame-dialog[open] { animation:ts-lightbox-in 200ms ease-out both; }
+.ts-r2-10.ts-frame-lens #frame-dialog[open] .full-frame-stage { animation:ts-lens-in 240ms ease-out both; }
+@media (hover:hover) and (pointer:fine) {
+  .ts-r2-10 button[data-full-frame]:is(.frame-image,.film-file-frame,.file-frame-thumbnail,.file-cover-expand),
+  .ts-r2-10 #film-file-dialog .ts-contact-sheet .file-frame-thumbnail,.ts-r2-10 #film-file-dialog .file-cover-expand.file-action { cursor:zoom-in; }
+  .ts-r2-10 #frame-dialog .frame-contact-thumb { cursor:pointer; }
+}
+/* 15 — type and whitespace rhythm. Scope to the cinematic layout and film
+   file. The 11 baseline grids and widths are intentionally untouched. */
+.ts-r2-15 body[data-award-view="cinematic"] .enhanced-card > .award-heading { align-items:baseline; gap:12px; }
+.ts-r2-15 body[data-award-view="cinematic"] .enhanced-card .award-heading h3 { line-height:1.22; text-wrap:balance; }
+.ts-r2-15 body[data-award-view="cinematic"] .enhanced-card .award-description { max-width:64ch; line-height:1.48; margin-top:5px; }
+.ts-r2-15 body[data-award-view="cinematic"] .enhanced-card .award-heading .award-number { font-variant-numeric:tabular-nums; align-self:baseline; }
+.ts-r2-15 body[data-award-view="cinematic"] .enhanced-card .nominee strong { line-height:1.22; text-wrap:pretty; }
+.ts-r2-15 body[data-award-view="cinematic"] .enhanced-card .nominee small { line-height:1.34; text-wrap:pretty; }
+.ts-r2-15 body[data-award-view="cinematic"] .enhanced-card .nominee :is(.performance-year,.performance-role) { white-space:normal; }
+.ts-r2-15 body[data-award-view="cinematic"] .enhanced-card .nominee :is(.nominee-character,.nominee-actor) { display:block; }
+.ts-r2-15 body[data-award-view="cinematic"] .enhanced-card .nominee .nominee-actor { margin-top:1px; }
+.ts-r2-15 body[data-award-view] #award-dialog .ceremony-body .nominee strong { font-size:.79rem; line-height:1.26; }
+.ts-r2-15 body[data-award-view] #award-dialog .ceremony-body .nominee small { font-size:.73rem; line-height:1.32; }
+.ts-r2-15 body[data-award-view] #award-dialog .ceremony-body .shortlist > .micro { letter-spacing:.035em; margin-bottom:9px; }
+.ts-r2-15 #film-file-dialog .film-file-meta { align-items:start; gap:clamp(9px,1.3vw,14px); }
+.ts-r2-15 #film-file-dialog.ts-film-fitted { height:var(--file-fitted-height); overflow:hidden; }
+.ts-r2-15 #film-file-dialog.ts-film-fitted .film-file-frame { height:var(--file-fitted-art); aspect-ratio:auto; }
+.ts-r2-15 #film-file-dialog .file-meta-copy { padding-top:1px; }
+.ts-r2-15 #film-file-dialog #film-file-title { font-size:clamp(1.1rem,1.32vw,1.28rem); line-height:1.22; margin-bottom:4px; text-wrap:pretty; }
+.ts-r2-15 #film-file-dialog .file-year { font-size:.76rem; line-height:1.38; }
+.ts-r2-15 #film-file-dialog .file-tally { font-size:.8rem; line-height:1.35; margin-top:5px; }
+.ts-r2-15 #film-file-dialog .file-group-summary { min-height:36px; }
+.ts-r2-15 #film-file-dialog .file-group-count { font-size:.73rem; letter-spacing:.015em; }
+.ts-r2-15 #film-file-dialog :is(.file-won-copy,.file-award-copy) strong { line-height:1.3; text-wrap:pretty; }
+.ts-r2-15 #film-file-dialog :is(.file-won-copy,.file-award-copy) small { line-height:1.38; text-wrap:pretty; }
+.ts-r2-15 .archive-card-copy :is(h3,p:last-of-type) { text-wrap:pretty; }
+.ts-r2-15 .ts-journey-title-link { color:inherit; text-decoration:underline; text-decoration-thickness:1px; text-decoration-color:var(--surface-border); text-underline-offset:4px; transition:color 130ms ease,text-decoration-color 130ms ease; }
+.ts-r2-15 .ts-journey-title-link:is(:hover,:focus-visible) { color:var(--paper-accent); text-decoration-color:currentColor; }
+.ts-r2-15 .ts-journey-actions { justify-content:flex-end; }
+@media(max-width:680px) {
+  .ts-r2-15 #film-file-dialog .film-file-meta { grid-template-columns:54px minmax(0,1fr); gap:10px; padding-bottom:10px; }
+  .ts-r2-15 #film-file-dialog #film-file-title { font-size:1rem; }
+  .ts-r2-15 #film-file-dialog .file-year { font-size:.73rem; }
+  .ts-r2-15 #film-file-dialog .file-meta-bottom { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:5px; }
+  .ts-r2-15 #film-file-dialog .file-tally,.ts-r2-15 #film-file-dialog .file-tally .file-mention-count { font-size:.72rem; margin:0; }
+  .ts-r2-15 #film-file-dialog .file-meta-actions { gap:0; }
+  .ts-r2-15 #film-file-dialog .file-group-summary { min-height:44px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .ts-r2-09 :is(.poster,.archive-card,.mood-collection,.sr-journey-tile,.frame-enlarge,.file-won-award,.film-award-row,.file-connection-link,.index-row,.nominee strong,.artist-film>span:last-child,.wall-tile strong,.archive-card h3,.mood-collection strong,.sr-journey-tile strong),
+  .ts-r2-09 :is(.archive-card,.mood-collection,.sr-journey-tile,.frame-enlarge,.file-won-award) img,
+  .ts-r2-07 .ts-ceremony-reveal,.ts-r2-15 .ts-journey-title-link { transition:none !important; }
+  .ts-r2-10 #frame-dialog[open],.ts-r2-10.ts-frame-lens #frame-dialog[open] .full-frame-stage { animation:none !important; }
+}

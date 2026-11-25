@@ -38,6 +38,7 @@
   }
 
   function trackVisit() {
+    if(window.ArchiveContinuity?.embedded)return;
     const archiveRoot = '/the-ts-archive';
     if (location.origin !== 'https://0lqc-go.github.io' || !location.pathname.startsWith(archiveRoot + '/')) return;
 
@@ -105,6 +106,7 @@
     $('#list-cards').innerHTML = index.lists.map(item => archiveCard(item, listHref(item), item.subtitle || 'Film list', index.media)).join('');
     $('#lists').hidden = index.lists.length === 0;
     $('#content-status').hidden = true;
+    window.ArchiveContinuity?.register('page',()=>true,()=>{});
     trackVisit();
   }
 
@@ -137,6 +139,7 @@
     setupListView();
     $('#content-status').hidden = true;
     $('#collection').hidden = false;
+    window.ArchiveContinuity?.register('page',()=>true,()=>{});
   }
 
   function setupListView() {

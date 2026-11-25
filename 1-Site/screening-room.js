@@ -4,6 +4,8 @@
   const explore = window.ArchiveExplore;
   const data = window.ArchiveScreeningData;
   const editorialJourneys = window.ArchiveJourneyEditorial;
+  const round2 = window.ArchiveFeatures;
+  const refinedQuestions = round2?.enabled('12');
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[char]));
@@ -32,7 +34,14 @@
     }
   }
 
-  function focusHeading(root) { const heading = $('h2[tabindex="-1"]', root); heading?.focus(); }
+  function focusHeading(root) {
+    const heading = $('h2[tabindex="-1"]',root);
+    if (!heading) return;
+    if (!refinedQuestions) { heading.focus(); return; }
+    heading.focus({preventScroll:true});
+    const rect=heading.getBoundingClientRect(), mast=$('.masthead')?.getBoundingClientRect().bottom || 0;
+    if(rect.top<mast || rect.bottom>innerHeight) heading.scrollIntoView({block:'start',behavior:'instant'});
+  }
 
   async function initDaily() {
     const section = $('#screening-daily');
@@ -73,6 +82,7 @@
     let mode = Object.hasOwn(nameOfMode, modeParam) ? modeParam : 'frame';
     let lastQuiz = quizModes.has(mode) ? mode : 'frame';
     const settings = {frame:{scope:'all', category:'all'},memory:{scope:'all', category:'all'},winner:{scope:'all',category:'all'}};
+    let difficulty = refinedQuestions && initialParams.get('difficulty') !== 'classic' ? 'challenge' : 'classic';
     const sessions = new Map(), recent = new Map();
     const matchupPairs = new Map(archive.matchups.map(pair=>[pair.id,pair]));
     let savedMatchup;
@@ -153,11 +163,11 @@
 
     function currentSession(fresh = false) {
       const options = settings[mode];
-      const key = `${mode}/${options.scope}/${options.category}`;
+      const key = `${mode}/${options.scope}/${options.category}/${difficulty}`;
       if (!sessions.has(key) || fresh) {
         const old = sessions.get(key);
         if (old) recent.set(key, old.questions.map(question => question.key));
-        const questions = data.makeQuiz(archive, mode, {...options, avoid:recent.get(key) ?? []});
+        const questions = data.makeQuiz(archive, mode, {...options, difficulty, avoid:recent.get(key) ?? []});
         sessions.set(key, {questions, index:0, answers:[], complete:false});
       }
       return sessions.get(key);
@@ -165,10 +175,17 @@
 
     const select = (label, id, items, chosen, className = '') => `<label class="sr-field${className ? ` ${esc(className)}` : ''}" for="${id}"><span>${esc(label)}</span><span class="sr-select-wrap"><select class="sr-select" id="${id}" aria-label="${esc(label)}">${items.map(([key, text]) => `<option value="${esc(key)}"${key === chosen ? ' selected' : ''}>${esc(text)}</option>`).join('')}</select></span></label>`;
 
+    function quizFilters(scope) {
+      const decade = select('Decade','sr-decade',[['all','All decades'],...catalog.editions.map(edition=>[edition.id,edition.period])],scope);
+      if (!refinedQuestions) return decade;
+      const level = select('Difficulty','sr-difficulty',[['challenge','Challenge'],['classic','Classic']],difficulty,'sr-difficulty-field');
+      return `<div class="sr-quiz-filters">${decade}${level}</div>`;
+    }
+
     function quizToolbar() {
       const options = settings[mode];
       const categories = [['all','All'], ['dialogue','Dialogue'], ['music','Music'], ['scenes','Scenes']];
-      return `<div class="sr-toolbar${mode === 'memory' ? ' sr-memory-tools' : ''}">${mode === 'memory' ? `<div class="sr-segment" role="group" aria-label="Cinema memory categories">${categories.map(([key, name]) => `<button type="button" data-memory-category="${key}" aria-pressed="${options.category === key}">${name}</button>`).join('')}</div>` : ''}${select('Decade', 'sr-decade', [['all','All decades'], ...catalog.editions.map(edition => [edition.id, edition.period])], options.scope)}</div>`;
+      return `<div class="sr-toolbar${mode === 'memory' ? ' sr-memory-tools' : ''}">${mode === 'memory' ? `<div class="sr-segment" role="group" aria-label="Cinema memory categories">${categories.map(([key, name]) => `<button type="button" data-memory-category="${key}" aria-pressed="${options.category === key}">${name}</button>`).join('')}</div>` : ''}${quizFilters(options.scope)}</div>`;
     }
 
     function progress(session) {
@@ -186,6 +203,16 @@
         settings[mode].scope = event.target.value;
         renderQuiz();
         $('#sr-decade', activity)?.focus({preventScroll:true});
+      });
+      $('#sr-difficulty', activity)?.addEventListener('change', event => {
+        const level=event.target.value;
+        if (!['classic','challenge'].includes(level) || difficulty===level) return;
+        difficulty=level;
+        try {
+          const url=new URL(location.href); url.searchParams.set('difficulty',difficulty); history.replaceState(history.state,'',url);
+        } catch { /* Local file previews still switch levels in-page. */ }
+        renderQuiz();
+        $('#sr-difficulty', activity)?.focus({preventScroll:true});
       });
       for (const button of $$('[data-memory-category]', activity)) button.addEventListener('click', () => {
         const key = button.dataset.memoryCategory;
@@ -207,7 +234,7 @@
       const question = session.questions[session.index];
       if (mode === 'winner') { renderWinnerQuestion(session,question); return; }
       activity.innerHTML = `${mode === 'memory' ? quizToolbar() : ''}
-        <div class="sr-quiz-heading"><h2 tabindex="-1" id="sr-question-title">${esc(question.prompt)}</h2><div class="sr-quiz-heading-tools">${mode === 'frame' ? `<div class="sr-frame-tools">${select('Decade','sr-decade',[['all','All decades'],...catalog.editions.map(edition => [edition.id,edition.period])],settings.frame.scope)}</div>` : ''}${progress(session)}</div></div>
+        <div class="sr-quiz-heading"><h2 tabindex="-1" id="sr-question-title">${esc(question.prompt)}</h2><div class="sr-quiz-heading-tools">${mode === 'frame' ? `<div class="sr-frame-tools">${quizFilters(settings.frame.scope)}</div>` : ''}${progress(session)}</div></div>
         <div class="sr-question-grid" aria-labelledby="sr-question-title">
           ${clueMarkup(question)}
           <div>${mode === 'memory' && question.frame ? `<p class="sr-scene-clue"><small>${esc(question.marker)}</small><span>${esc(question.clue)}</span></p>` : ''}<div class="sr-answer-list" role="group" aria-label="Choose an answer">${question.choices.map(choice => `<button type="button" class="sr-answer" data-answer="${esc(choice.key)}"><span>${esc(choice.label)}</span><span class="sr-answer-state" aria-hidden="true"></span></button>`).join('')}</div>
@@ -216,6 +243,7 @@
           </div>
         </div>`;
       bindStillErrors(activity);
+      round2?.stageCut(activity,`quiz:${mode}:${question.key}:${session.index}`,'.sr-quiz-heading h2');
       bindQuestionControls(session);
     }
 
@@ -228,13 +256,14 @@
     }
 
     function renderWinnerQuestion(session,question) {
-      const scope = select('Decade','sr-decade',[['all','All decades'],...catalog.editions.map(edition=>[edition.id,edition.period])],settings.winner.scope);
+      const scope = quizFilters(settings.winner.scope);
       activity.innerHTML = `<div class="sr-winner-quiz"><div class="sr-winner-heading"><div><p class="screening-kicker">${esc(question.marker)} · ${esc(question.award.chapter)}</p><h2 tabindex="-1" id="sr-question-title">${esc(question.award.name)}</h2><p>Which did the archive choose?</p></div><div class="sr-quiz-heading-tools"><div class="sr-frame-tools">${scope}</div>${progress(session)}</div></div>
-        <div class="sr-winner-options" role="group" aria-labelledby="sr-question-title">${question.choices.map(choice=>{
+        <div class="sr-winner-options${difficulty==='challenge'?' is-challenge':''}" role="group" aria-labelledby="sr-question-title">${question.choices.map(choice=>{
           const candidate = choice.candidate;
           return `<button type="button" class="sr-answer sr-winner-option" data-answer="${esc(choice.key)}"><span class="sr-winner-posters${candidate.films.length>1?' is-portfolio':''}">${candidate.films.slice(0,4).map(film=>poster(film)).join('')}</span><span class="sr-winner-option-copy"><strong>${esc(candidate.title)}</strong>${candidate.detail ? `<small>${esc(candidate.detail)}</small>` : ''}</span><span class="sr-answer-state" aria-hidden="true"></span></button>`;
         }).join('')}</div>
         <div class="sr-quiz-actions"><button type="button" class="sr-text-action" data-quiz-skip>Skip</button><button type="button" class="sr-primary" data-quiz-next hidden>${session.index===session.questions.length-1?'See results':'Next'}</button></div><div class="sr-feedback" aria-live="polite" aria-atomic="true" hidden></div></div>`;
+      round2?.stageCut(activity,`quiz:${mode}:${question.key}:${session.index}`,'.sr-winner-heading h2');
       bindQuestionControls(session);
     }
 
@@ -286,7 +315,7 @@
 
     function renderQuizResults(session) {
       const count = session.questions.filter((question,index) => question.correct.key === session.answers[index]).length;
-      activity.innerHTML = `${quizToolbar()}<div class="sr-results-header"><div><span class="screening-kicker">${nameOfMode[mode]}</span><h2 tabindex="-1">${count} of ${session.questions.length}.</h2><p>A little more of the archive to remember.</p></div><button type="button" class="sr-primary" data-quiz-replay>Play again</button></div><ol class="sr-result-list">${session.questions.map((question,index) => {
+      activity.innerHTML = `${quizToolbar()}<div class="sr-results-header"><div><span class="screening-kicker">${nameOfMode[mode]}${refinedQuestions?' · '+(difficulty==='challenge'?'Challenge':'Classic'):''}</span><h2 tabindex="-1">${count} of ${session.questions.length}.</h2><p>A little more of the archive to remember.</p></div><button type="button" class="sr-primary" data-quiz-replay>Play again</button></div><ol class="sr-result-list">${session.questions.map((question,index) => {
         const picked = question.choices.find(choice => choice.key === session.answers[index]);
         const match = question.correct.key === session.answers[index];
         if (question.answerKind === 'winner') return `<li>${poster(question.film)}<div><strong><a href="${esc(question.award.href)}">${esc(question.award.name)}</a></strong><p>${esc(question.correct.label)} · ${esc(question.marker)}${!match && picked?` · You chose ${esc(picked.label)}`:''}</p></div><span class="sr-result-status${match?' is-match':''}">${match?'Correct':picked?'Missed':'Skipped'}</span></li>`;
@@ -412,17 +441,17 @@
       if (!pair) { activity.innerHTML='<p class="sr-empty">More cinematic matchups are coming.</p>'; return; }
       const chosen=choices[pair.id];
       const last=index===order.length-1;
-      activity.innerHTML = `<div class="sr-matchup"><div class="sr-matchup-heading"><div><p class="screening-kicker">${esc(pair.theme)}</p><h2 tabindex="-1">${esc(pair.prompt)}</h2></div><div class="sr-matchup-meta"><span>No right answer. Just your cinema.</span><div class="sr-matchup-progress" role="progressbar" aria-label="Matchup progress" aria-valuemin="1" aria-valuemax="${order.length}" aria-valuenow="${index+1}"><span>Pair ${index+1} of ${order.length}</span><span class="sr-matchup-progress-track" aria-hidden="true"><span style="--progress:${100*(index+1)/order.length}%"></span></span></div></div></div>
+      activity.innerHTML = `<div class="sr-matchup"><div class="sr-matchup-heading"><div><p class="screening-kicker">${esc(pair.theme)}</p><h2 tabindex="-1">${esc(pair.prompt)}</h2></div><div class="sr-matchup-meta"><span>${refinedQuestions?'No right answer.':'No right answer. Just your cinema.'}</span><div class="sr-matchup-progress" role="progressbar" aria-label="Matchup progress" aria-valuemin="1" aria-valuemax="${order.length}" aria-valuenow="${index+1}"><span>Pair ${index+1} of ${order.length}</span><span class="sr-matchup-progress-track" aria-hidden="true"><span style="--progress:${100*(index+1)/order.length}%"></span></span></div></div></div>
         <div class="sr-match-grid" role="group" aria-label="Choose between two films">${pair.entries.map(entry=>`<button type="button" class="sr-match-choice" data-match-choice="${esc(entry.film.key)}" aria-pressed="${chosen===entry.film.key}"><span class="sr-match-image">${namedFrame(entry)}</span><span class="sr-match-copy"><span><strong>${esc(entry.film.title)}</strong><small>${esc(entry.film.year)}</small></span><span class="sr-match-mark" aria-hidden="true"></span></span></button>`).join('')}</div>
         <div class="sr-match-footer"><button type="button" class="sr-secondary" data-match-prev${index===0?' disabled':''}>Previous</button><div class="sr-match-response" aria-live="polite" hidden></div><div class="sr-match-buttons"><button type="button" class="sr-text-action" data-match-finish hidden>Finish round</button><button type="button" class="sr-primary" data-match-next>${last?'See my results':'Skip'}</button></div></div>
-        <p class="sr-match-note">Your choices shape a cinematic taste profile. Skip any pair if you prefer.</p></div>`;
+        <p class="sr-match-note">${refinedQuestions?'Skip any pair if you prefer.':'Your choices shape a cinematic taste profile. Skip any pair if you prefer.'}</p></div>`;
       function updateChoice() {
         const selected = choices[pair.id];
         for (const button of $$('[data-match-choice]',activity)) button.setAttribute('aria-pressed',String(button.dataset.matchChoice===selected));
         const response = $('.sr-match-response',activity);
         const film = pair.entries.find(entry=>entry.film.key===selected)?.film;
         response.hidden = !film;
-        if (film) response.innerHTML = `<span>Your choice: <strong>${esc(film.title)}</strong></span><div class="sr-feedback-links">${pair.entries.map(entry=>`<a href="${esc(entry.film.href)}">${esc(entry.film.title)}</a>`).join('')}</div>`;
+        if (film) response.innerHTML = refinedQuestions ? `<span>Selected · <strong>${esc(film.title)}</strong></span><div class="sr-feedback-links"><a href="${esc(film.href)}">Open film</a></div>` : `<span>Your choice: <strong>${esc(film.title)}</strong></span><div class="sr-feedback-links">${pair.entries.map(entry=>`<a href="${esc(entry.film.href)}">${esc(entry.film.title)}</a>`).join('')}</div>`;
         $('[data-match-next]',activity).textContent = last ? 'See my results' : film?'Next matchup':'Skip';
         $('[data-match-finish]',activity).hidden = last || Object.keys(choices).length<4;
       }
@@ -440,6 +469,7 @@
         renderMatchup();focusHeading(activity);
       });
       updateChoice();
+      round2?.stageCut(activity,`matchup:${pair.id}:${index}`,'.sr-matchup-heading h2');
     }
 
     function renderMatchupResults() {
@@ -510,9 +540,12 @@
       const back='<button type="button" class="sr-text-action" data-journey-back>All journeys</button>';
       const controls=`<div class="sr-journey-nav"><button type="button" class="sr-journey-control" data-journey-step="-1" aria-label="Previous film" title="Previous film"${journeyIndex===0?' disabled':''}>${chevron(-1)}</button><button type="button" class="sr-journey-control" data-journey-step="1" aria-label="Next film" title="Next film"${journeyIndex===journey.entries.length-1?' disabled':''}>${chevron(1)}</button></div>`;
       if(curated){
+        const filmHref=esc(editorialJourneys.filmHref(journey,entry));
+        const titleLink=round2?.enabled('15')?`<a class="ts-journey-title-link" href="${filmHref}" title="Open ${esc(entry.film.title)}">${esc(entry.film.title)}</a>`:esc(entry.film.title);
+        const filmAction=round2?.enabled('15')?'':`<a href="${filmHref}" class="ts-journey-film-link">Film file <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="2.5" width="13" height="15" rx="1.5"/><path d="M7 7h6M7 10h6M7 13h4"/></svg></a>`;
         activity.innerHTML=`<div class="sr-journey-detail ts-journey-detail"><div class="sr-journey-heading ts-journey-heading"><div>${back}<h2 tabindex="-1">${esc(journey.title)}</h2><p>${esc(journey.description)}</p></div><span class="ts-journey-topic">${esc(journey.lens||'Visual journey')}</span></div>
           <div class="sr-journey-stage${fade?' sr-journey-fade':''}" aria-label="${esc(entry.film.title)} still">${namedFrame(entry)}</div>
-          <div class="ts-journey-reading"><div class="ts-journey-reading-copy"><div><h3 lang="en">${esc(entry.film.title)}</h3><span>${esc(entry.film.year)}</span></div><p>${esc(entry.editorialNote||journey.description)}</p></div><div class="ts-journey-actions"><a href="${esc(editorialJourneys.filmHref(journey,entry))}" class="ts-journey-film-link">Film file <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="2.5" width="13" height="15" rx="1.5"/><path d="M7 7h6M7 10h6M7 13h4"/></svg></a>${controls}</div></div>
+          <div class="ts-journey-reading"><div class="ts-journey-reading-copy"><div><h3 lang="en">${titleLink}</h3><span>${esc(entry.film.year)}</span></div><p>${esc(entry.editorialNote||journey.description)}</p></div><div class="ts-journey-actions">${filmAction}${controls}</div></div>
           <div class="sr-journey-reel ts-journey-reel" role="group" aria-label="Films in this journey">${journey.entries.map((item,index)=>`<button type="button" data-journey-frame="${index}" aria-label="${esc(item.film.title)}" title="${esc(item.film.title)}" aria-pressed="${journeyIndex===index}"><span class="ts-journey-thumb">${namedFrame(item,'',true)}</span><span class="ts-journey-thumb-title">${esc(item.film.title)}</span></button>`).join('')}</div>
           <div class="ts-journey-foot"><a href="index.html?topic=${encodeURIComponent(journey.mood||'Atmosphere')}#moods">Explore ${esc(journey.mood||'Atmosphere')} in the archive</a><span>${journey.entries.length} films · ${esc(journey.lens||'Visual journey')}</span></div></div>`;
       }else activity.innerHTML=`<div class="sr-journey-detail"><div class="sr-journey-heading"><div>${back}<h2 tabindex="-1">${esc(journey.title)}</h2><p>${esc(journey.description)}</p></div></div>
@@ -569,12 +602,13 @@
     status.hidden = true;
     activity.hidden = false;
     switchMode(mode,false);
+    window.ArchiveContinuity?.register('screening',()=>true,()=>{});
   }
 
   async function loadPosterArt(paths) {
     const posterPaths=[...new Set(paths.filter(Boolean))];
     const loaded=await Promise.all(posterPaths.map(path=>new Promise(resolve=>{
-      const src=location.protocol==='file:'?window.__tsArchiveLocalBallotArt?.[path]:path;
+      const src=path;
       if(!src){resolve([path,null]);return;}
       const img=new Image();
       img.onload=()=>resolve([path,img]);img.onerror=()=>resolve([path,null]);img.src=src;
@@ -644,8 +678,7 @@
 
   async function createBallotCard(edition, summary) {
     // Only the visitor's picks belong on the shared image. The comparison
-    // remains in the private browser view. All artwork is local; the offline
-    // mirror supplies encoded thumbnails to keep the canvas export origin-safe.
+    // remains in the private browser view. All artwork is on the archive’s origin.
     try { await document.fonts.ready; } catch { /* fallback faces */ }
     const rows=summary.rows;
     const art=await loadPosterArt(rows.flatMap(row=>row.picked.films.map(film=>film.poster)));
