@@ -9,6 +9,8 @@
   theme.apply(document.body.dataset.page, selected.id);
   const archive = await site.read(selected.content);
   const explore = window.ArchiveExplore;
+  const rhythmLeads = new Set(['film-direction','scenes-moments','editorial-picks']);
+  const rhythmAwards = new Set(['best-picture','best-scene','best-cinematography']);
   const exploreEngine = explore.createEngine(catalog, {edition: selected, archive});
   document.body.dataset.edition = selected.id;
   const media = {
@@ -388,8 +390,9 @@
       const id = esc(chapter.id);
       const accent = chapterAccent(chapter.id);
       const opener = chapterPreview(chapter);
+      const rhythm = Boolean(opener?.path && rhythmLeads.has(chapter.id));
       return `<section class="chapter section-shell" data-chapter-accent="${accent}" style="--accent:${accent};--chapter-accent:${accent}" id="${id}" aria-labelledby="chapter-title-${id}">
-      <header class="chapter-heading${opener?.path ? ' has-opener' : ''}"><span class="chapter-number" aria-label="Chapter ${i + 1}">${pad(i + 1)}<span>.</span></span><div class="chapter-heading-title"><p class="eyebrow">${chapter.awards.length} ${chapter.awards.length === 1 ? 'award' : 'awards'}</p><h2 id="chapter-title-${id}">${esc(chapter.name)}</h2></div>${opener?.path ? `<span class="chapter-opener" aria-hidden="true"${opener.focal ? ` style="--focal-x:${esc(opener.focal)}"` : ''}>${imageMarkup(opener.path,false,'(max-width: 360px) 1px, (max-width: 680px) 36vw, (min-width: 1447px) 560px, 39vw')}</span>` : ''}</header>
+      <header class="chapter-heading${opener?.path ? ' has-opener' : ''}${rhythm ? ' ts-rhythm-lead' : ''}"><span class="chapter-number" aria-label="Chapter ${i + 1}">${pad(i + 1)}<span>.</span></span><div class="chapter-heading-title"><p class="eyebrow">${chapter.awards.length} ${chapter.awards.length === 1 ? 'award' : 'awards'}</p><h2 id="chapter-title-${id}">${esc(chapter.name)}</h2></div>${opener?.path ? `<span class="chapter-opener" aria-hidden="true"${opener.focal ? ` style="--focal-x:${esc(opener.focal)}"` : ''}>${imageMarkup(opener.path,false,rhythm ? '(max-width: 680px) 59vw, (min-width: 1447px) 810px, 58vw' : '(max-width: 360px) 1px, (max-width: 680px) 36vw, (min-width: 1447px) 560px, 39vw')}</span>` : ''}</header>
       <div class="award-grid">${chapter.awards.map(a => {
         const quote = edition.interludes?.[a.id];
         return awardCard(awardsById.get(a.id)) + (quote ? quotePanel(quote, 'interlude') : '');
@@ -548,6 +551,8 @@
   }
 
   let homeDiscoveryReturn = site.params.get('from') === 'home-discover' && film(site.params.get('film'));
+  let journeyReturn = window.ArchiveJourneyEditorial && site.params.get('from') === 'journey' && film(site.params.get('film')) &&
+    /^[a-z-]+$/.test(site.params.get('journey') || '') ? {id:site.params.get('journey'),shot:site.params.get('shot') || site.params.get('film')} : null;
   function returnToDiscoveryHome() {
     const home = new URL('index.html#decades', location.href);
     const directory = new URL('./', home);
@@ -563,19 +568,33 @@
     }
     location.replace(home.href);
   }
+  function returnToJourney(visit) {
+    const target = new URL(window.ArchiveJourneyEditorial.href(visit.id,visit.shot),location.href);
+    if (document.referrer && history.length > 1) {
+      const previous = new URL(document.referrer);
+      if (previous.origin === target.origin && previous.pathname === target.pathname && previous.searchParams.get('journey') === visit.id && previous.searchParams.get('shot') === visit.shot) {
+        history.back(); return;
+      }
+    }
+    location.replace(target.href);
+  }
   function closeDialog(dialog, dismissed = false) {
     if (dialog === indexDialog && dialog.open) saveIndexPosition();
-    if (dialog === filmDialog && dialog.open && homeDiscoveryReturn) {
+    if (dialog === filmDialog && dialog.open && (homeDiscoveryReturn || journeyReturn)) {
+      const visit = journeyReturn;
+      journeyReturn = null;
       homeDiscoveryReturn = false;
       if (dismissed) {
         dialog.close();
-        returnToDiscoveryHome();
+        if (visit) returnToJourney(visit); else returnToDiscoveryHome();
         return;
       }
       // An intentional jump to an award ends this discovery visit.
       const url = new URL(location.href);
       url.searchParams.delete('from');
       url.searchParams.delete('film');
+      url.searchParams.delete('journey');
+      url.searchParams.delete('shot');
       site.replaceLocation(url);
     }
     dialog.close();
@@ -619,6 +638,8 @@
       if (!frameDialog.open) {
         setContactSheet(false, true);
         image.removeAttribute('src');
+        image.removeAttribute('width'); image.removeAttribute('height');
+        $('.ts-frame-size',frameDialog)?.remove();
         frameCollection = []; frameIndex = 0; frameTouch = null;
         $('.frame-gallery-controls', frameDialog).hidden = true;
       }
@@ -704,6 +725,15 @@
     counter.setAttribute('aria-label',action + ', frame ' + (frameIndex+1) + ' of ' + frameCollection.length);
     counter.title = action;
     $$('.frame-contact-thumb',sheet).forEach((button,i) => button.setAttribute('aria-pressed',String(i===frameIndex)));
+    if (expanded) {
+      const selected = $('.frame-contact-thumb[aria-pressed="true"]',sheet);
+      const grid = $('.frame-contact-grid',sheet);
+      if (selected && grid.scrollWidth > grid.clientWidth) {
+        const box=selected.getBoundingClientRect(), region=grid.getBoundingClientRect();
+        if (box.left < region.left+4) grid.scrollLeft += box.left-region.left-4;
+        else if (box.right > region.right-4) grid.scrollLeft += box.right-region.right+4;
+      }
+    }
   }
   function setContactSheet(open, clear = false) {
     if (!frameDialog) return;
@@ -711,9 +741,12 @@
     if (clear) grid.replaceChildren();
     sheet.hidden = !open || frameCollection.length < 2;
     if (!sheet.hidden && !grid.children.length) {
-      // Until the visitor opens the contact sheet, these files are not requested.
+      // Original frame proportions are retained in the thumbnail strip.
       grid.style.setProperty('--frame-count',frameCollection.length);
-      grid.innerHTML = frameCollection.map((frame,i) => `<button type="button" class="frame-contact-thumb" data-frame-index="${i}" aria-pressed="${i===frameIndex}" aria-label="Frame ${i+1}: ${esc(frame.context || frame.label)}" title="${esc(frame.context || frame.label)}"><img src="${esc(frame.thumbnail || frame.src)}" alt="" width="320" height="180" decoding="async" loading="lazy"></button>`).join('');
+      grid.innerHTML = frameCollection.map((frame,i) => {
+        const [width,height] = media.sizes?.[frame.path] ?? [320,180];
+        return `<button type="button" class="frame-contact-thumb" data-frame-index="${i}" aria-pressed="${i===frameIndex}" aria-label="Frame ${i+1}: ${esc(frame.context || frame.label)}" title="${esc(frame.context || frame.label)}"><img src="${esc(frame.thumbnail || frame.src)}" alt="" width="${width}" height="${height}" decoding="async" loading="lazy"></button>`;
+      }).join('');
     }
     updateContactSheet();
   }
@@ -736,6 +769,17 @@
     $('.frame-gallery-controls', frameDialog).hidden = frameCollection.length < 2;
     updateContactSheet();
     image.alt = frame.label;
+    const size = media.sizes?.[frame.src] || media.sizes?.[frame.path];
+    if (size) {
+      image.width = size[0]; image.height = size[1];
+    }
+    let dimensions = $('.ts-frame-size',frameDialog);
+    if (!dimensions) {
+      dimensions=document.createElement('small'); dimensions.className='ts-frame-size';
+      $('.frame-caption-meta',frameDialog).append(dimensions);
+    }
+    dimensions.textContent = size ? `${size[0]} × ${size[1]}` : '';
+    dimensions.hidden = !size;
     status.textContent = 'Loading frame…';
     status.hidden = false;
     image.src = frame.src;
@@ -763,7 +807,7 @@
         source:entry?.source || presentation?.[1]?.source}, ...frameCollection].slice(0,7);
       frameIndex = 0;
     }
-    setContactSheet(false,true);
+    setContactSheet(frameCollection.length > 1,true);
     openDialog(frameDialog, '.dialog-close', trigger);
     displayFrame();
     if (trigger.dataset.openContactSheet === 'true') setContactSheet(true);
@@ -1050,8 +1094,9 @@
   function dossierFrames(slug, gallery) {
     if (!gallery.length || !frameDialog) return '';
     const sizes = '(max-width: 680px) 44vw, (min-width: 1971px) 336px, 240px';
-    const thumbnails = gallery.map((frame, index) => `<li><button type="button" class="file-frame-thumbnail frame-enlarge" data-full-frame="${esc(frame.src)}" data-frame-path="${esc(frame.path)}" data-frame-label="${esc(frame.label)}" data-film="${esc(slug)}" aria-label="View frame ${index+1}: ${esc(frame.context || frame.label)}" title="${esc(frame.context || frame.label)}" aria-haspopup="dialog">${imageMarkup(frame.path,false,sizes)}</button></li>`).join('');
-    return dossierDisclosure('frames','Selected frames',gallery.length,`<ul class="file-frames-grid">${thumbnails}</ul>`,false,'film-file-section file-frames');
+    const icon='<span class="ts-frame-zoom" aria-hidden="true"><svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8V3h5m4 0h5v5m0 4v5h-5m-4 0H3v-5"/></svg></span>';
+    const thumbnails = gallery.map((frame, index) => `<li><button type="button" class="file-frame-thumbnail frame-enlarge" data-full-frame="${esc(frame.src)}" data-frame-path="${esc(frame.path)}" data-frame-label="${esc(frame.label)}" data-film="${esc(slug)}" aria-label="View frame ${index+1}: ${esc(frame.context || frame.label)}" title="${esc(frame.context || frame.label)}" aria-haspopup="dialog">${imageMarkup(frame.path,false,sizes)}${icon}</button></li>`).join('');
+    return dossierDisclosure('frames','Selected frames',gallery.length,`<ul class="file-frames-grid ts-contact-sheet">${thumbnails}</ul>`,false,'film-file-section file-frames');
   }
 
   function dossierActions(slug, info, still) {
@@ -1077,6 +1122,8 @@
         const local = related.editionId === editionId;
         return `<li><a class="file-connection-link" href="${esc(related.href)}"${local ? ` data-film-file="${esc(related.slug)}" aria-haspopup="dialog"` : ''}>${related.poster ? `<img src="${esc(related.poster)}" alt="" width="84" height="126" loading="lazy" decoding="async">` : ''}<div><strong>${esc(related.title)}</strong><small>${esc(related.year)}</small><small class="connection-reason">${esc(reason)}</small></div></a></li>`;
       }).join('')}</ul>` : '<p class="file-connection-status">No related selections yet.</p>';
+      const journeys=window.ArchiveJourneyEditorial?.related(connected,`${editionId}/${slug}`)||[];
+      if(journeys.length) content.insertAdjacentHTML('beforeend',`<div class="ts-file-journeys"><span>Part of a film journey</span>${journeys.map(journey=>`<a href="${esc(window.ArchiveJourneyEditorial.href(journey.id,slug))}">${esc(journey.title)}</a>`).join('')}</div>`);
       details.dataset.connectionLoaded = 'true';
     } catch {
       if (details.isConnected) content.innerHTML = '<p class="file-connection-status">Related films could not be loaded. Close and reopen this section to try again.</p>';
@@ -1524,9 +1571,10 @@
         observer.unobserve(entry.target);
       });
     }, {threshold:.18});
-    const reveals = $$('.chapter-heading, .edition-quote.interlude, .section-heading');
+    const reveals = $$('.chapter-heading.ts-rhythm-lead');
+    const enteredCards = cards.filter(card=>rhythmAwards.has(card.id));
     reveals.forEach(section => section.classList.add('motion-reveal'));
-    [...cards, ...reveals].forEach(section => observer.observe(section));
+    [...enteredCards, ...reveals].forEach(section => observer.observe(section));
   }
   const links = $$('.chapter-link');
   const masthead = $('.masthead');

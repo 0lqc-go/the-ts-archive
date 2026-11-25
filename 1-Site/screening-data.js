@@ -241,7 +241,8 @@
       const frame = film?.frames.find(item => item.path.split('/').at(-1) === filename);
       return film && frame ? {film, frame} : null;
     }
-    archive.journeys = journeyDefinitions.map(definition => ({id:definition.id,title:definition.title,description:definition.description,entries:definition.entries.map(curatedStill).filter(Boolean)})).filter(journey => journey.entries.length >= 3);
+    archive.journeys = journeyDefinitions.map(definition => ({id:definition.id,title:definition.title,description:definition.description,entries:definition.entries.map(curatedStill).filter(Boolean)})).filter(journey => journey.entries.length >= 3)
+      .map(journey=>globalThis.ArchiveJourneyEditorial?.decorate(journey)||journey);
     archive.matchups = matchupDefinitions.map(([id,theme,prompt,left,right]) => ({id,theme,prompt,entries:[left,right].map((selection,index) => {
       const entry=curatedStill(selection), [primary,secondary,note]=tasteReadings[id][index];
       return entry ? {...entry, taste:{primary,secondary,note}} : null;

@@ -250,6 +250,22 @@
     resultNav.setAttribute('aria-label','Jump to result type');
     resultNav.hidden = true;
     results.before(resultNav);
+    const visual = window.ArchiveVisualIndex?.create(dialog,results);
+
+    // Every preview is resolved from the selected edition's existing assets.
+    // Register paths only; no image is fetched until its row is highlighted.
+    function previewFor(model,slug,details = {}) {
+      const info=model.data.films[slug] || {};
+      const art=model.media.films[slug] || {};
+      const path=details.path || model.data.galleries?.[slug]?.[0]?.path || art.backdrop || art.poster;
+      if(!path)return null;
+      const size=model.media.sizes[path] || [960,540];
+      const variants=[...(model.media.variants[path]||[])].sort((a,b)=>a.width-b.width);
+      const responsive=variants.find(item=>item.width>=560)||variants.at(-1);
+      return {path,src:responsive?.src||path,width:size[0],height:size[1],poster:size[0]/size[1]<1.16,
+        title:details.title||info.title,kicker:details.kicker||`Film · ${model.edition.period}`,
+        meta:details.meta||[info.year,info.director].filter(Boolean).join(' · '),credit:details.credit||'',alt:details.alt||`Artwork from ${info.title||details.title}`};
+    }
     function setFiltersOpen(open) {
       filterPanel.hidden = !open;
       filterToggle.setAttribute('aria-expanded', String(open));
@@ -285,6 +301,7 @@
       updateFilterSummary();
     }
     function render(models, rebuildControls) {
+      visual?.clear();
       if (rebuildControls || !yearBox.children.length) controls(models);
       else updateActiveControls();
       const current = state.scope === localEdition;
@@ -296,16 +313,29 @@
       resultNav.replaceChildren();
       if (idle && current && chapterIndex) { results.innerHTML = chapterIndex(); return; }
       const globalBrowse = !current && idle;
+      const previews = new Map();
+      const previewAttr=(key,model,slug,details={})=>{
+        if(!visual)return '';
+        const preview=previewFor(model,slug,details);
+        if(!preview)return '';
+        const id=model.edition.id+'/'+key;
+        previews.set(id,preview);
+        return ` data-visual-preview="${esc(id)}"`;
+      };
       const local = model => pageActions?.editionId === model.edition.id;
       const period = model => multi && state.scope === 'all' ? ' · ' + model.edition.period : '';
       const filmRows = searched.flatMap(({model,filmRows}) => (state.query.trim() || state.year !== null || state.selection !== 'all' || state.role !== 'all' || globalBrowse || !chapterIndex ? filmRows : []).map(([slug,info]) => {
         const href = dossierHref(model.edition, 'film', slug);
         const attrs = local(model) ? ` data-film-file="${esc(slug)}" aria-haspopup="dialog"` : '';
-        return `<a class="index-row film-index-row" href="${esc(href)}" data-result-edition="${esc(model.edition.id)}" data-result-film="${esc(slug)}"${attrs}>${indexPoster(model,slug)}<span><strong>${esc(info.title)}</strong><small>${esc(info.year + period(model))}</small></span></a>`;
+        const preview=previewAttr('film/'+slug,model,slug);
+        return `<a class="index-row film-index-row" href="${esc(href)}" data-result-edition="${esc(model.edition.id)}" data-result-film="${esc(slug)}"${preview}${attrs}>${indexPoster(model,slug)}<span><strong>${esc(info.title)}</strong><small>${esc(info.year + period(model))}</small></span></a>`;
       }));
       const artistRows = searched.flatMap(({model,people}) => people.map(person => {
         const name = `<span><strong>${esc(person.name)}</strong><small>${esc(person.count + (person.count === 1 ? ' film' : ' films') + period(model))}</small></span>`;
-        const attr = `class="index-row person-index-row" data-result-edition="${esc(model.edition.id)}" data-result-person="${esc(person.id)}"`;
+        const slugs=[...new Set(person.appearances.flatMap(item=>item.films))];
+        const slug=slugs.find(id=>model.data.galleries?.[id]?.length||model.media.films[id]?.backdrop)||slugs[0];
+        const preview=previewAttr('artist/'+person.id,model,slug,{title:person.name,kicker:`Artist · ${model.edition.period}`,meta:person.count+(person.count===1?' film':' films'),credit:model.data.films[slug] ? `From ${model.data.films[slug].title}` : ''});
+        const attr = `class="index-row person-index-row" data-result-edition="${esc(model.edition.id)}" data-result-person="${esc(person.id)}"${preview}`;
         return local(model) ? `<button type="button" ${attr} data-person="${esc(person.id)}" aria-haspopup="dialog">${name}</button>` : `<a ${attr} href="${esc(dossierHref(model.edition,'artist',person.id))}">${name}</a>`;
       }));
       const awardRows = globalBrowse ? [] : searched.flatMap(({model,awards,awardRecords}) => awards.map(award => {
@@ -318,12 +348,20 @@
           : display.title;
         const caption = relevantCaption + period(model);
         const body = `<span>${shortNumber(award.number)}</span><span><strong>${esc(award.name)}</strong><small>${esc(caption)}</small></span><b aria-hidden="true">↗</b>`;
-        const attr = `class="index-row archive-award-row" data-result-edition="${esc(model.edition.id)}" data-result-award="${esc(award.id)}"`;
+        const featured=mentionOnly?matchedMentions[0].entry:award.winner;
+        const presentation=!mentionOnly && model.data.editorial?.presentationStills?.[award.id];
+        const slug=presentation?.film && featured.films.includes(presentation.film)?presentation.film:featured.films[0];
+        const dedicated=(model.data.stills?.[slug]||[]).find(still=>still.award===award.id)?.path;
+        const frame=(!mentionOnly && award.winnerArtwork?.path)||presentation?.path||dedicated||model.media.films[slug]?.backdrop;
+        const info=model.data.films[slug];
+        const preview=previewAttr('award/'+award.id,model,slug,{path:frame,title:award.name,kicker:`${mentionOnly?'Honorable mention':'Award'} · ${model.edition.period}`,meta:mentionOnly?featured.title:display.title,credit:info?[info.title,info.year].join(' · '):''});
+        const attr = `class="index-row archive-award-row" data-result-edition="${esc(model.edition.id)}" data-result-award="${esc(award.id)}"${preview}`;
         return local(model) && pageActions.awards ? `<button type="button" ${attr} data-award="${award.number - 1}">${body}</button>` : `<a ${attr} href="${esc(awardHref(model.edition,award.id))}">${body}</a>`;
       }));
       const snubRows = searched.flatMap(({model,snubs}) => snubs.map(snub => {
         const slug = snub.entry.films[0];
-        return `<a class="index-row archive-snub-row" data-result-edition="${esc(model.edition.id)}" href="${esc(model.snubHref(snub))}">${indexPoster(model,slug)}<span><strong>${esc(snub.entry.title)}</strong><small>${esc(snub.name + period(model))}</small></span><b aria-hidden="true">↗</b></a>`;
+        const preview=previewAttr('snub/'+slug+'/'+keyFor(snub.name),model,slug,{title:snub.entry.title,kicker:`Oscar Snubs · ${model.edition.period}`,meta:snub.name,credit:snub.status});
+        return `<a class="index-row archive-snub-row" data-result-edition="${esc(model.edition.id)}"${preview} href="${esc(model.snubHref(snub))}">${indexPoster(model,slug)}<span><strong>${esc(snub.entry.title)}</strong><small>${esc(snub.name + period(model))}</small></span><b aria-hidden="true">↗</b></a>`;
       }));
       const groups = [
         {id:'artists', label:'Artists', rows:artistRows},
@@ -341,8 +379,10 @@
       const chapter = models[0]?.data.chapters.find(item => item.id === state.chapter);
       const context = state.chapter ? `<div class="index-chapter-context"><button type="button" data-index-chapter="">All chapters</button><span>${esc(chapter?.name ?? 'All awards')}</span></div>` : '';
       results.innerHTML = context + (content || '<p class="empty-index">No matches. Try another film, person, award or mood, or clear a filter.</p>');
+      visual?.render(previews);
     }
     function refresh(rebuildControls = false) {
+      visual?.clear();
       state.query = search.value;
       const request = ++generation;
       const models = engine.cached(state.scope);
@@ -456,7 +496,9 @@
       const srcset = variants.map(item => item.src+' '+item.width+'w').join(', ');
       const [width,height] = picked.model.media.sizes[still] ?? [960,540];
       const sizes = '(min-width: 681px) 28vw, 30vw';
-      return `<button type="button" class="mood-collection" data-mood-topic="${esc(label)}" aria-haspopup="dialog" aria-label="Explore ${esc(label)}: ${pool.length} films"><img src="${esc(still)}"${srcset ? ` srcset="${esc(srcset)}" sizes="${sizes}"` : ''} width="${width}" height="${height}" loading="lazy" decoding="async" alt=""><span class="mood-collection-copy"><strong>${esc(label)}</strong><small>${pool.length} ${pool.length === 1 ? 'film' : 'films'}</small></span></button>`;
+      const card=`<button type="button" class="mood-collection" data-mood-topic="${esc(label)}" aria-haspopup="dialog" aria-label="Explore ${esc(label)}: ${pool.length} films"><img src="${esc(still)}"${srcset ? ` srcset="${esc(srcset)}" sizes="${sizes}"` : ''} width="${width}" height="${height}" loading="lazy" decoding="async" alt=""><span class="mood-collection-copy"><strong>${esc(label)}</strong><small>${pool.length} ${pool.length === 1 ? 'film' : 'films'}</small></span></button>`;
+      const journey=window.ArchiveJourneyEditorial?.forMood(label);
+      return journey?`<div class="ts-mood-journey-item">${card}<a class="ts-mood-journey" href="${esc(window.ArchiveJourneyEditorial.href(journey))}" aria-label="Follow a film journey about ${esc(label)}"><svg viewBox="0 0 20 16" width="17" height="14" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="1" y="2" width="18" height="12" rx="1"/><path d="M6 2v12M14 2v12M1 6h5m-5 4h5m8-4h5m-5 4h5"/></svg><span>Follow the journey</span></a></div>`:card;
     }).filter(Boolean);
     if (items.length) {
       $('#mood-collection-grid',section).innerHTML = items.join('');
@@ -531,6 +573,10 @@
       const loadMoods = () => archiveContext().then(({engine}) => renderMoodCollections(moodSection,engine)).catch(() => {});
       if ('requestIdleCallback' in window) requestIdleCallback(loadMoods,{timeout:1400});
       else setTimeout(loadMoods,100);
+      const requested=new URLSearchParams(location.search).get('topic');
+      if (requested) {
+        requestAnimationFrame(()=>open(trigger,requested.slice(0,80)));
+      }
     }
 
     const homeDiscover = $('[data-home-discover]');

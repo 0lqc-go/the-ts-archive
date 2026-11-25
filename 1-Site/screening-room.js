@@ -3,6 +3,7 @@
   const site = window.ArchiveSite;
   const explore = window.ArchiveExplore;
   const data = window.ArchiveScreeningData;
+  const editorialJourneys = window.ArchiveJourneyEditorial;
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[char]));
@@ -79,7 +80,8 @@
     let matchupRound = data.cleanMatchupRound(archive,savedMatchup);
     let tasteCardURL='';
     let journeyId = archive.journeys.some(journey=>journey.id===initialParams.get('journey')) ? initialParams.get('journey') : '';
-    let journeyIndex = 0;
+    const initialJourney=archive.journeys.find(item=>item.id===journeyId);
+    let journeyIndex = editorialJourneys?.enabled() ? Math.max(0,initialJourney?.entries.findIndex(entry=>entry.film.slug===initialParams.get('shot')) ?? 0) : 0;
     let ballotEditionId = catalog.editions.some(item => item.id === new URLSearchParams(location.search).get('edition'))
       ? new URLSearchParams(location.search).get('edition') : catalog.featuredEdition || catalog.editions[0]?.id;
     let ballotView = 'vote', confirmClear = false, storageAvailable = true;
@@ -129,6 +131,10 @@
           if (mode !== 'ballot') url.searchParams.delete('edition');
           if (mode === 'journeys' && journeyId) url.searchParams.set('journey',journeyId);
           else url.searchParams.delete('journey');
+          if (editorialJourneys?.enabled()) {
+            const entry=archive.journeys.find(item=>item.id===journeyId)?.entries[journeyIndex];
+            if(mode==='journeys'&&entry)url.searchParams.set('shot',entry.film.slug);else url.searchParams.delete('shot');
+          }
           history.replaceState(history.state, '', url);
         } catch { /* The in-page switch also works from a restricted file URL. */ }
       }
@@ -478,28 +484,51 @@
     const chevron = direction => `<svg viewBox="0 0 20 20" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${direction<0?'M12.5 4.5 7 10l5.5 5.5':'M7.5 4.5 13 10l-5.5 5.5'}"/></svg>`;
 
     function updateJourneyLocation() {
-      try {const url=new URL(location.href);if(journeyId)url.searchParams.set('journey',journeyId);else url.searchParams.delete('journey');history.replaceState(history.state,'',url);} catch {}
+      try {
+        const url=new URL(location.href);
+        if(journeyId)url.searchParams.set('journey',journeyId);else url.searchParams.delete('journey');
+        if(editorialJourneys?.enabled()) {
+          const entry=archive.journeys.find(item=>item.id===journeyId)?.entries[journeyIndex];
+          if(entry)url.searchParams.set('shot',entry.film.slug);else url.searchParams.delete('shot');
+        }
+        history.replaceState(history.state,'',url);
+      } catch {}
     }
 
     function renderJourneys(fade = false, restoreFocus = '') {
       const journey = archive.journeys.find(item=>item.id===journeyId);
+      const curated=editorialJourneys?.enabled();
+      document.body.classList.toggle('ts-journey-active',Boolean(curated&&journey));
       if (!journey) {
-        activity.innerHTML = `<div class="sr-journey-intro"><h2 tabindex="-1">Film journeys.</h2><p>Follow a visual thread through the archive.</p></div><div class="sr-journey-grid">${archive.journeys.map(item=>`<button type="button" class="sr-journey-tile" data-open-journey="${esc(item.id)}"><span class="sr-journey-cover">${namedFrame(item.entries[0],'',true)}</span><span class="sr-journey-tile-copy"><strong>${esc(item.title)}</strong><small>${esc(item.description)}</small><span>${item.entries.length} films</span></span></button>`).join('')}</div>`;
+        activity.innerHTML = `<div class="sr-journey-intro"><h2 tabindex="-1">Film journeys.</h2><p>${curated?'Visual essays, told through films from both decades.':'Follow a visual thread through the archive.'}</p></div><div class="sr-journey-grid${curated?' ts-journey-grid':''}">${archive.journeys.map(item=>`<button type="button" class="sr-journey-tile" data-open-journey="${esc(item.id)}"><span class="sr-journey-cover">${namedFrame(item.entries[0],'',true)}${curated?`<span class="ts-journey-lens">${esc(item.lens||'Visual journey')}</span>`:''}</span><span class="sr-journey-tile-copy"><strong>${esc(item.title)}</strong><small>${esc(item.description)}</small><span>${item.entries.length} films</span></span></button>`).join('')}</div>`;
         for (const button of $$('[data-open-journey]',activity)) button.addEventListener('click',()=>{journeyId=button.dataset.openJourney;journeyIndex=0;updateJourneyLocation();renderJourneys();focusHeading(activity);});
+        if(restoreFocus)$(restoreFocus,activity)?.focus({preventScroll:true});
         return;
       }
       journeyIndex=Math.max(0,Math.min(journey.entries.length-1,journeyIndex));
       const entry=journey.entries[journeyIndex];
-      activity.innerHTML=`<div class="sr-journey-detail"><div class="sr-journey-heading"><div><button type="button" class="sr-text-action" data-journey-back>All journeys</button><h2 tabindex="-1">${esc(journey.title)}</h2><p>${esc(journey.description)}</p></div></div>
+      const back='<button type="button" class="sr-text-action" data-journey-back>All journeys</button>';
+      const controls=`<div class="sr-journey-nav"><button type="button" class="sr-journey-control" data-journey-step="-1" aria-label="Previous film" title="Previous film"${journeyIndex===0?' disabled':''}>${chevron(-1)}</button><button type="button" class="sr-journey-control" data-journey-step="1" aria-label="Next film" title="Next film"${journeyIndex===journey.entries.length-1?' disabled':''}>${chevron(1)}</button></div>`;
+      if(curated){
+        activity.innerHTML=`<div class="sr-journey-detail ts-journey-detail"><div class="sr-journey-heading ts-journey-heading"><div>${back}<h2 tabindex="-1">${esc(journey.title)}</h2><p>${esc(journey.description)}</p></div><span class="ts-journey-topic">${esc(journey.lens||'Visual journey')}</span></div>
+          <div class="sr-journey-stage${fade?' sr-journey-fade':''}" aria-label="${esc(entry.film.title)} still">${namedFrame(entry)}</div>
+          <div class="ts-journey-reading"><div class="ts-journey-reading-copy"><div><h3 lang="en">${esc(entry.film.title)}</h3><span>${esc(entry.film.year)}</span></div><p>${esc(entry.editorialNote||journey.description)}</p></div><div class="ts-journey-actions"><a href="${esc(editorialJourneys.filmHref(journey,entry))}" class="ts-journey-film-link">Film file <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="2.5" width="13" height="15" rx="1.5"/><path d="M7 7h6M7 10h6M7 13h4"/></svg></a>${controls}</div></div>
+          <div class="sr-journey-reel ts-journey-reel" role="group" aria-label="Films in this journey">${journey.entries.map((item,index)=>`<button type="button" data-journey-frame="${index}" aria-label="${esc(item.film.title)}" title="${esc(item.film.title)}" aria-pressed="${journeyIndex===index}"><span class="ts-journey-thumb">${namedFrame(item,'',true)}</span><span class="ts-journey-thumb-title">${esc(item.film.title)}</span></button>`).join('')}</div>
+          <div class="ts-journey-foot"><a href="index.html?topic=${encodeURIComponent(journey.mood||'Atmosphere')}#moods">Explore ${esc(journey.mood||'Atmosphere')} in the archive</a><span>${journey.entries.length} films · ${esc(journey.lens||'Visual journey')}</span></div></div>`;
+      }else activity.innerHTML=`<div class="sr-journey-detail"><div class="sr-journey-heading"><div>${back}<h2 tabindex="-1">${esc(journey.title)}</h2><p>${esc(journey.description)}</p></div></div>
         <div class="sr-journey-stage${fade?' sr-journey-fade':''}" aria-label="${esc(entry.film.title)} still">${namedFrame(entry)}</div>
-        <div class="sr-journey-caption"><div><strong>${esc(entry.film.title)}</strong><small>${esc(entry.film.year)}</small><a href="${esc(entry.film.href)}">Open film</a></div><div class="sr-journey-nav"><button type="button" class="sr-journey-control" data-journey-step="-1" aria-label="Previous film" title="Previous film"${journeyIndex===0?' disabled':''}>${chevron(-1)}</button><button type="button" class="sr-journey-control" data-journey-step="1" aria-label="Next film" title="Next film"${journeyIndex===journey.entries.length-1?' disabled':''}>${chevron(1)}</button></div></div>
+        <div class="sr-journey-caption"><div><strong>${esc(entry.film.title)}</strong><small>${esc(entry.film.year)}</small><a href="${esc(entry.film.href)}">Open film</a></div>${controls}</div>
         <div class="sr-journey-reel" role="group" aria-label="Films in this journey">${journey.entries.map((item,index)=>`<button type="button" data-journey-frame="${index}" aria-label="${esc(item.film.title)}" title="${esc(item.film.title)}" aria-pressed="${journeyIndex===index}">${namedFrame(item,'',true)}</button>`).join('')}</div></div>`;
-      $('[data-journey-back]',activity).addEventListener('click',()=>{journeyId='';journeyIndex=0;updateJourneyLocation();renderJourneys();focusHeading(activity);});
+      $('[data-journey-back]',activity).addEventListener('click',()=>{const previous=journeyId;journeyId='';journeyIndex=0;updateJourneyLocation();renderJourneys(false,curated?`[data-open-journey="${previous}"]`:'');if(!curated)focusHeading(activity);});
       for(const button of $$('[data-journey-step]',activity)) button.addEventListener('click',()=>stepJourney(Number(button.dataset.journeyStep),`[data-journey-step="${button.dataset.journeyStep}"]`));
       for(const button of $$('[data-journey-frame]',activity)) button.addEventListener('click',()=>{
-        const next=Number(button.dataset.journeyFrame);if(next!==journeyIndex){journeyIndex=next;renderJourneys(true,`[data-journey-frame="${next}"]`);}
+        const next=Number(button.dataset.journeyFrame);if(next!==journeyIndex){journeyIndex=next;if(curated)updateJourneyLocation();renderJourneys(true,`[data-journey-frame="${next}"]`);}
       });
       if(restoreFocus) $(restoreFocus,activity)?.focus({preventScroll:true});
+      if(curated){
+        const rail=$('.ts-journey-reel',activity),selected=$('[data-journey-frame][aria-pressed="true"]',rail);
+        if(selected&&rail.scrollWidth>rail.clientWidth){const a=selected.getBoundingClientRect(),b=rail.getBoundingClientRect();if(a.right>b.right)rail.scrollLeft+=a.right-b.right+4;else if(a.left<b.left)rail.scrollLeft+=a.left-b.left-4;}
+      }
       const stage=$('.sr-journey-stage',activity);
       let touch;
       stage.addEventListener('touchstart',event=>{touch=event.touches.length===1?{x:event.touches[0].clientX,y:event.touches[0].clientY,id:event.touches[0].identifier}:null;},{passive:true});
@@ -514,10 +543,12 @@
       const next=journeyIndex+direction;
       if(!journey||next<0||next>=journey.entries.length)return;
       journeyIndex=next;
+      if(editorialJourneys?.enabled())updateJourneyLocation();
       renderJourneys(true,restoreFocus);
     }
 
     function renderActivity() {
+      if(mode!=='journeys')document.body.classList.remove('ts-journey-active');
       if (mode === 'ballot') renderBallot();
       else if (mode === 'matchup') renderMatchup();
       else if (mode === 'journeys') renderJourneys();
@@ -528,7 +559,7 @@
     // number keys choose the three answers without affecting the existing Index.
     document.addEventListener('keydown',event => {
       if (mode === 'ballot' || event.repeat || event.ctrlKey || event.metaKey || event.altKey || $('dialog[open]') || event.target.closest?.('input,textarea,select,[contenteditable="true"]')) return;
-      if (mode==='journeys'&&journeyId&&['ArrowLeft','ArrowRight'].includes(event.key)) {event.preventDefault();stepJourney(event.key==='ArrowRight'?1:-1);return;}
+      if (mode==='journeys'&&journeyId&&['ArrowLeft','ArrowRight'].includes(event.key)) {event.preventDefault();const direction=event.key==='ArrowRight'?1:-1;const onThumb=event.target.closest?.('[data-journey-frame]');stepJourney(direction,onThumb?`[data-journey-frame="${journeyIndex+direction}"]`:'');return;}
       if((quizModes.has(mode)||mode==='matchup')&&['1','2','3'].includes(event.key)) {
         const button = $$(mode==='matchup'?'[data-match-choice]':'[data-answer]',activity)[Number(event.key)-1];
         if (button && !button.disabled) { event.preventDefault(); button.click(); }
