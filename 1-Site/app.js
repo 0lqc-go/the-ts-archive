@@ -922,7 +922,8 @@
   if (!$('#chapter-content')) return;
   if (edition.opening) $('#opening-line').innerHTML = quotePanel(edition.opening, 'opening');
   if (edition.closing) $('#closing-line').innerHTML = quotePanel(edition.closing, 'closing');
-  site.setText('.hero-edition-period', 'The ' + selected.period);
+  site.setText('.hero-edition-period', selected.id === '2010-2019' ? '2010s' : selected.period);
+  $('#hero-title')?.setAttribute('aria-label', selected.title);
   site.setText('#award-count', awards.length);
   site.setText('#chapter-count', archive.chapters.length);
   renderChapters();
