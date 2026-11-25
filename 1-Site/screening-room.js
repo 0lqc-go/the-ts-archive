@@ -57,7 +57,7 @@
         const date = new Intl.DateTimeFormat('en', {day:'numeric', month:'short'}).format(now);
         const dateISO = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
         section.innerHTML = `<div class="screening-daily-heading"><span>Frame of the day</span><time datetime="${dateISO}">${esc(date)}</time></div>
-          <a class="screening-daily-card" href="${esc(film.href)}" aria-label="Explore ${esc(film.title)} (${esc(film.year)})"><img src="${esc(frame.path)}" width="${frame.width}" height="${frame.height}" alt="" loading="lazy" decoding="async"><span class="screening-daily-caption"><strong>${esc(film.title)}</strong><small>${esc(film.year)}</small></span></a>`;
+          <a class="screening-daily-card" href="${esc(film.href)}" aria-label="Explore ${esc(film.title)} (${esc(film.year)})"><img src="${esc(frame.path)}" width="${frame.width}" height="${frame.height}" alt="" loading="lazy" decoding="async"><span class="screening-daily-caption"><strong>${esc(film.title)}</strong><small>${esc(film.year)}</small></span></a>${frame.credit ? `<small class="screening-daily-credit">${esc(frame.credit)}</small>` : ''}`;
         const image = $('img', section);
         image.addEventListener('error', () => { image.hidden = true; });
         window.ArchiveContinuity?.prefetch(film.href,$('.screening-daily-card',section));

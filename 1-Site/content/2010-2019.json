@@ -6028,6 +6028,10 @@
         1920,
         1080
       ],
+      "assets/films/the-souvenir-daily-frame.jpg": [
+        2000,
+        1153
+      ],
       "assets/gallery/2010-2019/thumbs/the-souvenir-most-underrated-movie-hd-320w.webp": [
         320,
         180
@@ -11347,9 +11351,9 @@
     },
     "moodCovers": {
       "Obsession": {
-        "film": "whiplash-2014",
-        "path": "assets/films/whiplash-2014-best-breakthrough-performance-2010s.webp",
-        "priority": 2
+        "film": "phantom-thread",
+        "path": "assets/films/phantom-thread-best-actor-curator.webp",
+        "priority": 0
       },
       "Music": {
         "film": "la-la-land",

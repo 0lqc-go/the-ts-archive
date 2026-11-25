@@ -27,6 +27,7 @@
 .screening-daily-caption strong { color: var(--text); font: 500 clamp(1rem, 1.7vw, 1.28rem)/1.2 var(--body); overflow-wrap: anywhere; }
 .screening-daily-caption small { color: var(--text-subtle); font-size: .78rem; white-space: nowrap; }
 .screening-daily-card:hover .screening-daily-caption strong { color: var(--paper-accent); }
+.screening-daily-credit { display:block; margin-top:7px; color:var(--muted); font-size:.72rem; line-height:1.4; text-align:end; }
 .screening-daily-loading { display: grid; min-height: 100px; place-items: center; color: var(--muted); font-size: .875rem; }
 
 /* The screening room is a self-contained screen, sharing the archive's masthead,
