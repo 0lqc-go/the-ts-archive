@@ -2177,6 +2177,122 @@
       }
     },
     "sizes": {
+      "assets/films/responsive/screen-cbd75354caae-1920w.webp": [
+        1920,
+        797
+      ],
+      "assets/films/responsive/screen-19f260f11ce4-1920w.webp": [
+        1920,
+        805
+      ],
+      "assets/films/responsive/screen-89b79f5cbb24-2560w.webp": [
+        2560,
+        1444
+      ],
+      "assets/films/responsive/screen-89b79f5cbb24-3828w.webp": [
+        3828,
+        2159
+      ],
+      "assets/films/responsive/screen-b5f5e58bed8c-2559w.webp": [
+        2559,
+        1439
+      ],
+      "assets/films/responsive/screen-4f47f75b5c83-2560w.webp": [
+        2560,
+        1384
+      ],
+      "assets/films/responsive/screen-4f47f75b5c83-3839w.webp": [
+        3839,
+        2076
+      ],
+      "assets/films/responsive/screen-bb480fc2c18e-1916w.webp": [
+        1916,
+        1036
+      ],
+      "assets/films/responsive/screen-6b816f6c1ed1-2560w.webp": [
+        2560,
+        1389
+      ],
+      "assets/films/responsive/screen-6b816f6c1ed1-3826w.webp": [
+        3826,
+        2076
+      ],
+      "assets/films/responsive/screen-e8b7acd4388c-1916w.webp": [
+        1916,
+        1036
+      ],
+      "assets/films/responsive/screen-d23ed8689857-2560w.webp": [
+        2560,
+        1384
+      ],
+      "assets/films/responsive/screen-d23ed8689857-3510w.webp": [
+        3510,
+        1898
+      ],
+      "assets/films/responsive/screen-cd62dd5a8828-1920w.webp": [
+        1920,
+        804
+      ],
+      "assets/films/responsive/screen-bd928862dcd1-1920w.webp": [
+        1920,
+        804
+      ],
+      "assets/films/responsive/screen-c14cbc67503a-1920w.webp": [
+        1920,
+        804
+      ],
+      "assets/films/responsive/screen-c5755abffdf9-2559w.webp": [
+        2559,
+        1072
+      ],
+      "assets/films/responsive/screen-14d141c2d71e-2560w.webp": [
+        2560,
+        1075
+      ],
+      "assets/films/responsive/screen-14d141c2d71e-3829w.webp": [
+        3829,
+        1608
+      ],
+      "assets/films/responsive/screen-f9171e19ac8e-2557w.webp": [
+        2557,
+        1384
+      ],
+      "assets/films/responsive/screen-2b4b568cc90f-2557w.webp": [
+        2557,
+        1384
+      ],
+      "assets/films/responsive/screen-3c03164ebaf5-2557w.webp": [
+        2557,
+        1384
+      ],
+      "assets/films/responsive/screen-0ca0d8721d18-2551w.webp": [
+        2551,
+        1384
+      ],
+      "assets/films/responsive/screen-240309c6b930-2557w.webp": [
+        2557,
+        1384
+      ],
+      "assets/films/responsive/screen-78eb04a30922-2494w.webp": [
+        2494,
+        1383
+      ],
+      "assets/films/responsive/screen-a48aca158e58-2557w.webp": [
+        2557,
+        1384
+      ],
+      "assets/films/responsive/screen-0a4d5f5a829c-2545w.webp": [
+        2545,
+        1384
+      ],
+      "assets/films/responsive/screen-66a5e1ca63b3-2530w.webp": [
+        2530,
+        1384
+      ],
+      "assets/films/responsive/screen-39bc17fefbd3-3840w.webp": [
+        3840,
+        2158
+      ],
       "assets/films/the-beast-2023-curator-frame-20261126-01.webp": [
         2557,
         1384
@@ -6493,7 +6609,7 @@
           "width": 1920
         },
         {
-          "src": "assets/films/the-beast-2023-curator-frame-20261126-01.webp",
+          "src": "assets/films/responsive/screen-f9171e19ac8e-2557w.webp",
           "width": 2557
         }
       ],
@@ -6519,7 +6635,7 @@
           "width": 1920
         },
         {
-          "src": "assets/films/the-beast-2023-curator-frame-20261126-02.webp",
+          "src": "assets/films/responsive/screen-2b4b568cc90f-2557w.webp",
           "width": 2557
         }
       ],
@@ -6545,7 +6661,7 @@
           "width": 1920
         },
         {
-          "src": "assets/films/the-beast-2023-curator-frame-20261126-03.webp",
+          "src": "assets/films/responsive/screen-3c03164ebaf5-2557w.webp",
           "width": 2557
         }
       ],
@@ -6571,7 +6687,7 @@
           "width": 1920
         },
         {
-          "src": "assets/films/the-beast-2023-curator-frame-20261126-04.webp",
+          "src": "assets/films/responsive/screen-0ca0d8721d18-2551w.webp",
           "width": 2551
         }
       ],
@@ -6597,7 +6713,7 @@
           "width": 1920
         },
         {
-          "src": "assets/films/the-beast-2023-curator-frame-20261126-05.webp",
+          "src": "assets/films/responsive/screen-240309c6b930-2557w.webp",
           "width": 2557
         }
       ],
@@ -6641,7 +6757,7 @@
           "width": 1920
         },
         {
-          "src": "assets/films/the-beast-2023-curator-frame-20261126-07.webp",
+          "src": "assets/films/responsive/screen-78eb04a30922-2494w.webp",
           "width": 2494
         }
       ],
@@ -6667,7 +6783,7 @@
           "width": 1920
         },
         {
-          "src": "assets/films/the-beast-2023-curator-frame-20261126-08.webp",
+          "src": "assets/films/responsive/screen-a48aca158e58-2557w.webp",
           "width": 2557
         }
       ],
@@ -6693,7 +6809,7 @@
           "width": 1920
         },
         {
-          "src": "assets/films/the-beast-2023-curator-frame-20261126-09.webp",
+          "src": "assets/films/responsive/screen-0a4d5f5a829c-2545w.webp",
           "width": 2545
         }
       ],
@@ -6719,7 +6835,7 @@
           "width": 1920
         },
         {
-          "src": "assets/films/the-beast-2023-curator-frame-20261126-10.webp",
+          "src": "assets/films/responsive/screen-66a5e1ca63b3-2530w.webp",
           "width": 2530
         }
       ],
@@ -6741,7 +6857,7 @@
           "width": 1280
         },
         {
-          "src": "assets/films/no-other-choice-2025-curator-frame-20261126-12.webp",
+          "src": "assets/films/responsive/screen-cbd75354caae-1920w.webp",
           "width": 1920
         }
       ],
@@ -6763,7 +6879,7 @@
           "width": 1280
         },
         {
-          "src": "assets/films/no-other-choice-2025-curator-frame-20261126-13.webp",
+          "src": "assets/films/responsive/screen-19f260f11ce4-1920w.webp",
           "width": 1920
         }
       ],
@@ -6789,7 +6905,11 @@
           "width": 1920
         },
         {
-          "src": "assets/films/the-batman-curator-frame-20261126-14.webp",
+          "src": "assets/films/responsive/screen-14d141c2d71e-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-14d141c2d71e-3829w.webp",
           "width": 3829
         }
       ],
@@ -6859,7 +6979,11 @@
           "width": 1920
         },
         {
-          "src": "assets/films/sentimental-value-2025-curator-frame-20261126-18.webp",
+          "src": "assets/films/responsive/screen-4f47f75b5c83-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-4f47f75b5c83-3839w.webp",
           "width": 3839
         }
       ],
@@ -6881,7 +7005,7 @@
           "width": 1280
         },
         {
-          "src": "assets/films/sentimental-value-2025-curator-frame-20261126-19.webp",
+          "src": "assets/films/responsive/screen-bb480fc2c18e-1916w.webp",
           "width": 1916
         }
       ],
@@ -6907,7 +7031,11 @@
           "width": 1920
         },
         {
-          "src": "assets/films/sentimental-value-2025-curator-frame-20261126-20.webp",
+          "src": "assets/films/responsive/screen-6b816f6c1ed1-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-6b816f6c1ed1-3826w.webp",
           "width": 3826
         }
       ],
@@ -6929,7 +7057,7 @@
           "width": 1280
         },
         {
-          "src": "assets/films/sentimental-value-2025-curator-frame-20261126-21.webp",
+          "src": "assets/films/responsive/screen-e8b7acd4388c-1916w.webp",
           "width": 1916
         }
       ],
@@ -6977,7 +7105,11 @@
           "width": 1920
         },
         {
-          "src": "assets/films/sentimental-value-2025-curator-frame-20261126-23.webp",
+          "src": "assets/films/responsive/screen-d23ed8689857-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-d23ed8689857-3510w.webp",
           "width": 3510
         }
       ],
@@ -7003,7 +7135,11 @@
           "width": 1920
         },
         {
-          "src": "assets/films/one-battle-after-another-curator-frame-20261126-30.webp",
+          "src": "assets/films/responsive/screen-89b79f5cbb24-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-89b79f5cbb24-3828w.webp",
           "width": 3828
         }
       ],
@@ -7029,7 +7165,7 @@
           "width": 1920
         },
         {
-          "src": "assets/films/one-battle-after-another-curator-frame-20261126-32.webp",
+          "src": "assets/films/responsive/screen-b5f5e58bed8c-2559w.webp",
           "width": 2559
         }
       ],
@@ -7051,7 +7187,7 @@
           "width": 1280
         },
         {
-          "src": "assets/films/tar-2022-curator-frame-20261126-37.webp",
+          "src": "assets/films/responsive/screen-cd62dd5a8828-1920w.webp",
           "width": 1920
         }
       ],
@@ -7095,7 +7231,7 @@
           "width": 1280
         },
         {
-          "src": "assets/films/tar-2022-curator-frame-20261126-39.webp",
+          "src": "assets/films/responsive/screen-bd928862dcd1-1920w.webp",
           "width": 1920
         }
       ],
@@ -7117,7 +7253,7 @@
           "width": 1280
         },
         {
-          "src": "assets/films/tar-2022-curator-frame-20261126-40.webp",
+          "src": "assets/films/responsive/screen-c14cbc67503a-1920w.webp",
           "width": 1920
         }
       ],
@@ -7143,7 +7279,7 @@
           "width": 1920
         },
         {
-          "src": "assets/films/tar-2022-curator-frame-20261126-41.webp",
+          "src": "assets/films/responsive/screen-c5755abffdf9-2559w.webp",
           "width": 2559
         }
       ],
@@ -11061,7 +11197,7 @@
           "width": 2560
         },
         {
-          "src": "assets/films/the-brutalist-best-actor-cinematic-r2.webp",
+          "src": "assets/films/responsive/screen-39bc17fefbd3-3840w.webp",
           "width": 3840
         }
       ],

@@ -147,6 +147,9 @@
   function loc(text) { return C.local(text,state.locale); }
   function tagLabel(tag) { return C.label(tag,state.locale); }
   function artwork(name) { return name?.startsWith("assets/")?name:globalThis.CinemaProfileArtwork?.[name] || "assets/films/"+name; }
+  function profileImage(name,sizes,fallback=640) {
+    return globalThis.ArchiveMedia.attributes(globalThis.ArchiveProfileMedia,artwork(name),sizes,fallback);
+  }
 
   function readState() {
     const locale = navigator.language?.startsWith("ar") ? "ar" : "en";
@@ -268,7 +271,7 @@
     const savedCount = Object.values(state.answers).filter(answer=>answer.done).length;
     const resume=resumeRoute();
     const coverFilms=D.introFilms.map(id=>D.filmById[id]);
-    const gallery=coverFilms.map((film,i)=>'<figure><img src="'+e(artwork(film.still))+'" alt="'+
+    const gallery=coverFilms.map((film,i)=>'<figure><img '+profileImage(film.still,'(max-width: 680px) 92vw, 520px',640)+' alt="'+
       e(film.title)+'" decoding="async"'+(i===0?' fetchpriority="high"':' loading="lazy"')+'><figcaption><span lang="en">'+e(film.title)+'</span><span>'+film.year+'</span></figcaption></figure>').join("");
     root.innerHTML =
       '<section class="cp-wrap-wide cp-hero"><div class="cp-hero-copy"><p class="cp-eyebrow">THE T.S. ARCHIVE</p>'+
@@ -330,10 +333,10 @@
     const meta='<div class="cp-scene-meta"><div><strong lang="en">'+e(film.title)+'</strong>'+
       filmCaption(film)+'</div>'+switcher+'</div>';
     if (!compact && (current?.still||film.still)) {
-      return '<figure class="cp-film-scene"><img src="'+e(artwork(current?.still||film.still))+'" alt="'+
+      return '<figure class="cp-film-scene"><img '+profileImage(current?.still||film.still,'(max-width: 680px) 94vw, 800px',960)+' alt="'+
         e(film.title)+'" decoding="async">'+meta+'</figure>';
     }
-    const art=film.poster?'<img src="'+e(artwork(film.poster))+'" alt="" decoding="async">':"";
+    const art=film.poster?'<img '+profileImage(film.poster,'180px',320)+' alt="" decoding="async">':"";
     return '<div class="cp-film-context'+(compact?' cp-context-compact':'')+'">'+art+meta+'</div>';
   }
 
@@ -363,7 +366,7 @@
       const selected=draft.choice===option.id;
       const disabled=!synopsis&&!visual&&unseen;
       const art=landscape?film.still:film.poster;
-      const image=art?'<img src="'+e(artwork(art))+'" alt="" decoding="async">':"";
+      const image=art?'<img '+profileImage(art,landscape?'(max-width: 680px) 92vw, 45vw':'(max-width: 680px) 38vw, 180px)',landscape?640:320)+' alt="" decoding="async">':"";
       return '<div class="cp-film-card '+(selected?"cp-selected ":"")+(unseen?"cp-unseen":"")+'">'+
         '<button type="button" class="cp-film-choice" data-action="select" data-value="'+e(option.id)+'" aria-pressed="'+
         String(selected)+'" '+(disabled?"disabled":"")+'><div class="cp-film-art">'+image+
@@ -391,7 +394,7 @@
       const caption=loc(option.label);
       return '<button type="button" class="cp-visual-select '+(selected?'cp-visual-selected':'')+
         '" data-action="select" data-value="'+e(option.id)+'" aria-pressed="'+String(selected)+'" aria-label="'+e(movie.title+(caption?' · '+caption:''))+'">'+
-        '<div class="cp-visual-art"><img src="'+e(artwork(option.still))+'" alt="" decoding="async" draggable="false">'+
+        '<div class="cp-visual-art"><img '+profileImage(option.still,'(max-width: 680px) 92vw, 45vw',640)+' alt="" decoding="async" draggable="false">'+
         '<span class="cp-visual-check" aria-hidden="true">'+(selected?'✓':'')+'</span></div>'+
         '<div class="cp-visual-meta"><div><strong lang="en" dir="ltr">'+e(movie.title)+'</strong>'+
         (caption?'<span class="cp-visual-caption">'+e(caption)+'</span>':'')+'</div><small>'+movie.year+'</small></div></button>';
@@ -404,7 +407,7 @@
   function renderEndingVisual(){
     const ar=state.locale==="ar",movie=D.filmById[current.filmId];
     return '<div class="cp-visual-heading"><h2 class="cp-question-title">'+e(loc(current.prompt))+'</h2></div>'+
-      '<figure class="cp-rating-frame"><img src="'+e(artwork(current.still))+'" alt="'+e(movie.title)+'" decoding="async">'+
+      '<figure class="cp-rating-frame"><img '+profileImage(current.still,'(max-width: 680px) 94vw, 940px',960)+' alt="'+e(movie.title)+'" decoding="async">'+
       '<figcaption><div><strong lang="en" dir="ltr">'+e(movie.title)+'</strong><small>'+movie.year+'</small></div>'+
       '<button type="button" class="cp-text-button" data-action="film-unseen" data-film="'+e(movie.id)+'">'+e(t("unseen"))+'</button></figcaption></figure>'+
       '<div class="cp-rating-visual" role="group" aria-label="'+e(loc(current.prompt))+'"><div class="cp-rating-steps">'+
@@ -431,7 +434,7 @@
   function renderActualQuestion() {
     const film=current.filmId?D.filmById[current.filmId]:null;
     const cue=current.frameFilm?D.filmById[current.frameFilm]:null;
-    let html=film?filmContext(film,true):cue?'<figure class="cp-question-cue"><img src="'+e(artwork(cue.still))+'" alt="" decoding="async"><figcaption><span lang="en">'+e(cue.title)+' · '+cue.year+'</span><span>'+e(state.locale==='ar'?'كادر للتأمل فقط':'Visual cue · no viewing required')+'</span></figcaption></figure>':"";
+    let html=film?filmContext(film,true):cue?'<figure class="cp-question-cue"><img '+profileImage(cue.still,'(max-width: 680px) 92vw, 640px',640)+' alt="" decoding="async"><figcaption><span lang="en">'+e(cue.title)+' · '+cue.year+'</span><span>'+e(state.locale==='ar'?'كادر للتأمل فقط':'Visual cue · no viewing required')+'</span></figcaption></figure>':"";
     if(current.kind==="ending"){
       html+='<h2 class="cp-question-title">'+e(t("ratingEnding"))+'</h2><p class="cp-small">'+e(t("endingHint"))+'</p>'+
         renderRating(t("ratingEnding"),false)+'<div class="cp-feelings"><h3>'+e(t("feeling"))+'</h3><div class="cp-reason-set">'+
@@ -520,7 +523,7 @@
         return '<section><h3>'+left+' / '+right+'</h3><p class="cp-small">'+e(info.clear?(ar?"اتجاه متكرر":"Repeated lead"):info.count?(ar?"غير حاسم":"Inconclusive"):t("noEvidence"))+' · '+info.pairs+' '+e(ar?"مفاضلات":"comparisons")+' · '+info.positive+' / '+info.negative+'</p>'+
           (info.evidence.length?'<div class="cp-evidence-list">'+info.evidence.map(item=>{
             const film=D.filmById[item.filmId];
-            return '<article><img src="'+e(artwork(film.poster))+'" alt="" loading="lazy"><div><strong lang="en">'+e(item.film)+'</strong><small>'+e(item.side>0?left:right)+'</small><p>'+e(loc(item.choice))+' · '+e(ar?'مقابل':'versus')+' '+e((item.compared||[]).map(o=>o.film).join(" / "))+'</p></div></article>';
+            return '<article><img '+profileImage(film.poster,'80px',176)+' alt="" loading="lazy"><div><strong lang="en">'+e(item.film)+'</strong><small>'+e(item.side>0?left:right)+'</small><p>'+e(loc(item.choice))+' · '+e(ar?'مقابل':'versus')+' '+e((item.compared||[]).map(o=>o.film).join(" / "))+'</p></div></article>';
           }).join("")+'</div>':'<p class="cp-small">'+e(t("noEvidence"))+'</p>')+'</section>';
       }).join(""),"","cp-coin-evidence");
   }
@@ -563,8 +566,8 @@
     const links='<a target="_blank" rel="noopener noreferrer" href="https://letterboxd.com/search/films/'+encodeURIComponent(label)+
       '/">Letterboxd</a><a target="_blank" rel="noopener noreferrer" href="https://www.themoviedb.org/search?query='+
       encodeURIComponent(label)+'">TMDB</a>';
-    const poster=film.poster?'<a class="cp-rec-art" href="'+e(artwork(film.poster))+'" target="_blank" rel="noopener" aria-label="'+e((state.locale==='ar'?'تكبير بوستر ':'Enlarge poster for ')+film.title)+'"><img src="'+e(artwork(film.poster))+
-      '" alt="" loading="lazy" decoding="async"></a>':'';
+    const poster=film.poster?'<a class="cp-rec-art" href="'+e(artwork(film.poster))+'" target="_blank" rel="noopener" aria-label="'+e((state.locale==='ar'?'تكبير بوستر ':'Enlarge poster for ')+film.title)+'"><img '+profileImage(film.poster,'110px',176)+
+      ' alt="" loading="lazy" decoding="async"></a>':'';
     return '<article class="cp-rec-card">'+poster+'<div class="cp-rec-copy"><h3 class="cp-film-title" lang="en">'+e(film.title)+'</h3>'+
       '<span class="cp-rec-year">'+e(film.year)+'</span><details class="cp-rec-description"><summary>'+e(state.locale==="ar"?"التفاصيل":"Details")+'</summary><p class="cp-tags">'+
       e((item.priorInterest?[t("matchedInterest")]:[]).concat(item.reasons.map(tagLabel)).join(" · "))+
@@ -578,12 +581,12 @@
   function selectionPanel(){
     const films=result.chosenFilms,ar=state.locale==="ar";
     if(!films.length)return "";
-    return '<details class="cp-result-disclosure cp-selection-compact"><summary><span>'+e(ar?"اختياراتك السينمائية":"Your film selections")+'</span><div class="cp-selection-strip" aria-hidden="true">'+films.slice(0,5).map(film=>'<img src="'+e(artwork(film.poster))+'" alt="" loading="lazy">').join("")+'</div><small>'+films.length+'</small></summary><div class="cp-selected-grid cp-disclosure-body">'+films.map(film=>'<figure><img src="'+e(artwork(film.poster))+'" alt="" loading="lazy"><figcaption lang="en">'+e(film.title)+'</figcaption></figure>').join("")+'</div></details>';
+    return '<details class="cp-result-disclosure cp-selection-compact"><summary><span>'+e(ar?"اختياراتك السينمائية":"Your film selections")+'</span><div class="cp-selection-strip" aria-hidden="true">'+films.slice(0,5).map(film=>'<img '+profileImage(film.poster,'120px',176)+' alt="" loading="lazy">').join("")+'</div><small>'+films.length+'</small></summary><div class="cp-selected-grid cp-disclosure-body">'+films.map(film=>'<figure><img '+profileImage(film.poster,'120px',176)+' alt="" loading="lazy"><figcaption lang="en">'+e(film.title)+'</figcaption></figure>').join("")+'</div></details>';
   }
   function paletteCards(){
     return '<div class="cp-palette-frames">'+result.affinities.map(item=>{
       const film=item.representative;
-      return '<article class="cp-palette-card">'+(film?'<img src="'+e(artwork(film.still))+'" alt="" loading="lazy" decoding="async">':"")+
+      return '<article class="cp-palette-card">'+(film?'<img '+profileImage(film.still,'(max-width: 680px) 92vw, 320px',320)+' alt="" loading="lazy" decoding="async">':"")+
         '<div class="cp-palette-copy"><h3>'+e(loc(item.shortName||item.name))+'</h3><p>'+e(item.matches.slice(0,2).map(tagLabel).join(" · "))+'</p>'+(film?'<small lang="en">'+e(film.title)+' · '+e(film.year)+'</small>':"")+'</div></article>';
     }).join("")+'</div>';
   }
@@ -611,7 +614,7 @@
     const percent=Math.round(cf.index/CF.questions.length*100);
     const cards=C.orderedOptions(question,"visual",state.seed).map(option=>{
       const movie=D.filmById[option.filmId],selected=chosen===option.id;
-      return '<button type="button" class="cp-visual-select '+(selected?'cp-visual-selected':'')+'" data-action="cf-select" data-value="'+e(option.id)+'" aria-pressed="'+selected+'"><div class="cp-visual-art"><img src="'+e(artwork(option.still))+'" alt="" decoding="async" draggable="false"><span class="cp-visual-check" aria-hidden="true">'+(selected?'✓':'')+'</span></div><div class="cp-visual-meta"><div><strong lang="en" dir="ltr">'+e(movie.title)+'</strong><span class="cp-visual-caption">'+e(loc(option.label))+'</span></div><small>'+movie.year+'</small></div></button>';
+      return '<button type="button" class="cp-visual-select '+(selected?'cp-visual-selected':'')+'" data-action="cf-select" data-value="'+e(option.id)+'" aria-pressed="'+selected+'"><div class="cp-visual-art"><img '+profileImage(option.still,'(max-width: 680px) 92vw, 45vw',640)+' alt="" decoding="async" draggable="false"><span class="cp-visual-check" aria-hidden="true">'+(selected?'✓':'')+'</span></div><div class="cp-visual-meta"><div><strong lang="en" dir="ltr">'+e(movie.title)+'</strong><span class="cp-visual-caption">'+e(loc(option.label))+'</span></div><small>'+movie.year+'</small></div></button>';
     }).join("");
     const meter=counterframeMeter(chosen,strength,ar);
     root.innerHTML='<section class="cp-wrap cp-quiz cp-cf-quiz"><div class="cp-cf-top"><span class="cp-eyebrow">THE COUNTERFRAME</span>'+action("cf-return",ar?"العودة للنتيجة":"Back to profile","cp-button-quiet")+'</div><div class="cp-progress-row"><span>'+e(ar?"قراءة الضغط · اختيارية":"Pressure reading · Optional")+'</span><span>'+(cf.index+1)+' / '+CF.questions.length+'</span></div><div class="cp-progress-track" role="progressbar" aria-valuenow="'+percent+'" aria-valuemin="0" aria-valuemax="100"><span style="width:'+percent+'%"></span></div><div class="cp-question cp-visual-question"><div class="cp-visual-heading"><h2 class="cp-question-title">'+e(loc(question.prompt))+'</h2><p class="cp-small">'+e(ar?"تخيّل نفسك داخل الموقفين، واختر نوع الضغط لا الفيلم المفضّل. إذا لم تتذكّر الموقفين فبإمكانك التخطّي.":"Imagine yourself in both situations. Choose the pressure, not your favourite film. Skip if either situation is unfamiliar.")+'</p></div><div class="cp-visual-grid" role="group" aria-label="'+e(loc(question.prompt))+'">'+cards+'</div>'+meter+'</div><div class="cp-question-footer cp-cf-footer"><div>'+action("cf-prev",t("back"),"cp-button-outline",cf.index===0?'disabled':'')+'</div><div>'+action("cf-skip",ar?"لا أعرف الموقفين":"Unfamiliar","cp-button-quiet")+action("cf-neutral",ar?"لا فرق واضح":"No clear difference","cp-button-quiet")+action("cf-next",cf.index===CF.questions.length-1?(ar?"عرض القراءة":"View reading"):t("next"),"cp-button-primary",chosen&&strength?'':'disabled')+'</div></div></section>';
@@ -637,9 +640,9 @@
     }).join("");
     const selected=CF.questions.filter(q=>cf.answers[q.id]?.done&&cf.answers[q.id].kind==="choice").map(q=>{
       const answer=cf.answers[q.id],option=q.options.find(o=>o.id===answer.choice),film=D.filmById[option.filmId];
-      return '<div class="cp-cf-selected-frame"><img src="'+e(artwork(option.still))+'" loading="lazy" alt=""><div><strong lang="en">'+e(film.title)+'</strong><small>'+e(loc(option.label))+'</small></div><span>'+answer.strength+'/5</span></div>';
+      return '<div class="cp-cf-selected-frame"><img '+profileImage(option.still,'160px',320)+' loading="lazy" alt=""><div><strong lang="en">'+e(film.title)+'</strong><small>'+e(loc(option.label))+'</small></div><span>'+answer.strength+'/5</span></div>';
     }).join("");
-    return '<section class="cp-result-section cp-counterframe" id="cp-counterframe"><div class="cp-cf-head"><div><p class="cp-eyebrow">'+e(ar?"قراءة إضافية":"OPTIONAL READING")+'</p><h2 class="cp-section-heading">The Counterframe</h2></div><span class="cp-cf-count">'+e(progress)+'</span></div><article class="cp-cf-feature"><figure class="cp-cf-art"><img src="'+e(artwork(art.still))+'" alt="" loading="lazy"><figcaption lang="en">'+e(movie.title)+' · '+movie.year+'</figcaption></figure><div class="cp-cf-copy"><p class="cp-eyebrow">'+e(ready?(ar?"إشارات الضغط":"PRESSURE ECHO"):(ar?"مستوحى من John Beebe":"INSPIRED BY JOHN BEEBE"))+'</p><h3>'+e(title)+'</h3><p class="cp-small">'+e(subtitle)+'</p>'+
+    return '<section class="cp-result-section cp-counterframe" id="cp-counterframe"><div class="cp-cf-head"><div><p class="cp-eyebrow">'+e(ar?"قراءة إضافية":"OPTIONAL READING")+'</p><h2 class="cp-section-heading">The Counterframe</h2></div><span class="cp-cf-count">'+e(progress)+'</span></div><article class="cp-cf-feature"><figure class="cp-cf-art"><img '+profileImage(art.still,'(max-width: 680px) 92vw, 580px',640)+' alt="" loading="lazy"><figcaption lang="en">'+e(movie.title)+' · '+movie.year+'</figcaption></figure><div class="cp-cf-copy"><p class="cp-eyebrow">'+e(ready?(ar?"إشارات الضغط":"PRESSURE ECHO"):(ar?"مستوحى من John Beebe":"INSPIRED BY JOHN BEEBE"))+'</p><h3>'+e(title)+'</h3><p class="cp-small">'+e(subtitle)+'</p>'+
       (ready?'<div class="cp-cf-result-meta"><div><small>'+e(ar?"Opposing · استدلال نظري":"Theoretical Opposing")+'</small><strong>'+e(mirror)+'</strong></div><div><small>'+e(ar?"الإشارة في نفس المجال":"Cue in the same domain")+'</small><strong>'+e(mirrorCue)+'</strong><small>'+e(relationText)+'</small></div></div>':'')+
       '<div class="cp-cf-actions">'+action(ready?"cf-review":"cf-start",ready?(ar?"راجع اختياراتك":"Review comparisons"):reading.visited?(ar?"أكمل القراءة":"Resume reading"):(ar?"ابدأ القراءة":"Begin Counterframe"),"cp-button-outline")+'</div></div></article>'+
       (ready?'<p class="cp-small cp-cf-caveat">'+e(ar?"إشارات سردية استكشافية، لا تشخيصاً لنمطك أو استجابة فعلية للضغط.":"Exploratory story-response cues, not a diagnosis or an observed stress response.")+'</p>'+disclosure(ar?"إشارات المقاومة":"Pressure cues",evidence)+disclosure(ar?"المشاهد المختارة":"Selected moments",selected||'<p class="cp-small">'+e(t("noEvidence"))+'</p>',String(reading.directional)):"")+
@@ -696,7 +699,7 @@
     const ar=state.locale==='ar',films=result.chosenFilms.filter(film=>film.poster);
     if(!films.length)return '';
     const heading=ar?'أفلام شكّلت البصمة':'Films that shaped it';
-    return `<section class="cp-portrait-selection" aria-labelledby="cp-portrait-selection-title"><div class="cp-portrait-section-title"><h2 id="cp-portrait-selection-title">${e(heading)}</h2><small>${films.length}</small></div><ul class="cp-portrait-filmstrip" aria-label="${e(heading)}" tabindex="0">${films.map(film=>`<li title="${e(film.title+' · '+film.year)}"><img src="${e(artwork(film.poster))}" width="120" height="180" alt="${e(film.title+' · '+film.year)}" loading="lazy" decoding="async"></li>`).join('')}</ul></section>`;
+    return `<section class="cp-portrait-selection" aria-labelledby="cp-portrait-selection-title"><div class="cp-portrait-section-title"><h2 id="cp-portrait-selection-title">${e(heading)}</h2><small>${films.length}</small></div><ul class="cp-portrait-filmstrip" aria-label="${e(heading)}" tabindex="0">${films.map(film=>`<li title="${e(film.title+' · '+film.year)}"><img ${profileImage(film.poster,'120px',176)} width="120" height="180" alt="${e(film.title+' · '+film.year)}" loading="lazy" decoding="async"></li>`).join('')}</ul></section>`;
   }
 
   function analysisRow(label,meta,body,classes='') {
@@ -707,7 +710,7 @@
     const ar=state.locale==='ar',open=ar?'مفتوح':'Open';
     const spectrum=result.motiveSpectrum;
     const leadingMotif=spectrum.lead?loc(spectrum.lead.name):'';
-    const coverArt=cover?`<figure class="cp-portrait-art"><img src="${e(artwork(cover.still))}" alt="" decoding="async"><figcaption lang="en">${e(cover.title)} · ${e(cover.year)}</figcaption></figure>`:'';
+    const coverArt=cover?`<figure class="cp-portrait-art"><img ${profileImage(cover.still,'(max-width: 680px) 92vw, 700px',960)} alt="" decoding="async"><figcaption lang="en">${e(cover.title)} · ${e(cover.year)}</figcaption></figure>`:'';
     const traits=[
       [ar?'العدسة':'Lens',lens||open],
       [ar?'Savior Animal المحتمل':'Possible Savior Animal',result.animal||open],

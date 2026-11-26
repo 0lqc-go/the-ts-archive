@@ -2711,6 +2711,162 @@
       }
     },
     "sizes": {
+      "assets/films/responsive/screen-d9ea6e0ddfc9-2560w.webp": [
+        2560,
+        1067
+      ],
+      "assets/films/responsive/screen-d9ea6e0ddfc9-3840w.webp": [
+        3840,
+        1600
+      ],
+      "assets/films/responsive/screen-f9df4bfbb703-2560w.webp": [
+        2560,
+        1067
+      ],
+      "assets/films/responsive/screen-f9df4bfbb703-3840w.webp": [
+        3840,
+        1600
+      ],
+      "assets/films/responsive/screen-848936cd0fa7-2560w.webp": [
+        2560,
+        1067
+      ],
+      "assets/films/responsive/screen-848936cd0fa7-3840w.webp": [
+        3840,
+        1600
+      ],
+      "assets/films/responsive/screen-82534383aa4b-2560w.webp": [
+        2560,
+        1067
+      ],
+      "assets/films/responsive/screen-82534383aa4b-3840w.webp": [
+        3840,
+        1600
+      ],
+      "assets/films/responsive/screen-0f6a8dbc751d-2560w.webp": [
+        2560,
+        1074
+      ],
+      "assets/films/responsive/screen-0f6a8dbc751d-3813w.webp": [
+        3813,
+        1600
+      ],
+      "assets/films/responsive/screen-2f9121a8b675-2560w.webp": [
+        2560,
+        1069
+      ],
+      "assets/films/responsive/screen-2f9121a8b675-3833w.webp": [
+        3833,
+        1600
+      ],
+      "assets/films/responsive/screen-15770bf5041e-2558w.webp": [
+        2558,
+        1068
+      ],
+      "assets/films/responsive/screen-d6e8bd0ac5b5-2559w.webp": [
+        2559,
+        1067
+      ],
+      "assets/films/responsive/screen-543ed05c8fd0-2560w.webp": [
+        2560,
+        1067
+      ],
+      "assets/films/responsive/screen-543ed05c8fd0-3840w.webp": [
+        3840,
+        1600
+      ],
+      "assets/films/responsive/screen-3a8ce0a184c5-2491w.webp": [
+        2491,
+        1361
+      ],
+      "assets/films/responsive/screen-a1635e6d044a-2347w.webp": [
+        2347,
+        1256
+      ],
+      "assets/films/responsive/screen-4f0857a4c104-2560w.webp": [
+        2560,
+        1067
+      ],
+      "assets/films/responsive/screen-4f0857a4c104-3840w.webp": [
+        3840,
+        1600
+      ],
+      "assets/films/responsive/screen-e3a20a0cb8ce-2560w.webp": [
+        2560,
+        1067
+      ],
+      "assets/films/responsive/screen-e3a20a0cb8ce-3840w.webp": [
+        3840,
+        1600
+      ],
+      "assets/films/responsive/screen-96b29fd48063-2560w.webp": [
+        2560,
+        1067
+      ],
+      "assets/films/responsive/screen-96b29fd48063-3840w.webp": [
+        3840,
+        1600
+      ],
+      "assets/films/responsive/screen-1ab43c277602-2560w.webp": [
+        2560,
+        1067
+      ],
+      "assets/films/responsive/screen-1ab43c277602-3840w.webp": [
+        3840,
+        1600
+      ],
+      "assets/films/responsive/screen-1bc0ae50c951-2560w.webp": [
+        2560,
+        1067
+      ],
+      "assets/films/responsive/screen-1bc0ae50c951-3840w.webp": [
+        3840,
+        1600
+      ],
+      "assets/films/responsive/screen-e8c38b3be4d6-2560w.webp": [
+        2560,
+        1067
+      ],
+      "assets/films/responsive/screen-e8c38b3be4d6-3840w.webp": [
+        3840,
+        1600
+      ],
+      "assets/films/responsive/screen-7110d0aa98a7-2560w.webp": [
+        2560,
+        1067
+      ],
+      "assets/films/responsive/screen-7110d0aa98a7-3840w.webp": [
+        3840,
+        1600
+      ],
+      "assets/films/responsive/screen-ff6f9bfedd9f-2560w.webp": [
+        2560,
+        1067
+      ],
+      "assets/films/responsive/screen-ff6f9bfedd9f-3840w.webp": [
+        3840,
+        1600
+      ],
+      "assets/films/responsive/screen-b7e174ff07b5-2560w.webp": [
+        2560,
+        1067
+      ],
+      "assets/films/responsive/screen-b7e174ff07b5-3840w.webp": [
+        3840,
+        1600
+      ],
+      "assets/films/responsive/screen-ad98792b3c3f-2560w.webp": [
+        2560,
+        1067
+      ],
+      "assets/films/responsive/screen-ad98792b3c3f-3840w.webp": [
+        3840,
+        1600
+      ],
+      "assets/films/responsive/screen-7d0a7d1e0af3-3840w.webp": [
+        3840,
+        1600
+      ],
       "assets/gallery/2010-2019/thumbs/the-souvenir-daily-frame-320w.webp": [
         320,
         184
@@ -7307,7 +7463,11 @@
           "width": 1920
         },
         {
-          "src": "assets/films/blade-runner-2049-curator-frame-20261126-24.webp",
+          "src": "assets/films/responsive/screen-d9ea6e0ddfc9-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-d9ea6e0ddfc9-3840w.webp",
           "width": 3840
         }
       ],
@@ -7333,7 +7493,11 @@
           "width": 1920
         },
         {
-          "src": "assets/films/blade-runner-2049-curator-frame-20261126-25.webp",
+          "src": "assets/films/responsive/screen-f9df4bfbb703-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-f9df4bfbb703-3840w.webp",
           "width": 3840
         }
       ],
@@ -7359,7 +7523,11 @@
           "width": 1920
         },
         {
-          "src": "assets/films/blade-runner-2049-curator-frame-20261126-26.webp",
+          "src": "assets/films/responsive/screen-848936cd0fa7-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-848936cd0fa7-3840w.webp",
           "width": 3840
         }
       ],
@@ -7385,7 +7553,11 @@
           "width": 1920
         },
         {
-          "src": "assets/films/blade-runner-2049-curator-frame-20261126-27.webp",
+          "src": "assets/films/responsive/screen-82534383aa4b-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-82534383aa4b-3840w.webp",
           "width": 3840
         }
       ],
@@ -7411,7 +7583,11 @@
           "width": 1920
         },
         {
-          "src": "assets/films/blade-runner-2049-curator-frame-20261126-28.webp",
+          "src": "assets/films/responsive/screen-0f6a8dbc751d-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-0f6a8dbc751d-3813w.webp",
           "width": 3813
         }
       ],
@@ -7437,7 +7613,11 @@
           "width": 1920
         },
         {
-          "src": "assets/films/blade-runner-2049-curator-frame-20261126-29.webp",
+          "src": "assets/films/responsive/screen-2f9121a8b675-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-2f9121a8b675-3833w.webp",
           "width": 3833
         }
       ],
@@ -7463,7 +7643,7 @@
           "width": 1920
         },
         {
-          "src": "assets/films/blade-runner-2049-curator-frame-20261126-31.webp",
+          "src": "assets/films/responsive/screen-15770bf5041e-2558w.webp",
           "width": 2558
         }
       ],
@@ -7489,7 +7669,7 @@
           "width": 1920
         },
         {
-          "src": "assets/films/blade-runner-2049-curator-frame-20261126-35.webp",
+          "src": "assets/films/responsive/screen-d6e8bd0ac5b5-2559w.webp",
           "width": 2559
         }
       ],
@@ -7515,7 +7695,11 @@
           "width": 1920
         },
         {
-          "src": "assets/films/blade-runner-2049-curator-frame-20261126-36.webp",
+          "src": "assets/films/responsive/screen-543ed05c8fd0-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-543ed05c8fd0-3840w.webp",
           "width": 3840
         }
       ],
@@ -7541,7 +7725,7 @@
           "width": 1920
         },
         {
-          "src": "assets/films/her-curator-frame-20261126-33.webp",
+          "src": "assets/films/responsive/screen-3a8ce0a184c5-2491w.webp",
           "width": 2491
         }
       ],
@@ -7567,7 +7751,7 @@
           "width": 1920
         },
         {
-          "src": "assets/films/her-curator-frame-20261126-34.webp",
+          "src": "assets/films/responsive/screen-a1635e6d044a-2347w.webp",
           "width": 2347
         }
       ],
@@ -12381,7 +12565,11 @@
           "width": 1280
         },
         {
-          "src": "assets/films/inception-curator-frame-06.webp",
+          "src": "assets/films/responsive/screen-4f0857a4c104-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-4f0857a4c104-3840w.webp",
           "width": 3840
         }
       ],
@@ -12403,7 +12591,11 @@
           "width": 1280
         },
         {
-          "src": "assets/films/inception-curator-frame-08.webp",
+          "src": "assets/films/responsive/screen-e3a20a0cb8ce-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-e3a20a0cb8ce-3840w.webp",
           "width": 3840
         }
       ],
@@ -12425,7 +12617,11 @@
           "width": 1280
         },
         {
-          "src": "assets/films/inception-curator-frame-09.webp",
+          "src": "assets/films/responsive/screen-96b29fd48063-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-96b29fd48063-3840w.webp",
           "width": 3840
         }
       ],
@@ -12447,7 +12643,11 @@
           "width": 1280
         },
         {
-          "src": "assets/films/inception-curator-frame-10.webp",
+          "src": "assets/films/responsive/screen-1ab43c277602-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-1ab43c277602-3840w.webp",
           "width": 3840
         }
       ],
@@ -12469,7 +12669,11 @@
           "width": 1280
         },
         {
-          "src": "assets/films/inception-curator-frame-11.webp",
+          "src": "assets/films/responsive/screen-1bc0ae50c951-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-1bc0ae50c951-3840w.webp",
           "width": 3840
         }
       ],
@@ -12491,7 +12695,11 @@
           "width": 1280
         },
         {
-          "src": "assets/films/inception-curator-frame-12.webp",
+          "src": "assets/films/responsive/screen-e8c38b3be4d6-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-e8c38b3be4d6-3840w.webp",
           "width": 3840
         }
       ],
@@ -12535,7 +12743,11 @@
           "width": 1280
         },
         {
-          "src": "assets/films/inception-curator-frame-14.webp",
+          "src": "assets/films/responsive/screen-7110d0aa98a7-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-7110d0aa98a7-3840w.webp",
           "width": 3840
         }
       ],
@@ -12557,7 +12769,11 @@
           "width": 1280
         },
         {
-          "src": "assets/films/inception-curator-frame-17.webp",
+          "src": "assets/films/responsive/screen-ff6f9bfedd9f-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-ff6f9bfedd9f-3840w.webp",
           "width": 3840
         }
       ],
@@ -12601,7 +12817,11 @@
           "width": 1280
         },
         {
-          "src": "assets/films/inception-curator-frame-19.webp",
+          "src": "assets/films/responsive/screen-b7e174ff07b5-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-b7e174ff07b5-3840w.webp",
           "width": 3840
         }
       ],
@@ -12645,7 +12865,11 @@
           "width": 1280
         },
         {
-          "src": "assets/films/inception-curator-frame-21.webp",
+          "src": "assets/films/responsive/screen-ad98792b3c3f-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/responsive/screen-ad98792b3c3f-3840w.webp",
           "width": 3840
         }
       ],
@@ -12675,7 +12899,7 @@
           "width": 2560
         },
         {
-          "src": "assets/films/inception-curator-frame-22.webp",
+          "src": "assets/films/responsive/screen-7d0a7d1e0af3-3840w.webp",
           "width": 3840
         }
       ],

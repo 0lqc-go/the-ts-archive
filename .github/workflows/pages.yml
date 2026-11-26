@@ -6,6 +6,7 @@ on:
     paths:
       - '1-Site/**'
       - '2-Artwork/films/**'
+      - 'tools/build-core-css.cjs'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
@@ -27,6 +28,7 @@ jobs:
       - name: Assemble the archive
         shell: bash
         run: |
+          node tools/build-core-css.cjs
           mkdir -p _site/assets/films
           cp -R 1-Site/. _site/
           shopt -s nullglob

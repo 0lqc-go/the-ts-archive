@@ -14,16 +14,23 @@
   const storageKey = 'ts-archive-screening-ballot-v1';
   const matchupStorageKey = 'ts-archive-screening-matchup-v1';
   let contextPromise;
-  const getContext = () => contextPromise ??= site.catalog().then(async catalog => ({catalog, archive:data.makeArchive(await explore.createEngine(catalog).load('all'))})).catch(error => { contextPromise = null; throw error; });
+  let imageMedia={sizes:{},variants:{}};
+  const asset=window.ArchiveMedia;
+  const imageAttrs=(path,sizes,fallback)=>asset.attributes(imageMedia,path,sizes,fallback);
+  const getContext = () => contextPromise ??= site.catalog().then(async catalog => {
+    const models=await explore.createEngine(catalog).load('all');
+    imageMedia={sizes:Object.assign({},catalog.media?.sizes,...models.map(m=>m.media.sizes)),variants:Object.assign({},catalog.media?.variants,...models.map(m=>m.media.variants))};
+    return {catalog,archive:data.makeArchive(models)};
+  }).catch(error => { contextPromise = null; throw error; });
 
   function poster(film, className = '') {
-    return film?.poster ? `<img${className ? ` class="${className}"` : ''} src="${esc(film.poster)}" alt="" width="80" height="120" loading="lazy" decoding="async">` : `<span class="${className} sr-poster-placeholder" aria-hidden="true"></span>`;
+    return film?.poster ? `<img${className ? ` class="${className}"` : ''} ${imageAttrs(film.poster,'120px',176)} alt="" width="80" height="120" loading="lazy" decoding="async">` : `<span class="${className} sr-poster-placeholder" aria-hidden="true"></span>`;
   }
 
   function still(frame) {
     // The filename, film title, caption and credits are not displayed before
     // answering. The complete image itself is visible and entirely static.
-    return `<div class="sr-still"><img src="${esc(frame.path)}" width="${frame.width}" height="${frame.height}" alt="Film still for the question" loading="eager" decoding="async" fetchpriority="high"><span class="sr-still-message" hidden>The frame could not be loaded. You can skip this question.</span></div>`;
+    return `<div class="sr-still"><img ${imageAttrs(frame.path,'(max-width: 680px) 94vw, (min-width: 1440px) 1050px, 84vw',960)} width="${frame.width}" height="${frame.height}" alt="Film still for the question" loading="eager" decoding="async" fetchpriority="high"><span class="sr-still-message" hidden>The frame could not be loaded. You can skip this question.</span></div>`;
   }
 
   function bindStillErrors(root) {
@@ -60,7 +67,7 @@
         // existing artwork-source list, without adding chrome to this card.
         const credit = frame.credit ? ` data-photo-credit="${esc(frame.credit)}"` : '';
         section.innerHTML = `<div class="screening-daily-heading"><span>Frame of the day</span><time datetime="${dateISO}">${esc(date)}</time></div>
-          <a class="screening-daily-card" href="${esc(film.href)}" aria-label="Explore ${esc(film.title)} (${esc(film.year)})"><img src="${esc(frame.path)}" width="${frame.width}" height="${frame.height}" alt=""${credit} loading="lazy" decoding="async"><span class="screening-daily-caption"><strong>${esc(film.title)}</strong><small>${esc(film.year)}</small></span></a>`;
+          <a class="screening-daily-card" href="${esc(film.href)}" aria-label="Explore ${esc(film.title)} (${esc(film.year)})"><img ${imageAttrs(frame.path,'(max-width: 680px) 92vw, (min-width: 1440px) 680px, 48vw',640)} width="${frame.width}" height="${frame.height}" alt=""${credit} loading="lazy" decoding="async"><span class="screening-daily-caption"><strong>${esc(film.title)}</strong><small>${esc(film.year)}</small></span></a>`;
         const image = $('img', section);
         image.addEventListener('error', () => { image.hidden = true; });
         window.ArchiveContinuity?.prefetch(film.href,$('.screening-daily-card',section));
@@ -434,9 +441,9 @@
       });
     }
 
-    function namedFrame(entry, className = '', lazy = false) {
+    function namedFrame(entry, className = '', lazy = false, sizes = lazy ? '(max-width: 680px) 46vw, 320px' : '(max-width: 680px) 94vw, (min-width: 1440px) 1050px, 84vw') {
       const {film,frame} = entry;
-      return `<img class="${className}" src="${esc(frame.path)}" width="${frame.width}" height="${frame.height}" alt="${esc(film.title)}" loading="${lazy?'lazy':'eager'}" decoding="async"${lazy?'':' fetchpriority="high"'}>`;
+      return `<img class="${className}" ${imageAttrs(frame.path,sizes,lazy?320:960)} width="${frame.width}" height="${frame.height}" alt="${esc(film.title)}" loading="${lazy?'lazy':'eager'}" decoding="async"${lazy?'':' fetchpriority="high"'}>`;
     }
 
     function renderMatchup() {
@@ -446,7 +453,7 @@
       const chosen=choices[pair.id];
       const last=index===order.length-1;
       activity.innerHTML = `<div class="sr-matchup"><div class="sr-matchup-heading"><div><p class="screening-kicker">${esc(pair.theme)}</p><h2 tabindex="-1">${esc(pair.prompt)}</h2></div><div class="sr-matchup-meta"><span>${refinedQuestions?'No right answer.':'No right answer. Just your cinema.'}</span><div class="sr-matchup-progress" role="progressbar" aria-label="Matchup progress" aria-valuemin="1" aria-valuemax="${order.length}" aria-valuenow="${index+1}"><span>Pair ${index+1} of ${order.length}</span><span class="sr-matchup-progress-track" aria-hidden="true"><span style="--progress:${100*(index+1)/order.length}%"></span></span></div></div></div>
-        <div class="sr-match-grid" role="group" aria-label="Choose between two films">${pair.entries.map(entry=>`<button type="button" class="sr-match-choice" data-match-choice="${esc(entry.film.key)}" aria-pressed="${chosen===entry.film.key}"><span class="sr-match-image">${namedFrame(entry)}</span><span class="sr-match-copy"><span><strong>${esc(entry.film.title)}</strong><small>${esc(entry.film.year)}</small></span><span class="sr-match-mark" aria-hidden="true"></span></span></button>`).join('')}</div>
+        <div class="sr-match-grid" role="group" aria-label="Choose between two films">${pair.entries.map(entry=>`<button type="button" class="sr-match-choice" data-match-choice="${esc(entry.film.key)}" aria-pressed="${chosen===entry.film.key}"><span class="sr-match-image">${namedFrame(entry,'',false,'(max-width: 680px) 94vw, 45vw')}</span><span class="sr-match-copy"><span><strong>${esc(entry.film.title)}</strong><small>${esc(entry.film.year)}</small></span><span class="sr-match-mark" aria-hidden="true"></span></span></button>`).join('')}</div>
         <div class="sr-match-footer"><button type="button" class="sr-secondary" data-match-prev${index===0?' disabled':''}>Previous</button><div class="sr-match-response" aria-live="polite" hidden></div><div class="sr-match-buttons"><button type="button" class="sr-text-action" data-match-finish hidden>Finish round</button><button type="button" class="sr-primary" data-match-next>${last?'See my results':'Skip'}</button></div></div>
         <p class="sr-match-note">${refinedQuestions?'Skip any pair if you prefer.':'Your choices shape a cinematic taste profile. Skip any pair if you prefer.'}</p></div>`;
       function updateChoice() {
@@ -485,7 +492,7 @@
       } else {
         const film=representative.film,frame=representative.frame;
         activity.innerHTML=`<article class="sr-taste-result" aria-label="Your cinematic taste">
-          <div class="sr-taste-hero"><div class="sr-taste-hero-art" aria-hidden="true"><img src="${esc(frame.path)}" width="${frame.width}" height="${frame.height}" alt=""></div><div class="sr-taste-hero-copy"><p class="screening-kicker">Your cinematic taste · ${total} ${total===1?'choice':'choices'}</p><h2 tabindex="-1">${esc(profile.title)}.</h2><p>${total<4?'A first impression. ':''}${esc(profile.description)}</p><div class="sr-taste-signature">${traits.map(trait=>`<span>${esc(trait.label)}</span>`).join('')}</div></div><a class="sr-taste-cover-credit" href="${esc(film.href)}">${esc(film.title)} · ${esc(film.year)}</a></div>
+          <div class="sr-taste-hero"><div class="sr-taste-hero-art" aria-hidden="true"><img ${imageAttrs(frame.path,'(max-width: 680px) 94vw, 920px',960)} width="${frame.width}" height="${frame.height}" alt=""></div><div class="sr-taste-hero-copy"><p class="screening-kicker">Your cinematic taste · ${total} ${total===1?'choice':'choices'}</p><h2 tabindex="-1">${esc(profile.title)}.</h2><p>${total<4?'A first impression. ':''}${esc(profile.description)}</p><div class="sr-taste-signature">${traits.map(trait=>`<span>${esc(trait.label)}</span>`).join('')}</div></div><a class="sr-taste-cover-credit" href="${esc(film.href)}">${esc(film.title)} · ${esc(film.year)}</a></div>
           <div class="sr-taste-actions"><button type="button" class="sr-primary" data-taste-download aria-controls="sr-taste-export" aria-expanded="false">Save my taste card</button><button type="button" class="sr-secondary" data-taste-review>Review choices</button><button type="button" class="sr-text-action" data-taste-restart>Start another round</button><p class="sr-download-status" role="status" hidden></p></div>
           <section class="sr-taste-export" id="sr-taste-export" aria-label="Your shareable taste card" hidden><img alt="Your shareable cinematic taste card"><div><h3>Take your cinema with you.</h3><p>Your taste profile and every film you picked, with its poster.</p><a class="sr-primary" download="TS-Archive-My-Cinematic-Taste.png">Download PNG</a><button type="button" class="sr-text-action" data-taste-close>Close preview</button></div></section>
           <section class="sr-taste-section"><div class="sr-taste-section-heading"><h3>What stays with you.</h3><p>A reading of the films you picked.</p></div><div class="sr-taste-traits">${traits.map(trait=>`<div class="sr-taste-trait"><a href="${esc(trait.evidence.film.href)}" aria-label="Open ${esc(trait.evidence.film.title)}">${poster(trait.evidence.film)}</a><div><strong>${esc(trait.label)}</strong><p>${esc(trait.evidence.taste.note)}</p><small>In your choices: <a href="${esc(trait.evidence.film.href)}">${esc(trait.evidence.film.title)}</a></small></div></div>`).join('')}</div></section>
@@ -574,7 +581,7 @@
       stage.addEventListener('touchcancel',()=>{touch=null;},{passive:true});
       stage.addEventListener('touchend',event=>{const start=touch;touch=null;const end=start&&[...event.changedTouches].find(item=>item.identifier===start.id);if(!end)return;const x=end.clientX-start.x,y=end.clientY-start.y;if(Math.abs(x)>=45&&Math.abs(x)>Math.abs(y)*1.4)stepJourney(x<0?1:-1);},{passive:true});
       const next=journey.entries[journeyIndex+1];
-      if(next&&!navigator.connection?.saveData){const preload=new Image();preload.src=next.frame.path;}
+      if(next&&!navigator.connection?.saveData){const displayWidth=Math.min(innerWidth*.84,1050);asset.preload(asset.select(imageMedia,next.frame.path,displayWidth).src,'low');}
     }
 
     function stepJourney(direction,restoreFocus='') {
@@ -757,7 +764,14 @@
 
   if (document.body.dataset.page === 'home') {
     const load = () => initDaily();
-    if ('requestIdleCallback' in window) requestIdleCallback(load,{timeout:1500});
+    const daily=$('#screening-daily');
+    // The daily card is below the first fold. Don't fetch both edition files
+    // until the reader nears it, or a direct anchor brings it into view.
+    if(daily&&location.hash==='#screening-room')load();
+    else if(daily&&'IntersectionObserver' in window){
+      const observer=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){observer.disconnect();load();}},{rootMargin:'500px'});
+      observer.observe(daily);
+    } else if ('requestIdleCallback' in window) requestIdleCallback(load,{timeout:1500});
     else setTimeout(load,50);
   } else if (document.body.dataset.page === 'screening') {
     getContext().then(initRoom).catch(error => site.showError(error));

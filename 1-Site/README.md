@@ -4,6 +4,8 @@ A personal cinema archive by [0lqc](https://letterboxd.com/0lqc/). Browse the [p
 
 ## Edit the archive
 
+The shared `archive-core.css` is generated from the existing source stylesheets. Edit the source CSS, then run `node tools/build-core-css.cjs` from the repository root before previewing; the Pages build also refreshes the bundle. `tools/build-screen-variants.py` and `tools/build-profile-media.py` (Python with Pillow) rebuild responsive artwork when adding new high-resolution stills or Profile artwork. They never replace the master images.
+
 - [content/catalog.json](content/catalog.json) controls the homepage. Register each edition or list here. `featuredEdition` selects the featured awards link, while `homeCover` independently sets the homepage photograph, credit and crop. Each edition keeps its own cover.
 - [content/2020-2026.json](content/2020-2026.json) holds the 2020–2026 ballot, film links, stills, and quotes.
 - [content/2010-2019.json](content/2010-2019.json) holds the 2010–2019 ballot and its accompanying Oscar Snubs list.

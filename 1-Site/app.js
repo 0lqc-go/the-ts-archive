@@ -1,13 +1,17 @@
 (async () => {
   'use strict';
   const site = window.ArchiveSite;
+  const requestedEdition=site.params.get('edition');
+  // Fetch a known requested edition concurrently with the small catalogue.
+  const earlyArchive=['2010-2019','2020-2026'].includes(requestedEdition)
+    ? site.read(`content/${requestedEdition}.json`).catch(()=>null) : null;
   const catalog = await site.catalog();
   const editionId = site.params.get('edition') ?? catalog.featuredEdition;
   const selected = catalog.editions.find(item => item.id === editionId);
   if (!selected) throw new Error('That edition is not in the archive.');
   const theme = window.ArchiveTheme;
   theme.apply(document.body.dataset.page, selected.id);
-  const archive = await site.read(selected.content);
+  const archive = (earlyArchive && await earlyArchive) || await site.read(selected.content);
   const explore = window.ArchiveExplore;
   const rhythmLeads = new Set(['film-direction','scenes-moments','editorial-picks']);
   const rhythmAwards = new Set(['best-picture','best-scene','best-cinematography']);
@@ -110,9 +114,8 @@
 
   function imageMarkup(path, eager, sizes, fallback = [16, 9], priority = false) {
     const [width, height] = media.sizes?.[path] ?? fallback;
-    const srcset = imageSources(path);
-    const responsive = srcset ? `srcset="${esc(srcset)}" sizes="${esc(sizes)}" ` : '';
-    return `<img ${responsive}src="${esc(path)}" alt="" width="${width}" height="${height}" loading="${eager ? 'eager' : 'lazy'}" decoding="async"${priority ? ' fetchpriority="high"' : ''}>`;
+    const responsive = window.ArchiveMedia.attributes(media,path,sizes,width/height<.9?176:640);
+    return `<img ${responsive} alt="" width="${width}" height="${height}" loading="${eager ? 'eager' : 'lazy'}" decoding="async"${priority ? ' fetchpriority="high"' : ''}>`;
   }
 
   function largestFrame(path) {
@@ -762,13 +765,15 @@
     });
   });
 
-  let frameCollection = [], frameIndex = 0, frameTouch = null;
+  let frameCollection = [], frameIndex = 0, frameTouch = null, frameLoadVersion = 0;
+  const mediaLoader = window.ArchiveMedia;
+  const canWarmArtwork = () => !navigator.connection?.saveData && !/^(?:slow-)?2g$/.test(navigator.connection?.effectiveType||'');
   if (frameDialog) {
     const image = $('#full-frame-image', frameDialog);
     const status = $('#full-frame-status', frameDialog);
     image.addEventListener('load', () => {
       if (frameDialog.open) status.hidden = true;
-      if (frameDialog.dataset.mode === 'poster' && image.naturalWidth && image.naturalHeight) {
+      if (frameDialog.dataset.mode === 'poster' && !frameDialog.style.getPropertyValue('--poster-ratio') && image.naturalWidth && image.naturalHeight) {
         frameDialog.style.setProperty('--poster-ratio', image.naturalWidth / image.naturalHeight);
       }
     });
@@ -780,6 +785,7 @@
     });
     frameDialog.addEventListener('close', () => {
       if (!frameDialog.open) {
+        frameLoadVersion++;
         window.ArchiveFrameMotion?.cancel(image);
         setContactSheet(false, true);
         image.removeAttribute('src');
@@ -787,6 +793,10 @@
         image.removeAttribute('tabindex');
         delete frameDialog.dataset.mode;
         frameDialog.style.removeProperty('--poster-ratio');
+        frameDialog.style.removeProperty('--frame-display-width');
+        delete image.dataset.displayTier;
+        delete image.dataset.originalSrc;
+        delete image.dataset.screenSrc;
         $('.ts-frame-size',frameDialog)?.remove();
         frameCollection = []; frameIndex = 0; frameTouch = null;
         $('.frame-gallery-controls', frameDialog).hidden = true;
@@ -906,17 +916,24 @@
     updateContactSheet();
   }
 
-  function displayFrame() {
+  function displayFrame(preview = '') {
     const frame=frameCollection[frameIndex];
     if (!frame) return;
     updateContactSheet();
-    const image=$('#full-frame-image',frameDialog);
-    if (window.ArchiveFrameMotion) {
-      window.ArchiveFrameMotion.present(image,frame.src,()=>paintFrame(frame));
-    } else paintFrame(frame);
+    // Selected thumbnails normally already exist in the browser cache. Showing
+    // one immediately avoids a blank lightbox while the screen-sized image loads.
+    const thumb=$(`.frame-contact-thumb[data-frame-index="${frameIndex}"] img`,frameDialog);
+    paintFrame(frame, preview || (thumb?.complete && thumb.naturalWidth ? thumb.currentSrc : '') || frame.thumbnail);
   }
 
-  function paintFrame(frame) {
+  function screenFrame(frame) {
+    const poster=frameDialog.dataset.mode === 'poster';
+    const path=frame.path || frame.src;
+    const width=mediaLoader.fitWidth(media,path,{poster});
+    return {displayWidth:width, ...mediaLoader.select(media,path,width)};
+  }
+
+  function paintFrame(frame, preview) {
     const image = $('#full-frame-image', frameDialog);
     const status = $('#full-frame-status', frameDialog);
     if (!frame) return;
@@ -945,10 +962,48 @@
     dimensions.textContent = size ? `${size[0]} × ${size[1]}` : '';
     dimensions.hidden = !size;
     status.textContent = 'Loading frame…';
-    status.hidden = false;
-    image.src = frame.src;
-    if (image.complete && image.naturalWidth) status.hidden = true;
+    const job=++frameLoadVersion;
+    window.ArchiveFrameMotion?.cancel(image);
+    const target=screenFrame(frame);
+    const same=(a,b)=>a&&b&&new URL(a,location.href).href===new URL(b,location.href).href;
+    frameDialog.style.setProperty('--frame-display-width',Math.round(target.displayWidth)+'px');
+    image.dataset.originalSrc=frame.src;
+    image.dataset.screenSrc=target.src;
+    image.dataset.displayTier='preview';
+    const initial=preview||target.src;
+    status.hidden=Boolean(preview);
+    image.src=initial;
+    const finish=loaded=>{
+      if(job!==frameLoadVersion||!frameDialog.open)return;
+      if(loaded){
+        image.dataset.displayTier='screen';
+        if(!same(image.getAttribute('src'),target.src))image.src=target.src;
+        status.hidden=true;
+        // Only one adjacent frame is warmed, and only after the current one is ready.
+        if(frameCollection.length>1&&canWarmArtwork()){
+          const next=frameCollection[(frameIndex+1)%frameCollection.length];
+          const nextTarget=screenFrame(next);
+          if(nextTarget.src!==target.src)mediaLoader.preload(nextTarget.src,'low');
+        }
+      } else if(!image.naturalWidth){status.textContent='This frame could not be loaded.';status.hidden=false;}
+    };
+    if(same(initial,target.src)){
+      if(image.complete&&image.naturalWidth)finish(image);
+      else mediaLoader.preload(target.src,'high').then(finish);
+    } else mediaLoader.preload(target.src,'high').then(finish);
   }
+  let frameResizeTimer;
+  window.addEventListener('resize',()=>{
+    clearTimeout(frameResizeTimer);
+    if(!frameDialog?.open)return;
+    frameResizeTimer=setTimeout(()=>{
+      const frame=frameCollection[frameIndex],image=$('#full-frame-image',frameDialog);
+      if(!frameDialog.open||!frame)return;
+      const desired=screenFrame(frame);
+      frameDialog.style.setProperty('--frame-display-width',Math.round(desired.displayWidth)+'px');
+      if(desired.width>image.naturalWidth&&desired.src!==image.dataset.screenSrc)paintFrame(frame,image.currentSrc);
+    },150);
+  },{passive:true});
   function stepFrame(direction) {
     if (frameCollection.length < 2) return;
     frameIndex = (frameIndex + direction + frameCollection.length) % frameCollection.length;
@@ -959,6 +1014,8 @@
     const src = trigger.dataset.fullFrame;
     const slug = trigger.dataset.film;
     const path = trigger.dataset.framePath || src;
+    const displayed=trigger.querySelector('img');
+    const preview=displayed?.complete&&displayed.naturalWidth?displayed.currentSrc:'';
     if (trigger.dataset.posterView === 'true') {
       frameCollection = [{src,path,thumbnail:frameThumbnail(path),label:trigger.dataset.frameLabel,context:'Film poster',source:art(slug).posterSource}];
       frameIndex = 0;
@@ -969,7 +1026,7 @@
       $('#full-frame-image',frameDialog).tabIndex = -1;
       setContactSheet(false,true);
       openDialog(frameDialog, '#full-frame-image', trigger);
-      displayFrame();
+      displayFrame(preview);
       return;
     }
     delete frameDialog.dataset.mode;
@@ -988,7 +1045,7 @@
     }
     setContactSheet(frameCollection.length > 1,true);
     openDialog(frameDialog, '.dialog-close', trigger);
-    displayFrame();
+    displayFrame(preview);
     if (trigger.dataset.openContactSheet === 'true') setContactSheet(true);
   }
 
@@ -1473,6 +1530,18 @@
     openDialog(filmDialog, '#film-file-title', trigger);
     fitFilmFileViewport();
     syncFilmFileBackdrop();
+    if (movieArt.poster && canWarmArtwork() && frameDialog) {
+      const button=$('.file-poster-enlarge',filmDialog);
+      const warm=()=>{
+        if(!filmDialog.open||filmDialog.dataset.film!==slug)return;
+        const width=mediaLoader.fitWidth(media,movieArt.poster,{poster:true});
+        mediaLoader.preload(mediaLoader.select(media,movieArt.poster,width).src,'low');
+      };
+      button?.addEventListener('pointerenter',warm,{once:true});
+      button?.addEventListener('focus',warm,{once:true});
+      if('requestIdleCallback' in window)requestIdleCallback(warm,{timeout:900});
+      else setTimeout(warm,250);
+    }
   }
 
   function jumpToAward(id) {
@@ -1845,6 +1914,7 @@
         if (dialog?.open) dialog.close();
       }
       const image=$('#full-frame-image',frameDialog);
+      frameLoadVersion++;
       window.ArchiveFrameMotion?.cancel(image);image.removeAttribute('src');
       frameCollection=[];frameIndex=0;frameTouch=null;setContactSheet(false,true);
       $('#film-file-content').replaceChildren();$('#person-content').replaceChildren();dialogScroll.replaceChildren();

@@ -1,5 +1,13 @@
 {
   "sizes": {
+    "assets/films/responsive/screen-9b0a8862e14d-4885w.webp": [
+      4885,
+      2573
+    ],
+    "assets/films/responsive/screen-4fe4669c9fa9-5070w.webp": [
+      5070,
+      2535
+    ],
     "assets/films/tar-2022-decade-cover-hd.webp": [
       5070,
       2535
@@ -1500,7 +1508,7 @@
         "width": 3840
       },
       {
-        "src": "assets/films/tar-2022-decade-cover-hd.webp",
+        "src": "assets/films/responsive/screen-4fe4669c9fa9-5070w.webp",
         "width": 5070
       }
     ],
@@ -1530,7 +1538,7 @@
         "width": 3840
       },
       {
-        "src": "assets/films/tar-2022-decade-card-hd.webp",
+        "src": "assets/films/responsive/screen-9b0a8862e14d-4885w.webp",
         "width": 4885
       }
     ],

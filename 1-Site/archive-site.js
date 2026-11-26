@@ -78,9 +78,7 @@
 
   function artworkMarkup(file, media, sizes, fallback = [960,540]) {
     const [width,height] = media?.sizes?.[file] ?? fallback;
-    const variants = media?.variants?.[file] ?? [];
-    const srcset = variants.map(item => `${item.src} ${item.width}w`).join(', ');
-    return `<img src="${escape(file)}"${srcset ? ` srcset="${escape(srcset)}" sizes="${escape(sizes)}"` : ''} alt="" width="${width}" height="${height}" loading="lazy" decoding="async">`;
+    return `<img ${window.ArchiveMedia.attributes(media,file,sizes,width/height<.9?176:640)} alt="" width="${width}" height="${height}" loading="lazy" decoding="async">`;
   }
 
   function archiveCard(item, url, label, media) {
@@ -198,7 +196,7 @@
     image.decoding = 'async';
     image.fetchPriority = 'high';
     const [width, height] = media.sizes?.[path] ?? [];
-    const variants = [...(media.variants?.[path] ?? [])];
+    const variants = window.ArchiveMedia.variants(media,path);
     if (width && height) {
       image.width = width;
       image.height = height;
@@ -218,7 +216,7 @@
         updateSizes();
         image.srcset = variants.map(variant => `${variant.src} ${variant.width}w`).join(', ');
       }
-      image.src = path;
+      image.src = variants.length ? window.ArchiveMedia.select(media,path,parseInt(image.sizes,10)||innerWidth).src : path;
       node.replaceChildren(image);
       if (variants.length && width && height && 'ResizeObserver' in window) {
         const observer = new ResizeObserver(updateSizes);
