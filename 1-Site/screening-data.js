@@ -400,7 +400,7 @@
     return queue.map(question => questionChoices(archive, question, scope, random, challenge)).filter(Boolean);
   }
 
-  // Occasionally the curator selects a specific daily frame from a journey.
+  // Occasionally the curator selects a specific daily frame from the archive.
   // A dated choice affects only that local calendar day; the rotation resumes
   // unchanged on every other day.
   const dailyCuratorSelections = {
@@ -409,6 +409,11 @@
       label:'Julie and Anthony at the table',
       source:'Sundance Institute · still supplied by the curator',
       credit:'Courtesy of Sundance Institute · Photo by Agatha A. Nitecka'
+    }},
+    '2026-11-27': {edition:'2020-2026', film:'sentimental-value-2025', frame:{
+      path:'assets/films/sentimental-value-2025-curator-frame-20261126-16.webp', width:1916, height:1036,
+      label:'Sunlight and shadows across the floor',
+      credit:'Film still provided by the curator'
     }}
   };
 
@@ -418,7 +423,11 @@
     if (selection) {
       const entry = archive.journeys?.find(journey => journey.id === selection.journey)
         ?.entries.find(item => item.film.slug === selection.film);
-      if (entry) return {film:entry.film, frame:selection.frame ?? entry.frame, day:ordinal};
+      const film = entry?.film ?? (selection.edition
+        ? archive.filmList?.find(item => item.key === `${selection.edition}/${selection.film}`)
+        : null);
+      const frame = selection.frame ?? entry?.frame;
+      if (film && frame) return {film, frame, day:ordinal};
     }
     // One film per day before the cycle repeats; each film may supply another
     // still on the next cycle. The result is deterministic across reloads.
