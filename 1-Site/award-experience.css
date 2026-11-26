@@ -302,6 +302,7 @@ body[data-award-view="compact"] .enhanced-card .performance-winner-block > .winn
 .film-file-frame img { width: 100%; max-height: min(36dvh, clamp(350px, 20vw, 460px)); height: auto; object-fit: cover; }
 .film-file-meta { display: grid; grid-template-columns: 74px minmax(0,1fr); align-items: center; gap: 17px; padding: 21px 22px 25px; }
 .file-poster { min-width: 0; }
+#best-line-of-dialogue .nominee small, #award-dialog .nominee small { white-space: pre-line; }
 .file-year { color: var(--text-subtle); font-size: .88rem; }
 .file-tally { font: 600 1.02rem/1.4 var(--body); margin-block: 7px 8px; }
 .file-tally span { font-size: .84rem; color: var(--muted); font-weight: 400; }

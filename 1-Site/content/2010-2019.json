@@ -833,6 +833,22 @@
               "films": [
                 "little-women-2019"
               ]
+            },
+            {
+              "text": "Columbus — That's a fantasy that architects like to tell themselves. / I wasn't claiming to be healed.",
+              "title": "Columbus",
+              "detail": "— That's a fantasy that architects like to tell themselves.\n— I wasn't claiming to be healed.",
+              "films": [
+                "columbus"
+              ]
+            },
+            {
+              "text": "Certified Copy — “Forget the original — just get a good copy.”",
+              "title": "Certified Copy",
+              "detail": "“Forget the original — just get a good copy.”",
+              "films": [
+                "certified-copy"
+              ]
             }
           ],
           "accent": "#c3b5a2"
@@ -1432,7 +1448,12 @@
           "winnerArtwork": {
             "path": "assets/films/nicholas-britell-composer-of-the-decade.webp",
             "credit": "Portrait provided by the curator",
-            "focal": "42%"
+            "focal": "42%",
+            "dialogArtwork": {
+              "path": "assets/films/nicholas-britell-curator-award-photo-20261126.jpg",
+              "credit": "Photo provided by the curator",
+              "focal": "50%"
+            }
           }
         }
       ]
@@ -2167,6 +2188,12 @@
     }
   ],
   "films": {
+    "columbus": {
+      "title": "Columbus",
+      "year": 2017,
+      "director": "Kogonada",
+      "url": "https://letterboxd.com/film/columbus-2017/"
+    },
     "inception": {
       "title": "Inception",
       "year": 2010,
@@ -2422,6 +2449,10 @@
   },
   "media": {
     "films": {
+      "columbus": {
+        "poster": "assets/films/columbus-2017-poster.webp",
+        "backdrop": "assets/films/columbus-2017-wide.webp"
+      },
       "dunkirk-2017": {
         "source": "https://www.imdb.com/title/tt5013056/",
         "poster": "assets/films/dunkirk-2017-poster.webp",
@@ -2429,7 +2460,7 @@
       },
       "inside-llewyn-davis": {
         "source": "https://www.imdb.com/title/tt2042568/",
-        "poster": "assets/films/inside-llewyn-davis-poster.webp",
+        "poster": "assets/films/inside-llewyn-davis-curator-poster-20261126.webp",
         "backdrop": "assets/films/inside-llewyn-davis-wide.webp"
       },
       "the-social-network": {
@@ -2449,7 +2480,7 @@
       },
       "inception": {
         "source": "https://www.imdb.com/title/tt1375666/",
-        "poster": "assets/films/inception-poster.webp",
+        "poster": "assets/films/inception-curator-poster-20261126.webp",
         "backdrop": "assets/films/inception-wide.webp"
       },
       "interstellar": {
@@ -2459,8 +2490,7 @@
       },
       "oslo-august-31st": {
         "source": "https://www.imdb.com/title/tt1736633/",
-        "posterSource": "https://strandreleasing.com/films/oslo-august-31st/",
-        "poster": "assets/films/oslo-august-31st-official-poster.webp",
+        "poster": "assets/films/oslo-august-31st-curator-poster-20261126.webp",
         "backdrop": "assets/films/oslo-august-31st-wide.webp"
       },
       "the-dark-knight-rises": {
@@ -2486,7 +2516,7 @@
       },
       "blade-runner-2049": {
         "source": "https://www.imdb.com/title/tt1856101/",
-        "poster": "assets/films/blade-runner-2049-poster.webp",
+        "poster": "assets/films/blade-runner-2049-curator-poster-20261126.webp",
         "backdrop": "assets/films/blade-runner-2049-wide.webp"
       },
       "la-la-land": {
@@ -2506,7 +2536,7 @@
       },
       "black-swan": {
         "source": "https://www.imdb.com/title/tt0947798/",
-        "poster": "assets/films/black-swan-poster.webp",
+        "poster": "assets/films/black-swan-curator-poster-20261126.jpg",
         "backdrop": "assets/films/black-swan-wide.webp"
       },
       "little-women-2019": {
@@ -2552,12 +2582,14 @@
       "burning-2018": {
         "source": "https://www.imdb.com/title/tt7282468/",
         "poster": "assets/films/burning-2018-poster.webp",
-        "backdrop": "assets/films/burning-2018-wide.webp"
+        "backdrop": "assets/films/burning-2018-wide.webp",
+        "dossierCover": "assets/films/burning-2018-best-adapted-screenplay-hd.webp"
       },
       "her": {
         "source": "https://www.imdb.com/title/tt1798709/",
         "poster": "assets/films/her-poster.webp",
-        "backdrop": "assets/films/her-wide.webp"
+        "backdrop": "assets/films/her-wide.webp",
+        "dossierCover": "assets/films/her-curator-dossier-cover-20261126.webp"
       },
       "nightcrawler": {
         "source": "https://www.imdb.com/title/tt2872718/",
@@ -2571,7 +2603,7 @@
       },
       "before-midnight": {
         "source": "https://www.imdb.com/title/tt2209418/",
-        "poster": "assets/films/before-midnight-poster.webp",
+        "poster": "assets/films/before-midnight-curator-poster-20261126.webp",
         "backdrop": "assets/films/before-midnight-wide.webp"
       },
       "nocturnal-animals": {
@@ -2596,7 +2628,7 @@
       },
       "anna-karenina-2012": {
         "source": "https://www.imdb.com/title/tt1781769/",
-        "poster": "assets/films/anna-karenina-2012-poster.webp",
+        "poster": "assets/films/anna-karenina-2012-curator-poster-20261126.webp",
         "backdrop": "assets/films/anna-karenina-2012-wide.webp"
       },
       "the-grand-budapest-hotel": {
@@ -2621,8 +2653,9 @@
       },
       "the-souvenir": {
         "source": "https://www.imdb.com/title/tt6920356/",
-        "poster": "assets/films/the-souvenir-poster.webp",
-        "backdrop": "assets/films/the-souvenir-wide.webp"
+        "poster": "assets/films/the-souvenir-curator-poster-20261126.jpg",
+        "backdrop": "assets/films/the-souvenir-wide.webp",
+        "dossierCover": "assets/films/the-souvenir-daily-frame.jpg"
       },
       "coco-2017": {
         "source": "https://www.imdb.com/title/tt2380307/",
@@ -2662,7 +2695,8 @@
       "midnight-in-paris": {
         "source": "https://www.imdb.com/title/tt1605783/",
         "poster": "assets/films/midnight-in-paris-poster.webp",
-        "backdrop": "assets/films/midnight-in-paris-wide.webp"
+        "backdrop": "assets/films/midnight-in-paris-wide.webp",
+        "dossierCover": "assets/films/midnight-in-paris-curator-dossier-cover-20261126.webp"
       },
       "shutter-island": {
         "source": "https://www.imdb.com/title/tt1130884/",
@@ -2672,10 +2706,565 @@
       "if-beale-street-could-talk": {
         "source": "https://www.imdb.com/title/tt7125860/",
         "poster": "assets/films/if-beale-street-could-talk-poster.webp",
-        "backdrop": "assets/films/if-beale-street-could-talk-wide.webp"
+        "backdrop": "assets/films/if-beale-street-could-talk-wide.webp",
+        "dossierCover": "assets/films/if-beale-street-could-talk-best-score-cue-cinematic-r2.webp"
       }
     },
     "sizes": {
+      "assets/gallery/2010-2019/thumbs/the-souvenir-daily-frame-320w.webp": [
+        320,
+        184
+      ],
+      "assets/films/responsive/the-souvenir-daily-frame-640w.webp": [
+        640,
+        369
+      ],
+      "assets/films/responsive/the-souvenir-daily-frame-960w.webp": [
+        960,
+        553
+      ],
+      "assets/films/responsive/the-souvenir-daily-frame-1280w.webp": [
+        1280,
+        738
+      ],
+      "assets/films/responsive/the-souvenir-daily-frame-1920w.webp": [
+        1920,
+        1107
+      ],
+      "assets/films/her-curator-dossier-cover-20261126.webp": [
+        2560,
+        1440
+      ],
+      "assets/gallery/2010-2019/thumbs/her-curator-dossier-cover-20261126-320w.webp": [
+        320,
+        180
+      ],
+      "assets/films/responsive/her-curator-dossier-cover-20261126-640w.webp": [
+        640,
+        360
+      ],
+      "assets/films/responsive/her-curator-dossier-cover-20261126-960w.webp": [
+        960,
+        540
+      ],
+      "assets/films/responsive/her-curator-dossier-cover-20261126-1280w.webp": [
+        1280,
+        720
+      ],
+      "assets/films/responsive/her-curator-dossier-cover-20261126-1920w.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/midnight-in-paris-curator-dossier-cover-20261126.webp": [
+        2560,
+        1440
+      ],
+      "assets/gallery/2010-2019/thumbs/midnight-in-paris-curator-dossier-cover-20261126-320w.webp": [
+        320,
+        180
+      ],
+      "assets/films/responsive/midnight-in-paris-curator-dossier-cover-20261126-640w.webp": [
+        640,
+        360
+      ],
+      "assets/films/responsive/midnight-in-paris-curator-dossier-cover-20261126-960w.webp": [
+        960,
+        540
+      ],
+      "assets/films/responsive/midnight-in-paris-curator-dossier-cover-20261126-1280w.webp": [
+        1280,
+        720
+      ],
+      "assets/films/responsive/midnight-in-paris-curator-dossier-cover-20261126-1920w.webp": [
+        1920,
+        1080
+      ],
+      "assets/films/nicholas-britell-curator-award-photo-20261126.jpg": [
+        1486,
+        836
+      ],
+      "assets/films/responsive/nicholas-britell-curator-award-photo-20261126-640w.webp": [
+        640,
+        360
+      ],
+      "assets/films/responsive/nicholas-britell-curator-award-photo-20261126-960w.webp": [
+        960,
+        540
+      ],
+      "assets/films/responsive/nicholas-britell-curator-award-photo-20261126-1280w.webp": [
+        1280,
+        720
+      ],
+      "assets/films/columbus-2017-poster.webp": [300, 444],
+      "assets/films/columbus-2017-wide.webp": [1680, 945],
+      "assets/films/thelma-2017-curator-frame-20261126-15.webp": [
+        1920,
+        804
+      ],
+      "assets/gallery/2010-2019/thumbs/thelma-2017-curator-frame-20261126-15-320w.webp": [
+        320,
+        134
+      ],
+      "assets/films/responsive/thelma-2017-curator-frame-20261126-15-640w.webp": [
+        640,
+        268
+      ],
+      "assets/films/responsive/thelma-2017-curator-frame-20261126-15-960w.webp": [
+        960,
+        402
+      ],
+      "assets/films/responsive/thelma-2017-curator-frame-20261126-15-1280w.webp": [
+        1280,
+        536
+      ],
+      "assets/films/blade-runner-2049-curator-frame-20261126-24.webp": [
+        3840,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-24-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-24-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-24-960w.webp": [
+        960,
+        400
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-24-1280w.webp": [
+        1280,
+        533
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-24-1920w.webp": [
+        1920,
+        800
+      ],
+      "assets/films/blade-runner-2049-curator-frame-20261126-25.webp": [
+        3840,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-25-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-25-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-25-960w.webp": [
+        960,
+        400
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-25-1280w.webp": [
+        1280,
+        533
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-25-1920w.webp": [
+        1920,
+        800
+      ],
+      "assets/films/blade-runner-2049-curator-frame-20261126-26.webp": [
+        3840,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-26-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-26-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-26-960w.webp": [
+        960,
+        400
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-26-1280w.webp": [
+        1280,
+        533
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-26-1920w.webp": [
+        1920,
+        800
+      ],
+      "assets/films/blade-runner-2049-curator-frame-20261126-27.webp": [
+        3840,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-27-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-27-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-27-960w.webp": [
+        960,
+        400
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-27-1280w.webp": [
+        1280,
+        533
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-27-1920w.webp": [
+        1920,
+        800
+      ],
+      "assets/films/blade-runner-2049-curator-frame-20261126-28.webp": [
+        3813,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-28-320w.webp": [
+        320,
+        134
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-28-640w.webp": [
+        640,
+        269
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-28-960w.webp": [
+        960,
+        403
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-28-1280w.webp": [
+        1280,
+        537
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-28-1920w.webp": [
+        1920,
+        806
+      ],
+      "assets/films/blade-runner-2049-curator-frame-20261126-29.webp": [
+        3833,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-29-320w.webp": [
+        320,
+        134
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-29-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-29-960w.webp": [
+        960,
+        401
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-29-1280w.webp": [
+        1280,
+        534
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-29-1920w.webp": [
+        1920,
+        801
+      ],
+      "assets/films/blade-runner-2049-curator-frame-20261126-31.webp": [
+        2558,
+        1068
+      ],
+      "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-31-320w.webp": [
+        320,
+        134
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-31-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-31-960w.webp": [
+        960,
+        401
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-31-1280w.webp": [
+        1280,
+        534
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-31-1920w.webp": [
+        1920,
+        802
+      ],
+      "assets/films/blade-runner-2049-curator-frame-20261126-35.webp": [
+        2559,
+        1067
+      ],
+      "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-35-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-35-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-35-960w.webp": [
+        960,
+        400
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-35-1280w.webp": [
+        1280,
+        534
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-35-1920w.webp": [
+        1920,
+        801
+      ],
+      "assets/films/blade-runner-2049-curator-frame-20261126-36.webp": [
+        3840,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-36-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-36-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-36-960w.webp": [
+        960,
+        400
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-36-1280w.webp": [
+        1280,
+        533
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-frame-20261126-36-1920w.webp": [
+        1920,
+        800
+      ],
+      "assets/films/her-curator-frame-20261126-33.webp": [
+        2491,
+        1361
+      ],
+      "assets/gallery/2010-2019/thumbs/her-curator-frame-20261126-33-320w.webp": [
+        320,
+        175
+      ],
+      "assets/films/responsive/her-curator-frame-20261126-33-640w.webp": [
+        640,
+        350
+      ],
+      "assets/films/responsive/her-curator-frame-20261126-33-960w.webp": [
+        960,
+        525
+      ],
+      "assets/films/responsive/her-curator-frame-20261126-33-1280w.webp": [
+        1280,
+        699
+      ],
+      "assets/films/responsive/her-curator-frame-20261126-33-1920w.webp": [
+        1920,
+        1049
+      ],
+      "assets/films/her-curator-frame-20261126-34.webp": [
+        2347,
+        1256
+      ],
+      "assets/gallery/2010-2019/thumbs/her-curator-frame-20261126-34-320w.webp": [
+        320,
+        171
+      ],
+      "assets/films/responsive/her-curator-frame-20261126-34-640w.webp": [
+        640,
+        342
+      ],
+      "assets/films/responsive/her-curator-frame-20261126-34-960w.webp": [
+        960,
+        514
+      ],
+      "assets/films/responsive/her-curator-frame-20261126-34-1280w.webp": [
+        1280,
+        685
+      ],
+      "assets/films/responsive/her-curator-frame-20261126-34-1920w.webp": [
+        1920,
+        1027
+      ],
+      "assets/films/inside-llewyn-davis-curator-poster-20261126.webp": [
+        2000,
+        3000
+      ],
+      "assets/films/responsive/inside-llewyn-davis-curator-poster-20261126-176w.webp": [
+        176,
+        264
+      ],
+      "assets/films/responsive/inside-llewyn-davis-curator-poster-20261126-320w.webp": [
+        320,
+        480
+      ],
+      "assets/films/responsive/inside-llewyn-davis-curator-poster-20261126-480w.webp": [
+        480,
+        720
+      ],
+      "assets/films/responsive/inside-llewyn-davis-curator-poster-20261126-640w.webp": [
+        640,
+        960
+      ],
+      "assets/films/responsive/inside-llewyn-davis-curator-poster-20261126-960w.webp": [
+        960,
+        1440
+      ],
+      "assets/films/responsive/inside-llewyn-davis-curator-poster-20261126-1280w.webp": [
+        1280,
+        1920
+      ],
+      "assets/films/blade-runner-2049-curator-poster-20261126.webp": [
+        1000,
+        1500
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-poster-20261126-176w.webp": [
+        176,
+        264
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-poster-20261126-320w.webp": [
+        320,
+        480
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-poster-20261126-480w.webp": [
+        480,
+        720
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-poster-20261126-640w.webp": [
+        640,
+        960
+      ],
+      "assets/films/responsive/blade-runner-2049-curator-poster-20261126-960w.webp": [
+        960,
+        1440
+      ],
+      "assets/films/inception-curator-poster-20261126.webp": [
+        1116,
+        1674
+      ],
+      "assets/films/responsive/inception-curator-poster-20261126-176w.webp": [
+        176,
+        264
+      ],
+      "assets/films/responsive/inception-curator-poster-20261126-320w.webp": [
+        320,
+        480
+      ],
+      "assets/films/responsive/inception-curator-poster-20261126-480w.webp": [
+        480,
+        720
+      ],
+      "assets/films/responsive/inception-curator-poster-20261126-640w.webp": [
+        640,
+        960
+      ],
+      "assets/films/responsive/inception-curator-poster-20261126-960w.webp": [
+        960,
+        1440
+      ],
+      "assets/films/oslo-august-31st-curator-poster-20261126.webp": [
+        2000,
+        3000
+      ],
+      "assets/films/responsive/oslo-august-31st-curator-poster-20261126-176w.webp": [
+        176,
+        264
+      ],
+      "assets/films/responsive/oslo-august-31st-curator-poster-20261126-320w.webp": [
+        320,
+        480
+      ],
+      "assets/films/responsive/oslo-august-31st-curator-poster-20261126-480w.webp": [
+        480,
+        720
+      ],
+      "assets/films/responsive/oslo-august-31st-curator-poster-20261126-640w.webp": [
+        640,
+        960
+      ],
+      "assets/films/responsive/oslo-august-31st-curator-poster-20261126-960w.webp": [
+        960,
+        1440
+      ],
+      "assets/films/responsive/oslo-august-31st-curator-poster-20261126-1280w.webp": [
+        1280,
+        1920
+      ],
+      "assets/films/before-midnight-curator-poster-20261126.webp": [
+        1365,
+        2047
+      ],
+      "assets/films/responsive/before-midnight-curator-poster-20261126-176w.webp": [
+        176,
+        264
+      ],
+      "assets/films/responsive/before-midnight-curator-poster-20261126-320w.webp": [
+        320,
+        480
+      ],
+      "assets/films/responsive/before-midnight-curator-poster-20261126-480w.webp": [
+        480,
+        720
+      ],
+      "assets/films/responsive/before-midnight-curator-poster-20261126-640w.webp": [
+        640,
+        960
+      ],
+      "assets/films/responsive/before-midnight-curator-poster-20261126-960w.webp": [
+        960,
+        1440
+      ],
+      "assets/films/responsive/before-midnight-curator-poster-20261126-1280w.webp": [
+        1280,
+        1920
+      ],
+      "assets/films/anna-karenina-2012-curator-poster-20261126.webp": [
+        853,
+        1280
+      ],
+      "assets/films/responsive/anna-karenina-2012-curator-poster-20261126-176w.webp": [
+        176,
+        264
+      ],
+      "assets/films/responsive/anna-karenina-2012-curator-poster-20261126-320w.webp": [
+        320,
+        480
+      ],
+      "assets/films/responsive/anna-karenina-2012-curator-poster-20261126-480w.webp": [
+        480,
+        720
+      ],
+      "assets/films/responsive/anna-karenina-2012-curator-poster-20261126-640w.webp": [
+        640,
+        960
+      ],
+      "assets/films/the-souvenir-curator-poster-20261126.jpg": [
+        500,
+        750
+      ],
+      "assets/films/responsive/the-souvenir-curator-poster-20261126-176w.webp": [
+        176,
+        264
+      ],
+      "assets/films/responsive/the-souvenir-curator-poster-20261126-320w.webp": [
+        320,
+        480
+      ],
+      "assets/films/responsive/the-souvenir-curator-poster-20261126-480w.webp": [
+        480,
+        720
+      ],
+      "assets/films/black-swan-curator-poster-20261126.jpg": [
+        600,
+        850
+      ],
+      "assets/films/responsive/black-swan-curator-poster-20261126-176w.webp": [
+        176,
+        249
+      ],
+      "assets/films/responsive/black-swan-curator-poster-20261126-320w.webp": [
+        320,
+        453
+      ],
+      "assets/films/responsive/black-swan-curator-poster-20261126-480w.webp": [
+        480,
+        680
+      ],
       "assets/films/phantom-thread-best-actor-curator.webp": [
         1280,
         720
@@ -3271,6 +3860,10 @@
       "assets/films/whiplash-decade-cover.webp": [
         1280,
         532
+      ],
+      "assets/films/whiplash-decade-cover-hd.jpg": [
+        1920,
+        800
       ],
       "assets/films/anna-karenina-production-design-curator.webp": [
         1280,
@@ -6116,6 +6709,322 @@
         1280,
         532
       ],
+      "assets/films/inception-curator-frame-04.webp": [
+        1000,
+        419
+      ],
+      "assets/gallery/2010-2019/thumbs/inception-curator-frame-04-320w.webp": [
+        320,
+        134
+      ],
+      "assets/films/responsive/inception-curator-frame-04-640w.webp": [
+        640,
+        268
+      ],
+      "assets/films/responsive/inception-curator-frame-04-960w.webp": [
+        960,
+        402
+      ],
+      "assets/films/inception-curator-frame-05.webp": [
+        736,
+        306
+      ],
+      "assets/gallery/2010-2019/thumbs/inception-curator-frame-05-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/inception-curator-frame-05-640w.webp": [
+        640,
+        266
+      ],
+      "assets/films/inception-curator-frame-06.webp": [
+        3840,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/inception-curator-frame-06-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/inception-curator-frame-06-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/inception-curator-frame-06-960w.webp": [
+        960,
+        400
+      ],
+      "assets/films/responsive/inception-curator-frame-06-1280w.webp": [
+        1280,
+        533
+      ],
+      "assets/films/inception-curator-frame-08.webp": [
+        3840,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/inception-curator-frame-08-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/inception-curator-frame-08-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/inception-curator-frame-08-960w.webp": [
+        960,
+        400
+      ],
+      "assets/films/responsive/inception-curator-frame-08-1280w.webp": [
+        1280,
+        533
+      ],
+      "assets/films/inception-curator-frame-09.webp": [
+        3840,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/inception-curator-frame-09-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/inception-curator-frame-09-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/inception-curator-frame-09-960w.webp": [
+        960,
+        400
+      ],
+      "assets/films/responsive/inception-curator-frame-09-1280w.webp": [
+        1280,
+        533
+      ],
+      "assets/films/inception-curator-frame-10.webp": [
+        3840,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/inception-curator-frame-10-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/inception-curator-frame-10-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/inception-curator-frame-10-960w.webp": [
+        960,
+        400
+      ],
+      "assets/films/responsive/inception-curator-frame-10-1280w.webp": [
+        1280,
+        533
+      ],
+      "assets/films/inception-curator-frame-11.webp": [
+        3840,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/inception-curator-frame-11-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/inception-curator-frame-11-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/inception-curator-frame-11-960w.webp": [
+        960,
+        400
+      ],
+      "assets/films/responsive/inception-curator-frame-11-1280w.webp": [
+        1280,
+        533
+      ],
+      "assets/films/inception-curator-frame-12.webp": [
+        3840,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/inception-curator-frame-12-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/inception-curator-frame-12-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/inception-curator-frame-12-960w.webp": [
+        960,
+        400
+      ],
+      "assets/films/responsive/inception-curator-frame-12-1280w.webp": [
+        1280,
+        533
+      ],
+      "assets/films/inception-curator-frame-13.webp": [
+        3840,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/inception-curator-frame-13-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/inception-curator-frame-13-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/inception-curator-frame-13-960w.webp": [
+        960,
+        400
+      ],
+      "assets/films/responsive/inception-curator-frame-13-1280w.webp": [
+        1280,
+        533
+      ],
+      "assets/films/inception-curator-frame-14.webp": [
+        3840,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/inception-curator-frame-14-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/inception-curator-frame-14-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/inception-curator-frame-14-960w.webp": [
+        960,
+        400
+      ],
+      "assets/films/responsive/inception-curator-frame-14-1280w.webp": [
+        1280,
+        533
+      ],
+      "assets/films/inception-curator-frame-17.webp": [
+        3840,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/inception-curator-frame-17-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/inception-curator-frame-17-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/inception-curator-frame-17-960w.webp": [
+        960,
+        400
+      ],
+      "assets/films/responsive/inception-curator-frame-17-1280w.webp": [
+        1280,
+        533
+      ],
+      "assets/films/inception-curator-frame-18.webp": [
+        3840,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/inception-curator-frame-18-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/inception-curator-frame-18-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/inception-curator-frame-18-960w.webp": [
+        960,
+        400
+      ],
+      "assets/films/responsive/inception-curator-frame-18-1280w.webp": [
+        1280,
+        533
+      ],
+      "assets/films/inception-curator-frame-19.webp": [
+        3840,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/inception-curator-frame-19-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/inception-curator-frame-19-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/inception-curator-frame-19-960w.webp": [
+        960,
+        400
+      ],
+      "assets/films/responsive/inception-curator-frame-19-1280w.webp": [
+        1280,
+        533
+      ],
+      "assets/films/inception-curator-frame-20.webp": [
+        3840,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/inception-curator-frame-20-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/inception-curator-frame-20-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/inception-curator-frame-20-960w.webp": [
+        960,
+        400
+      ],
+      "assets/films/responsive/inception-curator-frame-20-1280w.webp": [
+        1280,
+        533
+      ],
+      "assets/films/inception-curator-frame-21.webp": [
+        3840,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/inception-curator-frame-21-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/inception-curator-frame-21-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/inception-curator-frame-21-960w.webp": [
+        960,
+        400
+      ],
+      "assets/films/responsive/inception-curator-frame-21-1280w.webp": [
+        1280,
+        533
+      ],
+      "assets/films/inception-curator-frame-22.webp": [
+        3840,
+        1600
+      ],
+      "assets/gallery/2010-2019/thumbs/inception-curator-frame-22-320w.webp": [
+        320,
+        133
+      ],
+      "assets/films/responsive/inception-curator-frame-22-640w.webp": [
+        640,
+        267
+      ],
+      "assets/films/responsive/inception-curator-frame-22-960w.webp": [
+        960,
+        400
+      ],
+      "assets/films/responsive/inception-curator-frame-22-1280w.webp": [
+        1280,
+        533
+      ],
+      "assets/films/responsive/inception-curator-frame-22-1920w.webp": [
+        1920,
+        800
+      ],
+      "assets/films/responsive/inception-curator-frame-22-2560w.webp": [
+        2560,
+        1067
+      ],
       "assets/films/inception-best-opening-sequence-hd.webp": [
         3840,
         1600
@@ -6258,6 +7167,610 @@
       ]
     },
     "variants": {
+      "assets/films/the-souvenir-daily-frame.jpg": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/the-souvenir-daily-frame-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/the-souvenir-daily-frame-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/the-souvenir-daily-frame-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/the-souvenir-daily-frame-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/responsive/the-souvenir-daily-frame-1920w.webp",
+          "width": 1920
+        },
+        {
+          "src": "assets/films/the-souvenir-daily-frame.jpg",
+          "width": 2000
+        }
+      ],
+      "assets/films/her-curator-dossier-cover-20261126.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/her-curator-dossier-cover-20261126-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/her-curator-dossier-cover-20261126-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/her-curator-dossier-cover-20261126-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/her-curator-dossier-cover-20261126-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/responsive/her-curator-dossier-cover-20261126-1920w.webp",
+          "width": 1920
+        },
+        {
+          "src": "assets/films/her-curator-dossier-cover-20261126.webp",
+          "width": 2560
+        }
+      ],
+      "assets/films/midnight-in-paris-curator-dossier-cover-20261126.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/midnight-in-paris-curator-dossier-cover-20261126-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/midnight-in-paris-curator-dossier-cover-20261126-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/midnight-in-paris-curator-dossier-cover-20261126-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/midnight-in-paris-curator-dossier-cover-20261126-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/responsive/midnight-in-paris-curator-dossier-cover-20261126-1920w.webp",
+          "width": 1920
+        },
+        {
+          "src": "assets/films/midnight-in-paris-curator-dossier-cover-20261126.webp",
+          "width": 2560
+        }
+      ],
+      "assets/films/nicholas-britell-curator-award-photo-20261126.jpg": [
+        {
+          "src": "assets/films/responsive/nicholas-britell-curator-award-photo-20261126-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/nicholas-britell-curator-award-photo-20261126-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/nicholas-britell-curator-award-photo-20261126-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/nicholas-britell-curator-award-photo-20261126.jpg",
+          "width": 1486
+        }
+      ],
+      "assets/films/thelma-2017-curator-frame-20261126-15.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/thelma-2017-curator-frame-20261126-15-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/thelma-2017-curator-frame-20261126-15-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/thelma-2017-curator-frame-20261126-15-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/thelma-2017-curator-frame-20261126-15-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/thelma-2017-curator-frame-20261126-15.webp",
+          "width": 1920
+        }
+      ],
+      "assets/films/blade-runner-2049-curator-frame-20261126-24.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-24-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-24-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-24-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-24-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-24-1920w.webp",
+          "width": 1920
+        },
+        {
+          "src": "assets/films/blade-runner-2049-curator-frame-20261126-24.webp",
+          "width": 3840
+        }
+      ],
+      "assets/films/blade-runner-2049-curator-frame-20261126-25.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-25-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-25-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-25-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-25-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-25-1920w.webp",
+          "width": 1920
+        },
+        {
+          "src": "assets/films/blade-runner-2049-curator-frame-20261126-25.webp",
+          "width": 3840
+        }
+      ],
+      "assets/films/blade-runner-2049-curator-frame-20261126-26.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-26-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-26-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-26-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-26-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-26-1920w.webp",
+          "width": 1920
+        },
+        {
+          "src": "assets/films/blade-runner-2049-curator-frame-20261126-26.webp",
+          "width": 3840
+        }
+      ],
+      "assets/films/blade-runner-2049-curator-frame-20261126-27.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-27-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-27-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-27-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-27-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-27-1920w.webp",
+          "width": 1920
+        },
+        {
+          "src": "assets/films/blade-runner-2049-curator-frame-20261126-27.webp",
+          "width": 3840
+        }
+      ],
+      "assets/films/blade-runner-2049-curator-frame-20261126-28.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-28-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-28-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-28-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-28-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-28-1920w.webp",
+          "width": 1920
+        },
+        {
+          "src": "assets/films/blade-runner-2049-curator-frame-20261126-28.webp",
+          "width": 3813
+        }
+      ],
+      "assets/films/blade-runner-2049-curator-frame-20261126-29.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-29-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-29-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-29-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-29-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-29-1920w.webp",
+          "width": 1920
+        },
+        {
+          "src": "assets/films/blade-runner-2049-curator-frame-20261126-29.webp",
+          "width": 3833
+        }
+      ],
+      "assets/films/blade-runner-2049-curator-frame-20261126-31.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-31-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-31-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-31-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-31-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-31-1920w.webp",
+          "width": 1920
+        },
+        {
+          "src": "assets/films/blade-runner-2049-curator-frame-20261126-31.webp",
+          "width": 2558
+        }
+      ],
+      "assets/films/blade-runner-2049-curator-frame-20261126-35.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-35-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-35-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-35-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-35-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-35-1920w.webp",
+          "width": 1920
+        },
+        {
+          "src": "assets/films/blade-runner-2049-curator-frame-20261126-35.webp",
+          "width": 2559
+        }
+      ],
+      "assets/films/blade-runner-2049-curator-frame-20261126-36.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-36-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-36-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-36-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-36-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-frame-20261126-36-1920w.webp",
+          "width": 1920
+        },
+        {
+          "src": "assets/films/blade-runner-2049-curator-frame-20261126-36.webp",
+          "width": 3840
+        }
+      ],
+      "assets/films/her-curator-frame-20261126-33.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/her-curator-frame-20261126-33-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/her-curator-frame-20261126-33-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/her-curator-frame-20261126-33-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/her-curator-frame-20261126-33-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/responsive/her-curator-frame-20261126-33-1920w.webp",
+          "width": 1920
+        },
+        {
+          "src": "assets/films/her-curator-frame-20261126-33.webp",
+          "width": 2491
+        }
+      ],
+      "assets/films/her-curator-frame-20261126-34.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/her-curator-frame-20261126-34-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/her-curator-frame-20261126-34-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/her-curator-frame-20261126-34-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/her-curator-frame-20261126-34-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/responsive/her-curator-frame-20261126-34-1920w.webp",
+          "width": 1920
+        },
+        {
+          "src": "assets/films/her-curator-frame-20261126-34.webp",
+          "width": 2347
+        }
+      ],
+      "assets/films/inside-llewyn-davis-curator-poster-20261126.webp": [
+        {
+          "src": "assets/films/responsive/inside-llewyn-davis-curator-poster-20261126-176w.webp",
+          "width": 176
+        },
+        {
+          "src": "assets/films/responsive/inside-llewyn-davis-curator-poster-20261126-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/inside-llewyn-davis-curator-poster-20261126-480w.webp",
+          "width": 480
+        },
+        {
+          "src": "assets/films/responsive/inside-llewyn-davis-curator-poster-20261126-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/inside-llewyn-davis-curator-poster-20261126-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/inside-llewyn-davis-curator-poster-20261126-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/inside-llewyn-davis-curator-poster-20261126.webp",
+          "width": 2000
+        }
+      ],
+      "assets/films/blade-runner-2049-curator-poster-20261126.webp": [
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-poster-20261126-176w.webp",
+          "width": 176
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-poster-20261126-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-poster-20261126-480w.webp",
+          "width": 480
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-poster-20261126-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/blade-runner-2049-curator-poster-20261126-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/blade-runner-2049-curator-poster-20261126.webp",
+          "width": 1000
+        }
+      ],
+      "assets/films/inception-curator-poster-20261126.webp": [
+        {
+          "src": "assets/films/responsive/inception-curator-poster-20261126-176w.webp",
+          "width": 176
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-poster-20261126-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-poster-20261126-480w.webp",
+          "width": 480
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-poster-20261126-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-poster-20261126-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/inception-curator-poster-20261126.webp",
+          "width": 1116
+        }
+      ],
+      "assets/films/oslo-august-31st-curator-poster-20261126.webp": [
+        {
+          "src": "assets/films/responsive/oslo-august-31st-curator-poster-20261126-176w.webp",
+          "width": 176
+        },
+        {
+          "src": "assets/films/responsive/oslo-august-31st-curator-poster-20261126-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/oslo-august-31st-curator-poster-20261126-480w.webp",
+          "width": 480
+        },
+        {
+          "src": "assets/films/responsive/oslo-august-31st-curator-poster-20261126-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/oslo-august-31st-curator-poster-20261126-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/oslo-august-31st-curator-poster-20261126-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/oslo-august-31st-curator-poster-20261126.webp",
+          "width": 2000
+        }
+      ],
+      "assets/films/before-midnight-curator-poster-20261126.webp": [
+        {
+          "src": "assets/films/responsive/before-midnight-curator-poster-20261126-176w.webp",
+          "width": 176
+        },
+        {
+          "src": "assets/films/responsive/before-midnight-curator-poster-20261126-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/before-midnight-curator-poster-20261126-480w.webp",
+          "width": 480
+        },
+        {
+          "src": "assets/films/responsive/before-midnight-curator-poster-20261126-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/before-midnight-curator-poster-20261126-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/before-midnight-curator-poster-20261126-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/before-midnight-curator-poster-20261126.webp",
+          "width": 1365
+        }
+      ],
+      "assets/films/anna-karenina-2012-curator-poster-20261126.webp": [
+        {
+          "src": "assets/films/responsive/anna-karenina-2012-curator-poster-20261126-176w.webp",
+          "width": 176
+        },
+        {
+          "src": "assets/films/responsive/anna-karenina-2012-curator-poster-20261126-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/anna-karenina-2012-curator-poster-20261126-480w.webp",
+          "width": 480
+        },
+        {
+          "src": "assets/films/responsive/anna-karenina-2012-curator-poster-20261126-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/anna-karenina-2012-curator-poster-20261126.webp",
+          "width": 853
+        }
+      ],
+      "assets/films/the-souvenir-curator-poster-20261126.jpg": [
+        {
+          "src": "assets/films/responsive/the-souvenir-curator-poster-20261126-176w.webp",
+          "width": 176
+        },
+        {
+          "src": "assets/films/responsive/the-souvenir-curator-poster-20261126-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/the-souvenir-curator-poster-20261126-480w.webp",
+          "width": 480
+        },
+        {
+          "src": "assets/films/the-souvenir-curator-poster-20261126.jpg",
+          "width": 500
+        }
+      ],
+      "assets/films/black-swan-curator-poster-20261126.jpg": [
+        {
+          "src": "assets/films/responsive/black-swan-curator-poster-20261126-176w.webp",
+          "width": 176
+        },
+        {
+          "src": "assets/films/responsive/black-swan-curator-poster-20261126-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/black-swan-curator-poster-20261126-480w.webp",
+          "width": 480
+        },
+        {
+          "src": "assets/films/black-swan-curator-poster-20261126.jpg",
+          "width": 600
+        }
+      ],
       "assets/films/whiplash-decade-cover.webp": [
         {
           "src": "assets/gallery/2010-2019/thumbs/whiplash-2014-078e07dc56d4-320w.webp",
@@ -10818,6 +12331,354 @@
           "width": 1920
         }
       ],
+      "assets/films/inception-curator-frame-04.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/inception-curator-frame-04-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-04-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-04-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/inception-curator-frame-04.webp",
+          "width": 1000
+        }
+      ],
+      "assets/films/inception-curator-frame-05.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/inception-curator-frame-05-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-05-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/inception-curator-frame-05.webp",
+          "width": 736
+        }
+      ],
+      "assets/films/inception-curator-frame-06.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/inception-curator-frame-06-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-06-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-06-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-06-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/inception-curator-frame-06.webp",
+          "width": 3840
+        }
+      ],
+      "assets/films/inception-curator-frame-08.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/inception-curator-frame-08-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-08-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-08-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-08-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/inception-curator-frame-08.webp",
+          "width": 3840
+        }
+      ],
+      "assets/films/inception-curator-frame-09.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/inception-curator-frame-09-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-09-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-09-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-09-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/inception-curator-frame-09.webp",
+          "width": 3840
+        }
+      ],
+      "assets/films/inception-curator-frame-10.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/inception-curator-frame-10-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-10-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-10-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-10-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/inception-curator-frame-10.webp",
+          "width": 3840
+        }
+      ],
+      "assets/films/inception-curator-frame-11.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/inception-curator-frame-11-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-11-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-11-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-11-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/inception-curator-frame-11.webp",
+          "width": 3840
+        }
+      ],
+      "assets/films/inception-curator-frame-12.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/inception-curator-frame-12-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-12-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-12-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-12-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/inception-curator-frame-12.webp",
+          "width": 3840
+        }
+      ],
+      "assets/films/inception-curator-frame-13.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/inception-curator-frame-13-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-13-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-13-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-13-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/inception-curator-frame-13.webp",
+          "width": 3840
+        }
+      ],
+      "assets/films/inception-curator-frame-14.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/inception-curator-frame-14-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-14-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-14-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-14-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/inception-curator-frame-14.webp",
+          "width": 3840
+        }
+      ],
+      "assets/films/inception-curator-frame-17.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/inception-curator-frame-17-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-17-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-17-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-17-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/inception-curator-frame-17.webp",
+          "width": 3840
+        }
+      ],
+      "assets/films/inception-curator-frame-18.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/inception-curator-frame-18-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-18-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-18-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-18-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/inception-curator-frame-18.webp",
+          "width": 3840
+        }
+      ],
+      "assets/films/inception-curator-frame-19.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/inception-curator-frame-19-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-19-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-19-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-19-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/inception-curator-frame-19.webp",
+          "width": 3840
+        }
+      ],
+      "assets/films/inception-curator-frame-20.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/inception-curator-frame-20-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-20-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-20-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-20-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/inception-curator-frame-20.webp",
+          "width": 3840
+        }
+      ],
+      "assets/films/inception-curator-frame-21.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/inception-curator-frame-21-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-21-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-21-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-21-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/inception-curator-frame-21.webp",
+          "width": 3840
+        }
+      ],
+      "assets/films/inception-curator-frame-22.webp": [
+        {
+          "src": "assets/gallery/2010-2019/thumbs/inception-curator-frame-22-320w.webp",
+          "width": 320
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-22-640w.webp",
+          "width": 640
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-22-960w.webp",
+          "width": 960
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-22-1280w.webp",
+          "width": 1280
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-22-1920w.webp",
+          "width": 1920
+        },
+        {
+          "src": "assets/films/responsive/inception-curator-frame-22-2560w.webp",
+          "width": 2560
+        },
+        {
+          "src": "assets/films/inception-curator-frame-22.webp",
+          "width": 3840
+        }
+      ],
       "assets/films/inception-best-opening-sequence-hd.webp": [
         {
           "src": "assets/gallery/2010-2019/thumbs/inception-best-opening-sequence-hd-320w.webp",
@@ -11416,6 +13277,12 @@
   "galleries": {
     "inception": [
       {
+        "path": "assets/films/inception-curator-frame-22.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/inception-curator-frame-22-320w.webp",
+        "label": "Cobb and Mal",
+        "credit": "Film still provided by the curator"
+      },
+      {
         "path": "assets/films/inception-best-original-screenplay.webp",
         "thumbnail": "assets/gallery/2010-2019/thumbs/inception-8d5b286d36f2-320w.webp",
         "award": "best-original-screenplay",
@@ -11463,6 +13330,96 @@
         "thumbnail": "assets/gallery/2010-2019/thumbs/inception-46c2897ba086-320w.webp",
         "award": "best-picture",
         "source": "https://film-grab.com/2012/11/23/inception/"
+      },
+      {
+        "path": "assets/films/inception-curator-frame-04.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/inception-curator-frame-04-320w.webp",
+        "label": "Mal",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/inception-curator-frame-05.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/inception-curator-frame-05-320w.webp",
+        "label": "Mal and Cobb",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/inception-curator-frame-06.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/inception-curator-frame-06-320w.webp",
+        "label": "Saito and Mal",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/inception-curator-frame-08.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/inception-curator-frame-08-320w.webp",
+        "label": "The Paris café",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/inception-curator-frame-09.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/inception-curator-frame-09-320w.webp",
+        "label": "The dream comes apart",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/inception-curator-frame-10.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/inception-curator-frame-10-320w.webp",
+        "label": "Ariadne",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/inception-curator-frame-11.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/inception-curator-frame-11-320w.webp",
+        "label": "Cobb and Mal by the bridge",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/inception-curator-frame-12.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/inception-curator-frame-12-320w.webp",
+        "label": "Robert Fischer",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/inception-curator-frame-13.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/inception-curator-frame-13-320w.webp",
+        "label": "Robert Fischer",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/inception-curator-frame-14.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/inception-curator-frame-14-320w.webp",
+        "label": "The dream chamber",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/inception-curator-frame-17.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/inception-curator-frame-17-320w.webp",
+        "label": "Cobb and Mal in limbo",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/inception-curator-frame-18.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/inception-curator-frame-18-320w.webp",
+        "label": "Mal",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/inception-curator-frame-19.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/inception-curator-frame-19-320w.webp",
+        "label": "Cobb and Mal by the water",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/inception-curator-frame-20.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/inception-curator-frame-20-320w.webp",
+        "label": "Cobb",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/inception-curator-frame-21.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/inception-curator-frame-21-320w.webp",
+        "label": "The city in limbo",
+        "credit": "Film still provided by the curator"
       }
     ],
     "phantom-thread": [
@@ -11864,6 +13821,60 @@
         "source": "https://lukedowding.com/blade-runner-2049-4k-screen-shots/",
         "imageUrl": "https://lukedowding.com/wp-content/uploads/Blade-Runner-2049-frame-4k-124.jpg",
         "label": "K and the spinner in the aftermath of the explosion"
+      },
+      {
+        "path": "assets/films/blade-runner-2049-curator-frame-20261126-24.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-24-320w.webp",
+        "label": "Film still",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/blade-runner-2049-curator-frame-20261126-25.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-25-320w.webp",
+        "label": "Film still",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/blade-runner-2049-curator-frame-20261126-26.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-26-320w.webp",
+        "label": "Film still",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/blade-runner-2049-curator-frame-20261126-27.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-27-320w.webp",
+        "label": "Film still",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/blade-runner-2049-curator-frame-20261126-28.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-28-320w.webp",
+        "label": "Film still",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/blade-runner-2049-curator-frame-20261126-29.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-29-320w.webp",
+        "label": "Film still",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/blade-runner-2049-curator-frame-20261126-31.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-31-320w.webp",
+        "label": "Film still",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/blade-runner-2049-curator-frame-20261126-35.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-35-320w.webp",
+        "label": "Film still",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/blade-runner-2049-curator-frame-20261126-36.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/blade-runner-2049-curator-frame-20261126-36-320w.webp",
+        "label": "Film still",
+        "credit": "Film still provided by the curator"
       }
     ],
     "whiplash-2014": [
@@ -11903,9 +13914,9 @@
         "label": "Andrew under the stage lights"
       },
       {
-        "path": "assets/films/whiplash-decade-cover.webp",
-        "thumbnail": "assets/gallery/2010-2019/thumbs/whiplash-2014-078e07dc56d4-320w.webp",
-        "source": "https://film-grab.com/2015/05/22/whiplash/",
+        "path": "assets/films/whiplash-decade-cover-hd.jpg",
+        "source": "https://www.imdb.com/title/tt2582802/mediaindex/",
+        "imageUrl": "https://m.media-amazon.com/images/M/MV5BOGE1ZWY5MzctNzZkYi00MGRlLTg4ZGItOWI5ZjUzYWQ2ZDlkXkEyXkFqcGc%40._V1_.jpg",
         "context": "Cover still"
       }
     ],
@@ -12025,6 +14036,12 @@
         "label": "Thelma in the water",
         "source": "https://film-grab.com/2019/04/03/thelma/",
         "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/thelma055.jpg?bwg=1551292735"
+      },
+      {
+        "path": "assets/films/thelma-2017-curator-frame-20261126-15.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/thelma-2017-curator-frame-20261126-15-320w.webp",
+        "label": "Film still",
+        "credit": "Film still provided by the curator"
       }
     ],
     "gone-girl": [
@@ -12509,6 +14526,24 @@
         "label": "Theodore in the snow",
         "source": "https://film-grab.com/2014/05/06/her/",
         "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/55%20(423).jpg?bwg=1547220404"
+      },
+      {
+        "path": "assets/films/her-curator-frame-20261126-33.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/her-curator-frame-20261126-33-320w.webp",
+        "label": "Film still",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/her-curator-frame-20261126-34.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/her-curator-frame-20261126-34-320w.webp",
+        "label": "Film still",
+        "credit": "Film still provided by the curator"
+      },
+      {
+        "path": "assets/films/her-curator-dossier-cover-20261126.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/her-curator-dossier-cover-20261126-320w.webp",
+        "label": "Theodore at home at night",
+        "credit": "Film still provided by the curator"
       }
     ],
     "before-midnight": [
@@ -12792,6 +14827,7 @@
         "award": "most-underrated-movie",
         "source": "https://letterboxd.com/film/the-souvenir/",
         "imageUrl": "https://a.ltrbxd.com/resized/sm/upload/ex/gq/g4/sz/the-souvenir-1920-1920-1080-1080-crop-000000.jpg?v=101b35f919",
+        "credit": "Courtesy of Sundance Institute · Photo by Agatha A. Nitecka",
         "label": "Julie and Anthony at the table"
       },
       {
@@ -12817,6 +14853,12 @@
         "thumbnail": "assets/gallery/2010-2019/thumbs/the-souvenir-231c159c807c-320w.webp",
         "source": "https://film-grab.com/2024/07/10/the-souvenir/",
         "imageUrl": "https://film-grab.com/wp-content/uploads/photo-gallery/The_Souvenir_58.jpg?bwg=1701090817"
+      },
+      {
+        "path": "assets/films/the-souvenir-daily-frame.jpg",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/the-souvenir-daily-frame-320w.webp",
+        "label": "Julie and Anthony at the table",
+        "credit": "Courtesy of Sundance Institute · Photo by Agatha A. Nitecka"
       }
     ],
     "drive-2011": [
@@ -12972,6 +15014,12 @@
         "thumbnail": "assets/gallery/2010-2019/thumbs/midnight-in-paris-57ea4688e516-320w.webp",
         "source": "https://www.sonyclassics.com/midnightinparis/gallery.html",
         "imageUrl": "https://www.sonyclassics.com/midnightinparis/images/gallery/fullsize/20.jpg"
+      },
+      {
+        "path": "assets/films/midnight-in-paris-curator-dossier-cover-20261126.webp",
+        "thumbnail": "assets/gallery/2010-2019/thumbs/midnight-in-paris-curator-dossier-cover-20261126-320w.webp",
+        "label": "Gil and Adriana walking through Paris at night",
+        "credit": "Film still provided by the curator"
       }
     ],
     "the-handmaiden": [

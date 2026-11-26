@@ -49,7 +49,8 @@
     film("mad-max", "Mad Max: Fury Road", 2015, "action adventure scifi", "freedom discovery survival systems visual fast intense plot hopeful-ending", "Survivors race through a harsh landscape seeking another way to live.", "ناجون يعبرون عالمًا قاسيًا بحثًا عن طريقة أخرى للحياة."),
     film("dune", "Dune", 2021, "scifi adventure drama", "control destiny systems duty visual epic symbolic worldbuilding open", "A young heir enters a world of political and personal uncertainty.", "وريث شاب يدخل عالمًا من عدم اليقين السياسي والشخصي.", "dune-2021-poster.webp"),
     film("past-lives", "Past Lives", 2023, "romance drama", "memory love identity relationship time realism slow character bittersweet-ending", "Two childhood friends reconnect across different lives and places.", "صديقا طفولة يعيدان التواصل عبر حياتين وأماكن مختلفة.", "past-lives-poster.webp"),
-    film("before-sunrise", "Before Sunrise", 1995, "romance drama", "discovery dialogue love relationship episodic realism warm open", "Two strangers spend a night walking and talking in Vienna.", "غريبان يقضيان ليلة في المشي والحديث في فيينا."),
+    film("before-sunrise", "Before Sunrise", 1995, "romance drama", "discovery dialogue love relationship episodic realism warm open", "Two strangers spend a night walking and talking in Vienna.", "غريبان يقضيان ليلة في المشي والحديث في فيينا.", "before-sunrise-curator-poster-20261126.jpg", "Richard Linklater"),
+    film("atonement", "Atonement", 2007, "romance drama war", "love memory loss truth ethics relationship time tragic", "A misunderstanding changes the lives of three people across the years.", "سوء فهم يغيّر مصائر ثلاثة أشخاص عبر السنين.", "atonement-curator-poster-20261126.jpg", "Joe Wright"),
     film("notebook", "The Notebook", 2004, "romance drama", "memory love relationship familyBond emotional melodrama bittersweet-ending closed", "A love story is remembered across different stages of life.", "قصة حب تُستعاد عبر مراحل مختلفة من الحياة."),
     film("eternal-sunshine", "Eternal Sunshine of the Spotless Mind", 2004, "romance drama scifi", "memory identity relationship love nonlinear puzzle symbolic melancholic open", "A couple confronts love through an unusual experience of memory.", "ثنائي يواجه الحب عبر تجربة غير مألوفة مع الذاكرة."),
     film("phantom-thread", "Phantom Thread", 2017, "drama romance", "control relationship identity obsession psychological character stylized slow bittersweet-ending", "A meticulous dressmaker encounters a woman who unsettles his routines.", "مصمم أزياء دقيق يلتقي امرأة تربك روتينه المعتاد.", "phantom-thread-poster.webp"),
@@ -235,6 +236,19 @@
     }
   }
   const filmById = Object.fromEntries(films.map(item => [item.id, item]));
+  // Share the curator's poster choices with the archive while retaining the
+  // existing film ids, stills, question order and scoring tags.
+  const curatorPosters = {
+    inception:'inception-curator-poster-20261126.webp',
+    'black-swan':'black-swan-curator-poster-20261126.jpg',
+    'blade-runner':'blade-runner-2049-curator-poster-20261126.webp',
+    'inside-llewyn-davis':'inside-llewyn-davis-curator-poster-20261126.webp',
+    'before-midnight':'before-midnight-curator-poster-20261126.webp',
+    oslo:'oslo-august-31st-curator-poster-20261126.webp',
+    souvenir:'the-souvenir-curator-poster-20261126.jpg',
+    columbus:'columbus-2017-poster.webp'
+  };
+  for (const [id,path] of Object.entries(curatorPosters)) filmById[id].poster=path;
   // The archive already contains genuine wide stills for these titles.
   for(const [id,still] of Object.entries({aftersun:"aftersun-film-file.webp",challengers:"challengers-film-file.webp","asteroid-city":"asteroid-city-film-file.webp",materialists:"materialists-film-file.webp","marty-supreme":"marty-supreme-film-file.webp"})) filmById[id].still=still;
   // Prefer the archive's actual, curated frames rather than promotional

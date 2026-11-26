@@ -136,6 +136,10 @@
 #film-file-dialog .file-tally .file-mention-count { font-size: .78rem; }
 #film-file-dialog .file-tally .file-tally-narrow { display: none; }
 #film-file-dialog .file-poster .poster { border-radius: 3px; }
+#film-file-dialog .file-poster-enlarge { display:block; position:relative; width:100%; border-radius:3px; cursor:pointer; overflow:visible; transition:box-shadow .2s ease; }
+#film-file-dialog .file-poster-enlarge:is(:hover,:focus-visible) { box-shadow:0 0 0 1px #e5cf9d,0 0 14px #e5cf9d45; }
+#film-file-dialog .file-poster-enlarge:is(:hover,:focus-visible) .poster img { transform:scale(1.035); filter:brightness(1.07); }
+#film-file-dialog .file-poster-enlarge:focus-visible { outline:1px solid #e5cf9d; outline-offset:3px; }
 /* Quiet actions below the photograph, aligned to the bottom of the metadata. */
 #film-file-dialog .file-meta-actions {
   position: absolute;

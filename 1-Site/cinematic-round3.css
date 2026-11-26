@@ -176,3 +176,38 @@ html.ts-archive-embedded,html.ts-archive-embedded body { background:transparent 
   .masthead .topnav .nav-profile-label { display:none; }
   .masthead .topnav .nav-profile-short { display:inline; }
 }
+
+/* Dialogue mentions keep a consistent poster-and-title rhythm. The quote is
+   revealed separately, using a keyboard-accessible native disclosure. */
+.dialogue-shortlist .dialogue-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr)); gap:14px 18px; list-style:none; padding:0; margin:12px 0 0; align-items:start; }
+.dialogue-shortlist .dialogue-nominee { display:grid; grid-template-columns:54px minmax(0,1fr); gap:12px; align-items:start; min-width:0; padding:0; margin:0; }
+.dialogue-shortlist .dialogue-poster { display:block; width:54px; border-radius:3px; }
+.dialogue-shortlist .dialogue-poster .poster img { object-fit:contain; }
+.dialogue-shortlist .dialogue-copy { min-width:0; margin:0; }
+.dialogue-shortlist .dialogue-copy summary { display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:6px; min-height:81px; padding:4px 0; cursor:pointer; list-style:none; }
+.dialogue-shortlist .dialogue-copy summary::-webkit-details-marker { display:none; }
+.dialogue-shortlist .dialogue-copy summary strong { display:block; color:var(--text); font:600 .94rem/1.3 var(--body); overflow-wrap:anywhere; text-wrap:pretty; }
+.dialogue-shortlist .dialogue-reveal { display:inline-flex; align-items:center; gap:5px; color:var(--muted); font:500 .72rem/1.3 var(--body); }
+.dialogue-shortlist .dialogue-copy summary:is(:hover,:focus-visible) .dialogue-reveal { color:var(--accent,var(--text)); }
+.dialogue-shortlist .dialogue-copy summary:focus-visible { outline:1px solid var(--accent,var(--text)); outline-offset:3px; border-radius:2px; }
+.dialogue-shortlist .dialogue-reveal .hide-label, .dialogue-shortlist .dialogue-copy[open] .read-label { display:none; }
+.dialogue-shortlist .dialogue-copy[open] .hide-label { display:inline; }
+.dialogue-shortlist .dialogue-copy[open] .dialogue-chevron { transform:rotate(180deg); }
+.dialogue-shortlist .dialogue-copy blockquote { margin:2px 0 0; padding:8px 0 8px 10px; border-inline-start:1px solid var(--accent,var(--surface-border)); color:var(--muted); font:400 .85rem/1.55 var(--body); white-space:pre-line; overflow-wrap:anywhere; }
+#best-line-of-dialogue .dialogue-grid { grid-template-columns:repeat(auto-fit,minmax(min(100%,155px),1fr)); gap:12px 14px; }
+#best-line-of-dialogue .dialogue-nominee { grid-template-columns:48px minmax(0,1fr); gap:9px; }
+#best-line-of-dialogue .dialogue-poster { width:48px; }
+#best-line-of-dialogue .dialogue-copy summary { min-height:72px; }
+#best-line-of-dialogue .dialogue-copy summary strong { font-size:.86rem; }
+
+/* Poster-only viewer: match the quiet, centered Letterboxd-style reference.
+   The native dialog keeps the current film file underneath and preserves focus. */
+#frame-dialog[data-mode="poster"] { width:100%; height:100dvh; max-width:none; max-height:none; margin:0; padding:0; inset:0; border:0; border-radius:0; background:transparent; box-shadow:none; overflow:hidden; cursor:zoom-out; }
+#frame-dialog[data-mode="poster"]::backdrop { background:rgba(9,12,15,.58); backdrop-filter:blur(4px); }
+#frame-dialog[data-mode="poster"] .full-frame-header,
+#frame-dialog[data-mode="poster"] .frame-contact-sheet { display:none; }
+#frame-dialog[data-mode="poster"] .full-frame-stage { flex:1 1 100%; display:grid; place-items:center; width:100%; height:100%; min-height:0; padding:0; background:transparent; cursor:zoom-out; }
+#frame-dialog[data-mode="poster"] #full-frame-image { display:block; width:min(calc(82dvh * var(--poster-ratio,.666667)),calc(100vw - 40px)); height:auto; max-width:calc(100vw - 40px); max-height:82dvh; object-fit:contain; box-shadow:0 12px 55px #0004; cursor:default; outline:none; }
+@media (max-width:560px) {
+  #frame-dialog[data-mode="poster"] #full-frame-image { width:min(calc(82dvh * var(--poster-ratio,.666667)),calc(100vw - 28px)); max-width:calc(100vw - 28px); }
+}

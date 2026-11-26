@@ -130,6 +130,14 @@
     return `<span class="poster" aria-hidden="true">${art(slug).poster ? imageMarkup(art(slug).poster, eager, sizes, [380, 570]) : `<span>${esc(info.title)}</span>`}</span>`;
   }
 
+  function dossierPoster(slug) {
+    const markup = poster(slug, true, '(max-width: 680px) 54px, 68px');
+    const path = art(slug).poster;
+    if (!path) return markup;
+    if (!frameDialog) return `<a class="file-poster-enlarge" href="${esc(largestFrame(path))}" target="_blank" rel="noopener" aria-label="View poster for ${esc(film(slug).title)}">${markup}</a>`;
+    return `<button class="file-poster-enlarge frame-enlarge" type="button" data-full-frame="${esc(largestFrame(path))}" data-frame-path="${esc(path)}" data-frame-label="${esc(film(slug).title + ' — Poster')}" data-film="${esc(slug)}" data-poster-view="true" aria-haspopup="dialog" aria-label="Enlarge poster for ${esc(film(slug).title)}">${markup}</button>`;
+  }
+
   function artworkPath(slug, selected) {
     return selected[slug] || art(slug).backdrop || art(slug).poster;
   }
@@ -149,8 +157,9 @@
         shape: 'wide', focal: presentation.focal}];
     }
     if (award.winnerArtwork) {
-      return [{path: award.winnerArtwork.path, label: portfolioPresentation(award) ? artistName(award.winner) : award.winner.title,
-        shape: 'wide', focal: award.winnerArtwork.focal}];
+      const artwork = layout === 'dialog' && award.winnerArtwork.dialogArtwork ? award.winnerArtwork.dialogArtwork : award.winnerArtwork;
+      return [{path: artwork.path, label: portfolioPresentation(award) ? artistName(award.winner) : award.winner.title,
+        shape: 'wide', focal: artwork.focal}];
     }
     return filmFrames(award.winner.films, award.stills, award.focalPoints);
   }
@@ -337,6 +346,14 @@
 
   function nominations(entries, eager = false, artist = false, category = '', listId = '') {
     if (!entries.length) return '';
+    if (category === 'best-line-of-dialogue') {
+      const items = entries.map(entry => {
+        const slug = entry.films[0];
+        const info = film(slug);
+        return `<li class="dialogue-nominee"><a class="dialogue-poster" href="${esc(info.url)}" ${external} ${filmAttributes(slug)}>${poster(slug,eager,'54px')}</a><details class="dialogue-copy"><summary><strong>${title(entry)}</strong><span class="dialogue-reveal"><span class="read-label">Read dialogue</span><span class="hide-label">Hide dialogue</span><span class="dialogue-chevron" aria-hidden="true">⌄</span></span></summary><blockquote>${esc(entry.detail || '')}</blockquote></details></li>`;
+      }).join('');
+      return `<div class="shortlist dialogue-shortlist"${listId ? ` id="${esc(listId)}"` : ''}><p class="micro">Honorable mentions <span>${pad(entries.length)}</span></p><ul class="dialogue-grid" aria-label="Honorable mentions" data-count="${entries.length}">${items}</ul></div>`;
+    }
     return `<div class="shortlist${artist ? ' artist-shortlist' : ''}"${listId ? ` id="${esc(listId)}"` : ''}><p class="micro">Honorable mentions <span>${pad(entries.length)}</span></p><ul class="nominee-grid" aria-label="Honorable mentions" data-count="${entries.length}" style="--count:${entries.length}">${entries.map(entry => nomination(entry, eager, artist, category)).join('')}</ul></div>`;
   }
 
@@ -749,7 +766,12 @@
   if (frameDialog) {
     const image = $('#full-frame-image', frameDialog);
     const status = $('#full-frame-status', frameDialog);
-    image.addEventListener('load', () => { if (frameDialog.open) status.hidden = true; });
+    image.addEventListener('load', () => {
+      if (frameDialog.open) status.hidden = true;
+      if (frameDialog.dataset.mode === 'poster' && image.naturalWidth && image.naturalHeight) {
+        frameDialog.style.setProperty('--poster-ratio', image.naturalWidth / image.naturalHeight);
+      }
+    });
     image.addEventListener('error', () => {
       if (frameDialog.open && image.hasAttribute('src')) {
         status.textContent = 'This frame could not be loaded.';
@@ -762,9 +784,19 @@
         setContactSheet(false, true);
         image.removeAttribute('src');
         image.removeAttribute('width'); image.removeAttribute('height');
+        image.removeAttribute('tabindex');
+        delete frameDialog.dataset.mode;
+        frameDialog.style.removeProperty('--poster-ratio');
         $('.ts-frame-size',frameDialog)?.remove();
         frameCollection = []; frameIndex = 0; frameTouch = null;
         $('.frame-gallery-controls', frameDialog).hidden = true;
+      }
+    });
+    // A poster is a borderless lightbox. Any click outside the actual image
+    // returns to the underlying film file, but the image itself is inert.
+    frameDialog.addEventListener('click', event => {
+      if (frameDialog.open && frameDialog.dataset.mode === 'poster' && event.target !== image) {
+        closeDialog(frameDialog, true);
       }
     });
     $('.frame-gallery-prev', frameDialog).addEventListener('click', () => stepFrame(-1));
@@ -817,7 +849,7 @@
     const info = film(slug);
     if (!info) return frames;
     const curated = archive.galleries?.[slug];
-    if (curated?.length) return curated.slice(0,7).map(record => frameRecord(slug,record));
+    if (curated?.length) return curated.map(record => frameRecord(slug,record));
     const add = (path, context, record = {}) => {
       if (!path) return;
       const src = largestFrame(path);
@@ -927,16 +959,31 @@
     const src = trigger.dataset.fullFrame;
     const slug = trigger.dataset.film;
     const path = trigger.dataset.framePath || src;
+    if (trigger.dataset.posterView === 'true') {
+      frameCollection = [{src,path,thumbnail:frameThumbnail(path),label:trigger.dataset.frameLabel,context:'Film poster',source:art(slug).posterSource}];
+      frameIndex = 0;
+      frameDialog.dataset.mode = 'poster';
+      const size = media.sizes?.[src] || media.sizes?.[path];
+      if (size) frameDialog.style.setProperty('--poster-ratio', size[0] / size[1]);
+      $('#full-frame-title',frameDialog).textContent = trigger.dataset.frameLabel;
+      $('#full-frame-image',frameDialog).tabIndex = -1;
+      setContactSheet(false,true);
+      openDialog(frameDialog, '#full-frame-image', trigger);
+      displayFrame();
+      return;
+    }
+    delete frameDialog.dataset.mode;
     frameCollection = filmFrameCollection(slug);
     frameIndex = frameCollection.findIndex(frame => frame.src === src);
     if (frameIndex < 0) {
-      // Do not lose the explicitly selected award frame, even when the
-      // curated contact sheet already contains seven other photographs.
+      // Include the explicitly selected award frame. Keep the compact default
+      // for ordinary galleries, but never truncate an extended curated gallery.
       const entry = (alternates[slug] ?? []).find(still => still.path === path);
       const presentation = Object.entries(edition.presentationStills ?? {}).find(([,still]) => still.path === path);
       const context = awardsById.get(entry?.award ?? presentation?.[0])?.name || 'Selected artwork';
       frameCollection = [{src,path,thumbnail:frameThumbnail(path),label:trigger.dataset.frameLabel,context,
-        source:entry?.source || presentation?.[1]?.source}, ...frameCollection].slice(0,7);
+        source:entry?.source || presentation?.[1]?.source}, ...frameCollection];
+      if ((archive.galleries?.[slug]?.length ?? 0) <= 7) frameCollection = frameCollection.slice(0,7);
       frameIndex = 0;
     }
     setContactSheet(frameCollection.length > 1,true);
@@ -1391,7 +1438,7 @@
     const director = directorFor(slug);
     const movieArt = art(slug);
     const gallery = filmFrameCollection(slug);
-    const dossierStill = gallery[0]?.path || movieArt.backdrop || alternates[slug]?.find(still => still.path)?.path;
+    const dossierStill = movieArt.dossierCover || gallery[0]?.path || movieArt.backdrop || alternates[slug]?.find(still => still.path)?.path;
     const listening = awards.flatMap(award => (award.listen ?? []).filter(item => item.film === slug));
     const snubs = (archive.snubs ?? []).filter(item => item.entry.films.includes(slug));
     const winText = `${wins.length} ${wins.length === 1 ? 'award won' : 'awards won'}`;
@@ -1416,7 +1463,7 @@
       ${dossierStill ? frameDialog
         ? frameButton(dossierStill, info.title, 'film-file-frame', imageMarkup(dossierStill, true, '(min-width: 1971px) 1080px, (min-width: 1440px) 55vw, (min-width: 920px) 790px, 96vw', [16,9], true), ` data-film="${esc(slug)}" tabindex="-1"`)
         : `<div class="film-file-frame">${imageMarkup(dossierStill, true, '(min-width: 1971px) 1080px, (min-width: 1440px) 55vw, (min-width: 920px) 790px, 96vw', [16,9], true)}</div>` : ''}
-      <div class="film-file-meta"><div class="file-poster">${poster(slug,true,'(max-width: 680px) 54px, 68px')}</div><div class="file-meta-copy"><h2 id="film-file-title" tabindex="-1">${esc(info.title)}</h2><p class="file-year">${esc(info.year)}${director ? ` · ${personLink(director)}` : ''}</p><div class="file-meta-bottom"><p class="file-tally"><span class="file-tally-wide">${esc(winText)} <span class="file-mention-count">· ${mentions.length} ${mentions.length === 1 ? 'honorable mention' : 'honorable mentions'}</span></span><span class="file-tally-narrow">${wins.length} ${wins.length === 1 ? 'win' : 'wins'} <span class="file-mention-count">· ${mentions.length} ${mentions.length === 1 ? 'mention' : 'mentions'}</span></span></p>${dossierActions(slug,info,dossierStill)}</div></div></div>
+      <div class="film-file-meta"><div class="file-poster">${dossierPoster(slug)}</div><div class="file-meta-copy"><h2 id="film-file-title" tabindex="-1">${esc(info.title)}</h2><p class="file-year">${esc(info.year)}${director ? ` · ${personLink(director)}` : ''}</p><div class="file-meta-bottom"><p class="file-tally"><span class="file-tally-wide">${esc(winText)} <span class="file-mention-count">· ${mentions.length} ${mentions.length === 1 ? 'honorable mention' : 'honorable mentions'}</span></span><span class="file-tally-narrow">${wins.length} ${wins.length === 1 ? 'win' : 'wins'} <span class="file-mention-count">· ${mentions.length} ${mentions.length === 1 ? 'mention' : 'mentions'}</span></span></p>${dossierActions(slug,info,dossierStill)}</div></div></div>
       <div class="film-file-sections file-dossier-accordion">
       ${wonAwardsSection(wins)}
       ${mentionsGroup}${dossierFrames(slug,gallery)}${groups.join('')}
@@ -1538,7 +1585,7 @@
       return;
     }
     const frames = renderFrames(awardFrames(award, 'dialog'), true, 'dialog');
-    const frameClass = `ceremony-frame${artist ? ' portfolio-frame' : ''}${award.winnerArtwork ? ' portrait-frame' : ''}`;
+    const frameClass = `ceremony-frame${artist ? ' portfolio-frame' : ''}${award.winnerArtwork && !award.winnerArtwork.dialogArtwork ? ' portrait-frame' : ''}`;
     const winnerTitle = artist ? creditMarkup(credit, artistName(award.winner)) : performance ? performanceNameMarkup(performance) : title(award.winner);
     const detailMarkup = performance
       ? `<span class="winner-detail">${performanceFilmLine(award.winner, performance, 'ceremony-title-link performance-film-link')}</span>`

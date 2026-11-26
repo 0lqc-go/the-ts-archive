@@ -563,8 +563,8 @@
     const links='<a target="_blank" rel="noopener noreferrer" href="https://letterboxd.com/search/films/'+encodeURIComponent(label)+
       '/">Letterboxd</a><a target="_blank" rel="noopener noreferrer" href="https://www.themoviedb.org/search?query='+
       encodeURIComponent(label)+'">TMDB</a>';
-    const poster=film.poster?'<div class="cp-rec-art"><img src="'+e(artwork(film.poster))+
-      '" alt="" loading="lazy" decoding="async"></div>':'';
+    const poster=film.poster?'<a class="cp-rec-art" href="'+e(artwork(film.poster))+'" target="_blank" rel="noopener" aria-label="'+e((state.locale==='ar'?'تكبير بوستر ':'Enlarge poster for ')+film.title)+'"><img src="'+e(artwork(film.poster))+
+      '" alt="" loading="lazy" decoding="async"></a>':'';
     return '<article class="cp-rec-card">'+poster+'<div class="cp-rec-copy"><h3 class="cp-film-title" lang="en">'+e(film.title)+'</h3>'+
       '<span class="cp-rec-year">'+e(film.year)+'</span><details class="cp-rec-description"><summary>'+e(state.locale==="ar"?"التفاصيل":"Details")+'</summary><p class="cp-tags">'+
       e((item.priorInterest?[t("matchedInterest")]:[]).concat(item.reasons.map(tagLabel)).join(" · "))+

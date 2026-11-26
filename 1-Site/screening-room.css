@@ -20,12 +20,6 @@
 .screening-daily { min-width: 0; justify-self: stretch; }
 .screening-daily-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 10px; font: 500 .875rem/1.25 var(--body); }
 .screening-daily-heading time { color: var(--muted); font-size: .78rem; font-weight: 400; }
-.screening-daily-meta { position:relative; z-index:3; display:flex; align-items:center; gap:5px; }
-.screening-daily-source summary { display:grid; place-items:center; width:24px; height:24px; list-style:none; color:var(--muted); cursor:pointer; }
-.screening-daily-source summary::-webkit-details-marker { display:none; }
-.screening-daily-source summary:hover, .screening-daily-source[open] summary { color:var(--paper-accent); }
-.screening-daily-source-popover { position:absolute; inset-inline-end:0; top:calc(100% + 7px); width:max-content; max-width:min(245px,calc(100vw - 38px)); padding:10px 12px; border:1px solid var(--surface-border); border-radius:4px; background:var(--panel); color:var(--text-subtle); font:400 .75rem/1.45 var(--body); }
-@media (pointer:coarse) { .screening-daily-source summary { width:36px; height:34px; } }
 .screening-daily-card { position: relative; display: block; width: 100%; min-width: 0; isolation: isolate; overflow: hidden; border-radius: 4px; background: var(--deep); aspect-ratio: 2.35; }
 .screening-daily-card img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
 .screening-daily-card::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to top, color-mix(in srgb, var(--ink) 98%, transparent) 0%, color-mix(in srgb, var(--ink) 80%, transparent) 10%, color-mix(in srgb, var(--ink) 22%, transparent) 39%, transparent 63%); }

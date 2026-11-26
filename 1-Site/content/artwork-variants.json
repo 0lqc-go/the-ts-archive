@@ -1,5 +1,77 @@
 {
   "sizes": {
+    "assets/films/tar-2022-decade-cover-hd.webp": [
+      5070,
+      2535
+    ],
+    "assets/films/responsive/tar-2022-decade-cover-hd-640w.webp": [
+      640,
+      320
+    ],
+    "assets/films/responsive/tar-2022-decade-cover-hd-960w.webp": [
+      960,
+      480
+    ],
+    "assets/films/responsive/tar-2022-decade-cover-hd-1280w.webp": [
+      1280,
+      640
+    ],
+    "assets/films/responsive/tar-2022-decade-cover-hd-1920w.webp": [
+      1920,
+      960
+    ],
+    "assets/films/responsive/tar-2022-decade-cover-hd-2560w.webp": [
+      2560,
+      1280
+    ],
+    "assets/films/responsive/tar-2022-decade-cover-hd-3840w.webp": [
+      3840,
+      1920
+    ],
+    "assets/films/tar-2022-decade-card-hd.webp": [
+      4885,
+      2573
+    ],
+    "assets/films/responsive/tar-2022-decade-card-hd-640w.webp": [
+      640,
+      337
+    ],
+    "assets/films/responsive/tar-2022-decade-card-hd-960w.webp": [
+      960,
+      506
+    ],
+    "assets/films/responsive/tar-2022-decade-card-hd-1280w.webp": [
+      1280,
+      674
+    ],
+    "assets/films/responsive/tar-2022-decade-card-hd-1920w.webp": [
+      1920,
+      1011
+    ],
+    "assets/films/responsive/tar-2022-decade-card-hd-2560w.webp": [
+      2560,
+      1348
+    ],
+    "assets/films/responsive/tar-2022-decade-card-hd-3840w.webp": [
+      3840,
+      2023
+    ],
+    "assets/films/inside-llewyn-davis-home-original.jpg": [
+      1280,
+      690
+    ],
+    "assets/films/responsive/inside-llewyn-davis-home-original-640w.webp": [
+      640,
+      345
+    ],
+    "assets/films/responsive/inside-llewyn-davis-home-original-960w.webp": [
+      960,
+      518
+    ],
+    "assets/films/whiplash-decade-cover-hd.jpg": [
+      1920,
+      800
+    ],
     "assets/films/1917-poster.webp": [
       300,
       450
@@ -1402,6 +1474,80 @@
     ]
   },
   "variants": {
+    "assets/films/tar-2022-decade-cover-hd.webp": [
+      {
+        "src": "assets/films/responsive/tar-2022-decade-cover-hd-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-decade-cover-hd-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-decade-cover-hd-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-decade-cover-hd-1920w.webp",
+        "width": 1920
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-decade-cover-hd-2560w.webp",
+        "width": 2560
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-decade-cover-hd-3840w.webp",
+        "width": 3840
+      },
+      {
+        "src": "assets/films/tar-2022-decade-cover-hd.webp",
+        "width": 5070
+      }
+    ],
+    "assets/films/tar-2022-decade-card-hd.webp": [
+      {
+        "src": "assets/films/responsive/tar-2022-decade-card-hd-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-decade-card-hd-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-decade-card-hd-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-decade-card-hd-1920w.webp",
+        "width": 1920
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-decade-card-hd-2560w.webp",
+        "width": 2560
+      },
+      {
+        "src": "assets/films/responsive/tar-2022-decade-card-hd-3840w.webp",
+        "width": 3840
+      },
+      {
+        "src": "assets/films/tar-2022-decade-card-hd.webp",
+        "width": 4885
+      }
+    ],
+    "assets/films/inside-llewyn-davis-home-original.jpg": [
+      {
+        "src": "assets/films/responsive/inside-llewyn-davis-home-original-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/inside-llewyn-davis-home-original-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/inside-llewyn-davis-home-original.jpg",
+        "width": 1280
+      }
+    ],
     "assets/films/1917-poster.webp": [
       {
         "src": "assets/films/responsive/1917-poster-128w.webp",

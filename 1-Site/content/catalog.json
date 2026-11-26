@@ -6,10 +6,11 @@
   },
   "featuredEdition": "2020-2026",
   "homeCover": {
-    "cover": "assets/films/inside-llewyn-davis-home.webp",
+    "cover": "assets/films/inside-llewyn-davis-home-original.jpg",
     "coverFilm": "Inside Llewyn Davis",
     "coverYear": 2013,
     "coverSource": "https://film-grab.com/2014/03/31/inside-llewyn-davis/",
+    "coverImageUrl": "https://www.sfjff.org/images/import/festival/archive/7002_03.jpg",
     "coverPosition": "67% 39%",
     "coverMobilePosition": "60% center"
   },
@@ -19,11 +20,16 @@
       "title": "The 2020–2026 Awards",
       "period": "2020–2026",
       "description": "The films, performances, and scenes that shaped my decade so far.",
-      "cover": "assets/films/tar-2022-wide.webp",
-      "cardImage": "assets/films/tar-2022-best-picture.webp",
+      "cover": "assets/films/tar-2022-decade-cover-hd.webp",
+      "cardImage": "assets/films/tar-2022-decade-card-hd.webp",
       "coverFilm": "TÁR",
       "coverYear": 2022,
-      "coverSource": "https://www.focusfeatures.com/tar",
+      "coverSource": "https://www.latimes.com/entertainment-arts/movies/story/2023-01-24/all-the-best-picture-nominees-ranked-oscars-nominations-2023",
+      "coverImageUrl": "https://california-times-brightspot.s3.amazonaws.com/93/75/748915e2417daeb9e21d69a1ae8c/env-tar-cate-blanchett-004.jpg",
+      "coverCredit": "Courtesy of Focus Features",
+      "cardImageSource": "https://www.wmagazine.com/culture/tar-costume-designer-bina-daigeler-interview-cate-blanchett-the-row",
+      "cardImageUrl": "https://imgix.bustle.com/uploads/image/2022/10/27/d9a99f95-79ed-44ec-b70c-a5262ec1e7bc-c336efec-b7ba-4e70-abb9-4c4eafd62923-038_166a-3_pucsub0209851_c1_ur.jpeg",
+      "cardImageCredit": "Courtesy of Focus Features",
       "content": "content/2020-2026.json"
     },
     {
@@ -31,11 +37,11 @@
       "title": "The 2010–2019 Awards",
       "period": "2010–2019",
       "description": "A decade of ambition, obsession, and lives we might have lived.",
-      "cover": "assets/films/whiplash-decade-cover.webp",
-      "cardImage": "assets/films/whiplash-decade-cover.webp",
+      "cover": "assets/films/whiplash-decade-cover-hd.jpg",
+      "cardImage": "assets/films/whiplash-decade-cover-hd.jpg",
       "coverFilm": "Whiplash",
       "coverYear": 2014,
-      "coverSource": "https://film-grab.com/2015/05/22/whiplash/",
+      "coverSource": "https://m.media-amazon.com/images/M/MV5BOGE1ZWY5MzctNzZkYi00MGRlLTg4ZGItOWI5ZjUzYWQ2ZDlkXkEyXkFqcGc%40._V1_.jpg",
       "content": "content/2010-2019.json",
       "coverPosition": "38% 38%"
     }
