@@ -1479,6 +1479,58 @@
     "assets/films/responsive/tar-2022-best-scene-cinematic-r2-1280w.webp": [
       1280,
       536
+    ],
+    "assets/films/responsive/quick-cover-6f2f28e7e85a-1280w.webp": [
+      1280,
+      690
+    ],
+    "assets/films/responsive/quick-cover-9b0a8862e14d-1280w.webp": [
+      1280,
+      674
+    ],
+    "assets/films/responsive/quick-cover-9b0a8862e14d-1920w.webp": [
+      1920,
+      1011
+    ],
+    "assets/films/responsive/quick-cover-9b0a8862e14d-2560w.webp": [
+      2560,
+      1348
+    ],
+    "assets/films/responsive/quick-cover-9b0a8862e14d-3200w.webp": [
+      3200,
+      1685
+    ],
+    "assets/films/responsive/quick-cover-9b0a8862e14d-3840w.webp": [
+      3840,
+      2023
+    ],
+    "assets/films/responsive/quick-cover-4fe4669c9fa9-1920w.webp": [
+      1920,
+      960
+    ],
+    "assets/films/responsive/quick-cover-4fe4669c9fa9-2560w.webp": [
+      2560,
+      1280
+    ],
+    "assets/films/responsive/quick-cover-4fe4669c9fa9-3200w.webp": [
+      3200,
+      1600
+    ],
+    "assets/films/responsive/quick-cover-4fe4669c9fa9-3840w.webp": [
+      3840,
+      1920
+    ],
+    "assets/films/responsive/quick-cover-1ce187490741-640w.webp": [
+      640,
+      267
+    ],
+    "assets/films/responsive/quick-cover-1ce187490741-960w.webp": [
+      960,
+      400
+    ],
+    "assets/films/responsive/quick-cover-1ce187490741-1280w.webp": [
+      1280,
+      533
     ]
   },
   "variants": {
@@ -1496,15 +1548,19 @@
         "width": 1280
       },
       {
-        "src": "assets/films/responsive/tar-2022-decade-cover-hd-1920w.webp",
+        "src": "assets/films/responsive/quick-cover-4fe4669c9fa9-1920w.webp",
         "width": 1920
       },
       {
-        "src": "assets/films/responsive/tar-2022-decade-cover-hd-2560w.webp",
+        "src": "assets/films/responsive/quick-cover-4fe4669c9fa9-2560w.webp",
         "width": 2560
       },
       {
-        "src": "assets/films/responsive/tar-2022-decade-cover-hd-3840w.webp",
+        "src": "assets/films/responsive/quick-cover-4fe4669c9fa9-3200w.webp",
+        "width": 3200
+      },
+      {
+        "src": "assets/films/responsive/quick-cover-4fe4669c9fa9-3840w.webp",
         "width": 3840
       },
       {
@@ -1522,19 +1578,23 @@
         "width": 960
       },
       {
-        "src": "assets/films/responsive/tar-2022-decade-card-hd-1280w.webp",
+        "src": "assets/films/responsive/quick-cover-9b0a8862e14d-1280w.webp",
         "width": 1280
       },
       {
-        "src": "assets/films/responsive/tar-2022-decade-card-hd-1920w.webp",
+        "src": "assets/films/responsive/quick-cover-9b0a8862e14d-1920w.webp",
         "width": 1920
       },
       {
-        "src": "assets/films/responsive/tar-2022-decade-card-hd-2560w.webp",
+        "src": "assets/films/responsive/quick-cover-9b0a8862e14d-2560w.webp",
         "width": 2560
       },
       {
-        "src": "assets/films/responsive/tar-2022-decade-card-hd-3840w.webp",
+        "src": "assets/films/responsive/quick-cover-9b0a8862e14d-3200w.webp",
+        "width": 3200
+      },
+      {
+        "src": "assets/films/responsive/quick-cover-9b0a8862e14d-3840w.webp",
         "width": 3840
       },
       {
@@ -1552,7 +1612,7 @@
         "width": 960
       },
       {
-        "src": "assets/films/inside-llewyn-davis-home-original.jpg",
+        "src": "assets/films/responsive/quick-cover-6f2f28e7e85a-1280w.webp",
         "width": 1280
       }
     ],
@@ -6005,6 +6065,24 @@
       },
       {
         "src": "assets/films/tar-2022-best-scene-cinematic-r2.webp",
+        "width": 1920
+      }
+    ],
+    "assets/films/whiplash-decade-cover-hd.jpg": [
+      {
+        "src": "assets/films/responsive/quick-cover-1ce187490741-640w.webp",
+        "width": 640
+      },
+      {
+        "src": "assets/films/responsive/quick-cover-1ce187490741-960w.webp",
+        "width": 960
+      },
+      {
+        "src": "assets/films/responsive/quick-cover-1ce187490741-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "assets/films/whiplash-decade-cover-hd.jpg",
         "width": 1920
       }
     ]

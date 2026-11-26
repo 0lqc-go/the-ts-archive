@@ -54,7 +54,16 @@
     const section = $('#screening-daily');
     if (!section) return;
     try {
-      const {archive} = await getContext();
+      // The home page needs only the daily rotation, not the award index,
+      // games, ballots, or both full editions. Use the build-time projection.
+      let archive;
+      try {
+        const preview = await site.read('content/home-daily.json');
+        archive = preview.archive;
+        imageMedia = preview.media;
+      } catch {
+        ({archive} = await getContext());
+      }
       let lastDay;
       function draw() {
         const now = new Date(), current = data.dailyFrame(archive, now);
@@ -70,7 +79,6 @@
           <a class="screening-daily-card" href="${esc(film.href)}" aria-label="Explore ${esc(film.title)} (${esc(film.year)})"><img ${imageAttrs(frame.path,'(max-width: 680px) 92vw, (min-width: 1440px) 680px, 48vw',640)} width="${frame.width}" height="${frame.height}" alt=""${credit} loading="lazy" decoding="async"><span class="screening-daily-caption"><strong>${esc(film.title)}</strong><small>${esc(film.year)}</small></span></a>`;
         const image = $('img', section);
         image.addEventListener('error', () => { image.hidden = true; });
-        window.ArchiveContinuity?.prefetch(film.href,$('.screening-daily-card',section));
       }
       draw();
       window.addEventListener('focus', draw);
@@ -765,8 +773,7 @@
   if (document.body.dataset.page === 'home') {
     const load = () => initDaily();
     const daily=$('#screening-daily');
-    // The daily card is below the first fold. Don't fetch both edition files
-    // until the reader nears it, or a direct anchor brings it into view.
+    // Fetch the lightweight daily rotation when the reader approaches.
     if(daily&&location.hash==='#screening-room')load();
     else if(daily&&'IntersectionObserver' in window){
       const observer=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){observer.disconnect();load();}},{rootMargin:'500px'});

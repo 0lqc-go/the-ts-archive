@@ -98,9 +98,8 @@
   }
   function trimHosts() {
     const idle=[...hosts].filter(host=>!host.layer).sort((a,b)=>b.usedAt-a.usedAt);
-    // One parked edition on memory-constrained devices; two on desktop.
-    const limit=navigator.deviceMemory&&navigator.deviceMemory<=4?1:2;
-    idle.slice(limit).forEach(disposeHost);
+    // Retain only the most recently used shell; never boot one speculatively.
+    idle.slice(1).forEach(disposeHost);
   }
   function makeHost(edition) {
     const id=nextId();
@@ -269,31 +268,23 @@
       if(target)location.assign(target.href);
     }
   });
-  // Prepare at most one edition at a time, without loading its film art.
-  // Intent comes from a visible journey/day frame or a real link hover/focus.
-  // A fast connection gets a warm shell; slower/data-saving connections keep
-  // the foreground page first and simply reuse its cached catalogue on click.
-  const allowWarm=()=>canLayer&&!document.hidden&&!navigator.connection?.saveData&&!/^(slow-)?2g$/.test(navigator.connection?.effectiveType||'');
-  let warmTimer=0,warmObserver=null;
-  function queueWarm(destination,trigger,delay=150) {
+  // Warm only the catalogue file after sustained pointer/focus intent.
+  // A visible card is not a reason to build an entire hidden document.
+  const allowWarm=()=>canLayer&&!document.hidden&&!navigator.connection?.saveData&&!/^(slow-)?2g$|^3g$/.test(navigator.connection?.effectiveType||'');
+  let warmTimer=0;
+  function queueWarm(destination,trigger,delay=450) {
     clearTimeout(warmTimer);
     const target=cleanTarget(destination);
     if(!allowWarm()||!dossierRoute(target))return;
     warmTimer=setTimeout(()=>{
       if(!allowWarm()||layers.length||trigger&&!trigger.isConnected||parkedHost(editionOf(target)))return;
-      if([...hosts].some(host=>!host.booted&&!host.failed))return;
-      makeHost(editionOf(target));
+      const edition=editionOf(target);
+      if(!/^\d{4}-\d{4}$/.test(edition))return;
+      readContent(`content/${edition}.json`).catch(()=>{});
     },delay);
   }
   function prefetch(destination,trigger) {
-    if(!allowWarm())return;
-    warmObserver?.disconnect();
-    if(trigger instanceof Element&&'IntersectionObserver' in window){
-      warmObserver=new IntersectionObserver(entries=>{
-        if(entries.some(item=>item.isIntersecting)){warmObserver.disconnect();queueWarm(destination,trigger,200);}
-      },{rootMargin:'120px'});
-      warmObserver.observe(trigger);
-    } else queueWarm(destination,trigger,220);
+    // Explicit hover/focus already warms data. No background work on visibility.
   }
   function detailTarget(element) {
     const row=element.closest?.('#index-dialog .index-row[data-result-edition]');
@@ -312,8 +303,13 @@
       if(item&&!item.trigger.contains(event.relatedTarget))queueWarm(item.target,item.trigger);
     },{passive:true});
     document.addEventListener('focusin',event=>{
-      const item=detailTarget(event.target);if(item)queueWarm(item.target,item.trigger,100);
+      const item=detailTarget(event.target);if(item)queueWarm(item.target,item.trigger,450);
     });
+    document.addEventListener('pointerout',event=>{
+      const item=detailTarget(event.target);
+      if(item&&!item.trigger.contains(event.relatedTarget))clearTimeout(warmTimer);
+    },{passive:true});
+    document.addEventListener('focusout',()=>clearTimeout(warmTimer));
   }
   const navId = here.searchParams.get('visit');
   const origin = navId ? entry(navId) : null;

@@ -504,12 +504,11 @@
     return {ensure() { if (!rendered) refresh(true); }, global() { if (multi) { resetScope = 'all'; setScope('all'); updateFilterSummary(); } if (!rendered) refresh(true); }, setTopic, state, refresh,snapshot,restore,park};
   }
 
-  async function renderMoodCollections(section, engine) {
-    const models = await engine.load('all');
+  function homeMoodCards(models) {
     // The representative still is curated, but the membership and count
     // always come from the existing searchable catalogue, not a second list.
     const collections = ['Obsession','Music','Atmosphere'];
-    const items = collections.map(label => {
+    return collections.map(label => {
       const state = {scope:'all',query:label,year:null,chapter:null,selection:'all',role:'all'};
       const pool = models.flatMap(model => searchModel(model,state).filmRows.map(([slug,info]) => ({model,slug,info})));
       if (!pool.length) return '';
@@ -530,10 +529,17 @@
       }
       if (!still) return '';
       const variants = picked.model.media.variants[still] ?? [];
-      const srcset = variants.map(item => item.src+' '+item.width+'w').join(', ');
       const [width,height] = picked.model.media.sizes[still] ?? [960,540];
+      return {label, count:pool.length, still, variants, width, height};
+    }).filter(Boolean);
+  }
+
+  function drawMoodCollections(section, cards) {
+    const items = cards.map(({label,count,still,variants,width,height}) => {
+      const srcset = variants.map(item => item.src+' '+item.width+'w').join(', ');
       const sizes = '(min-width: 681px) 28vw, 30vw';
-      const card=`<button type="button" class="mood-collection" data-mood-topic="${esc(label)}" aria-haspopup="dialog" aria-label="Explore ${esc(label)}: ${pool.length} films"><img src="${esc(still)}"${srcset ? ` srcset="${esc(srcset)}" sizes="${sizes}"` : ''} width="${width}" height="${height}" loading="lazy" decoding="async" alt=""><span class="mood-collection-copy"><strong>${esc(label)}</strong><small>${pool.length} ${pool.length === 1 ? 'film' : 'films'}</small></span></button>`;
+      const fallback = variants.find(item => item.width >= 480)?.src || still;
+      const card=`<button type="button" class="mood-collection" data-mood-topic="${esc(label)}" aria-haspopup="dialog" aria-label="Explore ${esc(label)}: ${count} films"><img src="${esc(fallback)}"${srcset ? ` srcset="${esc(srcset)}" sizes="${sizes}"` : ''} width="${width}" height="${height}" loading="lazy" decoding="async" alt=""><span class="mood-collection-copy"><strong>${esc(label)}</strong><small>${count} ${count === 1 ? 'film' : 'films'}</small></span></button>`;
       const journey=window.ArchiveJourneyEditorial?.forMood(label);
       return journey?`<div class="ts-mood-journey-item">${card}<a class="ts-mood-journey" href="${esc(window.ArchiveJourneyEditorial.href(journey))}" aria-label="Follow a film journey about ${esc(label)}"><svg viewBox="0 0 20 16" width="17" height="14" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="1" y="2" width="18" height="12" rx="1"/><path d="M6 2v12M14 2v12M1 6h5m-5 4h5m8-4h5m-5 4h5"/></svg><span>Follow the journey</span></a></div>`:card;
     }).filter(Boolean);
@@ -542,6 +548,10 @@
       section.hidden = false;
       if (location.hash === '#moods') requestAnimationFrame(() => section.scrollIntoView({block:'start'}));
     }
+  }
+
+  async function renderMoodCollections(section, engine) {
+    drawMoodCollections(section, homeMoodCards(await engine.load('all')));
   }
 
   function compareCategory(id) {
@@ -563,7 +573,7 @@
     } catch { /* Comparison is optional; the current award remains usable. */ }
   }
 
-  window.ArchiveExplore = {creditFor, actingCredits, winnerDisplay, createEngine, createIndex, renderComparison, searchButton, bindSearchShortcut, dossierHref, setPageActions(actions) { pageActions = actions; }};
+  window.ArchiveExplore = {creditFor, actingCredits, winnerDisplay, createEngine, createIndex, renderComparison, searchButton, bindSearchShortcut, dossierHref, homeMoodCards, setPageActions(actions) { pageActions = actions; }};
 
   // The very same search and filters are available from the home and list pages.
   // On an award page its existing Index hosts the controller instead.
@@ -620,7 +630,9 @@
         const button = event.target.closest('[data-mood-topic]');
         if (button) open(button,button.dataset.moodTopic);
       });
-      const loadMoods = () => archiveContext().then(({engine}) => renderMoodCollections(moodSection,engine)).catch(() => {});
+      const loadMoods = () => site.read('content/home-moods.json')
+        .then(cards => drawMoodCollections(moodSection,cards))
+        .catch(() => archiveContext().then(({engine}) => renderMoodCollections(moodSection,engine)).catch(() => {}));
       if ('requestIdleCallback' in window) requestIdleCallback(loadMoods,{timeout:1400});
       else setTimeout(loadMoods,100);
       const requested=new URLSearchParams(location.search).get('topic');

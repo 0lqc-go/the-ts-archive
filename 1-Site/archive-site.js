@@ -94,7 +94,7 @@
   }
 
   async function renderHome() {
-    const index = await catalog();
+    const index = await read('content/home-catalog.json').catch(() => catalog());
     const hash = location.hash;
     if (hash && !['#top', '#decades', '#moods', '#lists', '#screening-room', '#cinema-profile', '#toggle-goatcounter'].includes(hash)) {
       location.replace(editionHref(index.featuredEdition) + hash);
@@ -189,6 +189,7 @@
     if (!node || !path) return;
     if (options.coverPosition) node.style.setProperty('--cover-position', options.coverPosition);
     if (options.coverMobilePosition) node.style.setProperty('--cover-mobile-position', options.coverMobilePosition);
+    if (node.querySelector('img[data-archive-cover]')?.dataset.archiveCover === path) return;
     const image = document.createElement('img');
     image.className = 'cover-art';
     image.alt = '';

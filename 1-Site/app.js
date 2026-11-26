@@ -134,8 +134,13 @@
   }
 
   function dossierPoster(slug) {
-    const markup = poster(slug, true, '(max-width: 680px) 54px, 68px');
     const path = art(slug).poster;
+    // A single film's poster doubles as the immediate enlarged preview.
+    // Keep the list/card thumbnails small; only the opened dossier requests
+    // a slightly sharper 320px rendition for instant enlargement.
+    const preview = path && window.ArchiveMedia.select(media,path,320,1);
+    const [width,height] = media.sizes?.[path] || [380,570];
+    const markup = preview ? `<span class="poster" aria-hidden="true"><img src="${esc(preview.src)}" alt="" width="${width}" height="${height}" decoding="async" loading="eager"></span>` : poster(slug,true,'68px');
     if (!path) return markup;
     if (!frameDialog) return `<a class="file-poster-enlarge" href="${esc(largestFrame(path))}" target="_blank" rel="noopener" aria-label="View poster for ${esc(film(slug).title)}">${markup}</a>`;
     return `<button class="file-poster-enlarge frame-enlarge" type="button" data-full-frame="${esc(largestFrame(path))}" data-frame-path="${esc(path)}" data-frame-label="${esc(film(slug).title + ' — Poster')}" data-film="${esc(slug)}" data-poster-view="true" aria-haspopup="dialog" aria-label="Enlarge poster for ${esc(film(slug).title)}">${markup}</button>`;
@@ -390,7 +395,7 @@
       : '';
     const winnerSummary = performance ? performanceName(performance) + ' — ' + workNames(award.winner) : award.winner.text;
     const winner = `<button class="winner-frame" data-award="${award.number - 1}" aria-haspopup="dialog" aria-label="Open ${esc(award.name)}: ${esc(winnerSummary)}">
-        ${renderFrames(awardFrames(award), feature, artist && !widePortfolio ? (editorialComposition ? 'artist-editorial' : 'artist') : featured ? 'feature' : 'card')}${enhanced ? compactArtwork(award, artist) : ''}${winnerBadge(award)}
+        ${renderFrames(awardFrames(award), false, artist && !widePortfolio ? (editorialComposition ? 'artist-editorial' : 'artist') : featured ? 'feature' : 'card')}${enhanced ? compactArtwork(award, artist) : ''}${winnerBadge(award)}
         ${performance ? '' : `<span class="winner-copy"><span class="winner-title">${artist ? esc(artistName(award.winner)) : title(award.winner)}</span>${detail && !linkedCredit ? `<span class="winner-detail${artist ? ' portfolio-summary' : quote ? ' line-of-dialogue' : ''}">${esc(detail)}</span>` : ''}${enhanced && !artist && award.winner.films.length === 1 ? `<span class="compact-year">${esc(film(award.winner.films[0]).year)}</span>` : ''}</span>`}${enhanced ? '' : '<span class="frame-open" aria-hidden="true">↗</span>'}
       </button>`;
     const actions = musicActions(award);
@@ -1539,8 +1544,10 @@
       };
       button?.addEventListener('pointerenter',warm,{once:true});
       button?.addEventListener('focus',warm,{once:true});
-      if('requestIdleCallback' in window)requestIdleCallback(warm,{timeout:900});
-      else setTimeout(warm,250);
+      // The visitor has deliberately opened this film. Start a low-priority
+      // request after the cover and the preview have been inserted, instead
+      // of making their poster click wait for an idle callback.
+      if(!/3g/.test(navigator.connection?.effectiveType||'')) requestAnimationFrame(warm);
     }
   }
 
@@ -1995,7 +2002,8 @@
     if (enhanced) {
       const end = $('#final-cut').getBoundingClientRect().top < 180;
       const label = end ? 'The final cut' : archive.chapters.find(chapter => chapter.id === active?.id)?.name ?? archive.chapters[0].name;
-      $('#active-chapter-label').textContent = label;
+      const chapterLabel = $('#active-chapter-label');
+      if (chapterLabel.textContent !== label) chapterLabel.textContent = label;
     }
     if (currentChapter !== active?.id) {
       currentChapter = active?.id;

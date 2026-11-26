@@ -7755,88 +7755,9 @@
           "width": 2347
         }
       ],
-      "assets/films/inside-llewyn-davis-curator-poster-20261126.webp": [
-        {
-          "src": "assets/films/responsive/inside-llewyn-davis-curator-poster-20261126-176w.webp",
-          "width": 176
-        },
-        {
-          "src": "assets/films/responsive/inside-llewyn-davis-curator-poster-20261126-320w.webp",
-          "width": 320
-        },
-        {
-          "src": "assets/films/responsive/inside-llewyn-davis-curator-poster-20261126-480w.webp",
-          "width": 480
-        },
-        {
-          "src": "assets/films/responsive/inside-llewyn-davis-curator-poster-20261126-640w.webp",
-          "width": 640
-        },
-        {
-          "src": "assets/films/responsive/inside-llewyn-davis-curator-poster-20261126-960w.webp",
-          "width": 960
-        },
-        {
-          "src": "assets/films/responsive/inside-llewyn-davis-curator-poster-20261126-1280w.webp",
-          "width": 1280
-        },
-        {
-          "src": "assets/films/inside-llewyn-davis-curator-poster-20261126.webp",
-          "width": 2000
-        }
-      ],
-      "assets/films/blade-runner-2049-curator-poster-20261126.webp": [
-        {
-          "src": "assets/films/responsive/blade-runner-2049-curator-poster-20261126-176w.webp",
-          "width": 176
-        },
-        {
-          "src": "assets/films/responsive/blade-runner-2049-curator-poster-20261126-320w.webp",
-          "width": 320
-        },
-        {
-          "src": "assets/films/responsive/blade-runner-2049-curator-poster-20261126-480w.webp",
-          "width": 480
-        },
-        {
-          "src": "assets/films/responsive/blade-runner-2049-curator-poster-20261126-640w.webp",
-          "width": 640
-        },
-        {
-          "src": "assets/films/responsive/blade-runner-2049-curator-poster-20261126-960w.webp",
-          "width": 960
-        },
-        {
-          "src": "assets/films/blade-runner-2049-curator-poster-20261126.webp",
-          "width": 1000
-        }
-      ],
-      "assets/films/inception-curator-poster-20261126.webp": [
-        {
-          "src": "assets/films/responsive/inception-curator-poster-20261126-176w.webp",
-          "width": 176
-        },
-        {
-          "src": "assets/films/responsive/inception-curator-poster-20261126-320w.webp",
-          "width": 320
-        },
-        {
-          "src": "assets/films/responsive/inception-curator-poster-20261126-480w.webp",
-          "width": 480
-        },
-        {
-          "src": "assets/films/responsive/inception-curator-poster-20261126-640w.webp",
-          "width": 640
-        },
-        {
-          "src": "assets/films/responsive/inception-curator-poster-20261126-960w.webp",
-          "width": 960
-        },
-        {
-          "src": "assets/films/inception-curator-poster-20261126.webp",
-          "width": 1116
-        }
-      ],
+      "assets/films/inside-llewyn-davis-curator-poster-20261126.webp": [{"src":"assets/films/responsive/inside-llewyn-davis-curator-poster-20261126-176w.webp","width":176},{"src":"assets/films/responsive/inside-llewyn-davis-curator-poster-20261126-320w.webp","width":320},{"src":"assets/films/responsive/quick-poster-8ed76a16b055-480w.webp","width":480},{"src":"assets/films/responsive/quick-poster-8ed76a16b055-640w.webp","width":640},{"src":"assets/films/responsive/quick-poster-8ed76a16b055-800w.webp","width":800},{"src":"assets/films/responsive/quick-poster-8ed76a16b055-960w.webp","width":960},{"src":"assets/films/responsive/quick-poster-8ed76a16b055-1120w.webp","width":1120},{"src":"assets/films/responsive/quick-poster-8ed76a16b055-1280w.webp","width":1280},{"src":"assets/films/responsive/quick-poster-8ed76a16b055-1440w.webp","width":1440},{"src":"assets/films/inside-llewyn-davis-curator-poster-20261126.webp","width":2000}],
+      "assets/films/blade-runner-2049-curator-poster-20261126.webp": [{"src":"assets/films/responsive/blade-runner-2049-curator-poster-20261126-176w.webp","width":176},{"src":"assets/films/responsive/blade-runner-2049-curator-poster-20261126-320w.webp","width":320},{"src":"assets/films/responsive/blade-runner-2049-curator-poster-20261126-480w.webp","width":480},{"src":"assets/films/responsive/blade-runner-2049-curator-poster-20261126-640w.webp","width":640},{"src":"assets/films/responsive/quick-poster-832914dc8059-800w.webp","width":800},{"src":"assets/films/responsive/quick-poster-832914dc8059-960w.webp","width":960},{"src":"assets/films/responsive/quick-poster-832914dc8059-1000w.webp","width":1000}],
+      "assets/films/inception-curator-poster-20261126.webp": [{"src":"assets/films/responsive/inception-curator-poster-20261126-176w.webp","width":176},{"src":"assets/films/responsive/inception-curator-poster-20261126-320w.webp","width":320},{"src":"assets/films/responsive/inception-curator-poster-20261126-480w.webp","width":480},{"src":"assets/films/responsive/inception-curator-poster-20261126-640w.webp","width":640},{"src":"assets/films/responsive/quick-poster-ebea14910f5c-800w.webp","width":800},{"src":"assets/films/responsive/inception-curator-poster-20261126-960w.webp","width":960},{"src":"assets/films/responsive/quick-poster-ebea14910f5c-1116w.webp","width":1116}],
       "assets/films/oslo-august-31st-curator-poster-20261126.webp": [
         {
           "src": "assets/films/responsive/oslo-august-31st-curator-poster-20261126-176w.webp",
@@ -7897,28 +7818,7 @@
           "width": 1365
         }
       ],
-      "assets/films/anna-karenina-2012-curator-poster-20261126.webp": [
-        {
-          "src": "assets/films/responsive/anna-karenina-2012-curator-poster-20261126-176w.webp",
-          "width": 176
-        },
-        {
-          "src": "assets/films/responsive/anna-karenina-2012-curator-poster-20261126-320w.webp",
-          "width": 320
-        },
-        {
-          "src": "assets/films/responsive/anna-karenina-2012-curator-poster-20261126-480w.webp",
-          "width": 480
-        },
-        {
-          "src": "assets/films/responsive/anna-karenina-2012-curator-poster-20261126-640w.webp",
-          "width": 640
-        },
-        {
-          "src": "assets/films/anna-karenina-2012-curator-poster-20261126.webp",
-          "width": 853
-        }
-      ],
+      "assets/films/anna-karenina-2012-curator-poster-20261126.webp": [{"src":"assets/films/responsive/anna-karenina-2012-curator-poster-20261126-176w.webp","width":176},{"src":"assets/films/responsive/anna-karenina-2012-curator-poster-20261126-320w.webp","width":320},{"src":"assets/films/responsive/quick-poster-7c9fa9253f27-480w.webp","width":480},{"src":"assets/films/responsive/anna-karenina-2012-curator-poster-20261126-640w.webp","width":640},{"src":"assets/films/responsive/quick-poster-7c9fa9253f27-853w.webp","width":853}],
       "assets/films/the-souvenir-curator-poster-20261126.jpg": [
         {
           "src": "assets/films/responsive/the-souvenir-curator-poster-20261126-176w.webp",

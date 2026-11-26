@@ -7,6 +7,7 @@ on:
       - '1-Site/**'
       - '2-Artwork/films/**'
       - 'tools/build-core-css.cjs'
+      - 'tools/build-home-preview.cjs'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
@@ -29,6 +30,7 @@ jobs:
         shell: bash
         run: |
           node tools/build-core-css.cjs
+          node tools/build-home-preview.cjs
           mkdir -p _site/assets/films
           cp -R 1-Site/. _site/
           shopt -s nullglob
