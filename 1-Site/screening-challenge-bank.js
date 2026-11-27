@@ -82,6 +82,86 @@
     ]
   };
 
+  // Additional hand-picked frames. Choose an environment, quiet encounter or
+  // visual detail rather than a costume, logo, or the film's iconic image.
+  // A missing alternatives list reuses the film's existing editorial choices.
+  const extraFrames = {
+    '2010-2019': [
+      ['1917','The ruined town by flare light'],
+      ['inception','The dream chamber',['arrival-2016','interstellar','shutter-island']],
+      ['inception','Cobb and Mal by the water',['arrival-2016','shutter-island','interstellar']],
+      ['the-social-network','Eduardo Saverin in the deposition',['steve-jobs','moneyball','the-wolf-of-wall-street']],
+      ['the-dark-knight-rises','The prison pit',['prisoners','sicario-2015','inception']],
+      ['the-dark-knight-rises','Gotham in winter',['prisoners','nightcrawler','nocturnal-animals']],
+      ['prisoners','The rain-soaked petrol station'],
+      ['prisoners','The RV investigation'],
+      ['sicario-2015','The landscape of Juárez'],
+      ['blade-runner-2049',"Wallace's illuminated architecture"],
+      ['blade-runner-2049','K in the falling snow'],
+      ['first-man','Inside the spacecraft'],
+      ['arrival-2016','Louise approaches the craft'],
+      ['the-wolf-of-wall-street','Jordan at the office',['the-social-network','steve-jobs','moneyball']],
+      ['her','Amy on the rooftop'],
+      ['her','Theodore alone above the city'],
+      ['oslo-august-31st','Anders at daybreak'],
+      ['inside-llewyn-davis','On the road at night'],
+      ['manchester-by-the-sea','On the boat'],
+      ['the-master-2012','The processing session'],
+      ['burning-2018','The stillness of the countryside'],
+      ['nightcrawler','Lou lit by the street'],
+      ['nocturnal-animals','Susan against the red wall'],
+      ['certified-copy','The mirror'],
+      ['before-midnight','The hotel room'],
+      ['moneyball','Billy in the office'],
+      ['little-women-2019','Jo in a quiet interior'],
+      ['thelma-2017','Thelma on the telephone'],
+    ],
+    '2020-2026': [
+      ['the-batman','A scarlet flare in the darkness'],
+      ['the-batman','The Riddler in interrogation'],
+      ['the-flash','A tense car interior',['tenet','extraction-2020','the-batman']],
+      ['peaky-blinders-the-immortal-man','A quiet conversation in the pub',['nightmare-alley-2021','the-brutalist','the-batman']],
+      ['the-menu-2022','The carefully plated meal',['nightmare-alley-2021','the-assessment-2024','tar-2022']],
+      ['the-menu-2022','The cheeseburger on the grill',['the-novice','nightmare-alley-2021','the-batman']],
+      ['past-lives','Outdoor gathering in the evening'],
+      ['past-lives','A distant conversation through a screen'],
+      ['nightmare-alley-2021','Carnival under the evening rain'],
+      ['nightmare-alley-2021','Car in the blue-lit forest'],
+      ['the-beast-2023','the-beast-2023-curator-frame-20261126-01.webp'],
+      ['the-beast-2023','The white dress in the ballroom',['poor-things-2023','hamnet','the-count-of-monte-cristo-2024']],
+      ['poor-things-2023','Golden city through a circular window'],
+      ['poor-things-2023','The vivid estate and its garden'],
+      ['the-power-of-the-dog','Figures dwarfed by the landscape'],
+      ['the-power-of-the-dog','Silhouetted figures and piano'],
+      ['oppenheimer-2023','Lewis Strauss in monochrome'],
+      ['oppenheimer-2023','The Los Alamos assembly'],
+      ['tenet','Red light in the inversion sequence'],
+      ['sentimental-value-2025','The sisters seated together in the house'],
+      ['sentimental-value-2025','An embrace at the dining table'],
+      ['the-brutalist','Conversation in the open landscape'],
+      ['the-brutalist','The figures against monumental architecture'],
+      ['the-worst-person-in-the-world','An intimate conversation across the table'],
+      ['the-banshees-of-inisherin','Siobhán in a muted interior'],
+      ['materialists','A portrait under evening lights'],
+      ['may-december','Gracie facing Elizabeth in the kitchen'],
+      ['no-other-choice-2025','The dark dining room'],
+      ['marty-supreme','The spectators assembled around the arena'],
+      ['la-chimera','Arthur against the industrial framework'],
+      ['the-french-dispatch-of-the-liberty-kansas','Symmetry of the yellow corridor'],
+      ['the-assessment-2024','Virginia at the green table'],
+      ['the-count-of-monte-cristo-2024','Period costume detail in the garden'],
+      ['tick-tick-boom-2021','Jonathan beside the piano in the empty theatre'],
+      ['the-odyssey-2026','Penelope in the palace',['hamnet','wuthering-heights-2026','the-count-of-monte-cristo-2024']],
+      ['wuthering-heights-2026','A period-costume portrait in the warmly lit room'],
+    ]
+  };
+  for (const [edition,rows] of Object.entries(extraFrames)) {
+    for (const [slug,ref,alternatives] of rows) {
+      const choices=alternatives||frames[edition].find(row=>row[0]===slug)?.[2];
+      if (choices) frames[edition].push([slug,ref,choices]);
+    }
+  }
+
   // Scene descriptions describe a concrete moment without a character, song
   // or film name giving the answer away. An omitted scene was too vague or
   // too strongly telegraphed to make a fair Challenge question.
@@ -109,6 +189,8 @@
   // The alternatives are written against the context of the clue itself.
   // Keys are film slugs, with more specific music/scene overrides when needed.
   const memoryAlternatives = {
+    'columbus':['certified-copy','before-midnight','the-souvenir'],
+    'certified-copy':['columbus','before-midnight','the-souvenir'],
     'the-worst-person-in-the-world':['sentimental-value-2025','past-lives','materialists'],
     'tar-2022':['the-menu-2022','the-brutalist','the-novice'],
     'the-menu-2022':['tar-2022','the-novice','nightmare-alley-2021'],
@@ -144,7 +226,81 @@
     'Hildur Guðnadóttir':['Jonny Greenwood','Nicholas Britell','Ludwig Göransson'],
     'Ludwig Göransson':['Hans Zimmer','Jonny Greenwood','Nicholas Britell'],
   };
-  const bank = {frames,scenePrompts,memoryAlternatives,composerAlternatives};
+  // Short dialogue excerpts, with alternatives chosen for a similar register.
+  const quotes = {
+    '2010-2019': [
+      ['arrival-2016','Language is the foundation of civilization.',['interstellar','blade-runner-2049','the-tree-of-life-2011']],
+      ['la-la-land','People love what other people are passionate about.',['whiplash-2014','inside-llewyn-davis','the-social-network']],
+      ['phantom-thread','Kiss me, my girl, before I’m sick.',['anna-karenina-2012','the-souvenir','the-master-2012']],
+      ['whiplash-2014','I want to be one of the greats.',['black-swan','la-la-land','inside-llewyn-davis']],
+      ['black-swan','I just want to be perfect.',['whiplash-2014','phantom-thread','shame-2011']],
+      ['the-grand-budapest-hotel','There are still faint glimmers of civilization left…',['midnight-in-paris','the-tree-of-life-2011','the-master-2012']],
+      ['interstellar','Now we just look down, and worry about our place in the dirt.',['arrival-2016','blade-runner-2049','inception']],
+      ['her','The heart’s not like a box that gets filled up.',['before-midnight','certified-copy','the-souvenir']],
+    ],
+    '2020-2026': [
+      ['oppenheimer-2023','Theory will take you only so far.',['tenet','the-brutalist','tar-2022']],
+      ['the-banshees-of-inisherin','I just don’t like ya no more.',['the-power-of-the-dog','the-worst-person-in-the-world','sentimental-value-2025']],
+      ['anatomy-of-a-fall','Sometimes a couple is a kind of chaos.',['may-december','past-lives','materialists']],
+      ['tenet','Don’t try to understand it. Feel it.',['dune-2021','oppenheimer-2023','the-beast-2023']],
+      ['past-lives','You dream in a language that I can’t understand.',['drive-my-car','the-worst-person-in-the-world','sentimental-value-2025']],
+    ]
+  };
+
+  // Questions depend on having watched the work (not on seeing its poster).
+  // Each answer is specific to the film and the other options are plausible.
+  const details = {
+    '2010-2019': [
+      ['inception','ariadne','What role does Ariadne take on in the dream team?','Architect',['Forger','Chemist','Extractor']],
+      ['arrival-2016','nicknames','What nicknames does the team give the two visitors?','Abbott and Costello',['Laurel and Hardy','Lewis and Clark','Bonnie and Clyde']],
+      ['blade-runner-2049','orphanage','What object does K find hidden in the orphanage?','A wooden horse',['An origami unicorn','A photograph','A chess piece']],
+      ['phantom-thread','lining','What does Reynolds sometimes sew into the lining of his garments?','Hidden messages',['Family photographs','Pressed flowers','His initials in gold']],
+      ['the-social-network','first-website','What site does Mark create before Facebook?','Facemash',['ConnectU','Friendster','The Crimson']],
+      ['prisoners','vehicle','Which vehicle first draws the police’s attention?','An RV',['A delivery van','A pickup truck','A station wagon']],
+      ['sicario-2015','profession','Which agency does Kate Macer work for at the beginning?','FBI',['DEA','CIA','ATF']],
+      ['whiplash-2014','final-piece','Which composition does Andrew launch into near the end of the final concert?','Caravan',['Whiplash','Upswingin’','Cherokee']],
+      ['la-la-land','club','What is the name of Sebastian’s jazz club at the end?','Seb’s',['The Lighthouse','Chicken on a Stick','The Blue Note']],
+      ['first-man','moon','Which personal object does the film depict Armstrong leaving on the Moon?','His daughter’s bracelet',['His wedding ring','A family photograph','His father’s watch']],
+      ['gone-girl','anniversary','Which wedding anniversary are Nick and Amy marking when she disappears?','Fifth',['Third','Seventh','Tenth']],
+      ['her','work','What kind of writing does Theodore do for a living?','Personal letters for other people',['Romance novels','Advertising copy','Newspaper columns']],
+      ['moneyball','statistic','Which statistic is central to identifying undervalued batters?','On-base percentage',['Home run total','Batting average','Stolen bases']],
+      ['nightcrawler','work','What does Lou Bloom sell to television news stations?','Footage of local incidents',['Celebrity interviews','Weather reports','Archival documentary footage']],
+      ['inside-llewyn-davis','audition','Where does Llewyn travel to audition for Bud Grossman?','Chicago',['Detroit','Boston','Philadelphia']],
+      ['the-grand-budapest-hotel','painting','Which painting is bequeathed to Gustave?','Boy with Apple',['Girl with a Pearl Earring','The Blue Boy','Portrait of a Lady']],
+      ['burning-2018','greenhouses','What unusual pastime does Ben claim to have?','Burning abandoned greenhouses',['Collecting abandoned cars','Photographing empty houses','Restoring old furniture']],
+      ['the-handmaiden','maid','What guise does Sook-hee take to enter the household?','A maid',['A governess','A translator','A nurse']],
+      ['moonlight-2016','chapter','Which title names the last chapter of the film?','Black',['Little','Chiron','Juan']],
+      ['before-midnight','summer','In which country do Jesse and Céline spend the summer?','Greece',['France','Italy','Austria']],
+      ['the-souvenir','study','What is Julie studying?','Filmmaking',['Journalism','Fine art','Literature']],
+      ['the-master-2012','movement','What is Lancaster Dodd’s movement called?','The Cause',['The Circle','The Path','The Foundation']],
+    ],
+    '2020-2026': [
+      ['aftersun','recording','What does adult Sophie revisit to remember the holiday?','Camcorder footage',['A handwritten diary','A cassette of voice messages','Postcards']],
+      ['anatomy-of-a-fall','song','Which song’s instrumental cover is played loudly before Samuel’s fall?','P.I.M.P.',['B.O.B.','Ms. Jackson','Get Ur Freak On']],
+      ['challengers','partners','What connects Patrick and Art before their relationship with Tashi?','Junior tennis doubles partners',['College roommates','Brothers','A coach and his pupil']],
+      ['drive-my-car','chekhov','Which Chekhov play does Kafuku direct?','Uncle Vanya',['The Seagull','Three Sisters','The Cherry Orchard']],
+      ['dune-2021','arrakis','Which house ruled Arrakis immediately before House Atreides?','Harkonnen',['Corrino','Richese','Vernius']],
+      ['dune-part-two','public-name','Which name does Paul choose for himself publicly among the Fremen?','Muad’Dib',['Usul','Lisan al-Gaib','Kwisatz Haderach']],
+      ['oppenheimer-2023','hearing','Who questions Oppenheimer as counsel during the security hearing?','Roger Robb',['Lewis Strauss','Gordon Gray','Leslie Groves']],
+      ['tenet','entropy','What term describes the reversal of an object’s entropy?','Inversion',['Dilation','Displacement','Synchronization']],
+      ['the-batman','club','What is the name of the nightclub tied to Gotham’s underworld?','Iceberg Lounge',['The Black Cat','Club Gotham','Monarch Lounge']],
+      ['the-beast-2023','years','Which three years frame Gabrielle’s different lives?','1910, 2014, 2044',['1900, 2010, 2050','1920, 2004, 2044','1910, 2024, 2060']],
+      ['the-banshees-of-inisherin','donkey','What is the name of Pádraic’s miniature donkey?','Jenny',['Rosie','Molly','Daisy']],
+      ['the-menu-2022','restaurant','What is the name of the restaurant on the island?','Hawthorn',['Juniper','The Grove','Cedar']],
+      ['the-power-of-the-dog','peter','What does Peter study?','Medicine',['Law','Architecture','Agriculture']],
+      ['poor-things-2023','profession','What field does Bella ultimately choose to pursue?','Medicine',['Painting','Law','Literature']],
+      ['past-lives','connection','Which Korean concept refers to connections across lifetimes?','In-Yun',['Han','Jeong','Nunchi']],
+      ['tar-2022','symphony','Which symphony is Lydia preparing to record?','Mahler’s Fifth',['Mahler’s Ninth','Beethoven’s Seventh','Bruckner’s Seventh']],
+      ['babylon-2022','transition','Which technological transition transforms the characters’ careers?','The arrival of synchronized sound',['The introduction of widescreen','The arrival of television','The replacement of film by video']],
+      ['the-brutalist','state','In which American state is László’s major architectural commission built?','Pennsylvania',['New York','Massachusetts','Ohio']],
+      ['may-december','visit','Why does Elizabeth visit Gracie and Joe?','To research a role in a film about them',['To write a biography','To make a documentary','To study a legal case']],
+      ['decision-to-leave','first-case','Where does the first death Hae-jun investigates occur?','On a mountain',['In a hotel','At a harbor','In a forest cabin']],
+      ['a-complete-unknown','festival','At which festival does Dylan perform with an electric band?','Newport Folk Festival',['Monterey Pop Festival','Woodstock','Isle of Wight Festival']],
+      ['la-chimera','ability','What unusual ability does Arthur seem to possess?','Locating ancient tombs',['Reading ancient languages','Identifying forged paintings','Discovering underground water']],
+      ['the-worst-person-in-the-world','study','What subject is Julie studying at the very start of the film?','Medicine',['Psychology','Photography','Literature']],
+    ]
+  };
+  const bank = {frames,scenePrompts,memoryAlternatives,composerAlternatives,quotes,details};
   if (typeof module !== 'undefined' && module.exports) module.exports=bank;
   else window.ArchiveScreeningChallenge=bank;
 })();

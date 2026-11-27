@@ -4,7 +4,7 @@
   'use strict';
   const negativeAwards = new Set(['worst-picture', 'most-overrated-movie']);
   const actingAwards = new Set(['best-actor', 'best-actress', 'best-supporting-actor', 'best-supporting-actress', 'best-breakthrough-performance']);
-  const memoryTypes = ['dialogue', 'music', 'scenes'];
+  const memoryTypes = ['dialogue', 'music', 'scenes', 'details'];
   const challengeBank = typeof module !== 'undefined' && module.exports
     ? require('./screening-challenge-bank.js') : globalThis.ArchiveScreeningChallenge;
   // Additional scene-specific stills already in the curated galleries.
@@ -235,6 +235,25 @@
       ballotEditions.set(id, {id, period:model.edition.period, title:model.edition.title, awards:ballotAwards});
     }
     const filmList = [...films.values()];
+    const authoredArchive = {films};
+    for (const [editionId, rows] of Object.entries(challengeBank?.quotes ?? {})) {
+      for (const [slug, quote, alternatives] of rows) {
+        const film = films.get(filmKey(editionId, slug));
+        const challengeDistractors = film && challengeFilmOptions(authoredArchive,film,alternatives);
+        if (!challengeDistractors) continue;
+        memory.push({film,key:`dialogue/${film.key}/${normal(quote)}`,subtype:'dialogue',marker:'Dialogue',prompt:'Which film is this line from?',clue:`“${quote}”`,quote:true,answerKind:'film',correct:{key:film.key,label:film.title},challengeDistractors});
+      }
+    }
+    for (const [editionId, rows] of Object.entries(challengeBank?.details ?? {})) {
+      for (const [slug,id,prompt,answer,alternatives] of rows) {
+        const film = films.get(filmKey(editionId, slug));
+        if (!film) continue;
+        const correct = {key:normal(answer),label:answer};
+        const challengeDistractors = unique(alternatives.map(label=>({key:normal(label),label})).filter(option=>option.key!==correct.key),option=>option.key);
+        if (challengeDistractors.length !== 3) continue;
+        memory.push({film,key:`details/${film.key}/${id}`,subtype:'details',marker:'Story detail',prompt,clue:film.title,subclue:String(film.year||''),answerKind:'detail',correct,challengeDistractors});
+      }
+    }
     const archive = {films, filmList, awards, ballotEditions, memory:unique(memory, question => question.key)};
     // Resolve only locally available curated artwork; an absent film never
     // becomes a placeholder or an unrelated image from another title.
@@ -295,11 +314,12 @@
       const frame = film?.frames.find(item => item.label === ref || item.path.split('/').at(-1) === ref);
       const challengeDistractors = film && challengeFilmOptions(archive,film,alternatives);
       if (!frame || !challengeDistractors) return [];
-      return [{key:`challenge-frame/${film.key}/${frame.path.split('/').at(-1)}`, film, frame, marker:'Film still', prompt:'Name the film.', answerKind:'film', correct:{key:film.key,label:film.title}, challengeDistractors}];
+      return [{key:`frame/${film.key}/${frame.path.split('/').at(-1)}`, film, frame, marker:'Film still', prompt:'Name the film.', answerKind:'film', correct:{key:film.key,label:film.title}, challengeDistractors}];
     }));
   }
 
   function challengeMemoryQuestion(archive, question) {
+    if (question.challengeDistractors) return question;
     if (question.answerKind === 'composer') {
       // Use actual score and composer credits in this archive (also across
       // decades if necessary). These are people, not out-of-scope films.
@@ -313,7 +333,7 @@
     }
     const slug=question.film.slug;
     // Exclude ambiguously short quotations and self-answering titles rather
-    // than making a harder quiz unfair. The classic bank is unchanged.
+    // than making a harder quiz unfair.
     if (question.subtype==='dialogue' && (slug==='little-women-2019'||slug==='the-brutalist')) return null;
     let clue=question.clue;
     if (question.subtype==='scenes') {
@@ -328,10 +348,8 @@
   }
 
   function questionChoices(archive, question, scope, random, challenge = false) {
-    if (challenge) {
-      const choices = question.challengeDistractors;
-      return choices?.length===3 ? {...question, choices:shuffle([question.correct,...choices],random)} : null;
-    }
+    if (question.challengeDistractors?.length===3) return {...question,choices:shuffle([question.correct,...shuffle(question.challengeDistractors,random).slice(0,challenge?3:2)],random)};
+    if (challenge || question.answerKind==='detail') return null;
     let distractors;
     if (question.answerKind === 'composer') {
       const pool = archive.memory.filter(item => item.answerKind === 'composer' && inScope(item.film.editionId, scope));
@@ -342,14 +360,7 @@
     return {...question, choices:shuffle([question.correct, ...distractors], random)};
   }
 
-  function pickDistinct(pool, length, random, avoid = []) {
-    const fresh = shuffle(pool.filter(question => !avoid.includes(question.key)), random);
-    const previous = shuffle(pool.filter(question => avoid.includes(question.key)), random);
-    return unique([...fresh, ...previous], question => question.film.key).slice(0,length);
-  }
-
-  function makeQuiz(archive, mode, {scope='all', category='all', difficulty='classic', length=5, random=Math.random, avoid=[]} = {}) {
-    let queue = [];
+  function quizPool(archive, mode, {scope='all', category='all', difficulty='classic', random=Math.random} = {}) {
     const challenge=difficulty==='challenge' && Boolean(challengeBank);
     const choiceCount=challenge?4:3;
     if (mode === 'winner') {
@@ -359,45 +370,44 @@
         const choices = shuffle([candidate, ...shuffle(award.candidates.filter(item => item.key !== award.archiveKey),random).slice(0,choiceCount-1)],random).map(item => ({key:item.key,label:item.title,candidate:item}));
         return {key:`winner/${award.key}`,award,film:candidate.films[0],candidate,marker:edition.period,prompt:'Guess the winner.',correct:{key:candidate.key,label:candidate.title},answerKind:'winner',choices};
       }).filter(Boolean));
-      const pick = (items,number) => [...shuffle(items.filter(q=>!avoid.includes(q.key)),random), ...shuffle(items.filter(q=>avoid.includes(q.key)),random)].slice(0,number);
-      const editions = unique(pool.map(question=>question.film.editionId));
-      if (scope === 'all' && editions.length > 1) {
-        for (const id of shuffle(editions,random)) queue.push(...pick(pool.filter(q=>q.film.editionId===id),Math.floor(length/editions.length)));
-        queue.push(...pick(pool.filter(q=>!queue.some(item=>item.key===q.key)),length-queue.length));
-        return shuffle(queue,random);
-      }
-      return pick(pool,length);
-    } else if (mode === 'frame') {
-      const pool = challenge ? challengeFramePool(archive,scope) : archive.filmList.filter(film => inScope(film.editionId, scope) && film.frames.length).map(film => {
-        // Prefer a genuine widescreen still of at least 1200px, never an
-        // animated reveal, crop or upscaled poster. Every frame stays fixed.
-        const frame = film.frames[Math.floor(random() * film.frames.length)];
-        return {key:`frame/${film.key}`, film, frame, marker:'Film still', prompt:'Name the film.', answerKind:'film', correct:{key:film.key,label:film.title}};
-      });
-      if (scope === 'all') {
-        // Give both decades a place in every mixed session when available.
-        const editions = unique(pool.map(question => question.film.editionId));
-        for (const id of shuffle(editions, random)) queue.push(...pickDistinct(pool.filter(question => question.film.editionId === id), Math.floor(length / editions.length), random, avoid));
-        queue.push(...pickDistinct(pool.filter(question => !queue.some(pick => pick.film.key === question.film.key)), length - queue.length, random, avoid));
-        queue = shuffle(queue, random);
-      } else queue = pickDistinct(pool, length, random, avoid);
+      return unique(pool,question=>question.key);
+    }
+    let pool = [];
+    if (mode === 'frame') {
+      // Both levels share the curated frames and stable identities. Classic
+      // reduces the number of options rather than showing giveaway posters.
+      pool = challengeFramePool(archive,scope);
     } else if (mode === 'memory') {
       const base = archive.memory.filter(question => inScope(question.film.editionId, scope) && (category === 'all' || question.subtype === category));
-      const pool = challenge ? base.map(question=>challengeMemoryQuestion(archive,question)).filter(Boolean) : base;
-      if (category === 'all') {
-        for (const type of memoryTypes) {
-          const match = pickDistinct(pool.filter(question => question.subtype === type && !queue.some(pick => pick.film.key === question.film.key)),1,random,avoid)[0];
-          if (match) queue.push(match);
-        }
-        queue.push(...pickDistinct(pool.filter(question => !queue.some(pick => pick.film.key === question.film.key)), Math.max(0,length - queue.length), random, avoid));
-        queue = shuffle(queue, random).slice(0,length);
-      } else if (category === 'scenes') {
-        const visual = pickDistinct(pool.filter(question => question.frame),1,random,avoid)[0];
-        if (visual) queue.push(visual);
-        queue.push(...pickDistinct(pool.filter(question => !queue.some(pick => pick.film.key === question.film.key)),length-queue.length,random,avoid));
-      } else queue = pickDistinct(pool, length, random, avoid);
+      pool = base.map(question=>challengeMemoryQuestion(archive,question) || (challenge?null:question)).filter(Boolean);
+      // Never ask for a film whose own title gives away the answer.
+      pool = pool.filter(question=>question.answerKind!=='film' || !normal(question.clue).includes(normal(question.film.title)));
     }
-    return queue.map(question => questionChoices(archive, question, scope, random, challenge)).filter(Boolean);
+    return unique(pool,question=>question.key).map(question=>questionChoices(archive,question,scope,random,challenge)).filter(Boolean);
+  }
+
+  function makeQuiz(archive, mode, {scope='all',category='all',difficulty='classic',length=5,random=Math.random,history={}} = {}) {
+    const pool = quizPool(archive,mode,{scope,category,difficulty,random});
+    if (!pool.length || length<=0) return [];
+    const exposure = question=>Number.isSafeInteger(history[question.key]) && history[question.key]>=0 ? history[question.key] : 0;
+    const floor = Math.min(...pool.map(exposure));
+    // Never fill a short final round with a question from the next cycle.
+    const available = shuffle(pool.filter(question=>exposure(question)===floor),random), queue=[];
+    const addWhere = predicate => {
+      if (queue.length>=length) return;
+      const question=available.find(item=>predicate(item)&&!queue.some(q=>q.key===item.key||q.film.key===item.film.key));
+      if (question) queue.push(question);
+    };
+    if (mode==='memory' && category==='all') for (const type of shuffle(memoryTypes,random)) addWhere(q=>q.subtype===type);
+    if (scope==='all') for (const id of shuffle(unique(available.map(q=>q.film.editionId)),random)) {
+      if (!queue.some(q=>q.film.editionId===id)) addWhere(q=>q.film.editionId===id);
+    }
+    for (const question of available) addWhere(q=>q.key===question.key);
+    for (const question of available) {
+      if (queue.length>=length) break;
+      if (!queue.some(q=>q.key===question.key)) queue.push(question);
+    }
+    return shuffle(queue,random);
   }
 
   // Occasionally the curator selects a specific daily frame from the archive.
@@ -415,9 +425,9 @@
       label:'Sunlight and shadows across the floor',
       credit:'Film still provided by the curator'
     }},
-    '2026-11-28': {edition:'2010-2019', film:'phantom-thread', frame:{
-      path:'assets/films/phantom-thread-daily-frame-20261128.webp', width:1920, height:1080,
-      label:'Reynolds and Alma in the ballroom after the New Year’s celebration',
+    '2026-11-28': {edition:'2020-2026', film:'the-beast-2023', frame:{
+      path:'assets/films/the-beast-2023-curator-frame-20261126-07.webp', width:2494, height:1383,
+      label:'Gabrielle and Louis in a period interior',
       credit:'Film still provided by the curator'
     }}
   };
@@ -565,7 +575,7 @@
     return result;
   }
 
-  const API = {makeArchive, makeQuiz, dailyFrame, cleanBallot, ballotSummary, cleanMatchupRound, matchupSummary, connectionFilms, memoryTypes, shuffle};
+  const API = {makeArchive, makeQuiz, quizPool, dailyFrame, cleanBallot, ballotSummary, cleanMatchupRound, matchupSummary, connectionFilms, memoryTypes, shuffle};
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else window.ArchiveScreeningData = API;
 })();

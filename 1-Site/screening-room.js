@@ -12,6 +12,7 @@
   const nameOfMode = {frame:'Guess the Frame',memory:'Cinema Memory',winner:'Guess the Winner',matchup:'This or That',ballot:'My Alternate Ballot',journeys:'Film Journeys'};
   const quizModes = new Set(['frame','memory','winner']);
   const storageKey = 'ts-archive-screening-ballot-v1';
+  const quizHistoryStorageKey = 'ts-archive-screening-quiz-history-v2';
   const matchupStorageKey = 'ts-archive-screening-matchup-v1';
   let contextPromise;
   let imageMedia={sizes:{},variants:{}};
@@ -102,7 +103,27 @@
     let lastQuiz = quizModes.has(mode) ? mode : 'frame';
     const settings = {frame:{scope:'all', category:'all'},memory:{scope:'all', category:'all'},winner:{scope:'all',category:'all'}};
     let difficulty = refinedQuestions && initialParams.get('difficulty') !== 'classic' ? 'challenge' : 'classic';
-    const sessions = new Map(), recent = new Map();
+    const sessions = new Map(), quizHistory = Object.create(null);
+    let activeQuizKey = '';
+    function syncQuizHistory() {
+      try {
+        const record = JSON.parse(localStorage.getItem(quizHistoryStorageKey) || '{}');
+        if (record.version === 2 && record.counts && typeof record.counts === 'object') {
+          for (const [key,count] of Object.entries(record.counts)) {
+            if (Number.isSafeInteger(count) && count>0) quizHistory[key]=Math.max(quizHistory[key]||0,count);
+          }
+        }
+      } catch { /* Keep the in-memory history if storage is unavailable. */ }
+    }
+    syncQuizHistory();
+    function recordQuestion(session, question) {
+      if (session.shown.has(question.key)) return;
+      session.shown.add(question.key);
+      syncQuizHistory();
+      quizHistory[question.key]=(quizHistory[question.key]||0)+1;
+      try { localStorage.setItem(quizHistoryStorageKey,JSON.stringify({version:2,counts:quizHistory})); }
+      catch { /* The current browser session still avoids repeats. */ }
+    }
     const matchupPairs = new Map(archive.matchups.map(pair=>[pair.id,pair]));
     let savedMatchup;
     try { savedMatchup = JSON.parse(localStorage.getItem(matchupStorageKey) || 'null'); } catch { /* in-memory play remains available */ }
@@ -183,11 +204,14 @@
     function currentSession(fresh = false) {
       const options = settings[mode];
       const key = `${mode}/${options.scope}/${options.category}/${difficulty}`;
+      if (activeQuizKey!==key) {
+        sessions.clear();
+        activeQuizKey=key;
+      }
       if (!sessions.has(key) || fresh) {
-        const old = sessions.get(key);
-        if (old) recent.set(key, old.questions.map(question => question.key));
-        const questions = data.makeQuiz(archive, mode, {...options, difficulty, avoid:recent.get(key) ?? []});
-        sessions.set(key, {questions, index:0, answers:[], complete:false});
+        syncQuizHistory();
+        const questions = data.makeQuiz(archive, mode, {...options,difficulty,history:quizHistory});
+        sessions.set(key, {questions,index:0,answers:[],shown:new Set(),complete:false});
       }
       return sessions.get(key);
     }
@@ -203,7 +227,7 @@
 
     function quizToolbar() {
       const options = settings[mode];
-      const categories = [['all','All'], ['dialogue','Dialogue'], ['music','Music'], ['scenes','Scenes']];
+      const categories = [['all','All'], ['dialogue','Dialogue'], ['music','Music'], ['scenes','Scenes'], ['details','Details']];
       return `<div class="sr-toolbar${mode === 'memory' ? ' sr-memory-tools' : ''}">${mode === 'memory' ? `<div class="sr-segment" role="group" aria-label="Cinema memory categories">${categories.map(([key, name]) => `<button type="button" data-memory-category="${key}" aria-pressed="${options.category === key}">${name}</button>`).join('')}</div>` : ''}${quizFilters(options.scope)}</div>`;
     }
 
@@ -251,6 +275,7 @@
       }
       if (session.complete) { renderQuizResults(session); return; }
       const question = session.questions[session.index];
+      recordQuestion(session,question);
       if (mode === 'winner') { renderWinnerQuestion(session,question); return; }
       activity.innerHTML = `${mode === 'memory' ? quizToolbar() : ''}
         <div class="sr-quiz-heading"><h2 tabindex="-1" id="sr-question-title">${esc(question.prompt)}</h2><div class="sr-quiz-heading-tools">${mode === 'frame' ? `<div class="sr-frame-tools">${quizFilters(settings.frame.scope)}</div>` : ''}${progress(session)}</div></div>
@@ -338,7 +363,7 @@
         const picked = question.choices.find(choice => choice.key === session.answers[index]);
         const match = question.correct.key === session.answers[index];
         if (question.answerKind === 'winner') return `<li>${poster(question.film)}<div><strong><a href="${esc(question.award.href)}">${esc(question.award.name)}</a></strong><p>${esc(question.correct.label)} · ${esc(question.marker)}${!match && picked?` · You chose ${esc(picked.label)}`:''}</p></div><span class="sr-result-status${match?' is-match':''}">${match?'Correct':picked?'Missed':'Skipped'}</span></li>`;
-        return `<li>${poster(question.film)}<div><strong><a href="${esc(question.film.href)}">${esc(question.film.title)}</a></strong><p>${question.answerKind === 'composer' ? `${esc(question.correct.label)}${!match && picked ? ` · You chose ${esc(picked.label)}` : ''}` : !match && picked ? `You chose ${esc(picked.label)}` : `${esc(question.film.year)}`}</p></div><span class="sr-result-status${match ? ' is-match' : ''}">${match ? 'Correct' : picked ? 'Missed' : 'Skipped'}</span></li>`;
+        return `<li>${poster(question.film)}<div><strong><a href="${esc(question.film.href)}">${esc(question.film.title)}</a></strong><p>${['composer','detail'].includes(question.answerKind) ? `${esc(question.correct.label)}${!match && picked ? ` · You chose ${esc(picked.label)}` : ''}` : !match && picked ? `You chose ${esc(picked.label)}` : `${esc(question.film.year)}`}</p></div><span class="sr-result-status${match ? ' is-match' : ''}">${match ? 'Correct' : picked ? 'Missed' : 'Skipped'}</span></li>`;
       }).join('')}</ol>`;
       bindQuizToolbar();
       $('[data-quiz-replay]',activity).addEventListener('click', () => { currentSession(true); renderQuiz(); focusHeading(activity); });
