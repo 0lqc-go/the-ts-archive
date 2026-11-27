@@ -89,6 +89,21 @@ async function chooseNext(page,slot,index){
     assert(!await p.locator("#cp-route-nav").isVisible());
     assert.equal(introLayout.weight,'600');assert(introLayout.titleSize<=76);
     assert.match(introLayout.src,/blade-runner-2049-best-cinematography/);
+    // The cover and editorial content follow the archive's masthead gutter,
+    // including ultra-wide desktops where the old 1250px cap was conspicuous.
+    await p.setViewportSize({width:2520,height:1080});
+    const wideGutters=await p.evaluate(()=>{
+      const masthead=document.querySelector('.cp-masthead');
+      const header=masthead.getBoundingClientRect(),style=getComputedStyle(masthead);
+      const left=header.left+parseFloat(style.paddingLeft),right=header.right-parseFloat(style.paddingRight);
+      return [...document.querySelectorAll('.cp-intro-cover-copy,.cp-intro-cover-credit,.cp-intro-content')].every(el=>{
+        const rect=el.getBoundingClientRect();return Math.abs(rect.left-left)<2&&Math.abs(rect.right-right)<2;
+      });
+    });
+    assert(wideGutters,'Panoramic intro must align with the archive gutters');
+    await assertFit(p);
+    if(proof)await p.screenshot({path:path.join(proof,"desktop-amber-wide-gutters.png"),fullPage:true});
+    await p.setViewportSize({width:1440,height:900});
     const featured=p.locator(".cp-hero-art a[data-film-file-link]");
     assert.equal(await featured.count(),3);
     assert.deepEqual(await featured.evaluateAll(cards=>cards.map(card=>card.dataset.filmFileLink)),["phantom-thread","souvenir","her"]);

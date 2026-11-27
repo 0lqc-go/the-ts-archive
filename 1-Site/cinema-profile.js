@@ -418,7 +418,7 @@
     const resume=resumeRoute();
     const cover=D.filmById[D.introCover.filmId];
     const coverFilms=D.introFilms.map(id=>D.filmById[id]);
-    const gallery=coverFilms.map(film=>'<figure>'+filmFileLink(film,'<img '+profileImage(D.introFrames[film.id]||film.still,'(max-width: 680px) 30vw, (min-width: 1440px) 415px, 31vw',640)+' alt="'+
+    const gallery=coverFilms.map(film=>'<figure>'+filmFileLink(film,'<img '+profileImage(D.introFrames[film.id]||film.still,'29vw',640)+' alt="'+
       e(film.title)+'" decoding="async" loading="lazy"><span class="cp-hero-film-caption"><span lang="en">'+e(film.title)+'</span><span>'+film.year+'</span></span>','cp-hero-film-card cp-link-art')+'</figure>').join("");
     root.innerHTML =
       '<section class="cp-intro-cover" aria-labelledby="cp-intro-title"><div class="cp-intro-cover-art"><img '+profileImage(D.introCover.still,'(max-width: 680px) 100vw, 100vw',1280)+' alt="" fetchpriority="high" decoding="async"></div>'+
