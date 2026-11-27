@@ -88,6 +88,7 @@ async function chooseNext(page,slot,index){
     assert(introLayout.overlay&&introLayout.background==='rgba(0, 0, 0, 0)');
     assert(!await p.locator("#cp-route-nav").isVisible());
     assert.equal(introLayout.weight,'600');assert(introLayout.titleSize<=76);
+    assert(await p.evaluate(()=>getComputedStyle(document.querySelector('.cp-footer')).backgroundColor===getComputedStyle(document.body).backgroundColor),'Intro footer should share the page background');
     assert.match(introLayout.src,/blade-runner-2049-best-cinematography/);
     // The cover and editorial content follow the archive's masthead gutter,
     // including ultra-wide desktops where the old 1250px cap was conspicuous.
