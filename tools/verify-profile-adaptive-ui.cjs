@@ -86,6 +86,7 @@ async function chooseNext(page,slot,index){
       return {overlay:Math.abs(hero.getBoundingClientRect().top-header.getBoundingClientRect().top)<2,background:getComputedStyle(header).backgroundColor,weight:getComputedStyle(title).fontWeight,titleSize:parseFloat(getComputedStyle(title).fontSize),src:hero.querySelector('img').currentSrc||hero.querySelector('img').src};
     });
     assert(introLayout.overlay&&introLayout.background==='rgba(0, 0, 0, 0)');
+    assert(!await p.locator("#cp-route-nav").isVisible());
     assert.equal(introLayout.weight,'600');assert(introLayout.titleSize<=76);
     assert.match(introLayout.src,/blade-runner-2049-best-cinematography/);
     const featured=p.locator(".cp-hero-art a[data-film-file-link]");
@@ -109,6 +110,7 @@ async function chooseNext(page,slot,index){
     assert.match(await p.locator(".cp-start-guidance").innerText(),/not a favourite title/);
     await action(p,"start").click();
     assert(!await p.locator("body").evaluate(el=>el.classList.contains("cp-intro-page")));
+    assert(await p.locator("#cp-route-nav").isVisible());
     await loadedArt(p);await assertFit(p);
     assert.equal(await p.locator(".cp-visual-select").count(),2);
     assert.equal(await p.locator(".cp-visual-heading .cp-small").count(),0);
