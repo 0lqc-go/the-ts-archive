@@ -111,6 +111,14 @@ async function chooseNext(page,slot,index){
     const [filmPage]=await Promise.all([p.waitForEvent("popup"),featured.first().click()]);
     await filmPage.locator("#film-file-dialog[open]").waitFor({timeout:30000});
     assert.match(await filmPage.locator("#film-file-title").innerText(),/Phantom Thread/i);
+    // Match the actual decade page, not just Cinema Profile's own header.
+    for(const width of [1280,1440,1920,2520]){
+      await Promise.all([p.setViewportSize({width,height:900}),filmPage.setViewportSize({width,height:900})]);
+      const decadeGutter=await filmPage.locator('.hero-title').evaluate(el=>parseFloat(getComputedStyle(el).paddingLeft));
+      const profileGutter=await p.locator('.cp-intro-content').evaluate(el=>el.getBoundingClientRect().left);
+      assert(Math.abs(decadeGutter-profileGutter)<2,`Decade and intro gutters differ at ${width}px: ${decadeGutter} vs ${profileGutter}`);
+    }
+    await p.setViewportSize({width:1440,height:900});
     await filmPage.close();
     await p.evaluate(()=>window.scrollTo(0,0));
     await p.waitForFunction(()=>!document.body.classList.contains('cp-intro-header-scrolled'));
