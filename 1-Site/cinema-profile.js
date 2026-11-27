@@ -1084,8 +1084,8 @@
       const wash=ctx.createLinearGradient(0,0,W,H);wash.addColorStop(0,'#24201a');wash.addColorStop(.48,bg);wash.addColorStop(1,'#151311');
       ctx.fillStyle=wash;ctx.fillRect(0,0,W,H);
       ctx.strokeStyle=line;ctx.lineWidth=2;ctx.strokeRect(28,28,W-56,H-56);
-      const font=(size,weight,family)=>`${weight} ${size}px "${family}", ${family==='Instrument Serif'?'Georgia, serif':family==='Noto Sans Arabic'?'"DM Sans", Arial, sans-serif':'Arial, sans-serif'}`;
-      const native=rtl?'Noto Sans Arabic':'DM Sans',display=rtl?'Noto Sans Arabic':'Instrument Serif';
+      const font=(size,weight,family)=>`${weight} ${size}px "${family}", ${family==='Instrument Serif'?'Georgia, serif':family==='Cairo'?'"DM Sans", Arial, sans-serif':'Arial, sans-serif'}`;
+      const native=rtl?'Cairo':'DM Sans',display=rtl?'Cairo':'Instrument Serif';
       const direction=rtl?'rtl':'ltr',start=rtl?right:pad;
       function draw(value,x,y,size,color=ink,weight=400,family=native,align=rtl?'right':'left',dir=direction){ctx.font=font(size,weight,family);ctx.fillStyle=color;ctx.textAlign=align;ctx.textBaseline='top';ctx.direction=dir;ctx.fillText(String(value),x,y);}
       function wrapped(value,max,size,weight,family,maxLines=2){ctx.font=font(size,weight,family);const words=String(value||'').split(/\s+/).filter(Boolean),lines=[];let current='';for(const word of words){const next=current?current+' '+word:word;if(current&&ctx.measureText(next).width>max){lines.push(current);current=word;}else current=next;}if(current)lines.push(current);const out=lines.slice(0,maxLines);return out.map((row,i)=>{if((lines.length>maxLines&&i===maxLines-1)||ctx.measureText(row).width>max){while(row&&ctx.measureText(row+'…').width>max)row=row.slice(0,-1);return row+'…';}return row;});}
@@ -1149,7 +1149,7 @@
     const left=86,right=994, width=908;
     let y=104;
     const setText=(size,weight=400,color=ink,align=rtl?"right":"left")=>{
-      ctx.font=weight+" "+size+"px "+(rtl?'"Noto Sans Arabic", "DM Sans", Arial, sans-serif':'Arial, sans-serif');ctx.fillStyle=color;
+      ctx.font=weight+" "+size+"px "+(rtl?'"Cairo", "DM Sans", Arial, sans-serif':'Arial, sans-serif');ctx.fillStyle=color;
       ctx.textAlign=align;ctx.textBaseline="top";ctx.direction=rtl?"rtl":"ltr";
     };
     const text=(value,size,weight=400,color=ink)=>{
@@ -1176,7 +1176,7 @@
     for(const [axis,a,b] of coins()){
       const percent=result.balance[axis].percent;
       const hasEvidence=result.balance[axis].count>0;
-      ctx.direction="ltr";ctx.font=rtl?'600 25px "Noto Sans Arabic", "DM Sans", Arial':'600 25px Arial';ctx.fillStyle=ink;ctx.textAlign="left";ctx.fillText(a+" "+(hasEvidence?percent+"%":"—"),left,y);
+      ctx.direction="ltr";ctx.font=rtl?'600 25px "Cairo", "DM Sans", Arial':'600 25px Arial';ctx.fillStyle=ink;ctx.textAlign="left";ctx.fillText(a+" "+(hasEvidence?percent+"%":"—"),left,y);
       ctx.textAlign="right";ctx.fillText((hasEvidence?(100-percent)+"%":"—")+" "+b,right,y);
       y+=40;ctx.fillStyle="#58626a";ctx.fillRect(left,y,width,10);ctx.fillStyle=accent;ctx.fillRect(left,y,width*percent/100,10);y+=33;
     }

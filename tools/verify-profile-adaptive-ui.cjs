@@ -321,11 +321,11 @@ async function chooseNext(page,slot,index){
     assert(mobileIntro.theme&&mobileIntro.overlay);
     await assertFit(m);await shot(m,"mobile-edition-picker");
     assert.match(await m.locator(".cp-start-guidance").innerText(),/لا الفيلم المفضّل لديك/);
-    assert(await m.evaluate(async()=>{await document.fonts.ready;return getComputedStyle(document.querySelector('.cp-intro-title')).fontFamily.includes('Noto Sans Arabic')&&document.fonts.check('500 16px "Noto Sans Arabic"','بصمتك السينمائية');}));
+    assert(await m.evaluate(async()=>{await document.fonts.ready;return getComputedStyle(document.querySelector('.cp-intro-title')).fontFamily.includes('Cairo')&&[...document.fonts].some(f=>f.family==='Cairo'&&f.status==='loaded')&&document.fonts.check('500 16px "Cairo"','بصمتك السينمائية');}));
     await action(m,"start").click();
     await loadedArt(m);await assertFit(m);
-    assert.match(await m.locator('.cp-question-title').evaluate(el=>getComputedStyle(el).fontFamily),/Noto Sans Arabic/);
-    assert.match(await m.locator('.cp-cinema-answer strong').first().evaluate(el=>getComputedStyle(el).fontFamily),/Noto Sans Arabic/);
+    assert.match(await m.locator('.cp-question-title').evaluate(el=>getComputedStyle(el).fontFamily),/Cairo/);
+    assert.match(await m.locator('.cp-cinema-answer strong').first().evaluate(el=>getComputedStyle(el).fontFamily),/Cairo/);
     assert.equal(await m.locator(".cp-visual-select").count(),2);
     assert.equal(await m.locator(".cp-visual-heading .cp-small").count(),0);
     assert.equal((await action(m,"next").innerText()).trim(),"متابعة");

@@ -149,7 +149,7 @@
 .ts-r2-12 .cp-quiz .cp-visual-question { margin-top:clamp(16px,2vw,25px); }
 .ts-r2-12 .cp-visual-heading { display:grid; align-content:center; min-height:78px; margin:0 auto 18px; gap:3px; }
 .ts-r2-12 .cp-visual-heading .cp-question-title { font:400 clamp(1.7rem,2.9vw,2.43rem)/1.14 var(--serif); margin:0 auto 4px; }
-.ts-r2-12 .cp-root[dir="rtl"] .cp-visual-heading .cp-question-title { font:650 clamp(1.3rem,2.25vw,1.9rem)/1.5 var(--cp-arabic,Tahoma,Arial,sans-serif); }
+.ts-r2-12 .cp-root[dir="rtl"] .cp-visual-heading .cp-question-title { font:600 clamp(1.3rem,2.25vw,1.9rem)/1.5 var(--cp-arabic,Tahoma,Arial,sans-serif); }
 .ts-r2-12 .cp-visual-heading .cp-small { font-size:.84rem; line-height:1.45; }
 .ts-r2-12 .cp-visual-grid { align-items:stretch; gap:clamp(10px,1.7vw,21px); }
 .ts-r2-12 .cp-visual-select { display:grid; grid-template-rows:auto 1fr; border-radius:3px; }
