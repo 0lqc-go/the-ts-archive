@@ -6,7 +6,7 @@
 .cp-portrait-art { position:absolute; z-index:-1; inset:0 0 0 36%; margin:0; pointer-events:none; background:var(--cp-deep); }
 .cp-portrait-art img { display:block; width:100%; height:100%; object-fit:cover; object-position:54% 45%; }
 .cp-portrait-art::after { content:""; position:absolute; inset:0; background:linear-gradient(90deg,var(--cp-bg) 0%,color-mix(in srgb,var(--cp-bg) 88%,transparent) 10%,color-mix(in srgb,var(--cp-bg) 35%,transparent) 38%,transparent 68%),linear-gradient(0deg,var(--cp-bg) 0%,color-mix(in srgb,var(--cp-bg) 30%,transparent) 25%,transparent 52%,transparent 77%,color-mix(in srgb,var(--cp-bg) 34%,transparent) 100%); }
-.cp-portrait-art figcaption { position:absolute; z-index:1; inset:auto 16px 12px auto; font:400 .76rem/1.4 var(--body); color:var(--cp-text); text-shadow:0 1px 6px #000; }
+.cp-portrait-art figcaption { position:absolute; z-index:1; inset:auto 16px 12px auto; font:400 .76rem/1.4 var(--body); color:var(--cp-text); text-shadow:0 1px 6px #000;pointer-events:auto; }
 .cp-portrait-copy { width:min(58%,690px); min-width:0; position:relative; }
 .cp-portrait-hero:not(.has-art) .cp-portrait-copy { width:min(100%,780px); }
 .cp-portrait-label { color:var(--cp-muted); font:400 clamp(.88rem,1.3vw,1.1rem)/1.35 var(--body); margin-top:clamp(16px,2.2vw,28px); }
@@ -23,6 +23,12 @@
 .cp-portrait-actions { margin-top:19px; gap:10px 16px; flex-wrap:wrap; }
 .cp-portrait-actions .cp-button-primary { min-height:43px; padding-inline:18px; }
 .cp-portrait-actions .cp-button-quiet { padding-inline:0; }
+.cp-portrait-evidence-hint {margin:10px 0 0;color:var(--cp-muted);font:.76rem/1.5 var(--body);max-width:620px;}
+.cp-portrait-depth-note {margin:8px 0 0;color:var(--cp-muted);font:.76rem/1.5 var(--body);max-width:620px;}
+.cp-portrait-next small {display:inline-flex;align-items:center;justify-content:center;min-width:30px;padding:3px 5px;border:1px solid currentColor;border-radius:3px;font-size:.72em;font-weight:600;opacity:.8;}
+.cp-portrait-download {min-height:43px;padding-inline:13px;color:var(--cp-text);font-weight:500;}
+.cp-portrait-download svg {color:var(--cp-accent);flex:none;}
+.cp-portrait-download:hover {background:color-mix(in srgb,var(--cp-accent) 8%,transparent);}
 .cp-portrait-results > .cp-feedback:empty { display:none; }
 .cp-portrait-results > .cp-feedback:not(:empty) { margin-top:10px; }
 .cp-portrait-results .cp-export:not([hidden]) { margin-top:18px; max-width:770px; }

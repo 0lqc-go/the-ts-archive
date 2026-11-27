@@ -4,7 +4,7 @@ const fs=require("node:fs"),path=require("node:path"),vm=require("node:vm");
 const repo=path.resolve(__dirname,".."),site=path.join(repo,"1-Site");
 const load=(adaptive=true)=>{
   const ctx=vm.createContext({});
-  for(const file of ["cinema-profile-data.js","cinema-profile-visual.js",
+  for(const file of ["cinema-profile-data.js","cinema-profile-film-links.js","cinema-profile-visual.js",
     ...(adaptive?["cinema-profile-scene-bank.js","cinema-profile-adaptive.js"]:[]),"cinema-profile-core.js","cinema-profile-counterframe.js","cinema-profile-media.js"])
     vm.runInContext(fs.readFileSync(path.join(site,file),"utf8"),ctx);
   return ctx;
@@ -22,6 +22,23 @@ const checkArt=name=>{
   for(const variant of ctx.ArchiveProfileMedia.variants[source]||[])assert(exists(variant.src),variant.src);
 };
 const localized=value=>assert(value?.en?.trim()&&value?.ar?.trim());
+
+const catalog=Object.fromEntries(["2010-2019","2020-2026"].map(edition=>[edition,JSON.parse(fs.readFileSync(path.join(site,"content",edition+".json"),"utf8")).films]));
+const normalizedTitle=value=>value.normalize("NFKD").replace(/\p{M}/gu,"").toLowerCase().replace(/[^a-z0-9]/g,"");
+for(const [id,href] of Object.entries(D.archiveFilmById)){
+  const url=new URL(href,"https://example.test/");
+  const destination=catalog[url.searchParams.get("edition")]?.[url.searchParams.get("film")];
+  assert(destination&&D.filmById[id],id);
+  assert.equal(destination.year,D.filmById[id].year);
+  assert.equal(normalizedTitle(destination.title),normalizedTitle(D.filmById[id].title));
+}
+const activeFilmIds=new Set([D.introCover.filmId,...D.introFilms,...[...D.questions,...A.questions,...CF.questions].flatMap(slot=>[slot,...(slot.forms||[])].flatMap(form=>[form.filmId,...(form.options||[]).map(option=>option.filmId)].filter(Boolean)))]);
+for(const id of activeFilmIds)assert(D.archiveFilmById[id],"Missing film-file route: "+id);
+assert.equal(D.introCover.filmId,"blade-runner");
+assert.equal(D.introCover.still,"blade-runner-2049-best-cinematography.webp");
+assert.deepEqual(Array.from(D.introFilms),["phantom-thread","souvenir","her"]);
+checkArt(D.introCover.still);
+for(const id of D.introFilms)checkArt(D.introFrames[id]);
 
 assert.equal(D.coreLimit,25);assert.equal(D.fullLimit,43);
 assert.equal(A.coreLimit,32);assert.equal(A.fullLimit,56);

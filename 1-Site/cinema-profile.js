@@ -17,8 +17,8 @@
     frameworkLabel:L("Inspired by","مستوحى من"),
     frameworks:L("Jungian cognitive functions · MBTI · Objective Personality · Enneagram","وظائف كارل يونغ المعرفية · MBTI · Objective Personality · Enneagram"),
     frameworkNote:L("An exploratory cinema portrait of cognitive preferences, taste and motives — not an official MBTI assessment.","قراءة سينمائية استكشافية للتفضيلات المعرفية والذائقة والدوافع، وليست اختبار MBTI رسمياً."),
-    adaptiveInstructions:L("Return to the moments, choices and questions that stayed with you in a film. Choose the scene or reaction that speaks to you, not a favourite title. Change the film if you haven't watched it or don't recall the scenes; rate only works you have seen.",
-      "استرجع اللحظات والقرارات والأسئلة التي بقيت معك من الفيلم. اختر المشهد أو الموقف الذي استوقفك، لا اسم فيلمك المفضّل. بدّل إذا لم تشاهد العمل أو لا تتذكّر المشاهد، وقيّم ما شاهدته فقط."),
+    adaptiveInstructions:L("Choose the scene or reaction that speaks to you, not a favourite title. Swap unfamiliar works; rate only films you've seen.",
+      "اختر المشهد أو الموقف الذي استوقفك، لا اسم فيلمك المفضّل. بدّل الأعمال غير المألوفة، وقيّم ما شاهدته فقط."),
     profileHome:L("Profile home","بداية الاختبار"),
     archiveHome:L("The archive","الأرشيف"),
     begin:L("Begin assessment","ابدأ الاختبار"),
@@ -157,6 +157,13 @@
   function loc(text) { return C.local(text,state.locale); }
   function tagLabel(tag) { return C.label(tag,state.locale); }
   function artwork(name) { return name?.startsWith("assets/")?name:globalThis.CinemaProfileArtwork?.[name] || "assets/films/"+name; }
+  function filmFileLink(film,content,classes="") {
+    if(!film)return content;
+    const internal=D.archiveFilmById?.[film.id];
+    const href=internal||"https://letterboxd.com/search/films/"+encodeURIComponent(film.title+" "+film.year)+"/";
+    const label=(state.locale==="ar"?(internal?"فتح بطاقة فيلم ":"فتح الفيلم على Letterboxd: "):(internal?"Open film file: ":"Open on Letterboxd: "))+film.title+" · "+film.year+(state.locale==="ar"?" (تبويب جديد)":" (new tab)");
+    return '<a class="cp-archive-film-link '+classes+'" href="'+e(href)+'" target="_blank" rel="noopener noreferrer" aria-label="'+e(label)+'" data-film-file-link="'+e(film.id)+'">'+content+'</a>';
+  }
   function profileImage(name,sizes,fallback=640) {
     return globalThis.ArchiveMedia.attributes(globalThis.ArchiveProfileMedia,artwork(name),sizes,fallback);
   }
@@ -332,8 +339,13 @@
       '<a href="https://doi.org/10.1111/j.1468-2958.2009.01368.x" target="_blank" rel="noopener noreferrer">Audience appreciation</a></p></details>';
   }
 
+  function syncIntroChrome() {
+    document.body.classList.toggle("cp-intro-header-scrolled",state.route==="intro"&&window.scrollY>36);
+  }
   function render() {
     document.documentElement.lang=state.locale;
+    document.body.classList.toggle("cp-intro-page",state.route==="intro");
+    syncIntroChrome();
     root.dir=state.locale==="ar"?"rtl":"ltr";
     root.classList.toggle("cp-adaptive",adaptiveState());
     document.querySelectorAll("[data-lang]").forEach(button=>
@@ -404,20 +416,23 @@
     const ar=state.locale==="ar",bounds=limits(),isAdaptive=adaptiveState();
     const savedCount = Object.values(state.answers).filter(answer=>answer.done).length;
     const resume=resumeRoute();
+    const cover=D.filmById[D.introCover.filmId];
     const coverFilms=D.introFilms.map(id=>D.filmById[id]);
-    const gallery=coverFilms.map((film,i)=>'<figure><img '+profileImage(film.still,'(max-width: 680px) 92vw, 520px',640)+' alt="'+
-      e(film.title)+'" decoding="async"'+(i===0?' fetchpriority="high"':' loading="lazy"')+'><figcaption><span lang="en">'+e(film.title)+'</span><span>'+film.year+'</span></figcaption></figure>').join("");
+    const gallery=coverFilms.map(film=>'<figure>'+filmFileLink(film,'<img '+profileImage(D.introFrames[film.id]||film.still,'(max-width: 680px) 30vw, (min-width: 1440px) 415px, 31vw',640)+' alt="'+
+      e(film.title)+'" decoding="async" loading="lazy"><span class="cp-hero-film-caption"><span lang="en">'+e(film.title)+'</span><span>'+film.year+'</span></span>','cp-hero-film-card cp-link-art')+'</figure>').join("");
     root.innerHTML =
-      '<section class="cp-wrap-wide cp-hero"><div class="cp-hero-copy"><p class="cp-eyebrow">THE T.S. ARCHIVE</p>'+
-      '<h1 class="cp-display" tabindex="-1">'+e(t("title"))+'</h1><p class="cp-hero-description">'+e(t("intro"))+'</p>'+
-      '<div class="cp-start-card">'+editionPicker(ar,isAdaptive)+'<div class="cp-start-facts"><strong>'+e(bounds.core+(ar?" سؤالاً · ":" questions · ")+(isAdaptive?(ar?"الملف الأساسي":"Core profile"):(ar?"الإصدار الكلاسيكي":"Classic profile")))+'</strong><span>'+e((bounds.full-bounds.core)+(ar?" سؤالاً إضافياً لقراءة أعمق.":" optional questions for a deeper reading."))+'</span></div>'+
-      '<div class="cp-framework"><span>'+e(t('frameworkLabel'))+'</span><strong>'+e(t('frameworks'))+'</strong><small>'+e(t('frameworkNote'))+'</small></div>'+
-      (isAdaptive?'<p class="cp-small cp-start-guidance">'+e(t("adaptiveInstructions"))+'</p>':"")+
+      '<section class="cp-intro-cover" aria-labelledby="cp-intro-title"><div class="cp-intro-cover-art"><img '+profileImage(D.introCover.still,'(max-width: 680px) 100vw, 100vw',1280)+' alt="" fetchpriority="high" decoding="async"></div>'+
+      '<div class="cp-wrap-wide cp-intro-cover-copy"><p class="cp-eyebrow">'+e(ar?'THE T.S. ARCHIVE · قراءة سينمائية':'THE T.S. ARCHIVE / A CINEMATIC READING')+'</p>'+
+      '<h1 class="cp-intro-title" id="cp-intro-title" tabindex="-1">'+e(t("title"))+'</h1><p class="cp-intro-subtitle">'+e(ar?'الشخصية من خلال السينما.':'Personality through film.')+'</p>'+
+      '<p class="cp-intro-framework" lang="en" dir="ltr">MBTI · OPS · ENNEAGRAM</p></div>'+
+      '<div class="cp-wrap-wide cp-intro-cover-credit">'+filmFileLink(cover,e(cover.title)+' · '+e(cover.year))+'</div></section>'+
+      '<section class="cp-wrap-wide cp-intro-content"><div class="cp-start-card">'+editionPicker(ar,isAdaptive)+'<div class="cp-intro-start-row"><div class="cp-intro-start-copy"><div class="cp-start-facts"><strong>'+e(bounds.core+(ar?" سؤالاً · ":" questions · ")+(isAdaptive?(ar?"الملف الأساسي":"Core profile"):(ar?"الإصدار الكلاسيكي":"Classic profile")))+'</strong><span>'+e(ar?'قراءة أعمق اختيارية · '+(bounds.full-bounds.core)+' سؤالاً':'Optional depth · '+(bounds.full-bounds.core)+' questions')+'</span></div>'+
+      (isAdaptive?'<p class="cp-small cp-start-guidance">'+e(t("adaptiveInstructions"))+'</p>':'')+'</div>'+
       '<div class="cp-start-actions">'+action("start",resume==='result'?t('showResult'):resume?t("resume"):t("begin"),"cp-button-primary")+
-      (resume||savedCount?'<button type="button" class="cp-text-button" data-action="restart">'+e(t("restart"))+'</button>':"")+'</div>'+
-      '<small class="cp-edition-note">'+e(ar?'تُحفظ الإجابات والنتائج لكل إصدار بصورة مستقلة.':'Progress and results are saved separately for each edition.')+'</small></div></div>'+
-      '<div class="cp-hero-art">'+gallery+'</div></section>'+
-      '<section class="cp-wrap-wide cp-intro-method">'+methodBlock()+'</section>';
+      (resume||savedCount?'<button type="button" class="cp-text-button" data-action="restart">'+e(t("restart"))+'</button>':"")+'</div></div>'+
+      '<small class="cp-edition-note">'+e(ar?'تُحفظ الإجابات والنتائج لكل إصدار بصورة مستقلة.':'Progress and results are saved separately for each edition.')+'</small></div>'+
+      '<section class="cp-intro-works" aria-labelledby="cp-intro-works-title"><div class="cp-intro-works-heading"><h2 id="cp-intro-works-title">'+e(ar?'أعمال في الاختبار':'Works in the profile.')+'</h2><a href="index.html#decades" target="_blank" rel="noopener noreferrer">'+e(ar?'الأرشيف ↗':'THE ARCHIVE ↗')+'</a></div><div class="cp-hero-art cp-intro-works-grid">'+gallery+'</div></section>'+
+      '<section class="cp-intro-method"><p class="cp-small cp-framework-note">'+e(t("frameworkNote"))+'</p>'+methodBlock()+'</section></section>';
   }
 
   function initDraft() {
@@ -745,7 +760,7 @@
             if(item.mode==="text")return '<article class="cp-text-evidence"><div><strong>'+e(ar?"موقف موازٍ":"Parallel story")+'</strong><small>'+e(item.side>0?left:right)+'</small><p>'+e(loc(item.choice))+' · '+e(ar?"مقابل":"versus")+' '+e((item.compared||[]).map(o=>loc(o.label)).join(" / "))+'</p></div></article>';
             if(!film)return '';
             const opposing=(item.compared||[]).map(o=>adaptiveState()?(o.film&&o.film!==item.film?o.film+" — ":"")+loc(o.label):o.film).join(" / ");
-            return '<article><img '+profileImage(film.poster,'80px',176)+' alt="" loading="lazy"><div><strong lang="en">'+e(item.film)+'</strong><small>'+e(item.side>0?left:right)+'</small><p>'+e(loc(item.choice))+' · '+e(ar?'مقابل':'versus')+' '+e(opposing)+'</p></div></article>';
+            return '<article>'+filmFileLink(film,'<img '+profileImage(film.poster,'80px',176)+' alt="" loading="lazy">','cp-link-art')+'<div><strong lang="en">'+filmFileLink(film,e(item.film))+'</strong><small>'+e(item.side>0?left:right)+'</small><p>'+e(loc(item.choice))+' · '+e(ar?'مقابل':'versus')+' '+e(opposing)+'</p></div></article>';
           }).join("")+'</div>':'<p class="cp-small">'+e(t("noEvidence"))+'</p>')+'</section>';
       }).join(""),"","cp-coin-evidence");
   }
@@ -785,12 +800,12 @@
   function recommendationCard(item) {
     const film=item.movie;
     const label=film.title+" "+film.year;
-    const links='<a target="_blank" rel="noopener noreferrer" href="https://letterboxd.com/search/films/'+encodeURIComponent(label)+
+    const links=(D.archiveFilmById?.[film.id]?filmFileLink(film,e(state.locale==='ar'?'بطاقة العمل ↗':'Film file ↗')):"")+'<a target="_blank" rel="noopener noreferrer" href="https://letterboxd.com/search/films/'+encodeURIComponent(label)+
       '/">Letterboxd</a><a target="_blank" rel="noopener noreferrer" href="https://www.themoviedb.org/search?query='+
       encodeURIComponent(label)+'">TMDB</a>';
-    const poster=film.poster?'<a class="cp-rec-art" href="'+e(artwork(film.poster))+'" target="_blank" rel="noopener" aria-label="'+e((state.locale==='ar'?'تكبير بوستر ':'Enlarge poster for ')+film.title)+'"><img '+profileImage(film.poster,'110px',176)+
-      ' alt="" loading="lazy" decoding="async"></a>':'';
-    return '<article class="cp-rec-card">'+poster+'<div class="cp-rec-copy"><h3 class="cp-film-title" lang="en">'+e(film.title)+'</h3>'+
+    const poster=film.poster?filmFileLink(film,'<img '+profileImage(film.poster,'110px',176)+
+      ' alt="" loading="lazy" decoding="async">','cp-rec-art cp-link-art'):'';
+    return '<article class="cp-rec-card">'+poster+'<div class="cp-rec-copy"><h3 class="cp-film-title" lang="en">'+filmFileLink(film,e(film.title))+'</h3>'+
       '<span class="cp-rec-year">'+e(film.year)+'</span><details class="cp-rec-description"><summary>'+e(state.locale==="ar"?"التفاصيل":"Details")+'</summary><p class="cp-tags">'+
       e((item.priorInterest?[t("matchedInterest")]:[]).concat(item.reasons.map(tagLabel)).join(" · "))+
       '</p><p>'+e(loc(film.description))+
@@ -808,8 +823,9 @@
   function paletteCards(){
     return '<div class="cp-palette-frames">'+result.affinities.map(item=>{
       const film=item.representative;
-      return '<article class="cp-palette-card">'+(film?'<img '+profileImage(film.still,'(max-width: 680px) 92vw, 320px',320)+' alt="" loading="lazy" decoding="async">':"")+
-        '<div class="cp-palette-copy"><h3>'+e(loc(item.shortName||item.name))+'</h3><p>'+e(item.matches.slice(0,2).map(tagLabel).join(" · "))+'</p>'+(film?'<small lang="en">'+e(film.title)+' · '+e(film.year)+'</small>':"")+'</div></article>';
+      const card=(film?'<img '+profileImage(film.still,'(max-width: 680px) 92vw, 320px',320)+' alt="" loading="lazy" decoding="async">':"")+
+        '<div class="cp-palette-copy"><h3>'+e(loc(item.shortName||item.name))+'</h3><p>'+e(item.matches.slice(0,2).map(tagLabel).join(" · "))+'</p>'+(film?'<small lang="en">'+e(film.title)+' · '+e(film.year)+'</small>':"")+'</div>';
+      return film?filmFileLink(film,card,'cp-palette-card cp-link-art'):'<article class="cp-palette-card">'+card+'</article>';
     }).join("")+'</div>';
   }
 
@@ -880,9 +896,9 @@
     const selected=CF.questions.filter(q=>cf.answers[q.id]?.done&&cf.answers[q.id].kind==="choice").map(q=>{
       const answer=cf.answers[q.id],option=CF.form(q,answer).options.find(o=>o.id===answer.choice),film=D.filmById[option.filmId];
       if(!film)return '<div class="cp-cf-selected-frame cp-cf-written"><div><strong>'+e(ar?"موقف موازٍ":"Parallel story")+'</strong><small>'+e(loc(option.label))+'</small></div><span>'+answer.strength+'/5</span></div>';
-      return '<div class="cp-cf-selected-frame"><img '+profileImage(option.still,'160px',320)+' loading="lazy" alt=""><div><strong lang="en">'+e(film.title)+'</strong><small>'+e(loc(option.label))+'</small></div><span>'+answer.strength+'/5</span></div>';
+      return '<div class="cp-cf-selected-frame">'+filmFileLink(film,'<img '+profileImage(option.still,'160px',320)+' loading="lazy" alt="">','cp-link-art')+'<div><strong lang="en">'+filmFileLink(film,e(film.title))+'</strong><small>'+e(loc(option.label))+'</small></div><span>'+answer.strength+'/5</span></div>';
     }).join("");
-    return '<section class="cp-result-section cp-counterframe" id="cp-counterframe"><div class="cp-cf-head"><div><p class="cp-eyebrow">'+e(ar?"قراءة إضافية":"OPTIONAL READING")+'</p><h2 class="cp-section-heading">The Counterframe</h2></div><span class="cp-cf-count">'+e(progress)+'</span></div><article class="cp-cf-feature"><figure class="cp-cf-art"><img '+profileImage(art.still,'(max-width: 680px) 92vw, 580px',640)+' alt="" loading="lazy"><figcaption lang="en">'+e(movie.title)+' · '+movie.year+'</figcaption></figure><div class="cp-cf-copy"><p class="cp-eyebrow">'+e(ready?(ar?"إشارات الضغط":"PRESSURE ECHO"):(ar?"مستوحى من John Beebe":"INSPIRED BY JOHN BEEBE"))+'</p><h3>'+e(title)+'</h3><p class="cp-small">'+e(subtitle)+'</p>'+
+    return '<section class="cp-result-section cp-counterframe" id="cp-counterframe"><div class="cp-cf-head"><div><p class="cp-eyebrow">'+e(ar?"قراءة إضافية":"OPTIONAL READING")+'</p><h2 class="cp-section-heading">The Counterframe</h2></div><span class="cp-cf-count">'+e(progress)+'</span></div><article class="cp-cf-feature"><figure class="cp-cf-art"><img '+profileImage(art.still,'(max-width: 680px) 92vw, 580px',640)+' alt="" loading="lazy"><figcaption lang="en">'+filmFileLink(movie,e(movie.title)+' · '+movie.year)+'</figcaption></figure><div class="cp-cf-copy"><p class="cp-eyebrow">'+e(ready?(ar?"إشارات الضغط":"PRESSURE ECHO"):(ar?"مستوحى من John Beebe":"INSPIRED BY JOHN BEEBE"))+'</p><h3>'+e(title)+'</h3><p class="cp-small">'+e(subtitle)+'</p>'+
       (ready?'<div class="cp-cf-result-meta"><div><small>'+e(ar?"Opposing · استدلال نظري":"Theoretical Opposing")+'</small><strong>'+e(mirror)+'</strong></div><div><small>'+e(ar?"الإشارة في نفس المجال":"Cue in the same domain")+'</small><strong>'+e(mirrorCue)+'</strong><small>'+e(relationText)+'</small></div></div>':'')+
       '<div class="cp-cf-actions">'+action(ready?"cf-review":"cf-start",ready?(ar?"راجع اختياراتك":"Review comparisons"):reading.visited?(ar?"أكمل القراءة":"Resume reading"):(ar?"ابدأ القراءة":"Begin Counterframe"),"cp-button-outline")+'</div></div></article>'+
       (ready?'<p class="cp-small cp-cf-caveat">'+e(ar?"إشارات سردية استكشافية، لا تشخيصاً لنمطك أو استجابة فعلية للضغط.":"Exploratory story-response cues, not a diagnosis or an observed stress response.")+'</p>'+disclosure(ar?"إشارات المقاومة":"Pressure cues",evidence)+disclosure(ar?"المشاهد المختارة":"Selected moments",selected||'<p class="cp-small">'+e(t("noEvidence"))+'</p>',String(reading.directional)):"")+
@@ -953,7 +969,7 @@
     const ar=state.locale==='ar',films=result.chosenFilms.filter(film=>film.poster);
     if(!films.length)return '';
     const heading=ar?'أفلام شكّلت البصمة':'Films that shaped it';
-    return `<section class="cp-portrait-selection" aria-labelledby="cp-portrait-selection-title"><div class="cp-portrait-section-title"><h2 id="cp-portrait-selection-title">${e(heading)}</h2><small>${films.length}</small></div><ul class="cp-portrait-filmstrip" aria-label="${e(heading)}" tabindex="0">${films.map(film=>`<li title="${e(film.title+' · '+film.year)}"><img ${profileImage(film.poster,'120px',176)} width="120" height="180" alt="${e(film.title+' · '+film.year)}" loading="lazy" decoding="async"></li>`).join('')}</ul></section>`;
+    return `<section class="cp-portrait-selection" aria-labelledby="cp-portrait-selection-title"><div class="cp-portrait-section-title"><h2 id="cp-portrait-selection-title">${e(heading)}</h2><small>${films.length}</small></div><ul class="cp-portrait-filmstrip" aria-label="${e(heading)}" tabindex="0">${films.map(film=>`<li>${filmFileLink(film,`<img ${profileImage(film.poster,'120px',176)} width="120" height="180" alt="${e(film.title+' · '+film.year)}" loading="lazy" decoding="async">`,'cp-link-art')}</li>`).join('')}</ul></section>`;
   }
 
   function analysisRow(label,meta,body,classes='') {
@@ -965,13 +981,21 @@
     const spectrum=result.motiveSpectrum;
     const refineCount=adaptiveState()?D.adaptive.refinePlan(state,result).length:0;
     const leadingMotif=spectrum.lead?loc(spectrum.lead.name):'';
-    const coverArt=cover?`<figure class="cp-portrait-art"><img ${profileImage(cover.still,'(max-width: 680px) 92vw, 700px',960)} alt="" decoding="async"><figcaption lang="en">${e(cover.title)} · ${e(cover.year)}</figcaption></figure>`:'';
+    const coverArt=cover?`<figure class="cp-portrait-art"><img ${profileImage(cover.still,'(max-width: 680px) 92vw, 700px',960)} alt="" decoding="async"><figcaption lang="en">${filmFileLink(cover,e(cover.title)+' · '+e(cover.year))}</figcaption></figure>`:'';
     const traits=[
       [ar?'العدسة':'Lens',lens||open],
       [ar?'Savior Animal المحتمل':'Possible Savior Animal',result.animal||open],
       [ar?'صدى الدافع':'Story motive',leadingMotif||open]
     ];
-    const portraitTop=`<header class="cp-portrait-hero${cover?' has-art':''}">${coverArt}<div class="cp-portrait-copy"><p class="cp-eyebrow">${e(isCore?(ar?'البصمة السينمائية · أولية':'CINEMA PROFILE · INITIAL READING'):(ar?'البصمة السينمائية':'CINEMA PROFILE'))}</p><p class="cp-portrait-label">${e(ar?'بصمة الأرشيف':'The Archive Signature')}</p><h1 class="cp-portrait-name${!heading&&!lens?' is-open':''}">${e(signature)}</h1>${subtitle?`<p class="cp-portrait-formula">${e(subtitle)}</p>`:''}<p class="cp-portrait-description">${e(heading?desc:lens?pairDesc:desc)}</p><p class="cp-portrait-confidence">${e(t(result.consistency))}</p><div class="cp-portrait-traits">${traits.map(([label,value])=>`<div><small>${e(label)}</small><strong>${e(value)}</strong></div>`).join('')}</div><div class="cp-actions cp-portrait-actions">${action('image',ar?'نزّل البورتريه':'Download portrait','cp-button-primary')}${action('review',t('reviewAnswers'),'cp-button-quiet')}${isCore?action('deepen',ar?'توسيع القراءة':'Deepen profile','cp-button-quiet'):''}${refineCount?action('refine',(ar?'استكمل المحاور المفتوحة':'Refine open contrasts')+' (+'+refineCount+')','cp-button-quiet'):''}</div></div></header>`;
+    const directional=Object.values(result.balance).filter(item=>item.clear).length;
+    const evidenceHint=adaptiveState()?`<p class="cp-portrait-evidence-hint">${e(ar?`${directional} من 5 محاور لها اتجاه واضح نسبياً${isCore&&!spectrum.coverage?' · قراءة الدوافع تستكمل في العمق.':''}`:`${directional} of 5 contrasts show a direction${isCore&&!spectrum.coverage?' · story motives need the deeper reading.':''}`)}</p>`:'';
+    const nextLabel=ar?'توسيع القراءة':'Deepen profile';
+    const depthCount=limits().full-limits().core;
+    const depthNote=isCore?`<p class="cp-portrait-depth-note">${e(ar?'أدلة إضافية للـ5 Coins · Lens · Savior Animal · دوافع Enneagram.':'More evidence for the five Coins · Lens · Savior Animal · Enneagram motives.')}</p>`:'';
+    const nextAction=isCore?`<button type="button" class="cp-button cp-button-primary cp-portrait-next" data-action="deepen">${e(nextLabel)}<small dir="ltr">+${depthCount}</small></button>`:
+      refineCount?action('refine',(ar?'استكمل المحاور المفتوحة':'Refine open contrasts')+' (+'+refineCount+')','cp-button-primary'):'';
+    const downloadAction=`<button type="button" class="cp-button cp-button-outline cp-portrait-download" data-action="image"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 17v4h14v-4"/></svg>${e(ar?'نزّل البورتريه':'Download portrait')}</button>`;
+    const portraitTop=`<header class="cp-portrait-hero${cover?' has-art':''}">${coverArt}<div class="cp-portrait-copy"><p class="cp-eyebrow">${e(isCore?(ar?'البصمة السينمائية · أولية':'CINEMA PROFILE · INITIAL READING'):(ar?'البصمة السينمائية':'CINEMA PROFILE'))}</p><p class="cp-portrait-label">${e(ar?'بصمة الأرشيف':'The Archive Signature')}</p><h1 class="cp-portrait-name${!heading&&!lens?' is-open':''}">${e(signature)}</h1>${subtitle?`<p class="cp-portrait-formula">${e(subtitle)}</p>`:''}<p class="cp-portrait-description">${e(heading?desc:lens?pairDesc:desc)}</p><p class="cp-portrait-confidence">${e(t(result.consistency))}</p><div class="cp-portrait-traits">${traits.map(([label,value])=>`<div><small>${e(label)}</small><strong>${e(value)}</strong></div>`).join('')}</div>${evidenceHint}<div class="cp-actions cp-portrait-actions">${nextAction}${downloadAction}${action('review',t('reviewAnswers'),'cp-button-quiet')}</div>${depthNote}</div></header>`;
     const exportPanel=`<div class="cp-feedback" id="cp-image-status" role="status"></div><section id="cp-export" class="cp-export" hidden><img alt="${e(ar?'بطاقة البصمة السينمائية':'Cinema Profile portrait card')}"><div><h3 class="cp-subheading">${e(t('save'))}</h3><p class="cp-small">${e(ar?'بطاقة مرئية مختصرة من بصمتك وأفلام اختياراتك.':'A visual card with your signature and films from your choices.')}</p><a class="cp-button cp-button-primary" download="The-TS-Archive-Cinema-Profile.png">Download PNG</a><button type="button" class="cp-text-button" data-action="close-export">${e(ar?'إغلاق المعاينة':'Close preview')}</button></div></section>`;
     const palette=`<section class="cp-result-section cp-portrait-palette"><h2 class="cp-section-heading">${e(t('taste'))}</h2>${result.affinities.length?paletteCards():`<p class="cp-small">${e(t('noEvidence'))}</p>`}${disclosure(t('reading'),`<div class="cp-reading-text">${reading.length?reading.map(text=>`<p>${e(text)}</p>`).join(''):`<p>${e(t('noEvidence'))}</p>`}</div><h3 class="cp-rank-heading">${e(t('evidence'))}</h3><div class="cp-reading-evidence">${examples.length?examples.map(text=>`<p>${e(text)}</p>`).join(''):`<p>${e(t('noEvidence'))}</p>`}</div>`)}</section>`;
     const close=recs.filter(item=>item.kind==='close'),discoveries=recs.filter(item=>item.kind==='discovery');
@@ -1329,6 +1353,7 @@
   document.querySelectorAll("[data-lang]").forEach(button=>button.addEventListener("click",()=>{
     state.locale=button.dataset.lang;persist();render();
   }));
+  window.addEventListener("scroll",syncIntroChrome,{passive:true});
 
   document.querySelectorAll('[data-profile-action]').forEach(control=>control.addEventListener('click',event=>{
     if(event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;

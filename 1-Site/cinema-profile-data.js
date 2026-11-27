@@ -762,7 +762,13 @@
     if (["c3", "c12", "d2", "d8"].includes(question.id)) question.crossCheck = true;
   }
 
-  const introFilms = ["dune-two", "one-battle", "sentimental-value"];
+  const introCover = {filmId:"blade-runner",still:"blade-runner-2049-best-cinematography.webp"};
+  const introFilms = ["phantom-thread", "souvenir", "her"];
+  const introFrames = {
+    "phantom-thread":"phantom-thread-best-actor-curator.webp",
+    "souvenir":"the-souvenir-daily-frame.jpg",
+    "her":"her-curator-frame-20261126-33.webp"
+  };
   const sceneFilms = [
     ...introFilms,
     ...questions.flatMap(question=>question.filmId ? [question.filmId] :
@@ -770,7 +776,8 @@
   ];
   const artworkNames = [...new Set([
     ...films.map(movie=>movie.poster),
-    ...sceneFilms.map(id=>filmById[id].still)
+    ...sceneFilms.map(id=>filmById[id].still),
+    introCover.still,...Object.values(introFrames)
   ].filter(Boolean))];
-  globalThis.CinemaProfileData = { films, filmById, tagLabels, groups, questions, axes, introFilms, artworkNames, coreLimit, fullLimit };
+  globalThis.CinemaProfileData = { films, filmById, tagLabels, groups, questions, axes, introCover, introFilms, introFrames, artworkNames, coreLimit, fullLimit };
 })();
