@@ -82,9 +82,9 @@
 .cp-root[dir="rtl"] .cp-portrait-art { inset:0 36% 0 0; }
 .cp-root[dir="rtl"] .cp-portrait-art::after { background:linear-gradient(270deg,var(--cp-bg) 0%,color-mix(in srgb,var(--cp-bg) 88%,transparent) 10%,color-mix(in srgb,var(--cp-bg) 35%,transparent) 38%,transparent 68%),linear-gradient(0deg,var(--cp-bg) 0%,color-mix(in srgb,var(--cp-bg) 30%,transparent) 25%,transparent 52%,transparent 77%,color-mix(in srgb,var(--cp-bg) 34%,transparent) 100%); }
 .cp-root[dir="rtl"] .cp-portrait-art figcaption { inset:auto auto 12px 16px; }
-.cp-root[dir="rtl"] .cp-portrait-name { font:700 clamp(2.9rem,6.2vw,5.6rem)/1.27 Tahoma,Arial,sans-serif; letter-spacing:0; }
-.cp-root[dir="rtl"] .cp-portrait-section-title > h2 { font:700 clamp(1.36rem,2.4vw,2rem)/1.4 Tahoma,Arial,sans-serif; }
-.cp-root[dir="rtl"] .cp-portrait-selection .cp-portrait-section-title > h2 { font:500 .87rem/1.55 Tahoma,Arial,sans-serif; }
+.cp-root[dir="rtl"] .cp-portrait-name { font:650 clamp(2.9rem,6.2vw,5.6rem)/1.4 var(--cp-arabic); letter-spacing:0; }
+.cp-root[dir="rtl"] .cp-portrait-section-title > h2 { font:650 clamp(1.36rem,2.4vw,2rem)/1.5 var(--cp-arabic); }
+.cp-root[dir="rtl"] .cp-portrait-selection .cp-portrait-section-title > h2 { font:500 .87rem/1.6 var(--cp-arabic); }
 @media(max-width:850px) {
   .cp-portrait-copy { width:66%; }
   .cp-portrait-art { inset-inline-start:34%; }

@@ -145,12 +145,12 @@ html.ts-archive-embedded,html.ts-archive-embedded body { background:transparent 
 .cp-route-actions { display:flex; align-items:center; flex-wrap:wrap; gap:8px clamp(12px,3vw,26px); }
 .cp-route-actions[hidden] { display:none; }
 .cp-route-actions button:first-child { color:var(--text); }
-.cp-route-nav[dir="rtl"] { font-family:Tahoma,Arial,sans-serif; }
+.cp-route-nav[dir="rtl"] { font-family:var(--cp-arabic,Tahoma,Arial,sans-serif); }
 .cp-route-nav[dir="rtl"] .cp-route-arrow { transform:scaleX(-1); }
 .cp-framework { display:grid; gap:6px; color:var(--muted); font:400 .86rem/1.5 var(--body); }
 .cp-framework strong { color:var(--cp-accent); font-weight:500; }
 .cp-framework small { font-size:.8rem; line-height:1.45; color:var(--cp-muted); }
-.cp-root[dir="rtl"] .cp-framework { font-family:Tahoma,Arial,sans-serif; }
+.cp-root[dir="rtl"] .cp-framework { font-family:var(--cp-arabic,Tahoma,Arial,sans-serif); }
 @media (max-width:1020px) {
   .masthead:has(.nav-cinema-profile) .topnav { gap:clamp(9px,1.4vw,18px); }
   .masthead:has(.nav-cinema-profile) .topnav a { letter-spacing:.035em; }

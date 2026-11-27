@@ -77,6 +77,14 @@ async function chooseNext(page,slot,index){
     return {context,page,errors,missing};
   }
   try{
+    // The local curator image must appear even before catalogue scripts run.
+    const staticHome=await browser.newContext({javaScriptEnabled:false,viewport:{width:1440,height:900}});
+    await staticHome.route('**/*',route=>route.request().url().startsWith(base)?route.continue():route.abort());
+    const home=await staticHome.newPage();
+    await home.goto(base+'/index.html',{waitUntil:'domcontentloaded'});
+    await home.waitForFunction(()=>{const img=document.querySelector('.masthead .avatar img');return img?.complete&&img.naturalWidth>0;});
+    assert(await home.locator('.masthead .avatar img').isVisible());
+    await staticHome.close();
     const desktop=await session(),p=desktop.page;
     assert.match(await p.locator(".cp-start-facts").innerText(),/32 questions/);
     assert.equal(await action(p,"adaptive-edition").getAttribute("aria-pressed"),"true");
@@ -299,9 +307,12 @@ async function chooseNext(page,slot,index){
     const mobileIntro=await m.evaluate(()=>({theme:document.body.classList.contains("cp-intro-page"),overlay:Math.abs(document.querySelector(".cp-masthead").getBoundingClientRect().top-document.querySelector(".cp-intro-cover").getBoundingClientRect().top)<2}));
     assert(mobileIntro.theme&&mobileIntro.overlay);
     await assertFit(m);await shot(m,"mobile-edition-picker");
-    assert.match(await m.locator(".cp-start-guidance").innerText(),/لا اسم فيلمك المفضّل/);
+    assert.match(await m.locator(".cp-start-guidance").innerText(),/لا الفيلم المفضّل لديك/);
+    assert(await m.evaluate(async()=>{await document.fonts.ready;return getComputedStyle(document.querySelector('.cp-intro-title')).fontFamily.includes('Noto Sans Arabic')&&document.fonts.check('500 16px "Noto Sans Arabic"','بصمتك السينمائية');}));
     await action(m,"start").click();
     await loadedArt(m);await assertFit(m);
+    assert.match(await m.locator('.cp-question-title').evaluate(el=>getComputedStyle(el).fontFamily),/Noto Sans Arabic/);
+    assert.match(await m.locator('.cp-cinema-answer strong').first().evaluate(el=>getComputedStyle(el).fontFamily),/Noto Sans Arabic/);
     assert.equal(await m.locator(".cp-visual-select").count(),2);
     assert.equal(await m.locator(".cp-visual-heading .cp-small").count(),0);
     assert.equal((await action(m,"next").innerText()).trim(),"متابعة");

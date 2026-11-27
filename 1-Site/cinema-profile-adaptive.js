@@ -27,7 +27,7 @@
   for(const id of tasteIds){
     const original=legacy.get(id);
     const prompt=id==="v06"?L("Which film would you choose for tonight?","أيّ فيلم تختار لهذه الأمسية؟"):
-      id==="a-taste-pace"?L("Which rhythm would you want to spend an evening with?","مع أيّ إيقاع سينمائي ترغب في قضاء أمسيتك؟"):original.prompt;
+      id==="a-taste-pace"?L("Which rhythm would you want to spend an evening with?","أيّ إيقاع سينمائي تفضّل لأمسيتك؟"):original.prompt;
     slots.set(id,{...original,id,kind:"visual",coin:null,evidenceKind:"taste",purpose:"taste",
       tasteScope:id==="v06"?"viewing":id==="v25"?"atmosphere":id==="a-taste-pace"?"rhythm":"frame",
       prompt,options:bank.taste[id].map((o,i)=>choiceOption(o,i))});
@@ -50,12 +50,12 @@
     L("Whose story would you want to follow?","أيّ حكاية ترغب في متابعتها؟"),
     L("Which journey makes you more curious?","أيّ رحلة تثير فضولك أكثر؟"),
     L("Which character would keep you watching?","أيّ شخصية تجعلك تواصل المشاهدة؟"),
-    L("Whose next chapter would you rather see?","أيّ فصل تالٍ من الحكايتين تودّ رؤيته؟"),
+    L("Whose next chapter would you rather see?","أيّ حكاية تودّ مشاهدة فصلها التالي؟"),
     L("Which story would you follow to its conclusion?","أيّ حكاية تتابعها حتى نهايتها؟"),
-    L("Which struggle would you like to see unfold?","أيّ صراع ترغب في رؤية كيف يتطوّر؟"),
-    L("Which direction makes you want the next scene?","أيّ اتجاه يجعلك ترغب برؤية المشهد التالي؟"),
-    L("Which character's journey draws you in?","أيّ رحلة شخصية تشدّك أكثر؟"),
-    L("Which ending would you want to live with for longer?","أيّ حكاية سترغب في أن تعيش معها وقتًا أطول؟")
+    L("Which struggle would you like to see unfold?","أيّ صراع تودّ متابعة تطوّره؟"),
+    L("Which direction makes you want the next scene?","أيّ مسار يجعلك تنتظر المشهد التالي؟"),
+    L("Which character's journey draws you in?","أيّ رحلة من رحلات الشخصيات تشدّك أكثر؟"),
+    L("Which ending would you want to live with for longer?","أيّ نهاية تتمنّى أن يبقى أثرها معك وقتًا أطول؟")
   ];
   const motives=bank.motives.map(([leftId,left,rightId,right],i)=>{
     const q={id:"a-motive-"+(i+1),kind:"visual",purpose:"motive",coin:null,evidenceKind:"motive",cinematic:true,prompt:prompts[i],

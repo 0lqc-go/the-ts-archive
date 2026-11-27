@@ -12,42 +12,42 @@
   const ACTIVE_EDITION_KEY = "ts-archive-cinema-profile-edition";
   const L = (en,ar) => ({en,ar});
   const strings = {
-    title:L("Cinema Profile","ملفّك السينمائي"),
+    title:L("Cinema Profile","بصمتك السينمائية"),
     intro:L("Choose between films and frames. Discover the patterns behind the stories you return to and the characters you understand.","اختر بين الأفلام والكادرات، واكتشف الأنماط وراء القصص التي تعود إليها والشخصيات التي تفهمها."),
     frameworkLabel:L("Inspired by","مستوحى من"),
     frameworks:L("Jungian cognitive functions · MBTI · Objective Personality · Enneagram","وظائف كارل يونغ المعرفية · MBTI · Objective Personality · Enneagram"),
-    frameworkNote:L("An exploratory cinema portrait of cognitive preferences, taste and motives — not an official MBTI assessment.","قراءة سينمائية استكشافية للتفضيلات المعرفية والذائقة والدوافع، وليست اختبار MBTI رسمياً."),
+    frameworkNote:L("An exploratory cinema portrait of cognitive preferences, taste and motives — not an official MBTI assessment.","قراءة استكشافية لميولك المعرفية وذائقتك ودوافعك من خلال السينما، وليست اختبارًا رسميًا لـMBTI."),
     adaptiveInstructions:L("Choose the scene or reaction that speaks to you, not a favourite title. Swap unfamiliar works; rate only films you've seen.",
-      "اختر المشهد أو الموقف الذي استوقفك، لا اسم فيلمك المفضّل. بدّل الأعمال غير المألوفة، وقيّم ما شاهدته فقط."),
+      "اختر المشهد أو الموقف الأقرب إليك، لا الفيلم المفضّل لديك. يمكنك استبدال ما لم تشاهده، وقيّم فقط الأفلام التي شاهدتها."),
     profileHome:L("Profile home","بداية الاختبار"),
     archiveHome:L("The archive","الأرشيف"),
     begin:L("Begin assessment","ابدأ الاختبار"),
     resume:L("Resume assessment","أكمل الاختبار"),
     showResult:L("View saved result","عرض النتيجة المحفوظة"),
     age:L("Age range (optional)","الفئة العمرية (اختياري)"),
-    time:L(D.coreLimit+" questions · Core profile",D.coreLimit+" سؤالاً · الملف الأساسي"),
+    time:L(D.coreLimit+" questions · Core profile",D.coreLimit+" سؤالاً · القراءة الأولية"),
     missing:L((D.fullLimit-D.coreLimit)+" optional questions for a deeper profile.",(D.fullLimit-D.coreLimit)+" سؤالاً إضافياً لقراءة أعمق."),
     method:L("About the method","عن منهج الاختبار"),
     method1:L("Every choice is a film or a cinematic frame. Only comparisons of familiar story moments contribute indirect evidence to the five coins; visual taste picks and ending ratings are kept separate.",
-      "كل اختيار فيلم أو كادر سينمائي. مفاضلات اللحظات المعروفة من القصص فقط تقدّم أدلة غير مباشرة للمحاور الخمسة؛ أما الذائقة البصرية وتقييم النهايات فمستقلّان."),
+      "تعتمد الاختيارات على الأفلام ولقطاتها. وحدها المفاضلات بين مواقف مألوفة تقدّم أدلة غير مباشرة للمحاور المعرفية الخمسة؛ أما الذائقة البصرية وتقييم النهايات فيُقرآن بصورة مستقلة."),
     method2:L("Inspired by the repeated binary contrasts in Objective Personality, a possible pole requires agreement across several film pairs and contexts. These are hypotheses about your cinematic responses, not observed personality typing or a validated psychological test.",
-      "استلهاماً للمقارنات الثنائية المتكررة في Objective Personality، يحتاج كل اتجاه إلى توافق عبر عدة أزواج من الأفلام والسياقات. الاستنتاجات فرضيات عن الاستجابة السينمائية وليست تصنيفاً فعلياً للشخصية أو اختباراً نفسياً معايراً."),
+      "استلهامًا من المفاضلات الثنائية المتكرّرة في Objective Personality، لا يُرجَّح اتجاه إلا إذا تكرّر عبر عدة مواقف وسياقات. هذه استنتاجات عن استجابتك للسينما، وليست تشخيصًا للشخصية أو اختبارًا نفسيًا مُعايرًا."),
     method3:L("Your answers are saved on this browser. You can export your result or copy it when you choose.",
       "تُحفظ إجاباتك في هذا المتصفح. وتستطيع تنزيل النتيجة أو نسخها عندما ترغب."),
     restart:L("Start over","ابدأ من جديد"),
-    restartConfirm:L("Clear the saved assessment and start again?","مسح تقدم الاختبار المحفوظ والبدء من جديد؟"),
+    restartConfirm:L("Clear the saved assessment and start again?","هل تريد مسح تقدّمك المحفوظ والبدء من جديد؟"),
     back:L("Previous","السابق"),
     next:L("Continue","متابعة"),
     skip:L("Skip","تخطّ"),
     finish:L("See result","عرض النتيجة"),
     progress:L("Question","سؤال"),
     of:L("of","من"),
-    coreStage:L("Core · familiar films","الأساسي · أفلام شهيرة"),
-    depthStage:L("Detailed · stories & characters","التفصيلي · القصص والشخصيات"),
-    endingStage:L("Detailed · endings","التفصيلي · النهايات"),
-    styleStage:L("Detailed · cinematic form","التفصيلي · الشكل السينمائي"),
+    coreStage:L("Core · familiar films","القراءة الأولية · أفلام مألوفة"),
+    depthStage:L("Detailed · stories & characters","القراءة المعمّقة · الحكايات والشخصيات"),
+    endingStage:L("Detailed · endings","القراءة المعمّقة · النهايات"),
+    styleStage:L("Detailed · cinematic form","القراءة المعمّقة · الأسلوب السينمائي"),
     filmsHint:L("Mark any films you haven't seen, then choose one.","حدّد الأفلام التي لم تشاهدها، ثم اختر فيلماً."),
-    visualHint:L("Choose from the frames themselves. You do not need to have seen the films.","اختر من الكادرات نفسها. لا تشترط مشاهدة الأفلام."),
+    visualHint:L("Choose from the frames themselves. You do not need to have seen the films.","اختر اعتمادًا على اللقطات نفسها؛ لا يلزم أن تكون قد شاهدت الأفلام."),
     selectHint:L("Choose the closest answer.","اختر الإجابة الأقرب إليك."),
     unseen:L("Not seen","لم أشاهده"),
     watched:L("Watched","شاهدته"),
@@ -56,87 +56,87 @@
     notInterested:L("It hasn't appealed to me","لم يجذبني"),
     noOpportunity:L("No opportunity yet","لم تتح لي الفرصة"),
     synopsisLabel:L("About the film","عن الفيلم"),
-    synopsis:L("Choose by synopsis","اختر من الوصف"),
-    synopsisHint:L("Choose by anticipated interest. This contributes to your taste profile.","اختر بحسب اهتمامك المتوقع. ستُستخدم الإجابة لبناء ملف ذائقتك."),
+    synopsis:L("Choose by synopsis","اختر بناءً على نبذة الفيلم"),
+    synopsisHint:L("Choose by anticipated interest. This contributes to your taste profile.","اختر ما يثير فضولك بناءً على الوصف؛ ستُستخدم الإجابة في قراءة ذائقتك."),
     alternate:L("Try a parallel story","جرّب قصة موازية"),
     alternativeTitle:L("Equivalent story","قصة بديلة"),
     alternativeHint:L("The same question through a fictional situation.","السؤال نفسه من خلال موقف تخيلي."),
     returnFilms:L("Return to the films","العودة إلى الأفلام"),
     returnFilm:L("Answer about the film","أجب عن الفيلم"),
-    onlyOne:L("Only one film is familiar. Rate that film for your taste profile.","تعرف فيلماً واحداً؛ قيّم تجربتك معه لملف الذائقة."),
-    noneSeen:L("If you haven't watched either film, skip this question.","إذا لم تشاهد أيّاً من الفيلمين، تخطّ السؤال."),
+    onlyOne:L("Only one film is familiar. Rate that film for your taste profile.","إذا كنت قد شاهدت فيلمًا واحدًا فقط، فقيّم تجربتك معه لقراءة ذائقتك."),
+    noneSeen:L("If you haven't watched either film, skip this question.","إذا لم تشاهد أيًّا من الفيلمين، يمكنك تخطّي السؤال."),
     seenQuestion:L("Have you watched this film?","هل شاهدت هذا الفيلم؟"),
     seenQuestionHint:L("We will ask about your experience of the film.","سنسألك عن تجربتك مع الفيلم."),
     yes:L("Yes, I watched it","نعم، شاهدته"),
     no:L("I haven't watched it","لم أشاهده"),
-    ratingFilm:L("How satisfied were you with your experience of this film?","إلى أي درجة أنت راضٍ عن تجربة مشاهدة هذا الفيلم؟"),
-    ratingEnding:L("How satisfied were you with the ending?","إلى أي درجة أنت راضٍ عن نهاية الفيلم؟"),
+    ratingFilm:L("How satisfied were you with your experience of this film?","ما مدى رضاك عن تجربة مشاهدة هذا الفيلم؟"),
+    ratingEnding:L("How satisfied were you with the ending?","ما مدى رضاك عن نهاية الفيلم؟"),
     ratingCharacter:L("How satisfying was this part of the story?","ما مدى رضاك عن هذا الجانب من القصة؟"),
     endingHint:L("Rate your satisfaction with the ending.","قيّم مدى رضاك عن النهاية."),
-    feeling:L("How did the ending leave you feeling? (Optional)","كيف تركتك النهاية تشعر؟ (اختياري)"),
+    feeling:L("How did the ending leave you feeling? (Optional)","ما الشعور الذي تركته النهاية لديك؟ (اختياري)"),
     reasonOptional:L("Choose one, if you wish.","اختياري، اختر جانباً واحداً."),
-    coreResult:L("Your initial cinema profile","ملفّك السينمائي الأولي"),
-    fullResult:L("Your cinema profile","ملفّك السينمائي"),
+    coreResult:L("Your initial cinema profile","بصمتك السينمائية الأولية"),
+    fullResult:L("Your cinema profile","بصمتك السينمائية"),
     resultIntro:L("Built from your choices, the perspectives you followed and the way you responded to cinematic stories.",
-      "بُني من اختياراتك والمنظورات التي تابعتها والطريقة التي استجبت بها للقصص السينمائية."),
-    deepen:L("Continue to the detailed assessment","أكمل الاختبار التفصيلي"),
+      "تستند القراءة إلى اختياراتك ووجهات النظر التي تابعتها وكيفية استجابتك للحكايات السينمائية."),
+    deepen:L("Continue to the detailed assessment","تعمّق في القراءة"),
     refineHint:L("The optional "+(D.fullLimit-D.coreLimit)+" questions deepen the reading with new films and repeated coin checks.",
       "توسّع الأسئلة الـ"+(D.fullLimit-D.coreLimit)+" الاختيارية القراءة بأفلام جديدة ومراجعات متكررة للمحاور."),
     reviewAnswers:L("Review answers","راجع إجاباتك"),
-    cognitive:L("Exploratory cognitive orientation","الترجيح المعرفي الاستكشافي"),
+    cognitive:L("Exploratory cognitive orientation","ملامح التوجّه المعرفي"),
     relative:L("Relative match scores","درجات الترجيح النسبية"),
     inconclusive:L("Orientation still open","الاتجاه غير محسوم"),
     limited:L("Limited evidence","أدلة محدودة"),
     tentative:L("Tentative pattern","اتجاه أولي"),
     consistent:L("Consistent answer pattern","إجابات متسقة نسبيًا"),
-    balance:L("The Coins","الـCoins"),
-    balanceNote:L("Relative evidence balance, not typing accuracy. A leading pole needs at least three different film comparisons, two contexts and repeated agreement.","توازن نسبي للأدلة، لا دقة تصنيف. يحتاج الاتجاه الراجح إلى ثلاث مفاضلات أفلام مختلفة وسياقين وتوافق متكرر."),
+    balance:L("The Coins","المحاور المعرفية (Coins)"),
+    balanceNote:L("Relative evidence balance, not typing accuracy. A leading pole needs at least three different film comparisons, two contexts and repeated agreement.","تمثّل النسب توازن الأدلة، لا دقّة التصنيف. يحتاج أيّ اتجاه راجح إلى ثلاث مفاضلات على الأقل في سياقين مختلفين، مع تكرار الاستجابة."),
     pair:L("Possible pair","التركيبة المحتملة"),
-    noPair:L("More responses needed for a pair","نحتاج إلى مزيد من الإجابات للتركيبة"),
+    noPair:L("More responses needed for a pair","تحتاج تركيبة الوظائف إلى مزيد من الإجابات"),
     taste:L("Your cinematic palette","لوحتك السينمائية"),
     affinities:L("Recurring worlds","عَوالم تتكرّر"),
     tasteNote:L("These features are inferred from contrasts and satisfaction ratings, using only the evidence you provided.",
-      "تُستشف هذه الخصائص من المفاضلات وتقييمات الرضا بالاعتماد على الأدلة التي قدمتها."),
-    genres:L("Genre palette","لوحة الأنواع"),
-    themes:L("Story motifs","خيوط الحكاية"),
+      "نستخلص هذه الملامح من مفاضلاتك وتقييمات رضاك، استنادًا إلى ما قدّمته من إجابات."),
+    genres:L("Genre palette","الأنواع السينمائية"),
+    themes:L("Story motifs","الثيمات السردية"),
     style:L("Cinematic language","اللغة السينمائية"),
     tone:L("Atmosphere","الأجواء"),
-    endings:L("Final frames","الكادرات الأخيرة"),
+    endings:L("Final frames","النهايات السينمائية"),
     noEvidence:L("More answers will clarify this.","مزيد من الإجابات سيجعل هذا الجانب أوضح."),
     evidence:L("Moments that shaped the reading","لحظات شكّلت القراءة"),
     reading:L("The Afterimage","أثر المشهد"),
-    exposure:L("Film familiarity","الألفة مع الأفلام"),
+    exposure:L("Film familiarity","معرفتك بالأفلام"),
     viewed:L("watched","شاهدتها"),
     unviewed:L("unwatched","لم تشاهدها"),
     interestedCount:L("interested","مهتم بها"),
     answered:L("answered","إجابات"),
-    recommendations:L("Next screening","العرض التالي"),
+    recommendations:L("Next screening","ترشيحات المشاهدة التالية"),
     recNote:L("Films from the Archive's catalogue, matched to your taste. Mark any you have seen to refresh the list.","أفلام من الأرشيف تتوافق مع ذائقتك. حدّد ما شاهدته لتحديث القائمة."),
-    closeMatch:L("Close matches","أقرب لذائقتك"),
-    discovery:L("Related discoveries","اكتشافات متصلة"),
+    closeMatch:L("Close matches","الأقرب إلى ذائقتك"),
+    discovery:L("Related discoveries","اكتشافات قريبة من ذائقتك"),
     recSeen:L("Already watched","شاهدته سابقًا"),
     recNo:L("Not interested","غير مهتم"),
-    matchedInterest:L("On your interested list","ضمن اهتمامك بالمشاهدة"),
+    matchedInterest:L("On your interested list","من الأفلام التي تودّ مشاهدتها"),
     share:L("Keep exploring","واصل الاستكشاف"),
-    prompt:L("Your personalized ChatGPT prompt","البرومبت الشخصي لـ ChatGPT"),
+    prompt:L("Your personalized ChatGPT prompt","برومبت قراءتك الشخصية لـChatGPT"),
     promptHint:L("Includes your preferences, examples and known films. Copy it into a new chat to request fresh recommendations.",
-      "يتضمن تفضيلاتك وأمثلة من إجاباتك والأفلام المعروفة لديك. انسخه إلى محادثة جديدة للحصول على ترشيحات إضافية."),
+      "يتضمّن تفضيلاتك وأمثلة من إجاباتك والأفلام التي تعرفها. انسخه في محادثة جديدة لاستكشاف بصمتك والحصول على ترشيحات إضافية."),
     copy:L("Copy prompt","انسخ البرومبت"),
     chat:L("Open ChatGPT","افتح ChatGPT"),
     copied:L("Copied to clipboard.","تم النسخ."),
     copyManual:L("Select the text to copy it manually.","حدّد النص وانسخه يدويًا."),
     save:L("Save result","احفظ النتيجة"),
     image:L("Download result image","احفظ بطاقة النتيجة كصورة"),
-    imageHint:L("A printable card with your signature, story motifs and selected films.","بطاقة مصوّرة تضم بصمتك ودوافع الحكاية وأفلاماً من اختياراتك."),
+    imageHint:L("A printable card with your signature, story motifs and selected films.","بطاقة مرئية تضم بصمتك ودوافعك السردية وأفلامًا من اختياراتك."),
     email:L("Email (optional)","البريد الإلكتروني (اختياري)"),
     emailPlaceholder:L("you@example.com","you@example.com"),
     emailAction:L("Open email draft","إعداد رسالة بريد"),
     emailHint:L("Opens your email app with a prepared message. You choose when to send it.","يفتح تطبيق بريدك برسالة جاهزة ويمكنك اختيار إرسالها."),
     downloadDone:L("Result image downloaded.","تم تنزيل صورة النتيجة."),
-    methodShort:L("Exploratory, uncalibrated preference assessment.","تقييم استكشافي للتفضيلات يحتاج إلى معايرة."),
+    methodShort:L("Exploratory, uncalibrated preference assessment.","قراءة استكشافية للتفضيلات لم تُعاير إحصائيًا بعد."),
     notEnough:L("There is not enough evidence to make a reliable distinction yet.","الأدلة الحالية محدودة لتحديد اتجاه واضح. يمكنك متابعة الأسئلة التفصيلية."),
     qualityNote:L("A repeated pattern can support a hypothesis. It cannot establish a true psychological type without independent validation.",
-      "قد يدعم النمط المتكرر فرضية، ويحتاج إثبات دقة التصنيف النفسي إلى تحقق مستقل.")
+      "قد يدعم تكرار النمط فرضية، لكنه لا يكفي لإثبات تصنيف نفسي من دون تحقّق مستقل.")
   };
 
   const escape = value => String(value ?? "").replace(/[&<>"']/g, char =>
@@ -329,7 +329,7 @@
   }
   function methodBlock() {
     const ar=state.locale==="ar";
-    if(adaptiveState())return '<details class="cp-method"><summary>'+e(t("method"))+'</summary><p>'+e(ar?"تتداخل مفاضلات المواقف والذائقة والدوافع مع تقييم رضا من خمس درجات بعد كل سبعة اختيارات. إذا لم تعرف العملين يعرض الاختبار مجموعة بديلة، ثم موقفاً نصياً قصيراً. كل سؤال يحتسب مرة واحدة فقط.":"Seven choices alternate with a five-point satisfaction rating. Unfamiliar comparisons can switch to parallel films, then a short written scenario. Each question counts once.")+'</p><p>'+e(ar?"المواقف المعرفية والذائقة والدوافع مصادر مستقلة. لا تُعدّ مشاهدة الكادر مشاهدة للفيلم؛ والتعادل والتخطّي لا يرجّحان اتجاهاً. تُعرض الأدلة النصية والسينمائية كلّ على حدة لأن الصيغ لم تُعاير معاً إحصائياً بعد.":"Cognitive choices, taste and story motives are independent evidence streams. Seeing a frame is not watching a film; neutral or skipped answers support neither pole. Film and text evidence are shown separately because the forms are not statistically equated yet.")+'</p><p>'+e(t("method2"))+'</p><p>'+e(t("method3"))+'</p><p><a href="https://www.testingstandards.net/open-access-files.html" target="_blank" rel="noopener noreferrer">Testing standards</a> · <a href="https://www.cdc.gov/nchs/ccqder/question-evaluation/cognitive-interviewing.html" target="_blank" rel="noopener noreferrer">Question evaluation</a> · <a href="https://www.objectivepersonality.com/faq" target="_blank" rel="noopener noreferrer">Objective Personality</a></p>'+feedbackPanel()+'</details>';
+    if(adaptiveState())return '<details class="cp-method"><summary>'+e(t("method"))+'</summary><p>'+e(ar?"بعد كل سبعة اختيارات في المواقف والذائقة والدوافع، يأتي تقييم رضا من خمس درجات. إذا لم تشاهد أحد الأفلام أو لم تتذكّر المشهد، يُعرض بديل سينمائي ثم موقف مكتوب قصير عند الحاجة. يُحتسب كل سؤال مرة واحدة فقط.":"Seven choices alternate with a five-point satisfaction rating. Unfamiliar comparisons can switch to parallel films, then a short written scenario. Each question counts once.")+'</p><p>'+e(ar?"الاختيارات المعرفية والذائقة والدوافع السردية مصادر مستقلة للأدلة. رؤية لقطة لا تعني مشاهدة الفيلم، والإجابة المحايدة أو التخطّي لا يرجّحان أيّ اتجاه. نعرض الأدلة السينمائية والنصية بصورة منفصلة لأن الصيغ لم تُعاير إحصائيًا معًا بعد.":"Cognitive choices, taste and story motives are independent evidence streams. Seeing a frame is not watching a film; neutral or skipped answers support neither pole. Film and text evidence are shown separately because the forms are not statistically equated yet.")+'</p><p>'+e(t("method2"))+'</p><p>'+e(t("method3"))+'</p><p><a href="https://www.testingstandards.net/open-access-files.html" target="_blank" rel="noopener noreferrer">Testing standards</a> · <a href="https://www.cdc.gov/nchs/ccqder/question-evaluation/cognitive-interviewing.html" target="_blank" rel="noopener noreferrer">Question evaluation</a> · <a href="https://www.objectivepersonality.com/faq" target="_blank" rel="noopener noreferrer">Objective Personality</a></p>'+feedbackPanel()+'</details>';
     return '<details class="cp-method"><summary>'+e(t("method"))+'</summary><p>'+e(t("method1"))+'</p><p>'+
       e(t("method2"))+'</p><p>'+e(t("method3"))+'</p><p>'+
       '<a href="https://www.objectivepersonality.com/faq" target="_blank" rel="noopener noreferrer">Objective Personality</a> · '+
@@ -409,7 +409,7 @@
     const button=(legacy,name,count)=>'<button type="button" class="cp-edition-option" data-action="'+(legacy?'classic-edition':'adaptive-edition')+'" aria-pressed="'+(legacy===!isAdaptive)+'"><strong>'+e(name)+'</strong><small>'+e(count)+'</small></button>';
     return '<div class="cp-edition-picker" role="group" aria-label="'+e(ar?'اختر إصدار الاختبار':'Choose assessment edition')+'">'+
       button(false,ar?'إصدار المشاهد':'Scene Edition','32 + 24')+button(true,ar?'الإصدار الكلاسيكي':'Classic Edition','25 + 18')+'</div>'+
-      '<p class="cp-edition-description cp-small">'+e(isAdaptive?(ar?'قراءة من خلال المشاهد والشخصيات والقرارات.':'Explore scenes, characters and story decisions.'):(ar?'المفاضلات السينمائية الأصلية.':'The original cinematic comparisons.'))+'</p>';
+      '<p class="cp-edition-description cp-small">'+e(isAdaptive?(ar?'استكشف ذاتك من خلال المشاهد والشخصيات وقراراتها.':'Explore scenes, characters and story decisions.'):(ar?'النسخة الأصلية للمفاضلات السينمائية.':'The original cinematic comparisons.'))+'</p>';
   }
 
   function renderIntro() {
@@ -423,10 +423,10 @@
     root.innerHTML =
       '<section class="cp-intro-cover" aria-labelledby="cp-intro-title"><div class="cp-intro-cover-art"><img '+profileImage(D.introCover.still,'(max-width: 680px) 100vw, 100vw',1280)+' alt="" fetchpriority="high" decoding="async"></div>'+
       '<div class="cp-wrap-wide cp-intro-cover-copy"><p class="cp-eyebrow">'+e(ar?'THE T.S. ARCHIVE · قراءة سينمائية':'THE T.S. ARCHIVE / A CINEMATIC READING')+'</p>'+
-      '<h1 class="cp-intro-title" id="cp-intro-title" tabindex="-1">'+e(t("title"))+'</h1><p class="cp-intro-subtitle">'+e(ar?'الشخصية من خلال السينما.':'Personality through film.')+'</p>'+
+      '<h1 class="cp-intro-title" id="cp-intro-title" tabindex="-1">'+e(t("title"))+'</h1><p class="cp-intro-subtitle">'+e(ar?'تأمّل شخصيتك من خلال السينما.':'Personality through film.')+'</p>'+
       '<p class="cp-intro-framework" lang="en" dir="ltr">MBTI · OPS · ENNEAGRAM</p></div>'+
       '<div class="cp-wrap-wide cp-intro-cover-credit">'+filmFileLink(cover,e(cover.title)+' · '+e(cover.year))+'</div></section>'+
-      '<section class="cp-wrap-wide cp-intro-content"><div class="cp-start-card">'+editionPicker(ar,isAdaptive)+'<div class="cp-intro-start-row"><div class="cp-intro-start-copy"><div class="cp-start-facts"><strong>'+e(bounds.core+(ar?" سؤالاً · ":" questions · ")+(isAdaptive?(ar?"الملف الأساسي":"Core profile"):(ar?"الإصدار الكلاسيكي":"Classic profile")))+'</strong><span>'+e(ar?'قراءة أعمق اختيارية · '+(bounds.full-bounds.core)+' سؤالاً':'Optional depth · '+(bounds.full-bounds.core)+' questions')+'</span></div>'+
+      '<section class="cp-wrap-wide cp-intro-content"><div class="cp-start-card">'+editionPicker(ar,isAdaptive)+'<div class="cp-intro-start-row"><div class="cp-intro-start-copy"><div class="cp-start-facts"><strong>'+e(bounds.core+(ar?" سؤالاً · ":" questions · ")+(isAdaptive?(ar?"القراءة الأولية":"Core profile"):(ar?"الإصدار الكلاسيكي":"Classic profile")))+'</strong><span>'+e(ar?'التعمّق اختياري · '+(bounds.full-bounds.core)+' سؤالاً':'Optional depth · '+(bounds.full-bounds.core)+' questions')+'</span></div>'+
       (isAdaptive?'<p class="cp-small cp-start-guidance">'+e(t("adaptiveInstructions"))+'</p>':'')+'</div>'+
       '<div class="cp-start-actions">'+action("start",resume==='result'?t('showResult'):resume?t("resume"):t("begin"),"cp-button-primary")+
       (resume||savedCount?'<button type="button" class="cp-text-button" data-action="restart">'+e(t("restart"))+'</button>':"")+'</div></div>'+
@@ -555,11 +555,11 @@
     const same=cinema&&new Set(current.options.map(o=>o.filmId)).size===1;
     const sharedFilm=same?D.filmById[current.options[0].filmId]:null;
     const hint=adaptiveState()?
-      current.purpose==="coin"?"":current.purpose==="motive"?(ar?"لا يشترط أن تكون شاهدت العمل.":"No previous viewing required."):
-      current.tasteScope==="viewing"?(ar?"اختر الفيلم الذي ترغب بمشاهدته؛ لا يشترط أن تكون شاهدته.":"Choose the film you would like to see; no previous viewing required."):
-      (ar?"اختر الأقرب لك؛ لا يشترط أن تكون شاهدت الفيلم.":"Choose what draws you in; no viewing required."):
+      current.purpose==="coin"?"":current.purpose==="motive"?(ar?"لا يلزم أن تكون قد شاهدت الفيلم.":"No previous viewing required."):
+      current.tasteScope==="viewing"?(ar?"اختر الفيلم الذي تودّ مشاهدته؛ لا يلزم أن تكون قد شاهدته من قبل.":"Choose the film you would like to see; no previous viewing required."):
+      (ar?"اختر ما يلفت انتباهك؛ لا يلزم أن تكون قد شاهدت الفيلم.":"Choose what draws you in; no viewing required."):
       current.coin?(ar?"إذا شاهدت العملين، اختر أحدهما.":"Choose one if you have seen both films."):
-      (ar?"اختر الصورة الأقرب لك.":"Choose the frame that draws you in.");
+      (ar?"اختر اللقطة التي تشدّك أكثر.":"Choose the frame that draws you in.");
     const cards=C.orderedOptions(current,"visual",state.seed).map(option=>{
       const movie=D.filmById[option.filmId],selected=draft.choice===option.id;
       const caption=loc(option.label);
@@ -662,12 +662,12 @@
     const only=option=>'<button type="button" class="cp-text-button" data-action="unfamiliar-only" data-film="'+e(option.filmId)+'">'+
       e(ar?"شاهدت "+D.filmById[option.filmId].title+" فقط":"Watched "+D.filmById[option.filmId].title+" only")+'</button>';
     return '<div class="cp-question-tools">'+(visualCoin&&!draft.unfamiliar?'<button class="cp-text-button" type="button" data-action="swap-unfamiliar">'+
-      e(single?(ar?"ما شايف الفيلم؟ بدّل":"Haven't seen it? Change film"):(ar?"ما تعرف أحد العملين؟ بدّل":"Unfamiliar? Change films"))+'</button>':'')+
+      e(single?(ar?"لم تشاهد الفيلم؟ اختر بديلًا":"Haven't seen it? Change film"):(ar?"لم تشاهد أحد الفيلمين؟ اختر بديلًا":"Unfamiliar? Change films"))+'</button>':'')+
       '<button class="cp-text-button" type="button" data-action="neutral">'+e(ar?"لا فرق واضح":"No clear difference")+'</button></div>'+
-      (visualCoin&&draft.unfamiliar?'<div class="cp-familiarity-options" role="group" aria-label="'+e(ar?"الألفة مع العملين":"Film familiarity")+'">'+
+      (visualCoin&&draft.unfamiliar?'<div class="cp-familiarity-options" role="group" aria-label="'+e(ar?"معرفتك بالفيلمين":"Film familiarity")+'">'+
       '<p class="cp-small">'+e(single?(ar?"هل شاهدت هذا الفيلم؟":"Have you watched this film?"):(ar?"أيّهما شاهدت؟":"Which have you watched?"))+'</p>'+(single?"":options.map(only).join(""))+
       '<button class="cp-text-button" type="button" data-action="unfamiliar-none">'+e(single?(ar?"لم أشاهد الفيلم":"I haven't watched it"):(ar?"لم أشاهد أياً منهما":"Neither"))+'</button>'+
-      '<button class="cp-text-button" type="button" data-action="unfamiliar-recall">'+e(ar?"لا أتذكّر الموقفين":"I don’t recall the scenes")+'</button>'+
+      '<button class="cp-text-button" type="button" data-action="unfamiliar-recall">'+e(ar?"لا أتذكّر المشاهد جيدًا":"I don’t recall the scenes")+'</button>'+
       '<button class="cp-text-button" type="button" data-action="unfamiliar-cancel">'+e(ar?"إلغاء":"Cancel")+'</button></div>':'');
   }
   function switchQuestionForm(){
@@ -754,7 +754,7 @@
         const info=result.balance[axis];
         const details=adaptiveState()?[info.sources.film.count+' '+(ar?"سينمائي":"film"),info.sources.text.count+' '+(ar?"نصي":"written"),info.neutral+' '+(ar?"محايد":"neutral"),info.skipped+' '+(ar?"تخطّي":"skipped")].join(' · '):"";
         return '<section><h3>'+left+' / '+right+'</h3><p class="cp-small">'+e(adaptiveState()?status[info.status]:info.clear?(ar?"اتجاه متكرر":"Repeated lead"):info.count?(ar?"غير حاسم":"Inconclusive"):t("noEvidence"))+' · '+info.pairs+' '+e(ar?"مفاضلات":"comparisons")+' · '+info.positive+' / '+info.negative+
-          '</p>'+(details?'<p class="cp-small cp-evidence-sources">'+e(details)+(info.sourceConflict?' · '+e(ar?"اتجاه الصيغ مختلف":"Directions differ by form"):'')+'</p>':'')+
+          '</p>'+(details?'<p class="cp-small cp-evidence-sources">'+e(details)+(info.sourceConflict?' · '+e(ar?"اختلف الاتجاه بين الصيغتين":"Directions differ by form"):'')+'</p>':'')+
           (info.evidence.length?'<div class="cp-evidence-list">'+info.evidence.map(item=>{
             const film=D.filmById[item.filmId];
             if(item.mode==="text")return '<article class="cp-text-evidence"><div><strong>'+e(ar?"موقف موازٍ":"Parallel story")+'</strong><small>'+e(item.side>0?left:right)+'</small><p>'+e(loc(item.choice))+' · '+e(ar?"مقابل":"versus")+' '+e((item.compared||[]).map(o=>loc(o.label)).join(" / "))+'</p></div></article>';
@@ -772,7 +772,7 @@
         return '<div class="cp-animal-item '+(active?"cp-animal-active":"")+'"><div><strong>'+e(item.name)+'</strong><small dir="ltr">'+e(info.pair)+'</small>'+
           (active?'<span class="cp-animal-badge">Savior</span>':'')+'</div><span class="cp-animal-score">'+(result.animalEvidence?item.score+"%":"—")+'</span>'+
           '<div class="cp-rank-track"><span style="width:'+(result.animalEvidence?item.score:0)+'%"></span></div></div>';
-      }).join("")+'</div>'+disclosure(ar?"عن الإيقاع":"About the rhythm",'<p class="cp-small">'+e(ar?"ترجيح مشتق من تقاطع الـCoins؛ لا يشخّص ترتيب Animals الكامل.":"The relative combinations are derived from the Coins, not a measured animal stack.")+'</p>')+'</section>';
+      }).join("")+'</div>'+disclosure(ar?"عن الإيقاع":"About the rhythm",'<p class="cp-small">'+e(ar?"ترجيح مشتق من تقاطع المحاور المعرفية (Coins)؛ لا يشخّص ترتيب Animals الكامل.":"The relative combinations are derived from the Coins, not a measured animal stack.")+'</p>')+'</section>';
   }
   function motifPanel(){
     const ar=state.locale==="ar",spectrum=result.motiveSpectrum;
@@ -866,10 +866,10 @@
     const questionBody=written?scenarioChoices(question,chosen,"cf-select"):'<div class="cp-visual-heading"><h2 class="cp-question-title">'+e(loc(question.prompt))+'</h2>'+
       (adaptiveState()?"":'<p class="cp-small">'+e(ar?"تخيّل نفسك داخل الموقفين، واختر نوع الضغط لا الفيلم المفضّل.":"Imagine yourself in both situations. Choose the pressure, not your favourite film.")+'</p>')+
       '</div><div class="cp-visual-grid" role="group" aria-label="'+e(loc(question.prompt))+'">'+cards+'</div>';
-    const swap=adaptiveState()&&!written?'<div class="cp-question-tools"><button class="cp-text-button" type="button" data-action="cf-swap">'+e(ar?"لا تتذكّر أحد الموقفين؟ بدّل":"Unfamiliar? Change films")+'</button></div>':"";
+    const swap=adaptiveState()&&!written?'<div class="cp-question-tools"><button class="cp-text-button" type="button" data-action="cf-swap">'+e(ar?"لا تتذكّر أحد المشهدين؟ اختر بديلًا":"Unfamiliar? Change films")+'</button></div>':"";
     const complete=cf.index===CF.questions.length-1;
     const next=complete?(ar?"عرض القراءة":"View reading"):t("next");
-    root.innerHTML='<section class="cp-wrap cp-quiz cp-cf-quiz"><div class="cp-cf-top"><span class="cp-eyebrow">THE COUNTERFRAME</span>'+action("cf-return",ar?"العودة للنتيجة":"Back to profile","cp-button-quiet")+'</div><div class="cp-progress-row"><span>'+e(ar?"قراءة الضغط · اختيارية":"Pressure reading · Optional")+'</span><span>'+(cf.index+1)+' / '+CF.questions.length+'</span></div><div class="cp-progress-track" role="progressbar" aria-valuenow="'+percent+'" aria-valuemin="0" aria-valuemax="100"><span style="width:'+percent+'%"></span></div><div class="cp-question cp-visual-question">'+questionBody+meter+'</div>'+swap+'<div class="cp-question-footer cp-cf-footer"><div>'+action("cf-prev",t("back"),"cp-button-outline",cf.index===0?'disabled':'')+'</div><div>'+action("cf-skip",adaptiveState()?t("skip"):(ar?"لا أعرف الموقفين":"Unfamiliar"),"cp-button-quiet")+action("cf-neutral",ar?"لا فرق واضح":"No clear difference","cp-button-quiet")+action("cf-next",next,"cp-button-primary",chosen&&strength?'':'disabled')+'</div></div></section>';
+    root.innerHTML='<section class="cp-wrap cp-quiz cp-cf-quiz"><div class="cp-cf-top"><span class="cp-eyebrow">THE COUNTERFRAME</span>'+action("cf-return",ar?"العودة إلى النتيجة":"Back to profile","cp-button-quiet")+'</div><div class="cp-progress-row"><span>'+e(ar?"قراءة الضغط · اختيارية":"Pressure reading · Optional")+'</span><span>'+(cf.index+1)+' / '+CF.questions.length+'</span></div><div class="cp-progress-track" role="progressbar" aria-valuenow="'+percent+'" aria-valuemin="0" aria-valuemax="100"><span style="width:'+percent+'%"></span></div><div class="cp-question cp-visual-question">'+questionBody+meter+'</div>'+swap+'<div class="cp-question-footer cp-cf-footer"><div>'+action("cf-prev",t("back"),"cp-button-outline",cf.index===0?'disabled':'')+'</div><div>'+action("cf-skip",adaptiveState()?t("skip"):(ar?"لا أعرف الموقفين":"Unfamiliar"),"cp-button-quiet")+action("cf-neutral",ar?"لا فرق واضح":"No clear difference","cp-button-quiet")+action("cf-next",next,"cp-button-primary",chosen&&strength?'':'disabled')+'</div></div></section>';
     settleStage('counterframe:'+question.id+':'+(question.form??0), keepScroll);
     if(keepScroll)window.scrollTo({top:y,behavior:"instant"});
     if(!keepScroll)warmNextArtwork();
@@ -880,10 +880,10 @@
     const ready=reading.complete,top=reading.top;
     const art=reading.representative||{filmId:"shutter-island",still:"assets/gallery/2010-2019/shutter-island/17c04a148584.webp"};
     const movie=D.filmById[art.filmId];
-    const title=ready?(top?loc(CF.pressures[top.code].name):reading.ranked.length>1?(ar?"أنماط مقاومة متعددة":"Several pressure cues"):(ar?"القراءة مفتوحة":"Reading still open")):(ar?"ما الذي يثير مقاومتك؟":"What creates resistance?");
-    const subtitle=ready?(top?loc(CF.pressures[top.code].hint):reading.ranked.length>1?(ar?"تكرّرت أكثر من إشارة في اختياراتك دون اتجاه واحد أوضح.":"More than one pressure recurred without a single strongest cue."):(ar?"لم يتكرّر اتجاه قوي كفاية عبر المشاهد.":"No strong direction repeated across enough scenes.")):(ar?"قارن المواقف التي تثير مقاومة بدل اختيار الفيلم الذي تحبّه.":"Explore the pressures you resist, rather than the stories you prefer.")+
-      (adaptiveState()?(ar?" تابع إذا شاهدت العملين وتتذكّر الموقفين، وإلّا بدّل.":" Continue if you have seen both and remember the scenes; otherwise change films."):"");
-    const relationText={aligned:ar?"اتجاه متوافق · ليس تأكيداً":"Same direction · not confirmation",different:ar?"إشارة مختلفة":"Different direction",open:ar?"غير محسوم":"Still open",unavailable:ar?"الوظيفة الأساسية غير محسومة":"Primary function still open"}[reading.relation];
+    const title=ready?(top?loc(CF.pressures[top.code].name):reading.ranked.length>1?(ar?"أنماط مقاومة متعددة":"Several pressure cues"):(ar?"لم تُحسم القراءة بعد":"Reading still open")):(ar?"ما الذي يثير مقاومتك؟":"What creates resistance?");
+    const subtitle=ready?(top?loc(CF.pressures[top.code].hint):reading.ranked.length>1?(ar?"تكرّر أكثر من مؤشر في اختياراتك من دون أن يتقدّم أحدها بوضوح.":"More than one pressure recurred without a single strongest cue."):(ar?"لم يتكرّر أيّ اتجاه بما يكفي عبر المواقف المختلفة.":"No strong direction repeated across enough scenes.")):(ar?"اختر نوع الضغط الذي يصعب عليك تقبّله، بعيدًا عن تفضيلك للفيلم نفسه.":"Explore the pressures you resist, rather than the stories you prefer.")+
+      (adaptiveState()?(ar?" تابع إذا كنت تتذكّر الموقفين، وإلّا اختر أفلامًا بديلة.":" Continue if you have seen both and remember the scenes; otherwise change films."):"");
+    const relationText={aligned:ar?"اتجاه متوافق، لا تأكيد نهائي":"Same direction · not confirmation",different:ar?"إشارة مختلفة":"Different direction",open:ar?"غير محسوم":"Still open",unavailable:ar?"الوظيفة الأساسية غير محسومة":"Primary function still open"}[reading.relation];
     const mirror=reading.opposite?C.impressionName(reading.opposite,state.locale):"—";
     const mirrorCue=reading.comparison?loc(CF.pressures[reading.comparison.code].name):"—";
     const progress=ready?reading.answered+" / "+CF.questions.length:(reading.visited?reading.visited+" / "+CF.questions.length:CF.questions.length+" "+(ar?"مفاضلة":"comparisons"));
@@ -899,10 +899,10 @@
       return '<div class="cp-cf-selected-frame">'+filmFileLink(film,'<img '+profileImage(option.still,'160px',320)+' loading="lazy" alt="">','cp-link-art')+'<div><strong lang="en">'+filmFileLink(film,e(film.title))+'</strong><small>'+e(loc(option.label))+'</small></div><span>'+answer.strength+'/5</span></div>';
     }).join("");
     return '<section class="cp-result-section cp-counterframe" id="cp-counterframe"><div class="cp-cf-head"><div><p class="cp-eyebrow">'+e(ar?"قراءة إضافية":"OPTIONAL READING")+'</p><h2 class="cp-section-heading">The Counterframe</h2></div><span class="cp-cf-count">'+e(progress)+'</span></div><article class="cp-cf-feature"><figure class="cp-cf-art"><img '+profileImage(art.still,'(max-width: 680px) 92vw, 580px',640)+' alt="" loading="lazy"><figcaption lang="en">'+filmFileLink(movie,e(movie.title)+' · '+movie.year)+'</figcaption></figure><div class="cp-cf-copy"><p class="cp-eyebrow">'+e(ready?(ar?"إشارات الضغط":"PRESSURE ECHO"):(ar?"مستوحى من John Beebe":"INSPIRED BY JOHN BEEBE"))+'</p><h3>'+e(title)+'</h3><p class="cp-small">'+e(subtitle)+'</p>'+
-      (ready?'<div class="cp-cf-result-meta"><div><small>'+e(ar?"Opposing · استدلال نظري":"Theoretical Opposing")+'</small><strong>'+e(mirror)+'</strong></div><div><small>'+e(ar?"الإشارة في نفس المجال":"Cue in the same domain")+'</small><strong>'+e(mirrorCue)+'</strong><small>'+e(relationText)+'</small></div></div>':'')+
+      (ready?'<div class="cp-cf-result-meta"><div><small>'+e(ar?"Opposing · افتراض نظري":"Theoretical Opposing")+'</small><strong>'+e(mirror)+'</strong></div><div><small>'+e(ar?"الإشارة في المجال نفسه":"Cue in the same domain")+'</small><strong>'+e(mirrorCue)+'</strong><small>'+e(relationText)+'</small></div></div>':'')+
       '<div class="cp-cf-actions">'+action(ready?"cf-review":"cf-start",ready?(ar?"راجع اختياراتك":"Review comparisons"):reading.visited?(ar?"أكمل القراءة":"Resume reading"):(ar?"ابدأ القراءة":"Begin Counterframe"),"cp-button-outline")+'</div></div></article>'+
-      (ready?'<p class="cp-small cp-cf-caveat">'+e(ar?"إشارات سردية استكشافية، لا تشخيصاً لنمطك أو استجابة فعلية للضغط.":"Exploratory story-response cues, not a diagnosis or an observed stress response.")+'</p>'+disclosure(ar?"إشارات المقاومة":"Pressure cues",evidence)+disclosure(ar?"المشاهد المختارة":"Selected moments",selected||'<p class="cp-small">'+e(t("noEvidence"))+'</p>',String(reading.directional)):"")+
-      disclosure(ar?"عن هذه القراءة":"About Counterframe",'<p class="cp-small">'+e(ar?"تستكشف المفاضلات الاثنتا عشرة ضغوطاً قصصية في أربعة مجالات. يحتاج ترجيح اتجاه إلى تكراره في سياقين وبشدّة متوسطة فأكثر؛ التخطّي والتعادل لا يدعمان أي اتجاه. المقابلة مع الوظيفة الخامسة عند بيبي مشتقة من البصمة الأساسية عندما تتضح، وليست قياساً مستقلاً للوظيفة. هذه الإضافة لا تغيّر الـCoins أو الذائقة أو الإنياجرام.":"Twelve comparisons explore dramatic pressures in four domains. A cue needs repeated, moderate-or-strong responses across at least two contexts; skipped and neutral answers support neither side. Beebe’s fifth-position counterpart is a theoretical derivation when the primary function is clear, not a direct measurement of that function. This extension does not alter Coins, taste, Animals or Enneagram.")+'</p><p class="cp-small"><a href="https://www.types-psychologiques.com/wp-content/uploads/2016/06/john_beebe_-_evolving_the_8_function_model.pdf" target="_blank" rel="noopener noreferrer">John Beebe · Evolving the eight-function model</a></p>')+'</section>';
+      (ready?'<p class="cp-small cp-cf-caveat">'+e(ar?"هذه مؤشرات استكشافية من استجابتك للحكايات، وليست تشخيصًا لنمطك أو قياسًا لسلوكك الفعلي تحت الضغط.":"Exploratory story-response cues, not a diagnosis or an observed stress response.")+'</p>'+disclosure(ar?"إشارات المقاومة":"Pressure cues",evidence)+disclosure(ar?"المشاهد المختارة":"Selected moments",selected||'<p class="cp-small">'+e(t("noEvidence"))+'</p>',String(reading.directional)):"")+
+      disclosure(ar?"عن هذه القراءة":"About Counterframe",'<p class="cp-small">'+e(ar?"تستكشف المفاضلات الاثنتا عشرة ضغوطاً قصصية في أربعة مجالات. يحتاج ترجيح اتجاه إلى تكراره في سياقين وبشدّة متوسطة فأكثر؛ التخطّي والتعادل لا يدعمان أي اتجاه. المقابلة مع الوظيفة الخامسة عند بيبي مشتقة من البصمة الأساسية عندما تتضح، وليست قياساً مستقلاً للوظيفة. هذه الإضافة لا تغيّر المحاور المعرفية (Coins) أو الذائقة أو الإنياجرام.":"Twelve comparisons explore dramatic pressures in four domains. A cue needs repeated, moderate-or-strong responses across at least two contexts; skipped and neutral answers support neither side. Beebe’s fifth-position counterpart is a theoretical derivation when the primary function is clear, not a direct measurement of that function. This extension does not alter Coins, taste, Animals or Enneagram.")+'</p><p class="cp-small"><a href="https://www.types-psychologiques.com/wp-content/uploads/2016/06/john_beebe_-_evolving_the_8_function_model.pdf" target="_blank" rel="noopener noreferrer">John Beebe · Evolving the eight-function model</a></p>')+'</section>';
   }
 
   function returnFromCounterframe(){
@@ -977,7 +977,7 @@
   }
 
   function renderPortrait({isCore,heading,lens,signature,subtitle,desc,pairDesc,cover,functionStack,matchCards,pairCards,genreRows,reading,examples,watched,unknown,recs,prompt}) {
-    const ar=state.locale==='ar',open=ar?'مفتوح':'Open';
+    const ar=state.locale==='ar',open=ar?'غير محسوم':'Open';
     const spectrum=result.motiveSpectrum;
     const refineCount=adaptiveState()?D.adaptive.refinePlan(state,result).length:0;
     const leadingMotif=spectrum.lead?loc(spectrum.lead.name):'';
@@ -985,15 +985,15 @@
     const traits=[
       [ar?'العدسة':'Lens',lens||open],
       [ar?'Savior Animal المحتمل':'Possible Savior Animal',result.animal||open],
-      [ar?'صدى الدافع':'Story motive',leadingMotif||open]
+      [ar?'الدافع السردي':'Story motive',leadingMotif||open]
     ];
     const directional=Object.values(result.balance).filter(item=>item.clear).length;
     const evidenceHint=adaptiveState()?`<p class="cp-portrait-evidence-hint">${e(ar?`${directional} من 5 محاور لها اتجاه واضح نسبياً${isCore&&!spectrum.coverage?' · قراءة الدوافع تستكمل في العمق.':''}`:`${directional} of 5 contrasts show a direction${isCore&&!spectrum.coverage?' · story motives need the deeper reading.':''}`)}</p>`:'';
     const nextLabel=ar?'توسيع القراءة':'Deepen profile';
     const depthCount=limits().full-limits().core;
-    const depthNote=isCore?`<p class="cp-portrait-depth-note">${e(ar?'أدلة إضافية للـ5 Coins · Lens · Savior Animal · دوافع Enneagram.':'More evidence for the five Coins · Lens · Savior Animal · Enneagram motives.')}</p>`:'';
+    const depthNote=isCore?`<p class="cp-portrait-depth-note">${e(ar?'أدلة إضافية للمحاور الخمسة · Lens · Savior Animal · دوافع Enneagram.':'More evidence for the five Coins · Lens · Savior Animal · Enneagram motives.')}</p>`:'';
     const nextAction=isCore?`<button type="button" class="cp-button cp-button-primary cp-portrait-next" data-action="deepen">${e(nextLabel)}<small dir="ltr">+${depthCount}</small></button>`:
-      refineCount?action('refine',(ar?'استكمل المحاور المفتوحة':'Refine open contrasts')+' (+'+refineCount+')','cp-button-primary'):'';
+      refineCount?action('refine',(ar?'استكمل المحاور غير المحسومة':'Refine open contrasts')+' (+'+refineCount+')','cp-button-primary'):'';
     const downloadAction=`<button type="button" class="cp-button cp-button-outline cp-portrait-download" data-action="image"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 17v4h14v-4"/></svg>${e(ar?'نزّل البورتريه':'Download portrait')}</button>`;
     const portraitTop=`<header class="cp-portrait-hero${cover?' has-art':''}">${coverArt}<div class="cp-portrait-copy"><p class="cp-eyebrow">${e(isCore?(ar?'البصمة السينمائية · أولية':'CINEMA PROFILE · INITIAL READING'):(ar?'البصمة السينمائية':'CINEMA PROFILE'))}</p><p class="cp-portrait-label">${e(ar?'بصمة الأرشيف':'The Archive Signature')}</p><h1 class="cp-portrait-name${!heading&&!lens?' is-open':''}">${e(signature)}</h1>${subtitle?`<p class="cp-portrait-formula">${e(subtitle)}</p>`:''}<p class="cp-portrait-description">${e(heading?desc:lens?pairDesc:desc)}</p><p class="cp-portrait-confidence">${e(t(result.consistency))}</p><div class="cp-portrait-traits">${traits.map(([label,value])=>`<div><small>${e(label)}</small><strong>${e(value)}</strong></div>`).join('')}</div>${evidenceHint}<div class="cp-actions cp-portrait-actions">${nextAction}${downloadAction}${action('review',t('reviewAnswers'),'cp-button-quiet')}</div>${depthNote}</div></header>`;
     const exportPanel=`<div class="cp-feedback" id="cp-image-status" role="status"></div><section id="cp-export" class="cp-export" hidden><img alt="${e(ar?'بطاقة البصمة السينمائية':'Cinema Profile portrait card')}"><div><h3 class="cp-subheading">${e(t('save'))}</h3><p class="cp-small">${e(ar?'بطاقة مرئية مختصرة من بصمتك وأفلام اختياراتك.':'A visual card with your signature and films from your choices.')}</p><a class="cp-button cp-button-primary" download="The-TS-Archive-Cinema-Profile.png">Download PNG</a><button type="button" class="cp-text-button" data-action="close-export">${e(ar?'إغلاق المعاينة':'Close preview')}</button></div></section>`;
@@ -1020,7 +1020,7 @@
     const desc=result.type?loc(C.familyInfo[result.type]):t("notEnough");
     const pair=result.functionPair;
     const lens=C.lensName(pair,state.locale);
-    const pairDesc=pair?loc(C.functionPairs[pair].description):state.locale==='ar'?"العدسة تبقى مفتوحة حين تتوازن الاختيارات.":"The lens stays open when the choices are balanced.";
+    const pairDesc=pair?loc(C.functionPairs[pair].description):state.locale==='ar'?"لا يُحسم نوع العدسة حين تتوازن الاختيارات.":"The lens stays open when the choices are balanced.";
     const pairCards='<h3 class="cp-rank-heading">'+e(state.locale==="ar"?"العدسات":"Lenses")+'</h3><div class="cp-type-rank cp-function-rank">'+result.functionRank.map(item=>'<div class="'+(pair===item.type?'cp-leading':'')+'"><strong>'+e(C.lensName(item.type,state.locale))+'</strong><span>'+(result.functionEvidence.complete?item.score+'%':'—')+'</span></div>').join('')+'</div>';
     const cover=result.chosenFilms.find(film=>film.still);
     const reading=C.readings(result,state.locale);
@@ -1084,8 +1084,8 @@
       const wash=ctx.createLinearGradient(0,0,W,H);wash.addColorStop(0,'#24201a');wash.addColorStop(.48,bg);wash.addColorStop(1,'#151311');
       ctx.fillStyle=wash;ctx.fillRect(0,0,W,H);
       ctx.strokeStyle=line;ctx.lineWidth=2;ctx.strokeRect(28,28,W-56,H-56);
-      const font=(size,weight,family)=>`${weight} ${size}px "${family}", ${family==='Instrument Serif'?'Georgia, serif':'Arial, sans-serif'}`;
-      const native=rtl?'Tahoma':'DM Sans',display=rtl?'Tahoma':'Instrument Serif';
+      const font=(size,weight,family)=>`${weight} ${size}px "${family}", ${family==='Instrument Serif'?'Georgia, serif':family==='Noto Sans Arabic'?'"DM Sans", Arial, sans-serif':'Arial, sans-serif'}`;
+      const native=rtl?'Noto Sans Arabic':'DM Sans',display=rtl?'Noto Sans Arabic':'Instrument Serif';
       const direction=rtl?'rtl':'ltr',start=rtl?right:pad;
       function draw(value,x,y,size,color=ink,weight=400,family=native,align=rtl?'right':'left',dir=direction){ctx.font=font(size,weight,family);ctx.fillStyle=color;ctx.textAlign=align;ctx.textBaseline='top';ctx.direction=dir;ctx.fillText(String(value),x,y);}
       function wrapped(value,max,size,weight,family,maxLines=2){ctx.font=font(size,weight,family);const words=String(value||'').split(/\s+/).filter(Boolean),lines=[];let current='';for(const word of words){const next=current?current+' '+word:word;if(current&&ctx.measureText(next).width>max){lines.push(current);current=word;}else current=next;}if(current)lines.push(current);const out=lines.slice(0,maxLines);return out.map((row,i)=>{if((lines.length>maxLines&&i===maxLines-1)||ctx.measureText(row).width>max){while(row&&ctx.measureText(row+'…').width>max)row=row.slice(0,-1);return row+'…';}return row;});}
@@ -1104,7 +1104,7 @@
       const desc=wrapped(description,width,30,400,native,2);desc.forEach((row,i)=>draw(row,start,y+i*41,30,muted,400,native));
       y+=desc.length*41+34;rule(y);y+=27;
       const motive=currentResult.motiveSpectrum.lead;
-      const traits=[[rtl?'العدسة':'Lens',lens||(rtl?'مفتوح':'Open')],[rtl?'Savior Animal المحتمل':'Possible Savior Animal',currentResult.animal||(rtl?'مفتوح':'Open')],[rtl?'صدى الدافع':'Story motive',motive?C.local(motive.name,locale):(rtl?'مفتوح':'Open')]];
+      const traits=[[rtl?'العدسة':'Lens',lens||(rtl?'غير محسوم':'Open')],[rtl?'Savior Animal المحتمل':'Possible Savior Animal',currentResult.animal||(rtl?'غير محسوم':'Open')],[rtl?'الدافع السردي':'Story motive',motive?C.local(motive.name,locale):(rtl?'غير محسوم':'Open')]];
       const col=width/3;
       traits.forEach(([label,value],i)=>{
         const x=rtl?right-i*col:pad+i*col;
@@ -1149,7 +1149,7 @@
     const left=86,right=994, width=908;
     let y=104;
     const setText=(size,weight=400,color=ink,align=rtl?"right":"left")=>{
-      ctx.font=weight+" "+size+"px Arial, sans-serif";ctx.fillStyle=color;
+      ctx.font=weight+" "+size+"px "+(rtl?'"Noto Sans Arabic", "DM Sans", Arial, sans-serif':'Arial, sans-serif');ctx.fillStyle=color;
       ctx.textAlign=align;ctx.textBaseline="top";ctx.direction=rtl?"rtl":"ltr";
     };
     const text=(value,size,weight=400,color=ink)=>{
@@ -1176,7 +1176,7 @@
     for(const [axis,a,b] of coins()){
       const percent=result.balance[axis].percent;
       const hasEvidence=result.balance[axis].count>0;
-      ctx.direction="ltr";ctx.font="600 25px Arial";ctx.fillStyle=ink;ctx.textAlign="left";ctx.fillText(a+" "+(hasEvidence?percent+"%":"—"),left,y);
+      ctx.direction="ltr";ctx.font=rtl?'600 25px "Noto Sans Arabic", "DM Sans", Arial':'600 25px Arial';ctx.fillStyle=ink;ctx.textAlign="left";ctx.fillText(a+" "+(hasEvidence?percent+"%":"—"),left,y);
       ctx.textAlign="right";ctx.fillText((hasEvidence?(100-percent)+"%":"—")+" "+b,right,y);
       y+=40;ctx.fillStyle="#58626a";ctx.fillRect(left,y,width,10);ctx.fillStyle=accent;ctx.fillRect(left,y,width*percent/100,10);y+=33;
     }

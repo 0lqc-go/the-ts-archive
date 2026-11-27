@@ -4,10 +4,10 @@
   const data = globalThis.CinemaProfileData;
   const axisNames = ["od", "observer", "decider", "sn", "tf"];
   const functionPairs = {
-    ST:{name:{en:"Vérité",ar:"العدسة"},description:{en:"The world on screen becomes tangible through precise details and a coherent sequence of events.",ar:"يصبح عالم الشاشة ملموساً عبر التفاصيل الدقيقة وتسلسل الأحداث المتماسك."}},
-    SF:{name:{en:"Ember",ar:"الجمر"},description:{en:"In the details of lived experience, you notice the commitments that lend a moment its warmth.",ar:"تلتقط في تفاصيل التجربة الحية ما يمنح اللحظة دفئها وقيمتها."}},
+    ST:{name:{en:"Vérité",ar:"الواقعية"},description:{en:"The world on screen becomes tangible through precise details and a coherent sequence of events.",ar:"يصبح عالم الشاشة ملموساً عبر التفاصيل الدقيقة وتسلسل الأحداث المتماسك."}},
+    SF:{name:{en:"Ember",ar:"الجمرة"},description:{en:"In the details of lived experience, you notice the commitments that lend a moment its warmth.",ar:"تلتقط في تفاصيل التجربة الحية ما يمنح اللحظة دفئها وقيمتها."}},
     NT:{name:{en:"Prism",ar:"الموشور"},description:{en:"You follow the architecture beneath the image, testing how different possibilities illuminate the whole.",ar:"تتتبّع البنية الكامنة خلف الصورة، وتختبر كيف تضيء الاحتمالات المختلفة العمل بأكمله."}},
-    NF:{name:{en:"Reverie",ar:"الرؤيا"},description:{en:"You follow what images evoke, how their meanings echo and what makes a character's choices matter.",ar:"تتتبّع ما توحي به الصور، وكيف تتردد معانيها، وما يمنح اختيارات الشخصيات وزنها."}}
+    NF:{name:{en:"Reverie",ar:"حلم اليقظة"},description:{en:"You follow what images evoke, how their meanings echo and what makes a character's choices matter.",ar:"تتتبّع ما توحي به الصور وما يتردّد من معانيها، وما يضفي على قرارات الشخصيات أهميتها."}}
   };
   const alias = {
     emotion:"emotional", group:"community", architecture:"visual", psychology:"psychological",
@@ -17,7 +17,7 @@
   };
   const ratingNames = {
     en:["Very dissatisfied", "Dissatisfied", "Neutral", "Satisfied", "Very satisfied"],
-    ar:["غير راضي جدًا", "غير راضي", "بالنص", "راضي", "راضي جدًا"]
+    ar:["غير راضٍ إطلاقًا", "غير راضٍ", "محايد", "راضٍ", "راضٍ جدًا"]
   };
   const ageLabels = {
     "":{en:"Prefer not to say",ar:"أفضل عدم الإجابة"},
@@ -38,15 +38,15 @@
   const familyInfo = {
     IxxJ:{name:{en:"Architect",ar:"المعماري"},lead:"Oi",group:"Observer",en:"You look for the design that holds a story together.",ar:"تبحث عن البناء الذي يجمع خيوط الحكاية."},
     ExxP:{name:{en:"Voyager",ar:"الرحّالة"},lead:"Oe",group:"Observer",en:"You are drawn to the paths a story has not yet taken.",ar:"تجذبك المسارات التي لم تسلكها الحكاية بعد."},
-    IxxP:{name:{en:"Auteur",ar:"المؤلّف"},lead:"Di",group:"Decider",en:"You follow the private voice behind a character's decisions.",ar:"تتبع الصوت الخاص خلف قرارات الشخصية."},
-    ExxJ:{name:{en:"Conductor",ar:"المايسترو"},lead:"De",group:"Decider",en:"You follow the interplay of people, choices and shared consequences.",ar:"تتبع التفاعل بين الأشخاص والاختيارات والعواقب المشتركة."}
+    IxxP:{name:{en:"Auteur",ar:"المؤلّف"},lead:"Di",group:"Decider",en:"You follow the private voice behind a character's decisions.",ar:"تتتبّع الصوت الداخلي الكامن وراء قرارات الشخصية."},
+    ExxJ:{name:{en:"Conductor",ar:"المايسترو"},lead:"De",group:"Decider",en:"You follow the interplay of people, choices and shared consequences.",ar:"تتتبّع تفاعل الشخصيات وقراراتها وما يترتّب عليها من آثار مشتركة."}
   };
   const animalNames = {"Oi/Di":"Sleep","Oe/Di":"Consume","Oi/De":"Blast","Oe/De":"Play"};
   const animalInfo = {
     Sleep:{pair:"Oi + Di",description:{en:"Private reflection and the revisiting of what is already known.",ar:"التأمّل الداخلي وإعادة النظر فيما هو معروف."}},
-    Consume:{pair:"Oe + Di",description:{en:"Taking in new material through a personal point of view.",ar:"استقبال أفكار وتجارب جديدة عبر منظور خاص."}},
+    Consume:{pair:"Oe + Di",description:{en:"Taking in new material through a personal point of view.",ar:"استيعاب الأفكار والتجارب الجديدة من منظورك الخاص."}},
     Blast:{pair:"Oi + De",description:{en:"Giving form to what is known and communicating it to others.",ar:"صياغة ما هو معروف ومشاركته مع الآخرين."}},
-    Play:{pair:"Oe + De",description:{en:"Discovering possibilities through interaction and shared momentum.",ar:"اكتشاف الاحتمالات عبر التفاعل والحركة المشتركة."}}
+    Play:{pair:"Oe + De",description:{en:"Discovering possibilities through interaction and shared momentum.",ar:"استكشاف الاحتمالات من خلال التفاعل والنشاط مع الآخرين."}}
   };
   const impressionNames={
     Si:["Grain","Oi"],Se:["Grain","Oe"],Ni:["Motif","Oi"],Ne:["Motif","Oe"],

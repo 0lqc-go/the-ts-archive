@@ -67,6 +67,9 @@
     setText('.profile-name', profile.name);
     for (const link of document.querySelectorAll('.profile, .curator-link')) link.href = profile.url;
     for (const avatar of document.querySelectorAll('.avatar')) {
+      // The home masthead already contains the real local image; do not
+      // replace it with a new request after the catalogue finishes loading.
+      if (avatar.querySelector('img')?.getAttribute('src') === profile.avatar) continue;
       const image = document.createElement('img');
       image.src = profile.avatar;
       image.alt = '';
