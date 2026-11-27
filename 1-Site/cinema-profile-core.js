@@ -68,6 +68,30 @@
       ["tf",local(impressionWords.Structure,locale),local(impressionWords.Conviction,locale)]];
   }
 
+  // Export translations only. The portrait, evidence panel, scoring, and
+  // ordinary summary retain the Archive's cinematic vocabulary.
+  const opsEquivalents = {
+    "Ni/Te":"INTJ", "Ni/Fi":"INTJ Jumper", "Ni/Fe":"INFJ", "Ni/Ti":"INFJ Jumper",
+    "Si/Te":"ISTJ", "Si/Fi":"ISTJ Jumper", "Si/Fe":"ISFJ", "Si/Ti":"ISFJ Jumper",
+    "Ne/Ti":"ENTP", "Ne/Fe":"ENTP Jumper", "Ne/Fi":"ENFP", "Ne/Te":"ENFP Jumper",
+    "Se/Ti":"ESTP", "Se/Fe":"ESTP Jumper", "Se/Fi":"ESFP", "Se/Te":"ESFP Jumper",
+    "Ti/Ne":"INTP", "Ti/Si":"INTP Jumper", "Ti/Se":"ISTP", "Ti/Ni":"ISTP Jumper",
+    "Fi/Ne":"INFP", "Fi/Si":"INFP Jumper", "Fi/Se":"ISFP", "Fi/Ni":"ISFP Jumper",
+    "Te/Ni":"ENTJ", "Te/Se":"ENTJ Jumper", "Te/Si":"ESTJ", "Te/Ne":"ESTJ Jumper",
+    "Fe/Ni":"ENFJ", "Fe/Se":"ENFJ Jumper", "Fe/Si":"ESFJ", "Fe/Ne":"ESFJ Jumper"
+  };
+  const enneagramTypes = {
+    1:{en:"Reformer",ar:"المصلح"},2:{en:"Helper",ar:"المساعد"},3:{en:"Achiever",ar:"المنجز"},
+    4:{en:"Individualist",ar:"الفرداني"},5:{en:"Investigator",ar:"الباحث"},6:{en:"Loyalist",ar:"المخلص"},
+    7:{en:"Enthusiast",ar:"المتحمس"},8:{en:"Challenger",ar:"المتحدّي"},9:{en:"Peacemaker",ar:"صانع السلام"}
+  };
+  function decodedCoins(locale) {
+    const ar=locale==="ar";
+    return [["od","Observer","Decider"],["observer","Oi","Oe"],["decider","Di","De"],
+      ["sn",ar?"S (الحسّ)":"S (Sensing)",ar?"N (الحدس)":"N (Intuition)"],
+      ["tf",ar?"T (التفكير)":"T (Thinking)",ar?"F (الشعور)":"F (Feeling)"]];
+  }
+
   // Independent story-motive palette inspired by the nine Enneagram themes.
   // These are film affinities, NOT a measure of a person's basic fear, type,
   // wing, instinct or clinical traits. A film may express several motives.
@@ -588,35 +612,45 @@
     return result;
   }
 
-  function profileSummary(profile, state, locale) {
+  function profileSummary(profile, state, locale, {decoded=false}={}) {
     const ar=locale==="ar";
-    const top = familyName(profile.rank[0]?.type,locale);
-    const heading = familyName(profile.type,locale) || (ar?"كادر مفتوح":"Open Frame");
+    const family = key => decoded ? (key || "") : familyName(key,locale);
+    const lens = key => decoded ? (key || "") : lensName(key,locale);
+    const functionName = key => decoded ? (key || "") : impressionName(key,locale);
+    const motive = item => decoded
+      ? (ar?"النمط ":"Type ")+item.id+" ("+local(enneagramTypes[item.id],locale)+")"
+      : local(item.name,locale);
+    const top = family(profile.rank[0]?.type);
+    const heading = family(profile.type) || (decoded?(ar?"غير محسومة":"Unresolved"):(ar?"كادر مفتوح":"Open Frame"));
+    const resolvedPair=decoded&&profile.type&&profile.observerFunction&&profile.deciderFunction
+      ? profile.saviors.join("/") : "";
+    const opsEquivalent=resolvedPair&&opsEquivalents[resolvedPair];
     const lines = [
       ar?"ملف الذائقة السينمائية — The T.S. Archive":"Cinema Profile — The T.S. Archive",
-      (ar?"البصمة: ":"Archive signature: ")+heading+
+      (decoded?(ar?"عائلة OPS المعرفية: ":"OPS cognitive family: "):(ar?"البصمة: ":"Archive signature: "))+heading+
         (!profile.type&&profile.cognitiveCount>=6&&top ? " ("+top+" "+(ar?"أقرب مبدئيًا":"tentative lead")+")":""),
-      (ar?"العدسة السينمائية: ":"Cinematic lens: ")+(lensName(profile.functionPair,locale) || (ar?"لم تتضح بعد":"Still open")),
+      (decoded?(ar?"زوج الوظائف: ":"Function pair: "):(ar?"العدسة السينمائية: ":"Cinematic lens: "))+(lens(profile.functionPair) || (ar?"لم تتضح بعد":"Still open")),
       (ar?"تركيبة الـCoins: ":"Coin combination: ")+(profile.formula || (ar?"أدلة غير كافية":"insufficient evidence")),
       (ar?"Savior Animal المحتمل: ":"Possible Savior Animal: ")+(profile.animal || (ar?"غير محسوم":"Still open")),
-      (ar?"Saviors المحتملة: ":"Possible Saviors: ")+(profile.saviors.map(fn=>impressionName(fn,locale)).join(" / ") || (ar?"غير محسومة":"Inconclusive")),
-      (ar?"Demons المقابلة نظرياً: ":"The corresponding Demons: ")+(profile.demons.map(fn=>impressionName(fn,locale)).join(" / ") || (ar?"غير محسومة":"Inconclusive")),
+      (ar?"Saviors المحتملة: ":"Possible Saviors: ")+(profile.saviors.map(functionName).join(" / ") || (ar?"غير محسومة":"Inconclusive")),
+      (ar?"Demons المقابلة نظرياً: ":"The corresponding Demons: ")+(profile.demons.map(functionName).join(" / ") || (ar?"غير محسومة":"Inconclusive")),
+      ...(opsEquivalent?[(ar?"المقابل النظري حسب OPS (وليس تصنيف MBTI مؤكداً): ":"Theoretical OPS equivalent (not a confirmed MBTI type): ")+opsEquivalent+" ("+resolvedPair+")"]:[]),
       (ar?"اتساق الإجابات: ":"Answer consistency: ")+({limited:{en:"Limited",ar:"محدود"},tentative:{en:"Tentative",ar:"أولي"},consistent:{en:"Consistent",ar:"متسق نسبيًا"}}[profile.consistency][locale]),
-      ...coinLabels(locale).map(([axis,left,right])=>left+" "+(profile.balance[axis].count?profile.balance[axis].percent+"%":"—")+" / "+right+" "+(profile.balance[axis].count?(100-profile.balance[axis].percent)+"%":"—")+" · "+profile.balance[axis].pairs+" "+(ar?"مفاضلات":"comparisons")),
+      ...(decoded?decodedCoins(locale):coinLabels(locale)).map(([axis,left,right])=>left+" "+(profile.balance[axis].count?profile.balance[axis].percent+"%":"—")+" / "+right+" "+(profile.balance[axis].count?(100-profile.balance[axis].percent)+"%":"—")+" · "+profile.balance[axis].pairs+" "+(ar?"مفاضلات":"comparisons")),
       (ar?"الإجابات: ":"Answers: ")+profile.answered+"/"+state.limit,
       ar?"هذه الدرجات موازين نسبية استكشافية مبنية على الإجابات، وتحتاج إلى معايرة مستقلة.":"These scores are exploratory relative balances based on the answers and require independent calibration."
     ];
     if(state.age) lines.push((ar?"الفئة العمرية: ":"Age range: ")+local(ageLabels[state.age],locale));
     if(profile.cognitiveCount) {
-      lines.push((ar?"البصمات: ":"Signatures: ")+profile.rank.map(item=>familyName(item.type,locale)+" "+item.score+"%").join(ar?"، ":", "));
-      lines.push((ar?"العدسات: ":"Lenses: ")+profile.functionRank.map(item=>lensName(item.type,locale)+" "+item.score+"%").join(ar?"، ":", "));
+      lines.push((decoded?(ar?"ترجيح عائلات OPS: ":"OPS family affinities: "):(ar?"البصمات: ":"Signatures: "))+profile.rank.map(item=>family(item.type)+" "+item.score+"%").join(ar?"، ":", "));
+      lines.push((decoded?(ar?"ترجيح أزواج الوظائف: ":"Function-pair affinities: "):(ar?"العدسات: ":"Lenses: "))+profile.functionRank.map(item=>lens(item.type)+" "+item.score+"%").join(ar?"، ":", "));
     }
     if(profile.animalEvidence) lines.push((ar?"ترجيح Animals: ":"Animal affinity: ")+profile.animalRank.map(item=>item.name+" "+item.score+"%").join(ar?"، ":", "));
     if(profile.motiveSpectrum.available) {
       lines.push("",ar?"طيف الدوافع · مستلهم من Enneagram":"Motive spectrum · Enneagram-inspired",
-        profile.motiveSpectrum.rows.map(item=>local(item.name,locale)+" "+(item.score??"—")).join(" · "),
-        ...(profile.motiveSpectrum.lead?[((ar?"الدافع المتقدم: ":"Leading story motive: ")+local(profile.motiveSpectrum.lead.name,locale)),
-          ((ar?"صدى الجناح: ":"Wing echo: ")+(profile.motiveSpectrum.wing?local(profile.motiveSpectrum.wing.name,locale):(ar?"مفتوح":"Open")))]:[]),
+        profile.motiveSpectrum.rows.map(item=>motive(item)+" "+(item.score??"—")).join(" · "),
+        ...(profile.motiveSpectrum.lead?[((ar?"الدافع المتقدم: ":"Leading story motive: ")+motive(profile.motiveSpectrum.lead)),
+          ((ar?"صدى الجناح: ":"Wing echo: ")+(profile.motiveSpectrum.wing?motive(profile.motiveSpectrum.wing):(ar?"مفتوح":"Open")))]:[]),
         ar?"هذه أصداء الدوافع في الأفلام المختارة وليست تشخيصاً لنمط Enneagram.":"These are affinities with story motives, not an Enneagram typing result.");
     }
     if(profile.affinities.length) lines.push((ar?"الأنواع السينمائية المركبة: ":"Specific cinematic affinities: ")+profile.affinities.map(item=>local(item.name,locale)).join(ar?"، ":", "));
@@ -635,7 +669,7 @@
     const ar=locale==="ar";
     const join = ar?"، ":", ";
     const list = items => items.map(movie=>movie.title+" ("+movie.year+")").join(join);
-    const details = profileSummary(profile,state,locale);
+    const details = profileSummary(profile,state,locale,{decoded:true});
     const evidence = evidenceLines(profile,locale);
     const watched = list(profile.familiarity.seen);
     const interested = list(profile.familiarity.interested);
@@ -649,9 +683,22 @@
       "", (ar?"أعمال شاهدتها (استبعدها): ":"Watched films (exclude): ")+(watched || (ar?"غير محدد":"not specified")),
       ...(interested?[(ar?"أعمال لم أشاهدها ولكنني مهتم بها: ":"Unwatched films I am interested in: ")+interested]:[]),
       ...(uninterested?[(ar?"أعمال لم تجذبني: ":"Films I am not interested in: ")+uninterested]:[]),
-      "", ar?
-        "رشح لي 12 فيلمًا لم أشاهدها موزعة إلى 6 مطابقة قريبة لذائقتي، و4 توسّع ذائقتي في اتجاهات متصلة، وفيلمين مفاجئين. اذكر العنوان الأصلي والسنة والمخرج ونوع العمل السردي والفني، وسببًا محددًا يربط كل ترشيح بملفي. صف نوعية الأفلام التي تناسبني فقرةً واحدة دقيقة تقرأ ما بين السطور، مع توضيح الأدلة والابتعاد عن الأحكام النفسية الجازمة. تجنب حرق النهايات، وتحقق من معلومات الأفلام. اسأل عن الأفلام التي شاهدتها قبل ترشيحات لاحقة إذا لزم."
-        : "Recommend 12 films I have not seen: 6 close matches, 4 adjacent discoveries, and 2 thoughtful surprises. Include original title, year, director, narrative and formal type, and a specific reason grounded in this profile. Write one nuanced paragraph describing the kind of cinema that fits my taste, drawing inferences from the recorded evidence while avoiding definitive psychological claims. Do not spoil endings. Verify film facts and ask about additional watched films if needed.",
+      "", ar?"نظّم قراءتك وترشيحاتك في أربعة أقسام:":"Organize your reading and recommendations into four sections:",
+      ar?
+        "1. ملامح الشخصية (Cognitive Portrait): قدّم فقرة موجزة من أربعة إلى ستة أسطر عن طريقة تفكيري وإدراكي للحكايات واتخاذ الأحكام، مستندًا إلى الأنماط المتكررة في مجمل الإجابات، لا إلى تسمية النمط وحدها. ميّز بين ما تؤيده الإجابات وما تستنبطه على سبيل الاحتمال، واذكر ما لا تكفي الأدلة لحسمه. لا تقدّم تشخيصًا نفسيًا أو تصنيفًا قطعيًا للشخصية."
+        : "1. Cognitive Portrait: Write a short portrait of my possible cognitive and personality style in four to six lines. Draw on recurring patterns across the answers, not the type label alone. Distinguish evidence from tentative inference and acknowledge what remains unresolved. Do not make definitive personality or psychological diagnoses.",
+      ar?
+        "2. ما بين السطور (Between the Lines): استقرئ الموضوعات والدوافع والاختيارات الجمالية التي تتكرر في ملفي، واستنبط نوع السينما التي تناسبني ولماذا. قدّم ملاحظتين أو ثلاثًا محددة مرتبطة بالأدلة، وأشر إلى التوترات أو التناقضات بين اختياراتي إن كانت مدعومة بالإجابات، دون اختلاقها أو المبالغة بها."
+        : "2. Between the Lines: Infer recurring themes, story motives, and aesthetic patterns in my profile. Describe the kind of cinema that fits my taste and why, in two or three specific observations grounded in the evidence. Note interesting tensions or contradictions only when the answers support them; do not invent them.",
+      ar?
+        "3. ترشيحات الأفلام: رشح لي 12 فيلمًا لم أشاهدها موزعة إلى 6 مطابقة قريبة لذائقتي، و4 توسّع ذائقتي في اتجاهات متصلة، وفيلمين مفاجئين. استبعد الأفلام المذكورة في قائمة ما شاهدته. اذكر العنوان الأصلي والسنة والمخرج ونوع العمل السردي والفني، وسببًا محددًا يربط كل ترشيح بملفي."
+        : "3. Film Recommendations: Recommend 12 films I have not seen: 6 close matches, 4 adjacent discoveries, and 2 thoughtful surprises. Exclude the listed watched films. Include original title, year, director, narrative and formal type, and a specific reason grounded in this profile.",
+      ar?
+        "4. خارج السينما (Beyond Cinema): اقترح روايتين ومسلسلين (أو مسلسلين قصيرين) ينسجمان مع الأنماط السردية والجمالية والفكرية المستنبطة من الاختبار. اذكر العنوان الأصلي والمؤلف للرواية أو مبتكر المسلسل وسنة عرضه، مع سبب موجز من سطر واحد لكل عمل. لا تفترض تاريخ قراءتي للروايات أو مشاهدتي للمسلسلات إن لم أذكره."
+        : "4. Beyond Cinema: Suggest two novels and two TV series or miniseries that resonate with the narrative, aesthetic, and intellectual patterns inferred from the test. Include original title and author for each novel, or creator and year for each series, with one brief line linking each recommendation to the evidence. Do not assume which books I have read or series I have watched unless stated.",
+      ar?
+        "تجنب حرق الأحداث والنهايات، وتحقق من معلومات جميع الأعمال. لا تختلق أدلة أو تجارب شخصية غير واردة في الملف، واطلب توضيحًا عند نقص المعلومات إن لزم."
+        : "Avoid spoilers and verify the facts of all recommended works. Do not invent evidence or personal history not present in the profile. Ask for clarification or additional viewing history if necessary.",
       ar?"أعطِ الأولوية لأفلام آخر عشرين سنة ولأعمال المخرجين البارزين والمعاصرين، مع اختيار ما يلائم ذائقتي تحديداً.":"Favor films from the last twenty years and notable contemporary directors, guided by my specific taste."
     ].join("\n");
   }
