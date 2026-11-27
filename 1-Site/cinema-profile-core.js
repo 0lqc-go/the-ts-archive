@@ -106,7 +106,42 @@
     {id:8,name:{en:"Will",ar:"الإرادة"},hint:{en:"Autonomy & resolve",ar:"الاستقلال والحزم"},primary:["power","freedom","authority","control"],secondary:["justice","resilience","survival","ambition"]},
     {id:9,name:{en:"Stillwater",ar:"السكون"},hint:{en:"Harmony & reconciliation",ar:"الانسجام والمصالحة"},primary:["cooperation","friendship","hope","warm"],secondary:["relationship","trust","familyBond","growth"]}
   ];
+  function adaptiveMotiveSpectrum(state){
+    const totals=motifs.map(m=>({motif:m,sum:0,count:0,positive:0,negative:0,films:new Set(),contexts:new Set()}));
+    let answered=0;
+    for(const q of questionsForState(state).slice(0,state.limit)){
+      if(q.purpose!=="motive")continue;
+      const answer=state.answers[q.id];
+      if(!answer?.done||answer.mode!=="visual")continue;
+      const picked=q.options.find(o=>o.id===answer.choice);
+      if(!picked||!q.options.every(o=>answer.considered?.includes(o.id)))continue;
+      answered++;
+      for(const option of q.options){
+        const item=totals[option.motiveId-1];
+        if(!item)continue;
+        const positive=option===picked;
+        item.sum+=positive?1:-1;item.count++;
+        item[positive?"positive":"negative"]++;
+        item.films.add(option.filmId);item.contexts.add(q.id);
+      }
+    }
+    const rows=totals.map(item=>({...item.motif,count:item.count,positive:item.positive,negative:item.negative,
+      score:item.count?Math.round(50+50*item.sum/(item.count+1.85)):null,films:item.films.size,contexts:item.contexts.size}))
+      .sort((a,b)=>(b.score??-1)-(a.score??-1)||a.id-b.id);
+    const available=answered>=3;
+    const coverage=rows.every(m=>m.count>=2);
+    const supported=m=>m&&m.positive>=2&&m.contexts>=2;
+    const featured=available?rows.filter(supported).slice(0,3):[];
+    const first=rows[0],second=rows[1];
+    const lead=coverage&&supported(first)&&first.score-(second.score??0)>=3?first:null;
+    const neighbors=lead?rows.filter(m=>m.id===((lead.id+7)%9)+1||m.id===(lead.id%9)+1):[];
+    const wing=neighbors.length===2&&neighbors[0].positive>=1&&neighbors[0].score>=50&&
+      neighbors[0].score-(neighbors[1].score??0)>=3?neighbors[0]:null;
+    return {rows,featured,answered,available,coverage,lead,wing,independent:true};
+  }
+
   function motiveSpectrum(state){
+    if(state.version===6&&data.adaptive)return adaptiveMotiveSpectrum(state);
     const totals=motifs.map(m=>({motif:m,sum:0,mass:0,count:0,positive:0,negative:0,films:new Set()}));
     const strengths=new Map();
     function weights(id){
@@ -157,10 +192,21 @@
   const storyTags = film => filmTags(film).filter(tag=>!data.groups.endings.includes(tag));
   const anticipatedTags = film => filmTags(film).filter(tag=>data.groups.genres.includes(tag)||data.groups.themes.includes(tag));
 
-  function createState(locale = "en") {
+  function questionsForState(state){
+    return data.adaptive?.questionsFor(state)||data.questions;
+  }
+  function limitsForState(state){
+    return state.version===6&&data.adaptive?{core:data.adaptive.coreLimit,full:data.adaptive.fullLimit}:{core:data.coreLimit,full:data.fullLimit};
+  }
+  function formForAnswer(question, answer={}){
+    return data.adaptive?.form(question,answer)||question;
+  }
+  function createState(locale = "en", {legacy=false}={}) {
+    const adaptive=Boolean(data.adaptive&&!legacy);
     return {
-      version:5, locale, age:"", seed:Math.floor(Math.random() * 2147483647),
-      route:"intro", index:0, limit:data.coreLimit, answers:{}, familiarity:{}
+      version:adaptive?6:5, locale, age:"", seed:Math.floor(Math.random() * 2147483647),
+      route:"intro", index:0, limit:adaptive?data.adaptive.coreLimit:data.coreLimit, answers:{}, familiarity:{},
+      ...(adaptive?{refinement:[],bankRevision:data.adaptive.revision}:{})
     };
   }
 
@@ -189,12 +235,25 @@
       }
       return result >>> 0;
     }
-    return getModeOptions(question, mode).slice().sort((a,b) =>
+    const options=getModeOptions(question,mode);
+    // Stable counterbalancing: in the initial four blocks each coin's two
+    // directions appear first exactly twice. The alternative form retains
+    // the slot's order, and the three later blocks split first position 1/2.
+    if(question.purpose==="coin"&&Number.isInteger(question.block)&&options.length===2){
+      const band=question.block<=4?[1,2,3,4]:[5,6,7];
+      const salt=seed+":"+question.coin+":";
+      const ordered=band.slice().sort((a,b)=>hash(salt+a)-hash(salt+b));
+      const firstCount=band.length===4?2:1+(hash(salt+"depth")%2);
+      return ordered.indexOf(question.block)<firstCount?options.slice():options.slice().reverse();
+    }
+    return options.slice().sort((a,b) =>
       hash(seed + ":" + question.id + ":" + a.id) - hash(seed + ":" + question.id + ":" + b.id));
   }
 
   function calculate(state) {
-    const scores = Object.fromEntries(axisNames.map(axis => [axis, {sum:0, mass:0, count:0, positive:0, negative:0, films:new Set(), pairs:new Set(), contexts:new Set(), evidence:[]}]));
+    const adaptive=state.version===6&&Boolean(data.adaptive);
+    const scores = Object.fromEntries(axisNames.map(axis => [axis, {sum:0, mass:0, count:0, positive:0, negative:0, films:new Set(), pairs:new Set(), contexts:new Set(), evidence:[],
+      ...(adaptive?{sources:{film:{sum:0,mass:0,count:0,positive:0,negative:0,contexts:new Set()},text:{sum:0,mass:0,count:0,positive:0,negative:0,contexts:new Set()}},neutral:0,skipped:0,unverified:0}:{})}]));
     const taste = {};
     const examples = [];
     const comparisons = [];
@@ -241,6 +300,13 @@
       const value = (rating - 3) / 2;
       for (const tag of tags(items)) addTaste(tag, value, weight);
     }
+    function adaptiveTasteTags(movie,scope){
+      const all=filmTags(movie);
+      if(scope==="viewing")return all.filter(tag=>!data.groups.endings.includes(tag));
+      // A still can evoke atmosphere and cinematic form, but does not
+      // establish a preference for its story's ending or themes.
+      return all.filter(tag=>data.groups.style.includes(tag)||data.groups.tone.includes(tag));
+    }
 
     function contrastSignal(selected, other, weight, question) {
       if (!other.length) return false;
@@ -248,7 +314,8 @@
       for (const axis of axisNames) {
         // Only intentional, film-specific coin probes contribute cognitive
         // evidence. Ratings, genre preferences and poster picks never do.
-        if (question.coin !== axis || question.kind !== "visual" || !selected.filmId) continue;
+        if (question.coin !== axis || (question.kind !== "visual"&&!(adaptive&&question.kind==="scenario")) ||
+            (question.kind==="visual"&&!selected.filmId)) continue;
         const picked = selected.signal?.[axis] || 0;
         const otherMean = other.reduce((sum,item)=>sum + (item.signal?.[axis] || 0),0) / other.length;
         const difference = clamp((picked - otherMean) / 2, -1, 1);
@@ -258,22 +325,87 @@
         item.mass += Math.abs(difference) * weight;
         item.count += 1;
         item[difference > 0 ? "positive" : "negative"]++;
-        const contrasted=[selected,...other].map(option=>option.filmId);
+        const contrasted=[selected,...other].map(option=>option.filmId).filter(Boolean);
         contrasted.forEach(id=>item.films.add(id));
-        item.pairs.add([...new Set(contrasted)].sort().join("|"));
+        item.pairs.add(adaptive?question.id:[...new Set(contrasted)].sort().join("|"));
         item.contexts.add(question.evidenceKind);
-        item.evidence.push({film:data.filmById[selected.filmId].title,filmId:selected.filmId,still:selected.still,
-          compared:other.map(o=>({filmId:o.filmId,film:data.filmById[o.filmId].title,still:o.still})),
-          kind:question.evidenceKind,prompt:question.prompt,choice:selected.label,side:difference>0?1:-1});
+        const mode=question.kind==="scenario"?"text":"film";
+        if(adaptive){
+          const source=item.sources[mode];
+          source.sum+=difference*weight;source.mass+=Math.abs(difference)*weight;source.count++;
+          source[difference>0?"positive":"negative"]++;source.contexts.add(question.evidenceKind);
+        }
+        item.evidence.push({film:data.filmById[selected.filmId]?.title||"",filmId:selected.filmId,still:selected.still,
+          compared:other.map(o=>({filmId:o.filmId,film:data.filmById[o.filmId]?.title||"",still:o.still,...(adaptive?{label:o.label}:{})})),
+          kind:question.evidenceKind,prompt:question.prompt,choice:selected.label,side:difference>0?1:-1,
+          ...(adaptive?{mode,slot:question.id,form:question.form??0,scene:question.scene}:{})});
         contributed = true;
       }
       return contributed;
     }
 
-    for (const question of data.questions.slice(0, state.limit)) {
-      const answer = state.answers[question.id];
+    for (const slot of questionsForState(state).slice(0, state.limit)) {
+      const answer = state.answers[slot.id];
       if (!answer?.done) continue;
+      const question=adaptive?formForAnswer(slot,answer):slot;
       completed++;
+      if(adaptive){
+        const score=slot.coin?scores[slot.coin]:null;
+        if(answer.mode==="skip"||answer.mode==="neutral"){
+          if(score)score[answer.mode==="skip"?"skipped":"neutral"]++;
+          if(answer.mode==="neutral")answered++;
+          continue;
+        }
+        if(slot.purpose==="coin"){
+          const picked=question.options.find(o=>o.id===answer.choice);
+          const other=question.options.filter(o=>o.id!==answer.choice);
+          const complete=picked&&other.length&&question.options.every(o=>answer.considered?.includes(o.id));
+          const text=question.kind==="scenario"&&answer.mode==="text";
+          const known=question.kind==="visual"&&answer.mode==="visual"&&answer.confirmed===true&&
+            question.options.every(o=>answer.recalled?.includes(o.filmId)&&!isUnseen(state.familiarity[o.filmId]));
+          if(!complete||(!text&&!known)){score.unverified++;continue;}
+          answered++;
+          if(known){
+            const movie=data.filmById[picked.filmId],against=other.map(o=>data.filmById[o.filmId].title);
+            chosenFilms.add(movie.id);
+            comparisons.push({film:movie.title,against,source:"coin"});
+            examples.push({kind:"compare",film:movie.title,against,source:"coin"});
+          }else examples.push({kind:"scenario",scene:question.scene,label:picked.label,axis:slot.coin});
+          if(contrastSignal(picked,other,.72,question))cognitiveCount++;
+          continue;
+        }
+        if(slot.purpose==="taste"||slot.purpose==="motive"){
+          const picked=question.options.find(o=>o.id===answer.choice);
+          if(!picked||answer.mode!=="visual"||!question.options.every(o=>answer.considered?.includes(o.id)))continue;
+          const movie=data.filmById[picked.filmId],others=question.options.filter(o=>o.id!==picked.id);
+          answered++;
+          if(movie)chosenFilms.add(movie.id);
+          if(slot.purpose==="taste"){
+            const scope=slot.tasteScope||"frame";
+            contrastTaste(adaptiveTasteTags(movie,scope),others.map(o=>adaptiveTasteTags(data.filmById[o.filmId],scope)),scope==="viewing"?.8:1,"film");
+            const against=others.map(o=>data.filmById[o.filmId].title);
+            comparisons.push({film:movie.title,against,source:"taste",scope});
+            examples.push({kind:"compare",film:movie.title,against,source:"taste",scope});
+          }else examples.push({kind:"motive",film:movie?.title||"",label:picked.label,motiveId:picked.motiveId});
+          continue;
+        }
+        if(slot.purpose==="rating"){
+          if(answer.mode!=="actual"||answer.watched!==true||!Number.isInteger(answer.rating)||answer.rating<1||answer.rating>5||
+             isUnseen(state.familiarity[question.filmId]))continue;
+          const movie=data.filmById[question.filmId];
+          if(!movie)continue;
+          answered++;
+          if(answer.rating>=4)chosenFilms.add(movie.id);
+          if(question.kind==="ending"){
+            absoluteTaste(question.endingTags,answer.rating,1.35);
+            endRatings.push({film:movie.title,rating:answer.rating,feeling:"",tags:question.endingTags,reason:null});
+          }else{
+            absoluteTaste(storyTags(movie),answer.rating,.85);
+            examples.push({kind:"satisfaction",film:movie.title,rating:answer.rating});
+          }
+          continue;
+        }
+      }
       if (answer.mode === "skip") continue;
       if (question.filmId && answer.mode !== "alternative" && isUnseen(state.familiarity[question.filmId])) continue;
       const options = getModeOptions(question, answer.mode);
@@ -381,10 +513,21 @@
     const balance = Object.fromEntries(axisNames.map(axis => {
       const item = scores[axis];
       const value = item.sum / (item.mass + 1.75);
-      const coverage=item.films.size>=3 && item.pairs.size>=3 && item.contexts.size>=2;
+      const coverage=(adaptive?(item.sources.text.count>0||item.films.size>=3):item.films.size>=3) && item.pairs.size>=3 && item.contexts.size>=2;
+      const follows=s=>s.count>=2&&s.sum!==0&&Math.max(s.positive,s.negative)/s.count>=.70;
+      const sourceConflict=adaptive&&follows(item.sources.film)&&follows(item.sources.text)&&
+        Math.sign(item.sources.film.sum)!==Math.sign(item.sources.text.sum);
       const clear=coverage && item.count>=3 && Math.abs(value)>=.22 &&
-        Math.max(item.positive,item.negative)/item.count>=.70;
-      return [axis,{...item,films:item.films.size,pairs:item.pairs.size,contexts:item.contexts.size,clear,value,percent:Math.round((value+1)*50)}];
+        Math.max(item.positive,item.negative)/item.count>=.70&&!sourceConflict;
+      let extra={};
+      if(adaptive){
+        const f=item.sources.film;
+        const filmRepeated=f.count>=3&&f.contexts.size>=2&&item.films.size>=3&&
+          Math.abs(f.sum/(f.mass+1.75))>=.22&&Math.max(f.positive,f.negative)/f.count>=.70&&Math.sign(f.sum)===Math.sign(value);
+        extra={status:clear?(filmRepeated?"repeated":"provisional"):item.count?"open":"insufficient",sourceConflict,
+          sources:Object.fromEntries(Object.entries(item.sources).map(([mode,s])=>[mode,{...s,contexts:s.contexts.size}]))};
+      }
+      return [axis,{...item,films:item.films.size,pairs:item.pairs.size,contexts:item.contexts.size,clear,value,percent:Math.round((value+1)*50),...extra}];
     }));
     // Each pole needs repeated evidence from multiple films and multiple
     // situations; a single strong reaction cannot settle a coin.
@@ -410,7 +553,7 @@
       orientation==="Decider"&&decider ? (decider==="Di"?"IxxP":"ExxJ") : "";
     const enough=Boolean(type);
     const formula=observer&&decider ? (orientation==="Observer"?observer+"/"+decider:orientation==="Decider"?decider+"/"+observer:observer+" + "+decider) : observer||decider||"";
-    const consistency=axisNames.every(axis=>balance[axis].clear) ? "consistent" :
+    const consistency=axisNames.every(axis=>adaptive?balance[axis].status==="repeated":balance[axis].clear) ? "consistent" :
       axisNames.some(axis=>balance[axis].clear) ? "tentative" : "limited";
     const observerFunction=observer&&snPole ? snPole+(observer==="Oi"?"i":"e") : "";
     const deciderFunction=decider&&tfPole ? tfPole+(decider==="Di"?"i":"e") : "";
@@ -446,7 +589,7 @@
     }
     const profile = { type, rank, balance, observer, decider, orientation, formula, animal, animalRank, animalEvidence, consistency, enough,functionPair,functionRank,functionEvidence,observerFunction,deciderFunction,saviors,demons,
       cognitiveCount, completed, answered, taste, entries, groupRank, examples, comparisons, endRatings,
-      chosenFilms:[...chosenFilms].map(id=>data.filmById[id]), familiarity
+      chosenFilms:[...chosenFilms].map(id=>data.filmById[id]), familiarity,...(adaptive?{adaptive:true}:{})
     };
     profile.affinities = deriveAffinities(profile);
     profile.recommendations = recommend(profile, state);
@@ -590,8 +733,15 @@
       if (items.length <= limit) return items;
       return Array.from({length:limit}, (_,index)=>items[Math.round(index*(items.length-1)/(limit-1))]);
     }
-    for (const example of sample(profile.comparisons,3)) {
-      result.push(locale === "ar" ? "فضّلت " + example.film + " على " + example.against.join("، ") : "Preferred " + example.film + " over " + example.against.join(", "));
+    const preferredComparisons=profile.adaptive?profile.comparisons.filter(item=>item.source==="taste"):profile.comparisons;
+    for (const example of sample(preferredComparisons,3)) {
+      const prefix=profile.adaptive?{
+        viewing:{en:"Chose to watch ",ar:"اخترت لمشاهدة الأمسية "},
+        frame:{en:"Preferred the frame from ",ar:"فضّلت كادر "},
+        atmosphere:{en:"Preferred the atmosphere of ",ar:"فضّلت أجواء "},
+        rhythm:{en:"Preferred the rhythm suggested by ",ar:"فضّلت الإيقاع الذي يوحي به "}
+      }[example.scope||"frame"]:null;
+      result.push((prefix?local(prefix,locale):locale==="ar"?"فضّلت ":"Preferred ")+example.film+(locale==="ar"?" على ":" over ")+example.against.join(locale==="ar"?"، ":", "));
     }
     for (const ending of profile.endRatings.slice().sort((a,b)=>Math.abs(b.rating-3)-Math.abs(a.rating-3)).slice(0,3)) {
       result.push((locale==="ar" ? "تقييم نهاية " : "Ending of ") + ending.film + " — " +
@@ -604,6 +754,15 @@
     const visualChoice=profile.examples.find(example=>example.kind==="image");
     if (visualChoice) {
       result.push((locale==="ar"?"اختيار بصري من الكادرات: ":"Preferred visual frame: ")+visualChoice.film);
+    }
+    if(profile.adaptive){
+      for(const item of sample(profile.examples.filter(e=>e.kind==="satisfaction"),3)){
+        result.push((locale==="ar"?"تقييم تجربة مشاهدة ":"Film satisfaction: ")+item.film+" — "+ratingNames[locale][item.rating-1]);
+      }
+      for(const item of sample(profile.examples.filter(e=>e.kind==="motive"),2)){
+        result.push((locale==="ar"?"الدافع المختار في الحكاية: ":"Chosen story motive: ")+local(item.label,locale));
+      }
+      return result;
     }
     if (result.length<4) {
       const scenarioResponses=profile.examples.filter(example=>example.kind==="reaction"&&!example.film);
@@ -641,6 +800,34 @@
       ar?"هذه الدرجات موازين نسبية استكشافية مبنية على الإجابات، وتحتاج إلى معايرة مستقلة.":"These scores are exploratory relative balances based on the answers and require independent calibration."
     ];
     if(state.age) lines.push((ar?"الفئة العمرية: ":"Age range: ")+local(ageLabels[state.age],locale));
+    if(profile.adaptive&&decoded){
+      const status={repeated:{en:"Repeated familiar-film evidence",ar:"أدلة سينمائية متكررة"},
+        provisional:{en:"Provisional (text or mixed evidence)",ar:"ترجيح أولي (أدلة نصية أو مختلطة)"},
+        open:{en:"Unresolved",ar:"غير محسوم"},insufficient:{en:"Insufficient evidence",ar:"أدلة غير كافية"}};
+      lines.push("",ar?"الأدلة لكل محور — لا تمثّل احتمالات تصنيف":"Evidence by contrast — not typing probabilities");
+      for(const [axis,left,right] of decodedCoins(locale)){
+        const info=profile.balance[axis];
+        if(!info?.sources)continue;
+        lines.push(left+" / "+right+": "+local(status[info.status],locale)+" · "+
+          (ar?"أدلة اتجاهية ":"directional ")+info.positive+" / "+info.negative+" · "+
+          (ar?"سياقات ":"contexts ")+info.contexts+" · "+
+          (ar?"سينمائية ":"film ")+info.sources.film.count+" ("+info.sources.film.positive+"/"+info.sources.film.negative+") · "+
+          (ar?"نصية ":"text ")+info.sources.text.count+" ("+info.sources.text.positive+"/"+info.sources.text.negative+") · "+
+          (ar?"تعادل ":"neutral ")+info.neutral+" · "+(ar?"تخطٍّ ":"skipped ")+info.skipped+
+          (info.unverified?" · "+(ar?"غير مؤكدة ":"unverified ")+info.unverified:"")+
+          (info.sourceConflict?(ar?" · اختلاف بين الصيغ":" · directions differ by form"):""));
+        for(const side of [1,-1]){
+          const item=info.evidence.find(e=>e.side===side&&e.mode==="film")||info.evidence.find(e=>e.side===side);
+          if(item){
+            const contrasted=(item.compared||[]).map(o=>(o.film&&o.film!==item.film?o.film+" — ":"")+local(o.label,locale)).join(" / ");
+            lines.push("  "+(side===1?left:right)+": "+(item.film?item.film+" — ":"")+
+              local(item.choice,locale)+(contrasted?(ar?" · مقابل: ":" · instead of: ")+contrasted:"")+
+              (item.mode==="text"?(ar?" (حكاية نصية)":" (written story)"):""));
+          }
+        }
+      }
+      lines.push(ar?"الصيغ السينمائية والنصية غير معايرة إحصائياً بعد؛ عامل الترجيحات المختلطة أو النصية على أنها أولية.":"Film and text forms have not been statistically equated; treat mixed or text-based patterns as provisional.");
+    }
     if(profile.cognitiveCount) {
       lines.push((decoded?(ar?"ترجيح عائلات OPS: ":"OPS family affinities: "):(ar?"البصمات: ":"Signatures: "))+profile.rank.map(item=>family(item.type)+" "+item.score+"%").join(ar?"، ":", "));
       lines.push((decoded?(ar?"ترجيح أزواج الوظائف: ":"Function-pair affinities: "):(ar?"العدسات: ":"Lenses: "))+profile.functionRank.map(item=>lens(item.type)+" "+item.score+"%").join(ar?"، ":", "));
@@ -652,6 +839,8 @@
         ...(profile.motiveSpectrum.lead?[((ar?"الدافع المتقدم: ":"Leading story motive: ")+motive(profile.motiveSpectrum.lead)),
           ((ar?"صدى الجناح: ":"Wing echo: ")+(profile.motiveSpectrum.wing?motive(profile.motiveSpectrum.wing):(ar?"مفتوح":"Open")))]:[]),
         ar?"هذه أصداء الدوافع في الأفلام المختارة وليست تشخيصاً لنمط Enneagram.":"These are affinities with story motives, not an Enneagram typing result.");
+      if(profile.motiveSpectrum.independent)lines.push((ar?"مفاضلات الدوافع المستقلة: ":"Independent story-motive choices: ")+profile.motiveSpectrum.answered+"/9"+
+        (!profile.motiveSpectrum.coverage?(ar?" · تغطية جزئية":" · partial coverage"):""));
     }
     if(profile.affinities.length) lines.push((ar?"الأنواع السينمائية المركبة: ":"Specific cinematic affinities: ")+profile.affinities.map(item=>local(item.name,locale)).join(ar?"، ":", "));
     for (const [group,title] of Object.entries(ar?
@@ -674,10 +863,20 @@
     const watched = list(profile.familiarity.seen);
     const interested = list(profile.familiarity.interested);
     const uninterested= list(profile.familiarity["not-interested"]);
+    const counter=state.version===6&&globalThis.CinemaCounterframe&&state.counterframe
+      ?globalThis.CinemaCounterframe.evaluate(state.counterframe,profile):null;
+    const pressure=counter?.answered?[
+      "",ar?"Counterframe — قراءة الضغط الاختيارية (مستقلة عن نتيجة Coins)":"Counterframe — optional pressure reading, independent of Coins",
+      (ar?"الإجابات: ":"Answers: ")+counter.answered+"/12",
+      ...counter.axes.map(axis=>axis.axis+": "+(axis.lead?axis.lead.code+" · "+axis.lead.count+"/3"+(axis.lead.provisional?(ar?" · أولي":" · provisional"):""):"—")+" · "+(ar?"سينمائية ":"film ")+axis.film+" · "+(ar?"نصية ":"text ")+axis.text),
+      ar?"هذه اختيارات سردية وليست ملاحظة فعلية لسلوكي تحت الضغط؛ لا تستخدمها لتغيير الوظائف أو الإنياجرام.":"These are story-response cues, not observed stress behavior; do not use them to change the function or Enneagram reading."
+    ]:[];
     return [
       ar ? "أريد منك أن تعمل كناقد سينمائي ومحرّر ترشيحات شخصي. استند إلى ملف ذائقتي الناتج من اختبار تفاعلي، وإلى الأدلة المتكررة في إجاباتي. اعتبر الترجيح المعرفي وفق OPS فرضية استكشافية، واستند أساسًا إلى تفضيلاتي عند الاختيار."
         : "Act as my personal film curator and critic. Use my interactive cinema-taste profile and the recurring evidence in my answers. Treat the OPS-based cognitive orientation as an exploratory hypothesis, and prioritize my actual cinematic preferences.",
       "", details,
+      ...pressure,
+      ...(profile.adaptive?["",ar?"استند إلى تفضيلات الذائقة المباشرة وتقييمات الرضا للترشيحات، ولا تفترض أن اختيارات المواقف المعرفية تعني تفضيل الفيلم أو أن الدوافع السينمائية تشخّص شخصية.":"Use direct taste choices and satisfaction ratings for recommendations; do not assume cognitive scene choices indicate film preference or that story motives establish a personality type."]:[]),
       "", ar?"أمثلة مباشرة من إجاباتي":"Examples from my answers",
       ...(evidence.length?evidence:[ar?"لم تُسجّل أمثلة كافية بعد.":"Limited direct evidence so far."]),
       "", (ar?"أعمال شاهدتها (استبعدها): ":"Watched films (exclude): ")+(watched || (ar?"غير محدد":"not specified")),
@@ -705,5 +904,5 @@
 
   globalThis.CinemaProfileCore = { createState, isUnseen, local, label, ratingNames, ageLabels, feelings,
     familyInfo, functionPairs, familyName, lensName, impressionName, coinLabels, animalInfo,
-    orderedOptions, getModeOptions, calculate, readings, evidenceLines, profileSummary, buildPrompt };
+    orderedOptions, getModeOptions, questionsForState, limitsForState, formForAnswer, calculate, readings, evidenceLines, profileSummary, buildPrompt };
 })();

@@ -6,9 +6,9 @@ from PIL import Image
 repo = Path(__file__).resolve().parents[1]
 site = repo / '1-Site'
 script = '''const fs=require('fs'),path=require('path'),vm=require('vm');const root=process.argv[1];
-const ctx=vm.createContext({});for(const name of ['cinema-profile-data.js','cinema-profile-visual.js','cinema-profile-core.js','cinema-profile-counterframe.js'])vm.runInContext(fs.readFileSync(path.join(root,name),'utf8'),ctx);
+const ctx=vm.createContext({});for(const name of ['cinema-profile-data.js','cinema-profile-visual.js','cinema-profile-scene-bank.js','cinema-profile-adaptive.js','cinema-profile-core.js','cinema-profile-counterframe.js'])vm.runInContext(fs.readFileSync(path.join(root,name),'utf8'),ctx);
 const D=ctx.CinemaProfileData,CF=ctx.CinemaCounterframe;
-const names=[...D.artworkNames,...D.films.flatMap(f=>[f.poster,f.still]),...[...D.questions,...CF.questions].flatMap(q=>q.filmId?[q.still]:q.options.map(o=>o.still))].filter(Boolean).map(p=>p.startsWith('assets/')?p:'assets/films/'+p);
+const names=[...D.artworkNames,...D.films.flatMap(f=>[f.poster,f.still]),...[...D.questions,...D.adaptive.questions,...D.adaptive.refinement,...CF.questions].flatMap(q=>[q,...(q.forms||[])].flatMap(form=>form.filmId?[form.still]:form.options.map(o=>o.still)))].filter(Boolean).map(p=>p.startsWith('assets/')?p:'assets/films/'+p);
 console.log(JSON.stringify([...new Set(names)]));'''
 paths = json.loads(subprocess.check_output(['node','-e',script,str(site)],text=True,encoding='utf-8'))
 sizes, variants = {}, {}

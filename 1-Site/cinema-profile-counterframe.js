@@ -57,12 +57,76 @@
       frame("inside-llewyn-davis","Fi","Llewyn stands by his own artistic voice","لوين يتمسّك بصوته الفني الخاص","inside-llewyn-davis-wide.webp"),
       frame("drive-my-car","Fe","A performance must find its place within an ensemble","يجب أن يجد الأداء مكانه ضمن الفرقة","assets/gallery/2020-2026/drive-my-car/083ae3e36484.webp"))
   ];
+  // Optional Adaptive Edition forms: the original scenes are retained for
+  // Classic. A second film pair illustrates the same pressure, and a brief
+  // fictional situation makes a real choice possible without film recall.
+  const parallel=[
+    [["blade-runner","arrival"],L("Two people interpret an unexpected message. A decision cannot be postponed indefinitely.","يفسّر شخصان رسالة غير متوقّعة، ولا يمكن تأجيل القرار إلى أجل غير مسمّى."),
+      L("Having to settle on one explanation before everything is clear.","الاضطرار إلى اعتماد تفسير واحد قبل اتّضاح كل شيء."),L("Having to keep several explanations open without a conclusion.","الاضطرار إلى إبقاء عدّة تفسيرات مفتوحة بلا خلاصة.")],
+    [["first-man","babylon"],L("A new responsibility changes how an ordinary day unfolds.","تغيّر مسؤولية جديدة سير يوم اعتيادي."),
+      L("Having to follow a fixed sequence every day.","الاضطرار إلى اتّباع تسلسل ثابت كل يوم."),L("Having to respond on the spot to the changing pace of events.","الاضطرار إلى الاستجابة في اللحظة لإيقاع الأحداث المتغيّر.")],
+    [["social-network","moneyball"],L("A team presents a proposal and its reviewer challenges their decision.","يعرض فريق مقترحاً ويعترض المراجع على قراره."),
+      L("Being asked to reconcile every part of your reasoning.","أن يُطلب منك التوفيق بين كل جوانب منطقك."),L("Being asked to meet an established performance target.","أن يُطلب منك بلوغ هدف أداء محدّد سلفاً.")],
+    [["worst-person","before-midnight"],L("A person makes a life decision that will change things for their family.","يتّخذ شخص قراراً حياتياً سيغيّر أموراً تخص عائلته."),
+      L("The need to stay consistent with a deeply personal value.","ضرورة الاتّساق مع قيمة شخصية عميقة."),L("The need to find a decision others can live with.","ضرورة إيجاد قرار يستطيع الآخرون التعايش معه.")],
+    [["inception","midnight-paris"],L("A person is planning their next year with several possible paths ahead.","يخطّط شخص لعامه المقبل وأمامه أكثر من طريق ممكن."),
+      L("Committing to a single future around which everything must align.","الالتزام بمستقبل واحد يجب ترتيب كل شيء من أجله."),L("Leaving the future open to new directions as they appear.","ترك المستقبل مفتوحاً لاتّجاهات جديدة حين تظهر.")],
+    [["sicario","interstellar"],L("An unexpected problem requires a group to change its plan quickly.","تتطلّب مشكلة مفاجئة من مجموعة تعديل خطّتها بسرعة."),
+      L("Following established procedures closely even as conditions change.","اتّباع الإجراءات المألوفة بدقّة حتى حين تتغيّر الظروف."),L("Reacting immediately without enough time to consider procedures.","الاستجابة فوراً دون وقت كافٍ للنظر في الإجراءات.")],
+    [["social-network","moneyball"],L("A colleague is reviewing the work you have just completed.","يراجع زميل عملاً انتهيت من إنجازه."),
+      L("Their challenge is whether your explanation is internally coherent.","يركّز اعتراضه على مدى الاتّساق الداخلي لتفسيرك."),L("Their challenge is whether your work achieved the required result.","يركّز اعتراضه على ما إذا كان عملك قد حقّق النتيجة المطلوبة.")],
+    [["materialists","past-lives"],L("Two people care about one another but do not have the same priorities.","يهتم شخصان ببعضهما لكنّ أولوياتهما ليست واحدة."),
+      L("Being asked to define and stay true to your own priorities.","أن يُطلب منك تحديد أولوياتك الخاصة والوفاء بها."),L("Being asked to balance both people's needs and expectations.","أن يُطلب منك الموازنة بين حاجات الشخصين وتوقّعاتهما.")],
+    [["prisoners","certified-copy"],L("Two accounts of an event are plausible, and no final explanation has been agreed upon.","هناك روايتان معقولتان لحدث ولم يُتّفق على تفسير نهائي."),
+      L("Pressure to make the evidence converge on one interpretation.","الضغط لجمع الأدلة حول تفسير واحد."),L("Pressure to leave competing interpretations unresolved.","الضغط لترك التفسيرات المتنافسة دون حسم.")],
+    [["phantom-thread","grand-budapest"],L("A creative group is working toward a public presentation.","تعمل مجموعة إبداعية استعداداً لتقديم عمل أمام الجمهور."),
+      L("Repeating the same procedure until every detail is exact.","تكرار الإجراء نفسه إلى أن تصبح كل تفصيلة دقيقة."),L("Adjusting to unexpected changes during the work itself.","التكيّف مع تغيّرات مفاجئة أثناء العمل نفسه.")],
+    [["tar","social-network"],L("An independent reviewer is asked to assess a difficult judgment.","يُطلب من مراجع مستقل تقييم حكم صعب."),
+      L("Testing the reasoning for logical contradictions.","اختبار الاستدلال بحثاً عن تناقضات منطقية."),L("Testing the judgment against observable results.","اختبار الحكم وفق النتائج القابلة للملاحظة.")],
+    [["souvenir","la-la-land"],L("An artist has to decide how to finish a collaborative work.","يتوجّب على فنّان أن يقرّر كيف يُنهي عملاً جماعياً."),
+      L("The work must remain faithful to an individual artistic commitment.","يجب أن يبقى العمل وفياً لالتزام فنّي شخصي."),L("The work must find a form that satisfies the shared artistic needs.","يجب أن يجد العمل شكلاً يلبّي الحاجات الفنّية المشتركة.")]
+  ];
+  questions.forEach((question,i)=>{
+    const sceneForms=D.cinemaSceneBank?.pressure[question.id];
+    if(sceneForms){
+      question.forms=sceneForms.map(spec=>({...spec,options:spec.options.map((option,n)=>({
+        ...option,id:String(n+1),code:question.options[n].code
+      }))}));
+      return;
+    }
+    const [films,scene,...labels]=parallel[i];
+    const primary={kind:"visual",source:"film",options:question.options};
+    const options=question.options.map((option,n)=>{
+      const still=D.filmById[films[n]]?.still;
+      if(!still)throw Error("Missing Counterframe still: "+films[n]);
+      return {...option,label:labels[n],filmId:films[n],still};
+    });
+    const alternate={kind:"visual",source:"film",options};
+    const scenario={kind:"scenario",source:"text",scene,options:options.map(o=>({...o,filmId:"",still:""}))};
+    question.forms=[primary,alternate,scenario];
+  });
+  function form(question,answer={}){
+    if(!Number.isInteger(answer.form))return question;
+    const index=Math.max(0,Math.min(question.forms.length-1,answer.form));
+    return {...question,...question.forms[index],form:index};
+  }
+  function selectForm(question,state,from=0){
+    for(let i=from;i<question.forms.length;i++){
+      const variant=form(question,{form:i});
+      if(variant.source==="text"||variant.options.every(o=>!["unseen","interested","not-interested","no-opportunity"].includes(state.familiarity[o.filmId])))return i;
+    }
+    return -1;
+  }
   const mirror={Ni:"Ne",Ne:"Ni",Si:"Se",Se:"Si",Ti:"Te",Te:"Ti",Fi:"Fe",Fe:"Fi"};
   const domains=["N","S","T","F"];
   const create=()=>({version:1,index:0,complete:false,answers:{}});
   function validAnswer(question,answer){
+    if(answer?.form!==undefined&&(!Number.isInteger(answer.form)||answer.form<0||answer.form>=question.forms.length))return false;
+    const variant=form(question,answer||{});
+    const verified=answer?.form===undefined||variant.source==="text"||
+      (answer.confirmed===true&&variant.options.every(o=>answer.recalled?.includes(o.filmId)));
     return !!answer?.done&&(answer.kind==="skip"||answer.kind==="neutral"||
-      (answer.kind==="choice"&&question.options.some(o=>o.id===answer.choice)&&
+      (answer.kind==="choice"&&verified&&variant.options.some(o=>o.id===answer.choice)&&
         Number.isInteger(answer.strength)&&answer.strength>=1&&answer.strength<=5));
   }
   function normalize(saved){
@@ -73,7 +137,10 @@
       const answer=saved.answers[question.id];
       if(validAnswer(question,answer))cf.answers[question.id]={...answer};
       else if(answer?.kind==="choice"&&question.options.some(o=>o.id===answer.choice)){
-        cf.answers[question.id]={kind:"choice",choice:answer.choice,strength:Number.isInteger(answer.strength)&&answer.strength>=1&&answer.strength<=5?answer.strength:null,done:false};
+        cf.answers[question.id]={kind:"choice",choice:answer.choice,strength:Number.isInteger(answer.strength)&&answer.strength>=1&&answer.strength<=5?answer.strength:null,done:false,
+          ...(Number.isInteger(answer.form)&&answer.form>=0&&answer.form<question.forms.length?{form:answer.form}:{})};
+      } else if(answer?.kind==="pending"&&Number.isInteger(answer.form)&&answer.form>=0&&answer.form<question.forms.length){
+        cf.answers[question.id]={kind:"pending",form:answer.form,done:false};
       }
     }
     cf.complete=!!saved.complete&&questions.every(question=>validAnswer(question,cf.answers[question.id]));
@@ -82,8 +149,8 @@
   function evaluate(saved,profile={}){
     const cf=normalize(saved),valid=questions.filter(question=>validAnswer(question,cf.answers[question.id]));
     const choices=valid.filter(question=>cf.answers[question.id].kind==="choice").map(question=>{
-      const answer=cf.answers[question.id],option=question.options.find(o=>o.id===answer.choice);
-      return {question,option,strength:answer.strength};
+      const answer=cf.answers[question.id],variant=form(question,answer),option=variant.options.find(o=>o.id===answer.choice);
+      return {question:variant,option,strength:answer.strength,source:variant.source||"film"};
     });
     const axes=domains.map(axis=>{
       const relevant=choices.filter(choice=>choice.question.axis===axis);
@@ -97,7 +164,9 @@
       // a directional lead. Neutral and missing answers never become a pole.
       const lead=first.contexts>=2&&first.items.filter(item=>item.strength>=3).length>=2&&
         first.count>second.count&&first.mass>second.mass&&first.mass/total>=2/3?first:null;
-      return {axis,poles,lead,directional:relevant.length,answered:valid.filter(question=>question.axis===axis&&cf.answers[question.id].kind!=="skip").length};
+      if(lead)lead.provisional=lead.items.filter(item=>item.source==="film"&&item.strength>=3).length<2;
+      return {axis,poles,lead,directional:relevant.length,film:relevant.filter(item=>item.source==="film").length,
+        text:relevant.filter(item=>item.source==="text").length,answered:valid.filter(question=>question.axis===axis&&cf.answers[question.id].kind!=="skip").length};
     });
     const ranked=axes.map(axis=>axis.lead).filter(Boolean).sort((a,b)=>b.mass-a.mass||b.count-a.count);
     // Do not force a single strongest cue on a tie.
@@ -106,10 +175,10 @@
     const opposite=mirror[dominant]||"";
     const comparison=opposite&&axes.find(axis=>axis.axis===opposite[0])?.lead;
     const relation=!opposite?"unavailable":!comparison?"open":comparison.code===opposite?"aligned":"different";
-    const representative=top?.items.slice().sort((a,b)=>b.strength-a.strength)[0]?.option||null;
+    const representative=top?.items.filter(item=>item.option.filmId&&item.option.still).sort((a,b)=>b.strength-a.strength)[0]?.option||null;
     return {complete:cf.complete,visited:valid.length,answered:valid.filter(question=>cf.answers[question.id].kind!=="skip").length,
       directional:choices.length,neutral:valid.filter(question=>cf.answers[question.id].kind==="neutral").length,axes,ranked,top,
       dominant,opposite,relation,comparison:comparison||null,representative};
   }
-  globalThis.CinemaCounterframe={questions,pressures,mirror,create,normalize,evaluate,validAnswer};
+  globalThis.CinemaCounterframe={questions,pressures,mirror,create,normalize,evaluate,validAnswer,form,selectForm};
 })();

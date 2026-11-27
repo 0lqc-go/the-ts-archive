@@ -7,7 +7,9 @@
   const root = document.getElementById("cp-root");
   const round2 = window.ArchiveFeatures;
   const refinedQuestions = round2?.enabled('12');
-  const STORAGE_KEY = "ts-archive-cinema-profile-visual-v5";
+  const STORAGE_KEY = "ts-archive-cinema-profile-adaptive-v2";
+  const CLASSIC_STORAGE_KEY = "ts-archive-cinema-profile-visual-v5";
+  const ACTIVE_EDITION_KEY = "ts-archive-cinema-profile-edition";
   const L = (en,ar) => ({en,ar});
   const strings = {
     title:L("Cinema Profile","ملفّك السينمائي"),
@@ -15,6 +17,8 @@
     frameworkLabel:L("Inspired by","مستوحى من"),
     frameworks:L("Jungian cognitive functions · MBTI · Objective Personality · Enneagram","وظائف كارل يونغ المعرفية · MBTI · Objective Personality · Enneagram"),
     frameworkNote:L("An exploratory cinema portrait of cognitive preferences, taste and motives — not an official MBTI assessment.","قراءة سينمائية استكشافية للتفضيلات المعرفية والذائقة والدوافع، وليست اختبار MBTI رسمياً."),
+    adaptiveInstructions:L("Return to the moments, choices and questions that stayed with you in a film. Choose the scene or reaction that speaks to you, not a favourite title. Change the film if you haven't watched it or don't recall the scenes; rate only works you have seen.",
+      "استرجع اللحظات والقرارات والأسئلة التي بقيت معك من الفيلم. اختر المشهد أو الموقف الذي استوقفك، لا اسم فيلمك المفضّل. بدّل إذا لم تشاهد العمل أو لا تتذكّر المشاهد، وقيّم ما شاهدته فقط."),
     profileHome:L("Profile home","بداية الاختبار"),
     archiveHome:L("The archive","الأرشيف"),
     begin:L("Begin assessment","ابدأ الاختبار"),
@@ -142,6 +146,12 @@
   let draft = null;
   let current = null;
   let result = null;
+  let warmTimer=0,warmSequence=0;
+
+  const adaptiveState=()=>state.version===6&&Boolean(D.adaptive);
+  const activeQuestions=()=>C.questionsForState(state);
+  const limits=()=>C.limitsForState(state);
+  const activeSlot=()=>activeQuestions()[state.index];
 
   function t(key) { return C.local(strings[key],state.locale); }
   function loc(text) { return C.local(text,state.locale); }
@@ -150,23 +160,77 @@
   function profileImage(name,sizes,fallback=640) {
     return globalThis.ArchiveMedia.attributes(globalThis.ArchiveProfileMedia,artwork(name),sizes,fallback);
   }
+  function warmNextArtwork(){
+    clearTimeout(warmTimer);
+    const sequence=++warmSequence;
+    const route=state.route,index=route==="counterframe"?counterframeState().index:state.index;
+    const connection=navigator.connection;
+    if(!adaptiveState()||connection?.saveData||/2g/.test(connection?.effectiveType||""))return;
+    if(route!=="quiz"&&route!=="counterframe")return;
+    const slot=route==="counterframe"?CF.questions[index+1]:index+1<state.limit?activeQuestions()[index+1]:null;
+    if(!slot)return;
+    let question=slot;
+    if(slot.forms){
+      const stored=route==="counterframe"?counterframeState().answers[slot.id]?.form:
+        state.pendingForms?.[slot.id]??state.answers[slot.id]?.form;
+      const form=Number.isInteger(stored)?stored:route==="counterframe"?CF.selectForm(slot,state):D.adaptive.selectForm(slot,state);
+      if(form<0)return;
+      question=route==="counterframe"?CF.form(slot,{form}):C.formForAnswer(slot,{form});
+    }
+    const stills=question.filmId?[question.still]:question.options.map(o=>o.still).filter(Boolean);
+    if(!stills.length)return;
+    const active=()=>sequence===warmSequence&&state.route===route&&
+      (route==="counterframe"?counterframeState().index:state.index)===index;
+    const images=[...root.querySelectorAll(".cp-visual-art img,.cp-rating-frame > img")];
+    // Never compete with the card the visitor is looking at or preload the
+    // whole bank. At most the next two screen-sized images are warmed.
+    Promise.allSettled(images.map(img=>img.decode?.())).then(()=>{
+      if(!active())return;
+      warmTimer=setTimeout(()=>{
+        if(!active())return;
+        const width=window.innerWidth<681?window.innerWidth*(question.filmId ? .94 : .92):question.filmId?Math.min(740,window.innerWidth*.94):window.innerWidth*.45;
+        for(const still of stills.slice(0,2)){
+          const src=globalThis.ArchiveMedia.select(globalThis.ArchiveProfileMedia,artwork(still),width).src;
+          void globalThis.ArchiveMedia.preload(src,"low");
+        }
+      },180);
+    });
+  }
 
-  function readState() {
-    const locale = navigator.language?.startsWith("ar") ? "ar" : "en";
+  function savedEdition(key,version) {
     try {
-      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-      if (saved && saved.version===5 && ["intro","quiz","result","counterframe"].includes(saved.route) &&
-          ["en","ar"].includes(saved.locale) && [D.coreLimit,D.fullLimit].includes(saved.limit) &&
-          Number.isInteger(saved.index) && saved.index>=0 && saved.index<D.questions.length &&
-          saved.answers && saved.familiarity) {
+      const saved = JSON.parse(localStorage.getItem(key) || "null");
+      if (saved && saved.version===version && ["intro","quiz","result","counterframe"].includes(saved.route) &&
+          ["en","ar"].includes(saved.locale) && saved.answers && saved.familiarity) {
+        const bounds=C.limitsForState(saved);
+        if(version===6){
+          if(saved.bankRevision!==D.adaptive.revision)return null;
+          const allowed=new Set(D.adaptive.refinement.map(q=>q.id));
+          saved.refinement=[...new Set((Array.isArray(saved.refinement)?saved.refinement:[]).filter(id=>allowed.has(id)))];
+        }
+        const length=C.questionsForState(saved).length;
+        if(![bounds.core,bounds.full,length].includes(saved.limit)||!Number.isInteger(saved.index)||saved.index<0||saved.index>=saved.limit)return null;
         saved.counterframe=CF.normalize(saved.counterframe);
         return saved;
       }
     } catch {}
-    return C.createState(locale);
+    return null;
+  }
+  function readState() {
+    let locale = navigator.language?.startsWith("ar") ? "ar" : "en";
+    try{
+      const previous=JSON.parse(localStorage.getItem("ts-archive-cinema-profile-adaptive-v1")||"null");
+      if(["en","ar"].includes(previous?.locale))locale=previous.locale;
+      if(localStorage.getItem(ACTIVE_EDITION_KEY)==="classic")
+        return savedEdition(CLASSIC_STORAGE_KEY,5)||savedEdition(STORAGE_KEY,6)||C.createState(locale);
+    }catch{}
+    return savedEdition(STORAGE_KEY,6)||savedEdition(CLASSIC_STORAGE_KEY,5)||C.createState(locale);
   }
   function persist() {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
+    try {
+      localStorage.setItem(state.version===6?STORAGE_KEY:CLASSIC_STORAGE_KEY, JSON.stringify(state));
+      localStorage.setItem(ACTIVE_EDITION_KEY,state.version===6?"adaptive":"classic");
+    } catch {}
   }
   function goTop() { window.scrollTo({top:0,behavior:"instant"}); }
   function settleStage(key, keepScroll) {
@@ -194,18 +258,71 @@
   }
   function syncQuestionControls(name) {
     if(!refinedQuestions)return false;
-    const synced=name==='select'&&current.kind==='visual'?syncFrameChoices('select',draft.choice):name==='rating'&&current.kind==='ending'?syncRatingControls('rating',draft.rating):false;
+    const synced=name==='select'&&current.kind==='visual'?syncFrameChoices('select',draft.choice):name==='rating'&&['ending','satisfaction'].includes(current.kind)?syncRatingControls('rating',draft.rating):false;
     if(synced)root.querySelector('[data-action="next"]').disabled=!canContinue();
     return synced;
   }
   function stageLabel(question) {
+    if(question.stage==="refine")return state.locale==="ar"?"تعمّق موجّه":"Focused refinement";
+    if(adaptiveState())return question.stage==="core"?(state.locale==="ar"?"الاختبار الأساسي":"Core profile"):(state.locale==="ar"?"قراءة أعمق":"Deep profile");
     if(question.frameFilm)return state.locale==='ar'?"الأساسي · قراءة القصص":"Core · reading stories";
     return t({core:"coreStage",depth:"depthStage",endings:"endingStage",style:"styleStage"}[question.stage]);
   }
   function action(name,label,style="",extra="") {
     return '<button type="button" class="cp-button '+style+'" data-action="'+name+'" '+extra+'>'+e(label)+'</button>';
   }
+  const feedbackReasons=[
+    {id:"response",label:L("The response felt like mine","الاستجابة تشبه طريقتي")},
+    {id:"film",label:L("I know or like that film","معرفتي أو إعجابي بالفيلم")},
+    {id:"frame",label:L("The visual frame","الكادر البصري")},
+    {id:"wording",label:L("The wording was unclear","الصياغة لم تكن واضحة")},
+    {id:"uncertain",label:L("I was unsure","لم أكن متأكداً")}
+  ];
+  function feedbackSample(){
+    if(!adaptiveState()||!result)return [];
+    const items=Object.values(result.balance).flatMap(info=>info.evidence);
+    const selection=[];
+    for(const mode of ["film","text","any"]){
+      const pool=items.filter(item=>(mode==="any"||item.mode===mode)&&!selection.includes(item));
+      if(pool.length)selection.push(pool[Math.abs(state.seed||0)%pool.length]);
+    }
+    return selection;
+  }
+  function feedbackKey(item){
+    const answer=state.answers[item.slot];
+    return (answer.form??0)+":"+answer.choice;
+  }
+  function feedbackPanel(){
+    const ar=state.locale==="ar",items=feedbackSample();
+    if(state.route!=="result"||!items.length)return "";
+    return '<details class="cp-question-audit"><summary>'+e(ar?"ملاحظات اختيارية على الأسئلة":"Optional question feedback")+'</summary><p class="cp-small">'+e(ar?"هذه الملاحظات تساعد على تحسين وضوح الأسئلة. لا تغيّر نتيجتك، وتبقى في متصفّحك ما لم تختر نسخها ومشاركتها.":"These notes help improve question clarity. They do not change your result and stay in your browser unless you choose to copy and share them.")+'</p>'+
+      items.map(item=>{
+        const saved=state.feedback?.[item.slot],selected=saved?.key===feedbackKey(item)?saved.reason:"";
+        const reasons=feedbackReasons.filter(reason=>item.mode!=="text"||!["film","frame"].includes(reason.id));
+        return '<article><p>'+e(loc(item.prompt))+'</p><small>'+e(loc(item.choice))+'</small><p class="cp-small">'+e(ar?"ما الذي أثّر أكثر في اختيارك؟":"What most influenced this answer?")+'</p><div class="cp-reason-set">'+reasons.map(reason=>
+          '<button type="button" class="cp-chip" data-action="qa-reason" data-slot="'+e(item.slot)+'" data-value="'+e(reason.id)+'" aria-pressed="'+String(selected===reason.id)+'">'+e(loc(reason.label))+'</button>').join("")+'</div></article>';
+      }).join("")+'<button type="button" class="cp-text-button" data-action="qa-copy">'+e(ar?"نسخ ملاحظات الأسئلة فقط":"Copy question feedback only")+'</button><p class="cp-small" role="status" id="cp-audit-status"></p><textarea id="cp-audit-export" hidden readonly aria-label="'+e(ar?"ملاحظات الأسئلة":"Question feedback")+'"></textarea></details>';
+  }
+  async function copyFeedback(){
+    const items=feedbackSample().flatMap(item=>{
+      const saved=state.feedback?.[item.slot],answer=state.answers[item.slot];
+      return saved?.key===feedbackKey(item)?[{question:item.slot,form:answer.form??0,choice:answer.choice,reason:saved.reason}]:[];
+    });
+    const ar=state.locale==="ar",status=document.getElementById("cp-audit-status");
+    if(!items.length){if(status)status.textContent=ar?"ماكو ملاحظات محدّدة بعد.":"No feedback has been selected yet.";return;}
+    const report=JSON.stringify({edition:D.adaptive.revision,language:state.locale,items},null,2);
+    let copied=false;
+    try{await navigator.clipboard.writeText(report);copied=true;}catch{}
+    if(copied){if(status)status.textContent=t("copied");}
+    else{
+      const field=document.getElementById("cp-audit-export");
+      if(field){field.value=report;field.hidden=false;field.select();}
+      if(status)status.textContent=t("copyManual");
+    }
+  }
   function methodBlock() {
+    const ar=state.locale==="ar";
+    if(adaptiveState())return '<details class="cp-method"><summary>'+e(t("method"))+'</summary><p>'+e(ar?"تتداخل مفاضلات المواقف والذائقة والدوافع مع تقييم رضا من خمس درجات بعد كل سبعة اختيارات. إذا لم تعرف العملين يعرض الاختبار مجموعة بديلة، ثم موقفاً نصياً قصيراً. كل سؤال يحتسب مرة واحدة فقط.":"Seven choices alternate with a five-point satisfaction rating. Unfamiliar comparisons can switch to parallel films, then a short written scenario. Each question counts once.")+'</p><p>'+e(ar?"المواقف المعرفية والذائقة والدوافع مصادر مستقلة. لا تُعدّ مشاهدة الكادر مشاهدة للفيلم؛ والتعادل والتخطّي لا يرجّحان اتجاهاً. تُعرض الأدلة النصية والسينمائية كلّ على حدة لأن الصيغ لم تُعاير معاً إحصائياً بعد.":"Cognitive choices, taste and story motives are independent evidence streams. Seeing a frame is not watching a film; neutral or skipped answers support neither pole. Film and text evidence are shown separately because the forms are not statistically equated yet.")+'</p><p>'+e(t("method2"))+'</p><p>'+e(t("method3"))+'</p><p><a href="https://www.testingstandards.net/open-access-files.html" target="_blank" rel="noopener noreferrer">Testing standards</a> · <a href="https://www.cdc.gov/nchs/ccqder/question-evaluation/cognitive-interviewing.html" target="_blank" rel="noopener noreferrer">Question evaluation</a> · <a href="https://www.objectivepersonality.com/faq" target="_blank" rel="noopener noreferrer">Objective Personality</a></p>'+feedbackPanel()+'</details>';
     return '<details class="cp-method"><summary>'+e(t("method"))+'</summary><p>'+e(t("method1"))+'</p><p>'+
       e(t("method2"))+'</p><p>'+e(t("method3"))+'</p><p>'+
       '<a href="https://www.objectivepersonality.com/faq" target="_blank" rel="noopener noreferrer">Objective Personality</a> · '+
@@ -218,6 +335,7 @@
   function render() {
     document.documentElement.lang=state.locale;
     root.dir=state.locale==="ar"?"rtl":"ltr";
+    root.classList.toggle("cp-adaptive",adaptiveState());
     document.querySelectorAll("[data-lang]").forEach(button=>
       button.setAttribute("aria-pressed",String(button.dataset.lang===state.locale)));
     const routeNav=document.getElementById('cp-route-nav');
@@ -246,7 +364,7 @@
   function pauseToIntro() {
     if(state.route==='intro')return;
     state.resumeRoute=state.route;
-    if(state.route==='quiz'&&current?.id===D.questions[state.index]?.id&&draft)state.pausedDraft={id:current.id,answer:{...draft}};
+    if(state.route==='quiz'&&current?.id===activeSlot()?.id&&draft)state.pausedDraft={id:current.id,answer:{...draft}};
     state.route='intro';persist();render();goTop();
     root.querySelector('h1')?.focus({preventScroll:true});
   }
@@ -257,17 +375,33 @@
     if(!resume)state.index=0;
     delete state.resumeRoute;delete state.pausedDraft;
     current=null;draft=null;
-    if(state.route==='quiz'&&paused?.id===D.questions[state.index]?.id&&paused.answer&&typeof paused.answer==='object'){
-      current=D.questions[state.index];draft={...paused.answer};
+    if(state.route==='quiz'&&paused?.id===activeSlot()?.id&&paused.answer&&typeof paused.answer==='object'){
+      draft={...paused.answer};current=C.formForAnswer(activeSlot(),draft);
     }
     persist();render();goTop();
   }
   function restartAssessment() {
     if(!window.confirm(t('restartConfirm')))return;
-    state=C.createState(state.locale);current=null;draft=null;result=null;persist();render();goTop();
+    state=C.createState(state.locale,{legacy:!adaptiveState()});current=null;draft=null;result=null;persist();render();goTop();
+  }
+  function switchEdition(legacy){
+    if(legacy===!adaptiveState())return;
+    persist();
+    const target=savedEdition(legacy?CLASSIC_STORAGE_KEY:STORAGE_KEY,legacy?5:6)||C.createState(state.locale,{legacy});
+    target.locale=state.locale;
+    if(target.route!=="intro"){target.resumeRoute=target.route;target.route="intro";}
+    state=target;current=null;draft=null;result=null;persist();render();goTop();
+  }
+
+  function editionPicker(ar,isAdaptive){
+    const button=(legacy,name,count)=>'<button type="button" class="cp-edition-option" data-action="'+(legacy?'classic-edition':'adaptive-edition')+'" aria-pressed="'+(legacy===!isAdaptive)+'"><strong>'+e(name)+'</strong><small>'+e(count)+'</small></button>';
+    return '<div class="cp-edition-picker" role="group" aria-label="'+e(ar?'اختر إصدار الاختبار':'Choose assessment edition')+'">'+
+      button(false,ar?'إصدار المشاهد':'Scene Edition','32 + 24')+button(true,ar?'الإصدار الكلاسيكي':'Classic Edition','25 + 18')+'</div>'+
+      '<p class="cp-edition-description cp-small">'+e(isAdaptive?(ar?'قراءة من خلال المشاهد والشخصيات والقرارات.':'Explore scenes, characters and story decisions.'):(ar?'المفاضلات السينمائية الأصلية.':'The original cinematic comparisons.'))+'</p>';
   }
 
   function renderIntro() {
+    const ar=state.locale==="ar",bounds=limits(),isAdaptive=adaptiveState();
     const savedCount = Object.values(state.answers).filter(answer=>answer.done).length;
     const resume=resumeRoute();
     const coverFilms=D.introFilms.map(id=>D.filmById[id]);
@@ -276,17 +410,29 @@
     root.innerHTML =
       '<section class="cp-wrap-wide cp-hero"><div class="cp-hero-copy"><p class="cp-eyebrow">THE T.S. ARCHIVE</p>'+
       '<h1 class="cp-display" tabindex="-1">'+e(t("title"))+'</h1><p class="cp-hero-description">'+e(t("intro"))+'</p>'+
-      '<div class="cp-start-card"><div class="cp-start-facts"><strong>'+e(t("time"))+'</strong><span>'+e(t("missing"))+'</span></div>'+
+      '<div class="cp-start-card">'+editionPicker(ar,isAdaptive)+'<div class="cp-start-facts"><strong>'+e(bounds.core+(ar?" سؤالاً · ":" questions · ")+(isAdaptive?(ar?"الملف الأساسي":"Core profile"):(ar?"الإصدار الكلاسيكي":"Classic profile")))+'</strong><span>'+e((bounds.full-bounds.core)+(ar?" سؤالاً إضافياً لقراءة أعمق.":" optional questions for a deeper reading."))+'</span></div>'+
       '<div class="cp-framework"><span>'+e(t('frameworkLabel'))+'</span><strong>'+e(t('frameworks'))+'</strong><small>'+e(t('frameworkNote'))+'</small></div>'+
+      (isAdaptive?'<p class="cp-small cp-start-guidance">'+e(t("adaptiveInstructions"))+'</p>':"")+
       '<div class="cp-start-actions">'+action("start",resume==='result'?t('showResult'):resume?t("resume"):t("begin"),"cp-button-primary")+
-      (resume||savedCount?'<button type="button" class="cp-text-button" data-action="restart">'+e(t("restart"))+'</button>':"")+'</div></div></div>'+
+      (resume||savedCount?'<button type="button" class="cp-text-button" data-action="restart">'+e(t("restart"))+'</button>':"")+'</div>'+
+      '<small class="cp-edition-note">'+e(ar?'تُحفظ الإجابات والنتائج لكل إصدار بصورة مستقلة.':'Progress and results are saved separately for each edition.')+'</small></div></div>'+
       '<div class="cp-hero-art">'+gallery+'</div></section>'+
       '<section class="cp-wrap-wide cp-intro-method">'+methodBlock()+'</section>';
   }
 
   function initDraft() {
-    current = D.questions[state.index];
-    const saved = state.answers[current.id];
+    const slot=activeSlot();
+    const saved = state.answers[slot.id];
+    if(adaptiveState()){
+      const pending=state.pendingForms?.[slot.id];
+      const chosen=Number.isInteger(pending)?pending:Number.isInteger(saved?.form)?saved.form:D.adaptive.selectForm(slot,state);
+      const form=chosen<0?Math.max(0,(slot.forms?.length||1)-1):chosen;
+      current=C.formForAnswer(slot,{form});
+      draft=saved&&saved.form===form&&!["skip","neutral"].includes(saved.mode)?{...saved,form}:
+        {mode:current.kind==="scenario"?"text":current.purpose==="rating"?"actual":"visual",form,choice:"",rating:null,feeling:"",considered:[]};
+      return;
+    }
+    current=slot;
     if (saved && saved.mode!=="skip") draft={...saved};
     else {
       draft = {mode:current.kind==="visual"?"visual":current.kind==="ending"?"actual":"skip",choice:"",rating:null,feeling:"",considered:[]};
@@ -310,6 +456,7 @@
   }
 
   function canContinue() {
+    if(adaptiveState())return current.purpose==="rating"?Boolean(draft.rating):Boolean(draft.choice);
     if (draft.mode==="empty") return false;
     if (draft.mode==="single") return Boolean(draft.rating);
     if (current.kind==="ending" && draft.mode!=="alternative") return Boolean(draft.rating);
@@ -389,25 +536,43 @@
 
   function renderVisualQuestion(){
     const ar=state.locale==="ar";
+    const cinema=adaptiveState()&&current.cinematic;
+    const same=cinema&&new Set(current.options.map(o=>o.filmId)).size===1;
+    const sharedFilm=same?D.filmById[current.options[0].filmId]:null;
+    const hint=adaptiveState()?
+      current.purpose==="coin"?"":current.purpose==="motive"?(ar?"لا يشترط أن تكون شاهدت العمل.":"No previous viewing required."):
+      current.tasteScope==="viewing"?(ar?"اختر الفيلم الذي ترغب بمشاهدته؛ لا يشترط أن تكون شاهدته.":"Choose the film you would like to see; no previous viewing required."):
+      (ar?"اختر الأقرب لك؛ لا يشترط أن تكون شاهدت الفيلم.":"Choose what draws you in; no viewing required."):
+      current.coin?(ar?"إذا شاهدت العملين، اختر أحدهما.":"Choose one if you have seen both films."):
+      (ar?"اختر الصورة الأقرب لك.":"Choose the frame that draws you in.");
     const cards=C.orderedOptions(current,"visual",state.seed).map(option=>{
       const movie=D.filmById[option.filmId],selected=draft.choice===option.id;
       const caption=loc(option.label);
-      return '<button type="button" class="cp-visual-select '+(selected?'cp-visual-selected':'')+
-        '" data-action="select" data-value="'+e(option.id)+'" aria-pressed="'+String(selected)+'" aria-label="'+e(movie.title+(caption?' · '+caption:''))+'">'+
-        '<div class="cp-visual-art"><img '+profileImage(option.still,'(max-width: 680px) 92vw, 45vw',640)+' alt="" decoding="async" draggable="false">'+
-        '<span class="cp-visual-check" aria-hidden="true">'+(selected?'✓':'')+'</span></div>'+
+      const meta=cinema?'<div class="cp-visual-meta cp-cinema-answer"><div><strong>'+e(caption)+'</strong>'+
+        (same?"":'<small class="cp-scene-credit" lang="en" dir="ltr">'+e(movie.title)+' · '+movie.year+'</small>')+'</div></div>':
         '<div class="cp-visual-meta"><div><strong lang="en" dir="ltr">'+e(movie.title)+'</strong>'+
-        (caption?'<span class="cp-visual-caption">'+e(caption)+'</span>':'')+'</div><small>'+movie.year+'</small></div></button>';
+        (caption?'<span class="cp-visual-caption">'+e(caption)+'</span>':'')+'</div><small>'+movie.year+'</small></div>';
+      return '<button type="button" class="cp-visual-select '+(cinema?'cp-scene-choice ':'')+(selected?'cp-visual-selected':'')+
+        '" data-action="select" data-value="'+e(option.id)+'" aria-pressed="'+String(selected)+'" aria-label="'+e(movie.title+(caption?' · '+caption:''))+'">'+
+        '<div class="cp-visual-art"><img '+profileImage(option.still,'(max-width: 680px) 92vw, 45vw',640)+' alt="" decoding="async" fetchpriority="high" draggable="false">'+
+        '<span class="cp-visual-check" aria-hidden="true">'+(selected?'✓':'')+'</span></div>'+
+        meta+'</button>';
     }).join("");
-    return '<div class="cp-visual-heading"><h2 class="cp-question-title">'+e(loc(current.prompt))+'</h2>'+
-      '<p class="cp-small">'+e(current.coin?(ar?'إذا شاهدت العملين، اختر أحدهما.':'Choose one if you have seen both films.'):
-      (ar?'اختر الصورة الأقرب لك.':'Choose the frame that draws you in.'))+'</p></div>'+
+    return '<div class="cp-visual-heading">'+(sharedFilm?'<p class="cp-eyebrow cp-scene-film" lang="en" dir="ltr">'+e(sharedFilm.title)+' · '+sharedFilm.year+'</p>':"")+'<h2 class="cp-question-title">'+e(loc(current.prompt))+'</h2>'+
+      (hint?'<p class="cp-small">'+e(hint)+'</p>':"")+'</div>'+
       '<div class="cp-visual-grid" role="group" aria-label="'+e(loc(current.prompt))+'">'+cards+'</div>';
+  }
+  function scenarioChoices(question,chosen,actionName="select"){
+    const ar=state.locale==="ar";
+    return '<div class="cp-visual-heading"><p class="cp-eyebrow">'+e(ar?"موقف موازٍ":"Parallel story")+'</p><h2 class="cp-question-title">'+e(loc(question.prompt))+'</h2>'+
+      '<p class="cp-scenario-copy">'+e(loc(question.scene))+'</p></div><div class="cp-choices cp-scenario-choices" role="group" aria-label="'+e(loc(question.prompt))+'">'+
+      C.orderedOptions(question,"visual",state.seed).map(option=>'<button type="button" class="cp-choice cp-scenario-choice" data-action="'+actionName+'" data-value="'+e(option.id)+'" aria-pressed="'+
+        String(chosen===option.id)+'"><span class="cp-circle" aria-hidden="true">'+(chosen===option.id?"✓":"")+'</span><span>'+e(loc(option.label))+'</span></button>').join("")+'</div>';
   }
   function renderEndingVisual(){
     const ar=state.locale==="ar",movie=D.filmById[current.filmId];
     return '<div class="cp-visual-heading"><h2 class="cp-question-title">'+e(loc(current.prompt))+'</h2></div>'+
-      '<figure class="cp-rating-frame"><img '+profileImage(current.still,'(max-width: 680px) 94vw, 940px',960)+' alt="'+e(movie.title)+'" decoding="async">'+
+      '<figure class="cp-rating-frame"><img '+profileImage(current.still,adaptiveState()?'(max-width: 680px) 94vw, 740px':'(max-width: 680px) 94vw, 940px',adaptiveState()?768:960)+' alt="'+e(movie.title)+'" decoding="async" fetchpriority="high">'+
       '<figcaption><div><strong lang="en" dir="ltr">'+e(movie.title)+'</strong><small>'+movie.year+'</small></div>'+
       '<button type="button" class="cp-text-button" data-action="film-unseen" data-film="'+e(movie.id)+'">'+e(t("unseen"))+'</button></figcaption></figure>'+
       '<div class="cp-rating-visual" role="group" aria-label="'+e(loc(current.prompt))+'"><div class="cp-rating-steps">'+
@@ -451,30 +616,80 @@
   }
 
   function renderQuestion(keepScroll=false) {
-    if (!current || current.id!==D.questions[state.index].id || !draft) initDraft();
+    if (!current || current.id!==activeSlot().id || !draft) initDraft();
     normalizeDraft();
     const y=keepScroll?window.scrollY:0;
     const percent=Math.round((state.index/state.limit)*100);
     const stage=stageLabel(current);
-    const content=current.kind==="visual"?renderVisualQuestion():current.kind==="ending"?renderEndingVisual():"";
+    const content=current.kind==="visual"?renderVisualQuestion():current.kind==="scenario"?scenarioChoices(current,draft.choice):
+      ["ending","satisfaction"].includes(current.kind)?renderEndingVisual():"";
     root.innerHTML='<section class="cp-wrap cp-quiz"><div class="cp-progress-row"><span>'+e(stage)+'</span><span>'+
       e(t("progress"))+' '+(state.index+1)+' '+e(t("of"))+' '+state.limit+'</span></div>'+
       '<div class="cp-progress-track" role="progressbar" aria-valuenow="'+percent+'" aria-valuemin="0" aria-valuemax="100"><span style="width:'+percent+'%"></span></div>'+
-      '<div class="cp-question cp-visual-question">'+content+'</div><div class="cp-question-footer"><div>'+
+      '<div class="cp-question cp-visual-question">'+content+'</div>'+adaptiveQuestionTools()+'<div class="cp-question-footer"><div>'+
       action("back",t("back"),"cp-button-outline",state.index===0?"disabled":"")+'</div><div>'+
       action("skip",t("skip"),"cp-button-quiet")+
-      action("next",state.index===state.limit-1?t("finish"):t("next"),"cp-button-primary",canContinue()?"":"disabled")+
+      action("next",nextLabel(),"cp-button-primary",canContinue()?"":"disabled")+
       '</div></div></section>';
-    settleStage('profile:'+current.id, keepScroll);
+    settleStage('profile:'+current.id+(adaptiveState()?':'+draft.form:''), keepScroll);
     if(keepScroll)window.scrollTo({top:y,behavior:"instant"});
+    if(!keepScroll)warmNextArtwork();
+  }
+
+  function nextLabel(){
+    return state.index===state.limit-1?t("finish"):t("next");
+  }
+  function adaptiveQuestionTools(){
+    if(!adaptiveState()||current.purpose==="rating")return "";
+    const ar=state.locale==="ar",visualCoin=current.purpose==="coin"&&current.kind==="visual";
+    const options=visualCoin?C.orderedOptions(current,"visual",state.seed):[];
+    const single=options.length>0&&new Set(options.map(o=>o.filmId)).size===1;
+    const only=option=>'<button type="button" class="cp-text-button" data-action="unfamiliar-only" data-film="'+e(option.filmId)+'">'+
+      e(ar?"شاهدت "+D.filmById[option.filmId].title+" فقط":"Watched "+D.filmById[option.filmId].title+" only")+'</button>';
+    return '<div class="cp-question-tools">'+(visualCoin&&!draft.unfamiliar?'<button class="cp-text-button" type="button" data-action="swap-unfamiliar">'+
+      e(single?(ar?"ما شايف الفيلم؟ بدّل":"Haven't seen it? Change film"):(ar?"ما تعرف أحد العملين؟ بدّل":"Unfamiliar? Change films"))+'</button>':'')+
+      '<button class="cp-text-button" type="button" data-action="neutral">'+e(ar?"لا فرق واضح":"No clear difference")+'</button></div>'+
+      (visualCoin&&draft.unfamiliar?'<div class="cp-familiarity-options" role="group" aria-label="'+e(ar?"الألفة مع العملين":"Film familiarity")+'">'+
+      '<p class="cp-small">'+e(single?(ar?"هل شاهدت هذا الفيلم؟":"Have you watched this film?"):(ar?"أيّهما شاهدت؟":"Which have you watched?"))+'</p>'+(single?"":options.map(only).join(""))+
+      '<button class="cp-text-button" type="button" data-action="unfamiliar-none">'+e(single?(ar?"لم أشاهد الفيلم":"I haven't watched it"):(ar?"لم أشاهد أياً منهما":"Neither"))+'</button>'+
+      '<button class="cp-text-button" type="button" data-action="unfamiliar-recall">'+e(ar?"لا أتذكّر الموقفين":"I don’t recall the scenes")+'</button>'+
+      '<button class="cp-text-button" type="button" data-action="unfamiliar-cancel">'+e(ar?"إلغاء":"Cancel")+'</button></div>':'');
+  }
+  function switchQuestionForm(){
+    const form=D.adaptive.selectForm(activeSlot(),state,(draft.form??0)+1);
+    if(form<0){commitAnswer(true);return;}
+    (state.pendingForms??={})[current.id]=form;
+    current=C.formForAnswer(activeSlot(),{form});
+    draft={mode:current.kind==="scenario"?"text":current.purpose==="rating"?"actual":"visual",form,choice:"",rating:null,considered:[]};
+    persist();renderQuestion();goTop();
   }
 
   function resetMode(mode){
     draft.mode=mode; draft.choice=""; draft.rating=null; draft.feeling=""; draft.considered=[];
   }
 
-  function commitAnswer(skip=false) {
-    if(skip) state.answers[current.id]={mode:"skip",done:true};
+  function commitAnswer(skip=false,neutral=false) {
+    if(adaptiveState()){
+      const form=draft.form??0;
+      if(skip||neutral)state.answers[current.id]={form,mode:skip?"skip":"neutral",done:true};
+      else {
+        if(!canContinue())return;
+        if(current.purpose==="rating"){
+          state.familiarity[current.filmId]="seen";
+          state.answers[current.id]={form,mode:"actual",rating:draft.rating,watched:true,done:true};
+        }else{
+          const answer={form,mode:draft.mode,choice:draft.choice,considered:current.options.map(option=>option.id),done:true};
+          if(current.purpose==="coin"&&current.kind==="visual"){
+            answer.confirmed=true;
+            answer.recalled=[...new Set(current.options.map(option=>option.filmId))];
+            answer.recalled.forEach(id=>state.familiarity[id]="seen");
+          }
+          state.answers[current.id]=answer;
+        }
+      }
+      if(state.pendingForms)delete state.pendingForms[current.id];
+    }
+    else if(skip) state.answers[current.id]={mode:"skip",done:true};
     else {
       if(!canContinue()) return;
       if(current.filmId) state.familiarity[current.filmId]="seen";
@@ -517,13 +732,20 @@
   }
   function coinEvidence(){
     const ar=state.locale==="ar";
-    return disclosure(ar?"الأدلة وطريقة القراءة":"Evidence & balance",'<p class="cp-small">'+e(t("balanceNote"))+'</p>'+
+    const note=adaptiveState()?(ar?"لا يُرجَّح اتجاه من إجابة واحدة. نبحث عن تكرار عبر مفاضلات وسياقات مختلفة، ونبقي الصيغ النصية والسينمائية ظاهرة على حدة. النسب مؤشرات توازن، وليست احتمالات معايرة.":"No single answer settles a contrast. Direction relies on repeated evidence across choices and contexts. Film and written sources are reported separately. Percentages are balance indices, not calibrated probabilities."):t("balanceNote");
+    const status={repeated:ar?"أدلة سينمائية متكررة":"Repeated film evidence",provisional:ar?"اتجاه أولي":"Provisional direction",open:ar?"غير حاسم":"Inconclusive",insufficient:ar?"أدلة غير كافية":"Insufficient evidence"};
+    return disclosure(ar?"الأدلة وطريقة القراءة":"Evidence & balance",'<p class="cp-small">'+e(note)+'</p>'+
       coins().map(([axis,left,right])=>{
         const info=result.balance[axis];
-        return '<section><h3>'+left+' / '+right+'</h3><p class="cp-small">'+e(info.clear?(ar?"اتجاه متكرر":"Repeated lead"):info.count?(ar?"غير حاسم":"Inconclusive"):t("noEvidence"))+' · '+info.pairs+' '+e(ar?"مفاضلات":"comparisons")+' · '+info.positive+' / '+info.negative+'</p>'+
+        const details=adaptiveState()?[info.sources.film.count+' '+(ar?"سينمائي":"film"),info.sources.text.count+' '+(ar?"نصي":"written"),info.neutral+' '+(ar?"محايد":"neutral"),info.skipped+' '+(ar?"تخطّي":"skipped")].join(' · '):"";
+        return '<section><h3>'+left+' / '+right+'</h3><p class="cp-small">'+e(adaptiveState()?status[info.status]:info.clear?(ar?"اتجاه متكرر":"Repeated lead"):info.count?(ar?"غير حاسم":"Inconclusive"):t("noEvidence"))+' · '+info.pairs+' '+e(ar?"مفاضلات":"comparisons")+' · '+info.positive+' / '+info.negative+
+          '</p>'+(details?'<p class="cp-small cp-evidence-sources">'+e(details)+(info.sourceConflict?' · '+e(ar?"اتجاه الصيغ مختلف":"Directions differ by form"):'')+'</p>':'')+
           (info.evidence.length?'<div class="cp-evidence-list">'+info.evidence.map(item=>{
             const film=D.filmById[item.filmId];
-            return '<article><img '+profileImage(film.poster,'80px',176)+' alt="" loading="lazy"><div><strong lang="en">'+e(item.film)+'</strong><small>'+e(item.side>0?left:right)+'</small><p>'+e(loc(item.choice))+' · '+e(ar?'مقابل':'versus')+' '+e((item.compared||[]).map(o=>o.film).join(" / "))+'</p></div></article>';
+            if(item.mode==="text")return '<article class="cp-text-evidence"><div><strong>'+e(ar?"موقف موازٍ":"Parallel story")+'</strong><small>'+e(item.side>0?left:right)+'</small><p>'+e(loc(item.choice))+' · '+e(ar?"مقابل":"versus")+' '+e((item.compared||[]).map(o=>loc(o.label)).join(" / "))+'</p></div></article>';
+            if(!film)return '';
+            const opposing=(item.compared||[]).map(o=>adaptiveState()?(o.film&&o.film!==item.film?o.film+" — ":"")+loc(o.label):o.film).join(" / ");
+            return '<article><img '+profileImage(film.poster,'80px',176)+' alt="" loading="lazy"><div><strong lang="en">'+e(item.film)+'</strong><small>'+e(item.side>0?left:right)+'</small><p>'+e(loc(item.choice))+' · '+e(ar?'مقابل':'versus')+' '+e(opposing)+'</p></div></article>';
           }).join("")+'</div>':'<p class="cp-small">'+e(t("noEvidence"))+'</p>')+'</section>';
       }).join(""),"","cp-coin-evidence");
   }
@@ -546,7 +768,7 @@
       }).join("");
     return '<section class="cp-result-section cp-motive-section"><div class="cp-motive-heading"><div><p class="cp-eyebrow">ENNEAGRAM</p><h2 class="cp-section-heading">'+e(ar?"طيف الدوافع":"Motive Spectrum")+'</h2></div>'+
       (lead&&wing?'<div class="cp-wing"><small>'+e(ar?"صدى الجناح":"Wing echo")+'</small><strong>'+lead.id+'w'+wing.id+'</strong><span>'+e(loc(lead.name)+' · '+loc(wing.name))+'</span></div>':lead?'<div class="cp-wing"><small>'+e(ar?"الجناح غير محسوم":"Wing open")+'</small><strong>'+e(loc(lead.name))+'</strong></div>':'')+'</div>'+
-      '<div class="cp-motif-grid">'+cards(spectrum.rows.slice(0,3))+'</div><p class="cp-small cp-motive-caption">'+e(spectrum.available?(ar?"ميول قصصية نسبية؛ ليست نتيجة نمط إنياجرام مؤكدة.":"Story affinities, not a confirmed Enneagram type."):(ar?"تحتاج القراءة إلى مفاضلات إضافية.":"More familiar-film comparisons are needed."))+'</p>'+
+      '<div class="cp-motif-grid">'+cards(spectrum.rows.slice(0,3))+'</div><p class="cp-small cp-motive-caption">'+e(spectrum.available?(ar?"ميول قصصية نسبية؛ ليست نتيجة نمط إنياجرام مؤكدة.":"Story affinities, not a confirmed Enneagram type."):spectrum.independent?(ar?"تحتاج الدوافع إلى مفاضلات قصصية إضافية.":"More independent story choices are needed."):(ar?"تحتاج القراءة إلى مفاضلات إضافية.":"More familiar-film comparisons are needed."))+'</p>'+
       disclosure(ar?"الطيف الكامل":"Full spectrum",'<div class="cp-motif-grid">'+cards(spectrum.rows.slice(3))+'</div><p class="cp-small cp-panel-note">'+e(ar?"صدى الجناح يُستنتج فقط حين تدعم الاختيارات دافعاً مجاوراً لدافع متقدم.":"A wing echo is shown only when the comparisons support a neighboring motive of a leading motive.")+'</p>',"06")+'</section>';
   }
   function rankRows(items) {
@@ -595,6 +817,10 @@
     if(!state.counterframe)state.counterframe=CF.create();
     return state.counterframe;
   }
+  function counterframeQuestion(){
+    const cf=counterframeState(),slot=CF.questions[cf.index],answer=cf.answers[slot.id];
+    return adaptiveState()?CF.form(slot,{form:Number.isInteger(answer?.form)?answer.form:CF.selectForm(slot,state)}):slot;
+  }
   function counterframeMeter(chosen,strength,ar){
     return chosen?'<div class="cp-cf-meter"><p>'+e(ar?"إلى أي مدى يزعجك هذا النوع من الضغط؟":"How strongly does that pressure affect you?")+'</p><div class="cp-rating-steps" role="group" aria-label="'+e(ar?"شدّة الانزعاج":"Intensity of discomfort")+'">'+[1,2,3,4,5].map(n=>'<button type="button" class="cp-rating-step" data-action="cf-strength" data-value="'+n+'" aria-label="'+e((ar?"درجة ":"Intensity ")+n+" / 5")+'" aria-pressed="'+(strength===n)+'"><span class="cp-rating-dot"></span><span>'+n+'</span></button>').join("")+'</div><div class="cp-rating-endpoints"><span>'+e(ar?"خفيف":"Slight")+'</span><span>'+e(ar?"قوي":"Strong")+'</span></div></div>':"";
   }
@@ -607,19 +833,30 @@
     return true;
   }
   function renderCounterframeQuestion(keepScroll=false){
-    const y=window.scrollY,ar=state.locale==="ar",cf=counterframeState(),question=CF.questions[cf.index];
+    const y=window.scrollY,ar=state.locale==="ar",cf=counterframeState(),question=counterframeQuestion();
     const answer=cf.answers[question.id]||{};
     const chosen=answer.kind==="choice"?answer.choice:"";
     const strength=chosen?answer.strength:null;
     const percent=Math.round(cf.index/CF.questions.length*100);
-    const cards=C.orderedOptions(question,"visual",state.seed).map(option=>{
+    const written=question.kind==="scenario";
+    const cinema=adaptiveState()&&question.cinematic;
+    const cards=written?"":C.orderedOptions(question,"visual",state.seed).map(option=>{
       const movie=D.filmById[option.filmId],selected=chosen===option.id;
-      return '<button type="button" class="cp-visual-select '+(selected?'cp-visual-selected':'')+'" data-action="cf-select" data-value="'+e(option.id)+'" aria-pressed="'+selected+'"><div class="cp-visual-art"><img '+profileImage(option.still,'(max-width: 680px) 92vw, 45vw',640)+' alt="" decoding="async" draggable="false"><span class="cp-visual-check" aria-hidden="true">'+(selected?'✓':'')+'</span></div><div class="cp-visual-meta"><div><strong lang="en" dir="ltr">'+e(movie.title)+'</strong><span class="cp-visual-caption">'+e(loc(option.label))+'</span></div><small>'+movie.year+'</small></div></button>';
+      const meta=cinema?'<div class="cp-visual-meta cp-cinema-answer"><div><strong>'+e(loc(option.label))+'</strong><small class="cp-scene-credit" lang="en" dir="ltr">'+e(movie.title)+' · '+movie.year+'</small></div></div>':
+        '<div class="cp-visual-meta"><div><strong lang="en" dir="ltr">'+e(movie.title)+'</strong><span class="cp-visual-caption">'+e(loc(option.label))+'</span></div><small>'+movie.year+'</small></div>';
+      return '<button type="button" class="cp-visual-select '+(cinema?'cp-scene-choice ':'')+(selected?'cp-visual-selected':'')+'" data-action="cf-select" data-value="'+e(option.id)+'" aria-pressed="'+selected+'"><div class="cp-visual-art"><img '+profileImage(option.still,'(max-width: 680px) 92vw, 45vw',640)+' alt="" decoding="async" fetchpriority="high" draggable="false"><span class="cp-visual-check" aria-hidden="true">'+(selected?'✓':'')+'</span></div>'+meta+'</button>';
     }).join("");
     const meter=counterframeMeter(chosen,strength,ar);
-    root.innerHTML='<section class="cp-wrap cp-quiz cp-cf-quiz"><div class="cp-cf-top"><span class="cp-eyebrow">THE COUNTERFRAME</span>'+action("cf-return",ar?"العودة للنتيجة":"Back to profile","cp-button-quiet")+'</div><div class="cp-progress-row"><span>'+e(ar?"قراءة الضغط · اختيارية":"Pressure reading · Optional")+'</span><span>'+(cf.index+1)+' / '+CF.questions.length+'</span></div><div class="cp-progress-track" role="progressbar" aria-valuenow="'+percent+'" aria-valuemin="0" aria-valuemax="100"><span style="width:'+percent+'%"></span></div><div class="cp-question cp-visual-question"><div class="cp-visual-heading"><h2 class="cp-question-title">'+e(loc(question.prompt))+'</h2><p class="cp-small">'+e(ar?"تخيّل نفسك داخل الموقفين، واختر نوع الضغط لا الفيلم المفضّل. إذا لم تتذكّر الموقفين فبإمكانك التخطّي.":"Imagine yourself in both situations. Choose the pressure, not your favourite film. Skip if either situation is unfamiliar.")+'</p></div><div class="cp-visual-grid" role="group" aria-label="'+e(loc(question.prompt))+'">'+cards+'</div>'+meter+'</div><div class="cp-question-footer cp-cf-footer"><div>'+action("cf-prev",t("back"),"cp-button-outline",cf.index===0?'disabled':'')+'</div><div>'+action("cf-skip",ar?"لا أعرف الموقفين":"Unfamiliar","cp-button-quiet")+action("cf-neutral",ar?"لا فرق واضح":"No clear difference","cp-button-quiet")+action("cf-next",cf.index===CF.questions.length-1?(ar?"عرض القراءة":"View reading"):t("next"),"cp-button-primary",chosen&&strength?'':'disabled')+'</div></div></section>';
-    settleStage('counterframe:'+question.id, keepScroll);
+    const questionBody=written?scenarioChoices(question,chosen,"cf-select"):'<div class="cp-visual-heading"><h2 class="cp-question-title">'+e(loc(question.prompt))+'</h2>'+
+      (adaptiveState()?"":'<p class="cp-small">'+e(ar?"تخيّل نفسك داخل الموقفين، واختر نوع الضغط لا الفيلم المفضّل.":"Imagine yourself in both situations. Choose the pressure, not your favourite film.")+'</p>')+
+      '</div><div class="cp-visual-grid" role="group" aria-label="'+e(loc(question.prompt))+'">'+cards+'</div>';
+    const swap=adaptiveState()&&!written?'<div class="cp-question-tools"><button class="cp-text-button" type="button" data-action="cf-swap">'+e(ar?"لا تتذكّر أحد الموقفين؟ بدّل":"Unfamiliar? Change films")+'</button></div>':"";
+    const complete=cf.index===CF.questions.length-1;
+    const next=complete?(ar?"عرض القراءة":"View reading"):t("next");
+    root.innerHTML='<section class="cp-wrap cp-quiz cp-cf-quiz"><div class="cp-cf-top"><span class="cp-eyebrow">THE COUNTERFRAME</span>'+action("cf-return",ar?"العودة للنتيجة":"Back to profile","cp-button-quiet")+'</div><div class="cp-progress-row"><span>'+e(ar?"قراءة الضغط · اختيارية":"Pressure reading · Optional")+'</span><span>'+(cf.index+1)+' / '+CF.questions.length+'</span></div><div class="cp-progress-track" role="progressbar" aria-valuenow="'+percent+'" aria-valuemin="0" aria-valuemax="100"><span style="width:'+percent+'%"></span></div><div class="cp-question cp-visual-question">'+questionBody+meter+'</div>'+swap+'<div class="cp-question-footer cp-cf-footer"><div>'+action("cf-prev",t("back"),"cp-button-outline",cf.index===0?'disabled':'')+'</div><div>'+action("cf-skip",adaptiveState()?t("skip"):(ar?"لا أعرف الموقفين":"Unfamiliar"),"cp-button-quiet")+action("cf-neutral",ar?"لا فرق واضح":"No clear difference","cp-button-quiet")+action("cf-next",next,"cp-button-primary",chosen&&strength?'':'disabled')+'</div></div></section>';
+    settleStage('counterframe:'+question.id+':'+(question.form??0), keepScroll);
     if(keepScroll)window.scrollTo({top:y,behavior:"instant"});
+    if(!keepScroll)warmNextArtwork();
   }
 
   function counterframePanel(){
@@ -628,7 +865,8 @@
     const art=reading.representative||{filmId:"shutter-island",still:"assets/gallery/2010-2019/shutter-island/17c04a148584.webp"};
     const movie=D.filmById[art.filmId];
     const title=ready?(top?loc(CF.pressures[top.code].name):reading.ranked.length>1?(ar?"أنماط مقاومة متعددة":"Several pressure cues"):(ar?"القراءة مفتوحة":"Reading still open")):(ar?"ما الذي يثير مقاومتك؟":"What creates resistance?");
-    const subtitle=ready?(top?loc(CF.pressures[top.code].hint):reading.ranked.length>1?(ar?"تكرّرت أكثر من إشارة في اختياراتك دون اتجاه واحد أوضح.":"More than one pressure recurred without a single strongest cue."):(ar?"لم يتكرّر اتجاه قوي كفاية عبر المشاهد.":"No strong direction repeated across enough scenes.")):(ar?"قارن المواقف التي تثير مقاومة بدل اختيار الفيلم الذي تحبّه.":"Explore the pressures you resist, rather than the stories you prefer.");
+    const subtitle=ready?(top?loc(CF.pressures[top.code].hint):reading.ranked.length>1?(ar?"تكرّرت أكثر من إشارة في اختياراتك دون اتجاه واحد أوضح.":"More than one pressure recurred without a single strongest cue."):(ar?"لم يتكرّر اتجاه قوي كفاية عبر المشاهد.":"No strong direction repeated across enough scenes.")):(ar?"قارن المواقف التي تثير مقاومة بدل اختيار الفيلم الذي تحبّه.":"Explore the pressures you resist, rather than the stories you prefer.")+
+      (adaptiveState()?(ar?" تابع إذا شاهدت العملين وتتذكّر الموقفين، وإلّا بدّل.":" Continue if you have seen both and remember the scenes; otherwise change films."):"");
     const relationText={aligned:ar?"اتجاه متوافق · ليس تأكيداً":"Same direction · not confirmation",different:ar?"إشارة مختلفة":"Different direction",open:ar?"غير محسوم":"Still open",unavailable:ar?"الوظيفة الأساسية غير محسومة":"Primary function still open"}[reading.relation];
     const mirror=reading.opposite?C.impressionName(reading.opposite,state.locale):"—";
     const mirrorCue=reading.comparison?loc(CF.pressures[reading.comparison.code].name):"—";
@@ -636,10 +874,12 @@
     const evidence=reading.axes.map(axis=>{
       const lead=axis.lead;
       const labels=axis.poles.slice().sort((a,b)=>a.code.localeCompare(b.code)).map(p=>loc(CF.pressures[p.code].name)).join(" / ");
-      return '<div class="cp-cf-evidence-row"><div><strong>'+e(lead?loc(CF.pressures[lead.code].name):labels)+'</strong><small>'+e(lead?(ar?"إشارة متكررة":"Repeated cue"):(ar?"غير محسوم":"Open"))+'</small></div><span>'+e(lead?lead.count+' / 3 · '+lead.mean.toFixed(1)+'/5':axis.answered+' / 3')+'</span></div>';
+      return '<div class="cp-cf-evidence-row"><div><strong>'+e(lead?loc(CF.pressures[lead.code].name):labels)+'</strong><small>'+e(lead?(adaptiveState()&&lead.provisional?(ar?"إشارة أولية":"Provisional cue"):(ar?"إشارة متكررة":"Repeated cue")):(ar?"غير محسوم":"Open"))+
+        (adaptiveState()?' · '+axis.film+' '+e(ar?"سينمائي":"film")+' · '+axis.text+' '+e(ar?"نصي":"written"):'')+'</small></div><span>'+e(lead?lead.count+' / 3 · '+lead.mean.toFixed(1)+'/5':axis.answered+' / 3')+'</span></div>';
     }).join("");
     const selected=CF.questions.filter(q=>cf.answers[q.id]?.done&&cf.answers[q.id].kind==="choice").map(q=>{
-      const answer=cf.answers[q.id],option=q.options.find(o=>o.id===answer.choice),film=D.filmById[option.filmId];
+      const answer=cf.answers[q.id],option=CF.form(q,answer).options.find(o=>o.id===answer.choice),film=D.filmById[option.filmId];
+      if(!film)return '<div class="cp-cf-selected-frame cp-cf-written"><div><strong>'+e(ar?"موقف موازٍ":"Parallel story")+'</strong><small>'+e(loc(option.label))+'</small></div><span>'+answer.strength+'/5</span></div>';
       return '<div class="cp-cf-selected-frame"><img '+profileImage(option.still,'160px',320)+' loading="lazy" alt=""><div><strong lang="en">'+e(film.title)+'</strong><small>'+e(loc(option.label))+'</small></div><span>'+answer.strength+'/5</span></div>';
     }).join("");
     return '<section class="cp-result-section cp-counterframe" id="cp-counterframe"><div class="cp-cf-head"><div><p class="cp-eyebrow">'+e(ar?"قراءة إضافية":"OPTIONAL READING")+'</p><h2 class="cp-section-heading">The Counterframe</h2></div><span class="cp-cf-count">'+e(progress)+'</span></div><article class="cp-cf-feature"><figure class="cp-cf-art"><img '+profileImage(art.still,'(max-width: 680px) 92vw, 580px',640)+' alt="" loading="lazy"><figcaption lang="en">'+e(movie.title)+' · '+movie.year+'</figcaption></figure><div class="cp-cf-copy"><p class="cp-eyebrow">'+e(ready?(ar?"إشارات الضغط":"PRESSURE ECHO"):(ar?"مستوحى من John Beebe":"INSPIRED BY JOHN BEEBE"))+'</p><h3>'+e(title)+'</h3><p class="cp-small">'+e(subtitle)+'</p>'+
@@ -659,7 +899,7 @@
     panel?.scrollIntoView({block:"start",behavior:"instant"});
   }
   function counterframeAction(name,value){
-    const cf=counterframeState(),question=CF.questions[cf.index];
+    const cf=counterframeState(),slot=CF.questions[cf.index],question=counterframeQuestion();
     if(name==="cf-start"||name==="cf-review"){
       if(name==="cf-review")cf.index=0;
       state.route="counterframe";persist();render();goTop();return;
@@ -669,10 +909,17 @@
     if(name==="cf-prev"){
       if(cf.index>0)cf.index--;persist();renderCounterframeQuestion();goTop();return;
     }
+    if(name==="cf-swap"&&adaptiveState()){
+      const next=CF.selectForm(slot,state,(question.form??0)+1);
+      if(next<0)return;
+      cf.answers[question.id]={kind:"pending",form:next,done:false};
+      cf.complete=false;persist();renderCounterframeQuestion();goTop();return;
+    }
     if(name==="cf-select"){
       if(!question.options.some(o=>o.id===value))return;
       const previous=cf.answers[question.id];
-      cf.answers[question.id]={kind:"choice",choice:value,strength:previous?.choice===value?previous.strength:null,done:false};
+      cf.answers[question.id]={kind:"choice",choice:value,strength:previous?.choice===value?previous.strength:null,done:false,
+        ...(adaptiveState()?{form:question.form??0}:{})};
       cf.complete=false;persist();if(!syncCounterframeControls(cf.answers[question.id]))renderCounterframeQuestion(true);return;
     }
     if(name==="cf-strength"){
@@ -682,10 +929,17 @@
     }
     if(name==="cf-next"){
       const answer=cf.answers[question.id];
-      if(!CF.validAnswer(question,{...answer,done:true})||answer?.kind!=="choice")return;
-      answer.done=true;
+      if(answer?.kind!=="choice")return;
+      const committed={...answer,done:true};
+      if(adaptiveState()&&question.kind!=="scenario"){
+        committed.confirmed=true;
+        committed.recalled=question.options.map(o=>o.filmId);
+      }
+      if(!CF.validAnswer(slot,committed))return;
+      if(committed.recalled)committed.recalled.forEach(id=>state.familiarity[id]="seen");
+      cf.answers[question.id]=committed;
     }else if(name==="cf-skip"||name==="cf-neutral"){
-      cf.answers[question.id]={kind:name==="cf-skip"?"skip":"neutral",done:true};
+      cf.answers[question.id]={kind:name==="cf-skip"?"skip":"neutral",done:true,...(adaptiveState()?{form:question.form??0}:{})};
     }else return;
     if(cf.index===CF.questions.length-1){
       const missing=CF.questions.findIndex(q=>!CF.validAnswer(q,cf.answers[q.id]));
@@ -709,6 +963,7 @@
   function renderPortrait({isCore,heading,lens,signature,subtitle,desc,pairDesc,cover,functionStack,matchCards,pairCards,genreRows,reading,examples,watched,unknown,recs,prompt}) {
     const ar=state.locale==='ar',open=ar?'مفتوح':'Open';
     const spectrum=result.motiveSpectrum;
+    const refineCount=adaptiveState()?D.adaptive.refinePlan(state,result).length:0;
     const leadingMotif=spectrum.lead?loc(spectrum.lead.name):'';
     const coverArt=cover?`<figure class="cp-portrait-art"><img ${profileImage(cover.still,'(max-width: 680px) 92vw, 700px',960)} alt="" decoding="async"><figcaption lang="en">${e(cover.title)} · ${e(cover.year)}</figcaption></figure>`:'';
     const traits=[
@@ -716,7 +971,7 @@
       [ar?'Savior Animal المحتمل':'Possible Savior Animal',result.animal||open],
       [ar?'صدى الدافع':'Story motive',leadingMotif||open]
     ];
-    const portraitTop=`<header class="cp-portrait-hero${cover?' has-art':''}">${coverArt}<div class="cp-portrait-copy"><p class="cp-eyebrow">${e(isCore?(ar?'البصمة السينمائية · أولية':'CINEMA PROFILE · INITIAL READING'):(ar?'البصمة السينمائية':'CINEMA PROFILE'))}</p><p class="cp-portrait-label">${e(ar?'بصمة الأرشيف':'The Archive Signature')}</p><h1 class="cp-portrait-name${!heading&&!lens?' is-open':''}">${e(signature)}</h1>${subtitle?`<p class="cp-portrait-formula">${e(subtitle)}</p>`:''}<p class="cp-portrait-description">${e(heading?desc:lens?pairDesc:desc)}</p><p class="cp-portrait-confidence">${e(t(result.consistency))}</p><div class="cp-portrait-traits">${traits.map(([label,value])=>`<div><small>${e(label)}</small><strong>${e(value)}</strong></div>`).join('')}</div><div class="cp-actions cp-portrait-actions">${action('image',ar?'نزّل البورتريه':'Download portrait','cp-button-primary')}${action('review',t('reviewAnswers'),'cp-button-quiet')}${isCore?action('deepen',ar?'توسيع القراءة':'Deepen profile','cp-button-quiet'):''}</div></div></header>`;
+    const portraitTop=`<header class="cp-portrait-hero${cover?' has-art':''}">${coverArt}<div class="cp-portrait-copy"><p class="cp-eyebrow">${e(isCore?(ar?'البصمة السينمائية · أولية':'CINEMA PROFILE · INITIAL READING'):(ar?'البصمة السينمائية':'CINEMA PROFILE'))}</p><p class="cp-portrait-label">${e(ar?'بصمة الأرشيف':'The Archive Signature')}</p><h1 class="cp-portrait-name${!heading&&!lens?' is-open':''}">${e(signature)}</h1>${subtitle?`<p class="cp-portrait-formula">${e(subtitle)}</p>`:''}<p class="cp-portrait-description">${e(heading?desc:lens?pairDesc:desc)}</p><p class="cp-portrait-confidence">${e(t(result.consistency))}</p><div class="cp-portrait-traits">${traits.map(([label,value])=>`<div><small>${e(label)}</small><strong>${e(value)}</strong></div>`).join('')}</div><div class="cp-actions cp-portrait-actions">${action('image',ar?'نزّل البورتريه':'Download portrait','cp-button-primary')}${action('review',t('reviewAnswers'),'cp-button-quiet')}${isCore?action('deepen',ar?'توسيع القراءة':'Deepen profile','cp-button-quiet'):''}${refineCount?action('refine',(ar?'استكمل المحاور المفتوحة':'Refine open contrasts')+' (+'+refineCount+')','cp-button-quiet'):''}</div></div></header>`;
     const exportPanel=`<div class="cp-feedback" id="cp-image-status" role="status"></div><section id="cp-export" class="cp-export" hidden><img alt="${e(ar?'بطاقة البصمة السينمائية':'Cinema Profile portrait card')}"><div><h3 class="cp-subheading">${e(t('save'))}</h3><p class="cp-small">${e(ar?'بطاقة مرئية مختصرة من بصمتك وأفلام اختياراتك.':'A visual card with your signature and films from your choices.')}</p><a class="cp-button cp-button-primary" download="The-TS-Archive-Cinema-Profile.png">Download PNG</a><button type="button" class="cp-text-button" data-action="close-export">${e(ar?'إغلاق المعاينة':'Close preview')}</button></div></section>`;
     const palette=`<section class="cp-result-section cp-portrait-palette"><h2 class="cp-section-heading">${e(t('taste'))}</h2>${result.affinities.length?paletteCards():`<p class="cp-small">${e(t('noEvidence'))}</p>`}${disclosure(t('reading'),`<div class="cp-reading-text">${reading.length?reading.map(text=>`<p>${e(text)}</p>`).join(''):`<p>${e(t('noEvidence'))}</p>`}</div><h3 class="cp-rank-heading">${e(t('evidence'))}</h3><div class="cp-reading-evidence">${examples.length?examples.map(text=>`<p>${e(text)}</p>`).join(''):`<p>${e(t('noEvidence'))}</p>`}</div>`)}</section>`;
     const close=recs.filter(item=>item.kind==='close'),discoveries=recs.filter(item=>item.kind==='discovery');
@@ -736,7 +991,7 @@
 
   function renderResult() {
     result=C.calculate(state);
-    const isCore=state.limit===D.coreLimit;
+    const isCore=state.limit===limits().core;
     const heading=C.familyName(result.type,state.locale);
     const desc=result.type?loc(C.familyInfo[result.type]):t("notEnough");
     const pair=result.functionPair;
@@ -974,13 +1229,35 @@
     if(name==="restart"){
       restartAssessment();return;
     }
+    if(name==="adaptive-edition"){switchEdition(false);return;}
+    if(name==="classic-edition"){switchEdition(true);return;}
     if(name==="deepen"){
-      state.limit=D.fullLimit;state.index=D.coreLimit;state.route="quiz";current=null;draft=null;persist();render();goTop();return;
+      const bounds=limits();
+      state.limit=bounds.full;state.index=bounds.core;state.route="quiz";current=null;draft=null;persist();render();goTop();return;
+    }
+    if(name==="refine"&&adaptiveState()&&state.route==="result"){
+      const plan=D.adaptive.refinePlan(state,result);
+      if(!plan.length)return;
+      state.index=state.limit;
+      state.refinement=[...(state.refinement||[]),...plan];
+      state.limit=activeQuestions().length;state.route="quiz";current=null;draft=null;persist();render();goTop();return;
     }
     if(name==="review"){
       state.route="quiz";state.index=0;current=null;draft=null;persist();render();goTop();return;
     }
     if(name==="copy"){void copyPrompt();return;}
+    if(name==="qa-copy"){void copyFeedback();return;}
+    if(name==="qa-reason"&&adaptiveState()&&state.route==="result"){
+      const item=feedbackSample().find(sample=>sample.slot===button.dataset.slot);
+      if(!item||!feedbackReasons.some(reason=>reason.id===value))return;
+      const feedback=state.feedback??={};
+      if(feedback[item.slot]?.key===feedbackKey(item)&&feedback[item.slot].reason===value)delete feedback[item.slot];
+      else feedback[item.slot]={key:feedbackKey(item),reason:value};
+      persist();
+      for(const control of root.querySelectorAll('[data-action="qa-reason"]'))if(control.dataset.slot===item.slot)
+        control.setAttribute("aria-pressed",String(feedback[item.slot]?.reason===control.dataset.value));
+      return;
+    }
     if(name==="chat"){window.open("https://chatgpt.com/","_blank","noopener,noreferrer");void copyPrompt();return;}
     if(name==="image"){void saveImage();return;}
     if(name==="image-full"){void saveImage(true);return;}
@@ -992,6 +1269,29 @@
     if(state.route!=="quiz")return;
     if(name==="next"){commitAnswer();return;}
     if(name==="skip"){commitAnswer(true);return;}
+    if(adaptiveState()){
+      if(name==="neutral"){commitAnswer(false,true);return;}
+      if(name==="swap-unfamiliar"||name==="unfamiliar-cancel"){
+        draft.unfamiliar=name==="swap-unfamiliar";renderQuestion(true);
+        if(draft.unfamiliar){
+          const panel=root.querySelector(".cp-familiarity-options");
+          if(window.innerWidth<=680)panel?.scrollIntoView({block:"center",behavior:"instant"});
+          panel?.querySelector("button")?.focus({preventScroll:true});
+        }else root.querySelector('[data-action="swap-unfamiliar"]')?.focus({preventScroll:true});
+        return;
+      }
+      if(["unfamiliar-only","unfamiliar-none","unfamiliar-recall"].includes(name)){
+        if(current.purpose!=="coin"||current.kind!=="visual")return;
+        if(name!=="unfamiliar-recall")current.options.forEach(option=>{
+          state.familiarity[option.filmId]=name==="unfamiliar-only"&&option.filmId===film?"seen":"unseen";
+        });
+        switchQuestionForm();return;
+      }
+      if(name==="film-unseen"&&current.purpose==="rating"){
+        state.familiarity[current.filmId]="unseen";
+        switchQuestionForm();return;
+      }
+    }
     if(name==="back"){
       if(state.index>0){state.index--;current=null;draft=null;persist();render();goTop();}
       return;
