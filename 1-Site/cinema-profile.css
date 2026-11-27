@@ -22,6 +22,10 @@
 }
 .cp-body .cp-root { min-height:calc(100svh - 145px); }
 .cp-body .cp-masthead { height:70px; }
+.cp-header-tools {display:flex;justify-content:flex-end;justify-self:end;align-items:center;gap:clamp(10px,1.15vw,18px);min-width:0;}
+.cp-header-tools .cp-curator-profile {flex:none;gap:8px;color:var(--cp-text);white-space:nowrap;font-size:clamp(.87rem,1vw,1.06rem);}
+.cp-header-tools .cp-curator-profile .avatar {width:clamp(40px,2.9vw,50px);height:clamp(40px,2.9vw,50px);border-color:color-mix(in srgb,var(--cp-accent) 55%,transparent);}
+.cp-header-tools .cp-curator-profile:hover .avatar,.cp-header-tools .cp-curator-profile:focus-visible .avatar {border-color:var(--cp-accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--cp-accent) 25%,transparent);}
 .cp-body .cp-lang {
   justify-self:end; display:flex; align-items:center; gap:2px; padding:3px;
   border:1px solid var(--cp-line); border-radius:4px; background:var(--cp-deep);
@@ -800,6 +804,8 @@
 .cp-intro-page .cp-framework-note {font-size:.75rem;}
 @media(max-width:760px){
   .cp-body.cp-intro-page {--cp-intro-header-h:62px;}
+  .cp-header-tools {gap:6px;}
+  .cp-header-tools .cp-curator-profile .avatar {width:32px;height:32px;}
   .cp-body.cp-intro-page .cp-masthead {grid-template-columns:minmax(0,1fr) auto auto;gap:7px;}
   .cp-body.cp-intro-page .cp-nav {display:flex;gap:0;}
   .cp-body.cp-intro-page .cp-nav a:not(.nav-cinema-profile) {display:none;}
@@ -828,8 +834,21 @@
   .cp-intro-works-grid .cp-hero-film-caption {display:grid;gap:2px;font-size:.71rem;}
   .cp-intro-works-grid .cp-hero-film-caption span:last-child {font-size:.66rem;}
 }
+@media(max-width:1200px){
+  .cp-header-tools .cp-curator-profile :is(.profile-name,.external-arrow) {display:none;}
+}
+@media(max-width:1040px) and (min-width:761px){
+  .cp-body .cp-masthead {grid-template-columns:minmax(0,1fr) auto auto;gap:12px;}
+  .cp-body .cp-nav :is(a[href="index.html#lists"],a[href="screening-room.html"]) {display:none;}
+}
+@media(max-width:540px){
+  .cp-body.cp-intro-page .cp-nav .nav-profile-label {display:none;}
+  .cp-body.cp-intro-page .cp-nav .nav-profile-short {display:inline;}
+}
 @media(max-width:360px){
   .cp-body.cp-intro-page .cp-masthead {gap:5px;}
+  .cp-header-tools {gap:4px;}
+  .cp-header-tools .cp-curator-profile .avatar {width:28px;height:28px;}
   .cp-body.cp-intro-page .cp-masthead .wordmark b {font-size:.9rem;}
   .cp-body.cp-intro-page .cp-nav .nav-cinema-profile {font-size:.58rem;}
   .cp-intro-start-row {grid-template-columns:1fr;}

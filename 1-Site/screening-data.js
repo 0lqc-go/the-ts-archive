@@ -414,6 +414,11 @@
       path:'assets/films/sentimental-value-2025-curator-frame-20261126-16.webp', width:1916, height:1036,
       label:'Sunlight and shadows across the floor',
       credit:'Film still provided by the curator'
+    }},
+    '2026-11-28': {edition:'2010-2019', film:'phantom-thread', frame:{
+      path:'assets/films/phantom-thread-daily-frame-20261128.webp', width:1920, height:1080,
+      label:'Reynolds and Alma in the ballroom after the New Year’s celebration',
+      credit:'Film still provided by the curator'
     }}
   };
 

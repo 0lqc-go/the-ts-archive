@@ -86,6 +86,9 @@ async function chooseNext(page,slot,index){
     assert(await home.locator('.masthead .avatar img').isVisible());
     await staticHome.close();
     const desktop=await session(),p=desktop.page;
+    await p.waitForFunction(()=>{const img=document.querySelector('.cp-curator-profile .avatar img');return img?.complete&&img.naturalWidth>0;});
+    assert(await p.locator('.cp-curator-profile .profile-name').isVisible());
+    assert.equal(await p.locator('.cp-curator-profile').getAttribute('href'),'https://letterboxd.com/0lqc/');
     assert.match(await p.locator(".cp-start-facts").innerText(),/32 questions/);
     assert.equal(await action(p,"adaptive-edition").getAttribute("aria-pressed"),"true");
     assert.equal(await action(p,"classic-edition").getAttribute("aria-pressed"),"false");
@@ -98,6 +101,15 @@ async function chooseNext(page,slot,index){
     assert.equal(introLayout.weight,'600');assert(introLayout.titleSize<=76);
     assert(await p.evaluate(()=>getComputedStyle(document.querySelector('.cp-footer')).backgroundColor===getComputedStyle(document.body).backgroundColor),'Intro footer should share the page background');
     assert.match(introLayout.src,/blade-runner-2049-best-cinematography/);
+    for(const width of [320,390,540,768,900,1024,1280,1440]){
+      await p.setViewportSize({width,height:900});
+      const fits=await p.evaluate(()=>{
+        const header=document.querySelector('.cp-masthead'),box=header.getBoundingClientRect();
+        const visible=[...header.children].filter(child=>getComputedStyle(child).display!=='none').map(child=>child.getBoundingClientRect());
+        return visible.every((rect,i)=>rect.left>=box.left-1&&rect.right<=box.right+1&&(!i||rect.left>=visible[i-1].right-1));
+      });
+      assert(fits,`Profile masthead must fit without overlapping at ${width}px`);
+    }
     // The cover and editorial content follow the archive's masthead gutter,
     // including ultra-wide desktops where the old 1250px cap was conspicuous.
     await p.setViewportSize({width:2520,height:1080});
@@ -301,6 +313,7 @@ async function chooseNext(page,slot,index){
     console.log("Desktop: 32 + 24 + "+targeted+" main answers, 12 Counterframe answers, fallback, refresh, audit and review passed.");
 
     const mobile=await session(true),m=mobile.page;
+    assert(await m.locator('.cp-curator-profile .avatar img').isVisible());
     assert.match(await m.locator(".cp-start-facts").innerText(),/32/);
     assert.equal(await action(m,"adaptive-edition").getAttribute("aria-pressed"),"true");
     assert.equal(await action(m,"classic-edition").getAttribute("aria-pressed"),"false");

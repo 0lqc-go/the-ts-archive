@@ -1,5 +1,9 @@
 {
   "sizes": {
+    "assets/films/phantom-thread-daily-frame-20261128.webp": [1920, 1080],
+    "assets/films/responsive/phantom-thread-daily-frame-20261128-640w.webp": [640, 360],
+    "assets/films/responsive/phantom-thread-daily-frame-20261128-960w.webp": [960, 540],
+    "assets/films/responsive/phantom-thread-daily-frame-20261128-1280w.webp": [1280, 720],
     "assets/films/responsive/screen-9b0a8862e14d-4885w.webp": [
       4885,
       2573
@@ -1534,6 +1538,12 @@
     ]
   },
   "variants": {
+    "assets/films/phantom-thread-daily-frame-20261128.webp": [
+      {"src": "assets/films/responsive/phantom-thread-daily-frame-20261128-640w.webp", "width": 640},
+      {"src": "assets/films/responsive/phantom-thread-daily-frame-20261128-960w.webp", "width": 960},
+      {"src": "assets/films/responsive/phantom-thread-daily-frame-20261128-1280w.webp", "width": 1280},
+      {"src": "assets/films/phantom-thread-daily-frame-20261128.webp", "width": 1920}
+    ],
     "assets/films/tar-2022-decade-cover-hd.webp": [
       {
         "src": "assets/films/responsive/tar-2022-decade-cover-hd-640w.webp",
