@@ -112,12 +112,6 @@
   // Screen order, not fictional chronology. Each sequence has independently
   // recognizable events, never two visually indistinguishable frames.
   const editor = [
-    ['moonlight-2016','three-ages',[
-      ['Juan teaches Little to swim','A swimming lesson with Juan'],
-      ['Chiron as a teenager','The second chapter'],
-      ['Chiron and Kevin at the diner','An adult reunion at the diner'],
-      ['The quiet reunion','The two find a moment of intimacy']
-    ]],
     ['inception','dream-layers',[
       ['The first extraction','The early extraction job'],
       ['The Paris café','Ariadne learns the rules'],
@@ -269,12 +263,6 @@
       ['Silhouettes at dusk','The silhouettes at dusk'],
       ['Alejandro','Alejandro in the grey light']
     ]],
-    ['thelma-2017','awakening',[
-      ['The frozen lake','The frozen lake'],
-      ['Thelma on the telephone','The telephone call'],
-      ['Thelma and Anja','Thelma and Anja together'],
-      ['Thelma in the water','The figure in the water']
-    ]],
     ['certified-copy','a-day-in-tuscany',[
       ['The drive','The drive'],
       ['Juliette Binoche in the Tuscan street','The Tuscan street'],
@@ -298,6 +286,66 @@
       ['Llewyn rides the subway','The subway ride'],
       ['On the road at night','The night road'],
       ['inside-llewyn-davis-music-as-memory.webp','Llewyn performing with his guitar']
+    ]],
+    ['the-dark-knight-rises','gotham-rises',[
+      ['Bruce and Selina','Bruce and Selina at the gathering'],
+      ['The prison pit','The prison pit'],
+      ['Gotham in winter','Gotham in winter'],
+      ['Bane','Bane in the shadows']
+    ]],
+    ['the-wolf-of-wall-street','rise-and-consequences',[
+      ['Jordan and Mark Hanna at lunch','Jordan’s lunch with Mark Hanna'],
+      ['Jordan at the office','The trading floor'],
+      ['Jordan in conversation','Jordan in conversation'],
+      ['Jordan faces the consequences','The later confrontation']
+    ]],
+    ['dune-2021','arrival-on-arrakis',[
+      ['ded59bd5ae74.webp','A figure crossing the courtyard'],
+      ['aac8b02376cb.webp','The room with the arched windows'],
+      ['ded3d0fc9163.webp','The craft above the desert'],
+      ['fb69e2a4b489.webp','Paul and Chani']
+    ]],
+    ['dune-part-two','desert-and-power',[
+      ['9503aa1ca9e8.webp','An assembly within a monumental interior'],
+      ['af90bc25bc36.webp','A figure on the immense dune'],
+      ['149d997005e0.webp','The monochrome portrait'],
+      ['667d21014e1f.webp','A figure above the gathered army']
+    ]],
+    ['avengers-infinity-war','cosmic-journey',[
+      ['19f58746f352.webp','A circular space interior'],
+      ['2b7a7d8bef49.webp','The eclipse-like sky'],
+      ['72ef8429397d.webp','The assembled fighters'],
+      ['272be5a0df2d.webp','The last silhouette in the orange light']
+    ]],
+    ['avengers-endgame','final-chapter',[
+      ['a861cce53afd.webp','A deep blue interior'],
+      ['cdfa835fc525.webp','A space framed by the setting sun'],
+      ['9ca39e56168e.webp','A distant purple landscape'],
+      ['9c91ce6229a2.webp','A figure against the smoke-filled sky']
+    ]],
+    ['coco-2017','memory-and-music',[
+      ['4d5ec7cdd437.webp','A guitarist in the street'],
+      ['ebf4c0b25370.webp','The illuminated family photographs'],
+      ['dcc1b08442be.webp','The enormous stage'],
+      ['6030fe350d6f.webp','Miguel and the guitar in the sunset']
+    ]],
+    ['your-name','across-time',[
+      ['25eb911f1ef0.webp','The mountain landscape'],
+      ['a798d92c3874.webp','The comet in the night sky'],
+      ['7d67b78fedbc.webp','The view of the crater'],
+      ['9fd4286bb891.webp','A figure in the city']
+    ]],
+    ['challengers','the-match',[
+      ['615ea65bdcf0.webp','A close-up on court'],
+      ['e85abe1b6c69.webp','The three together'],
+      ['b3edfcbeace9.webp','The court under stadium lights'],
+      ['ac5a6fa550aa.webp','The match in the final sequence']
+    ]],
+    ['uncut-gems','the-gamble',[
+      ['bdc2f4fd6f6f.webp','The excavation'],
+      ['a0ed9d432d9e.webp','Howard behind glass'],
+      ['061e5bae439b.webp','The jeweled ornament'],
+      ['f4190539d63a.webp','The basketball arena']
     ]]
   ];
   // Three disjoint groups per board; relationships are factual credits,
@@ -344,7 +392,8 @@
       ['Featuring Amy Adams',['arrival-2016','nocturnal-animals','the-master-2012']]
     ]]
   ];
-  // Programs are editorial suggestions, not correctness judgements.
+  // Pairings become comparison questions. Distractors are specific to just
+  // one of the films (or a neighboring genre), rather than competing moods.
   const pairs = [
     ['Distance & intimacy','her','past-lives','Two relationships ask what closeness means when a life can never be completely shared.'],
     ['The cost of control','phantom-thread','tar-2022','Two accomplished artists test the boundary between exacting work and control of the people around them.'],
@@ -359,7 +408,21 @@
     ['Doubt & responsibility','prisoners','the-batman','In both darker worlds, the search for justice exposes the costs of certainty.'],
     ['Time and possibility','arrival-2016','the-beast-2023','Genre stories use time, possibility and attachment to explore what it means to choose a life.']
   ];
-  const bank = {hardFrames,signatures,editor,connections,pairs};
+  const pairChoices = {
+    'Distance & intimacy':['An intimate bond across distance',['Love with an artificial intelligence','A reunion with a childhood sweetheart','Professional rivalry between artists']],
+    'The cost of control':['Creative authority reshapes private relationships',['The world of high fashion','The politics of classical orchestras','A family reconnects after bereavement']],
+    'Memory & time':['Childhood memory and parental relationships',['A holiday captured on a camcorder','The origin of the universe','A courtroom reconstruction of the past']],
+    'Art & family':['Filmmaking reworks intimate history',['A film student’s troubled romance','A director reconnects with his daughters','A rivalry over a prestigious art prize']],
+    'Obsession':['Discipline turns into self-sacrificing obsession',['A jazz band and a demanding conductor','A competitive rowing team','The return of an ageing musician']],
+    'Guilt & uncertainty':['An investigation reveals uncertain truths about intimacy',['A public trial examines a marriage','A detective is drawn to a suspect','Parents search for a missing child']],
+    'A future of loneliness':['Technology redefines personhood and intimacy',['A replicant investigates his memories','An operating system develops feelings','Shared dreams are used for extraction']],
+    'Spaces between people':['Architecture reflects emotional distance',['An architectural tour of Indiana','Digital companionship in future Los Angeles','An urban crime investigation']],
+    'The weight of loss':['Familiar places carry unresolved loss',['One day away from a rehabilitation centre','Returning home to care for a nephew','Siblings in a dispute over inheritance']],
+    'An artist’s ambition':['Artistic identity under performance pressure',['A ballet dancer prepares for a role','A conductor faces public allegations','A theatre director rehearses Chekhov']],
+    'Doubt & responsibility':['The search for justice tests moral boundaries',['A father searches for his daughters','A masked detective investigates corruption','A cameraman sells footage to television']],
+    'Time and possibility':['Time and alternate possibilities reshape attachment',['Language changes a scientist’s perception of time','Past-life technology revisits earlier lives','Astronauts travel beyond the solar system']]
+  };
+  const bank = {hardFrames,signatures,editor,connections,pairs,pairChoices};
   if (typeof module !== 'undefined' && module.exports) module.exports=bank;
   else window.ArchiveScreeningGamesBank=bank;
 })();

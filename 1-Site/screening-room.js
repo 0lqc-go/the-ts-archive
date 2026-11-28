@@ -9,8 +9,8 @@
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[char]));
-  const nameOfMode = {frame:'Guess the Frame',memory:'Cinema Memory',winner:'Guess the Winner',editor:'The Editor',connections:'Connections',daily:'Daily Challenge',double:'Double Feature',matchup:'This or That',ballot:'My Alternate Ballot',journeys:'Film Journeys'};
-  const quizModes = new Set(['frame','memory','winner','editor','connections','daily']);
+  const nameOfMode = {frame:'Guess the Frame',memory:'Cinema Memory',signature:'Visual Signature',winner:'Guess the Winner',editor:'The Editor',connections:'Connections',daily:'Daily Challenge',matchup:'This or That',ballot:'My Alternate Ballot',journeys:'Film Journeys'};
+  const quizModes = new Set(['frame','memory','signature','winner','editor','connections','daily']);
   const storageKey = 'ts-archive-screening-ballot-v1';
   const quizHistoryStorageKey = 'ts-archive-screening-quiz-history-v2';
   const dailyStorageKey = 'ts-archive-screening-daily-quiz-v1';
@@ -100,9 +100,10 @@
     const quizNav = $('.screening-quiz-navigation');
     const initialParams = new URLSearchParams(location.search);
     const modeParam = initialParams.get('mode');
-    let mode = Object.hasOwn(nameOfMode, modeParam) ? modeParam : 'frame';
+    let mode = modeParam==='double'?'memory':Object.hasOwn(nameOfMode, modeParam) ? modeParam : 'frame';
     let lastQuiz = quizModes.has(mode) ? mode : 'frame';
-    const settings = {frame:{scope:'all', category:'all'},memory:{scope:'all', category:'all'},winner:{scope:'all',category:'all'}};
+    const initialCategory=modeParam==='double'?'pair':initialParams.get('category');
+    const settings = {frame:{scope:'all', category:'all'},memory:{scope:'all',category:data.memoryTypes.includes(initialCategory)?initialCategory:'all'},signature:{scope:'all',category:'all'},winner:{scope:'all',category:'all'}};
     let difficulty = refinedQuestions && initialParams.get('difficulty') !== 'classic' ? 'challenge' : 'classic';
     const sessions = new Map(), quizHistory = Object.create(null);
     let activeQuizKey = '';
@@ -210,6 +211,8 @@
         try {
           const url = new URL(location.href);
           url.searchParams.set('mode',mode);
+          if(mode==='memory'&&settings.memory.category!=='all')url.searchParams.set('category',settings.memory.category);
+          else url.searchParams.delete('category');
           if (mode !== 'ballot') url.searchParams.delete('edition');
           if (mode === 'journeys' && journeyId) url.searchParams.set('journey',journeyId);
           else url.searchParams.delete('journey');
@@ -261,7 +264,7 @@
     function quizToolbar() {
       if(mode==='daily')return dailyBanner(getDailySession());
       const options = settings[mode];
-      const categories = [['all','All'], ['dialogue','Dialogue'], ['music','Music'], ['scenes','Scenes'], ['details','Details'], ['signature','Visual Signature']];
+        const categories = [['all','All'], ['dialogue','Dialogue'], ['music','Music'], ['scenes','Scenes'], ['details','Details'], ['pair','Double Feature']];
       return `<div class="sr-toolbar${mode === 'memory' ? ' sr-memory-tools' : ''}">${mode === 'memory' ? `<div class="sr-segment" role="group" aria-label="Cinema memory categories">${categories.map(([key, name]) => `<button type="button" data-memory-category="${key}" aria-pressed="${options.category === key}">${name}</button>`).join('')}</div>` : ''}${quizFilters(options.scope)}</div>`;
     }
 
@@ -271,6 +274,7 @@
 
     function clueMarkup(question) {
       if (mode === 'frame') return still(question.frame);
+      if(question.answerKind==='pair')return `<div class="sr-pair-clue"><p class="screening-kicker">Double Feature · Two films, one thread</p><div class="sr-pair-clue-grid">${question.films.map(film=>`<figure>${film.frames[0]?namedFrame({film,frame:film.frames[0]},'',false,'(max-width: 680px) 46vw, 42vw'):poster(film)}<figcaption><strong>${esc(film.title)}</strong><small>${esc(film.year)}</small></figcaption></figure>`).join('')}</div></div>`;
       if (question.frame) return still(question.frame);
       return `<div class="sr-memory-prompt" data-quote="${Boolean(question.quote)}"><span class="sr-memory-label">${esc(question.marker)}</span><p class="sr-memory-clue">${esc(question.clue)}</p>${question.subclue ? `<p class="sr-memory-subclue">${esc(question.subclue)}</p>` : ''}</div>`;
     }
@@ -295,6 +299,8 @@
         const key = button.dataset.memoryCategory;
         if (settings[mode].category === key) return;
         settings[mode].category = key;
+        if(key==='pair')settings[mode].scope='all';
+        try{const url=new URL(location.href);url.searchParams.set('mode','memory');if(key==='all')url.searchParams.delete('category');else url.searchParams.set('category',key);history.replaceState(history.state,'',url);}catch{}
         renderQuiz();
         $(`[data-memory-category="${key}"]`, activity)?.focus({preventScroll:true});
       });
@@ -312,7 +318,7 @@
       if(mode!=='daily')recordQuestion(session,question);
       if (question.answerKind === 'winner') { renderWinnerQuestion(session,question); return; }
       activity.innerHTML = `${mode === 'memory'||mode==='daily' ? quizToolbar() : ''}
-        <div class="sr-quiz-heading"><h2 tabindex="-1" id="sr-question-title">${esc(question.prompt)}</h2><div class="sr-quiz-heading-tools">${mode === 'frame' ? `<div class="sr-frame-tools">${quizFilters(settings.frame.scope)}</div>` : ''}${progress(session)}</div></div>
+        <div class="sr-quiz-heading"><h2 tabindex="-1" id="sr-question-title">${esc(question.prompt)}</h2><div class="sr-quiz-heading-tools">${['frame','signature'].includes(mode) ? `<div class="sr-frame-tools">${quizFilters(settings[mode].scope)}</div>` : ''}${progress(session)}</div></div>
         <div class="sr-question-grid" aria-labelledby="sr-question-title">
           ${clueMarkup(question)}
           <div>${question.frame && question.clue ? `<p class="sr-scene-clue"><small>${esc(question.marker)}</small><span>${esc(question.clue)}</span></p>` : ''}<div class="sr-answer-list" role="group" aria-label="Choose an answer">${question.choices.map(choice => `<button type="button" class="sr-answer" data-answer="${esc(choice.key)}"><span>${esc(choice.label)}</span><span class="sr-answer-state" aria-hidden="true"></span></button>`).join('')}</div>
@@ -379,6 +385,8 @@
       if (question.answerKind === 'winner') {
         const candidate = question.candidate;
         feedback.innerHTML = `<p class="sr-feedback-kicker">${label}</p><div class="sr-winner-feedback"><div><strong>${esc(candidate.title)}</strong>${candidate.detail ? `<p>${esc(candidate.detail)}</p>` : ''}<div class="sr-feedback-links"><a href="${esc(question.award.href)}">Open award</a>${candidate.films.length===1?`<a href="${esc(film.href)}">Open film</a>`:''}</div></div></div>`;
+      } else if(question.answerKind==='pair') {
+        feedback.innerHTML=`<p class="sr-feedback-kicker">${label} · ${esc(question.correct.label)}</p><p class="sr-pair-explanation">${esc(question.explanation)}</p><div class="sr-feedback-links">${question.films.map(film=>`<a href="${esc(film.href)}">${esc(film.title)}</a>`).join('')}</div>`;
       } else feedback.innerHTML = `<p class="sr-feedback-kicker">${label}${answer !== question.correct.key ? ` · ${esc(question.correct.label)}` : ''}</p><div class="sr-feedback-film">${poster(film)}<div><strong>${esc(film.title)} · ${esc(film.year)}</strong>${references.length ? `<p>${film.wins.length && !question.award ? 'Awards: ' : ''}${references.map(item => esc(item.name)).join(' · ')}</p>` : ''}<div class="sr-feedback-links"><a href="${esc(film.href)}">Open film</a>${question.award ? `<a href="${esc(question.award.href)}">The award</a>` : ''}${question.listening ? `<a href="${esc(question.listening.url)}" target="_blank" rel="noopener noreferrer">${esc(question.listening.label || 'Listen')}</a>` : ''}</div></div></div>`;
       if (moveFocus) next.focus({preventScroll:true});
     }
@@ -396,19 +404,25 @@
     function renderQuizResults(session) {
       const count = session.questions.filter((question,index) => question.correct.key === session.answers[index]).length;
       const daily=mode==='daily';
-      activity.innerHTML = `${quizToolbar()}<div class="sr-results-header"><div><span class="screening-kicker">${nameOfMode[mode]}${!daily&&refinedQuestions?' · '+(difficulty==='challenge'?'Challenge':'Classic'):''}</span><h2 tabindex="-1">${count} of ${session.questions.length}.</h2><p>${daily?'Today’s screening is complete. Come back tomorrow.':'A little more of the archive to remember.'}</p></div>${daily?'<div class="sr-daily-share"><p id="sr-daily-share-status" role="status"></p><button type="button" class="sr-primary" data-daily-share>Copy result</button></div>':'<button type="button" class="sr-primary" data-quiz-replay>Play again</button>'}</div><ol class="sr-result-list">${session.questions.map((question,index) => {
+      activity.innerHTML = `${quizToolbar()}<div class="sr-results-header"><div><span class="screening-kicker">${nameOfMode[mode]}${!daily&&refinedQuestions?' · '+(difficulty==='challenge'?'Challenge':'Classic'):''}</span><h2 tabindex="-1">${count} of ${session.questions.length}.</h2><p>${daily?'Today’s screening is complete. Come back tomorrow.':'A little more of the archive to remember.'}</p></div><div class="sr-result-actions"><p id="sr-result-save-status" role="status"></p><button type="button" class="${daily?'sr-primary':'sr-secondary'}" data-quiz-download><svg viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg>Download result</button>${daily?'':'<button type="button" class="sr-primary" data-quiz-replay>Play again</button>'}</div></div><ol class="sr-result-list">${session.questions.map((question,index) => {
         const picked = question.choices.find(choice => choice.key === session.answers[index]);
         const match = question.correct.key === session.answers[index];
         if (question.answerKind === 'winner') return `<li>${poster(question.film)}<div><strong><a href="${esc(question.award.href)}">${esc(question.award.name)}</a></strong><p>${esc(question.correct.label)} · ${esc(question.marker)}${!match && picked?` · You chose ${esc(picked.label)}`:''}</p></div><span class="sr-result-status${match?' is-match':''}">${match?'Correct':picked?'Missed':'Skipped'}</span></li>`;
+        if(question.answerKind==='pair')return `<li>${poster(question.film)}<div><strong>${question.films.map(film=>`<a href="${esc(film.href)}">${esc(film.title)}</a>`).join(' &amp; ')}</strong><p>${esc(question.correct.label)}${!match&&picked?` · You chose ${esc(picked.label)}`:''}</p></div><span class="sr-result-status${match?' is-match':''}">${match?'Correct':picked?'Missed':'Skipped'}</span></li>`;
         return `<li>${poster(question.film)}<div><strong><a href="${esc(question.film.href)}">${esc(question.film.title)}</a></strong><p>${['composer','detail','credit'].includes(question.answerKind) ? `${esc(question.correct.label)}${!match && picked ? ` · You chose ${esc(picked.label)}` : ''}` : !match && picked ? `You chose ${esc(picked.label)}` : `${esc(question.film.year)}`}</p></div><span class="sr-result-status${match ? ' is-match' : ''}">${match ? 'Correct' : picked ? 'Missed' : 'Skipped'}</span></li>`;
-      }).join('')}</ol>${daily?'<textarea class="sr-share-fallback" aria-label="Daily result to copy" readonly hidden></textarea>':''}`;
+      }).join('')}</ol>`;
       bindQuizToolbar();
       $('[data-quiz-replay]',activity)?.addEventListener('click', () => { currentSession(true); renderQuiz(); focusHeading(activity); });
-      $('[data-daily-share]',activity)?.addEventListener('click',async()=>{
-        const marks=session.questions.map((question,index)=>question.correct.key===session.answers[index]?'■':session.answers[index]===null?'–':'□').join(' ');
-        const share=`The T.S. Archive · Daily Challenge ${session.date}\n${count}/${session.questions.length} · ${marks}\n${new URL('screening-room.html?mode=daily',location.href).href}`;
-        try{await navigator.clipboard.writeText(share);$('#sr-daily-share-status',activity).textContent='Result copied.';}
-        catch{const fallback=$('.sr-share-fallback',activity);fallback.hidden=false;fallback.value=share;fallback.select();$('#sr-daily-share-status',activity).textContent='Select and copy your result.';}
+      $('[data-quiz-download]',activity)?.addEventListener('click',async event=>{
+        const button=event.currentTarget,status=$('#sr-result-save-status',activity), quizName=nameOfMode[mode];
+        button.disabled=true;status.textContent='Preparing image…';
+        try{
+          const blob=await createQuizResultCard(session,quizName,daily?'Daily Challenge':difficulty==='challenge'?'Challenge':'Classic');
+          const url=URL.createObjectURL(blob);
+          const anchor=document.createElement('a');anchor.href=url;anchor.download=daily?`TS-Archive-Daily-${session.date}.png`:`TS-Archive-${quizName.replace(/\s+/g,'-')}-Result.png`;document.body.append(anchor);anchor.click();anchor.remove();
+          setTimeout(()=>URL.revokeObjectURL(url),3000);status.textContent='Image ready.';
+        }catch{status.textContent='Could not save the image. Please try again.';}
+        finally{button.disabled=false;}
       });
     }
 
@@ -674,11 +688,10 @@
       if (mode === 'ballot') renderBallot();
       else if (mode === 'matchup') renderMatchup();
       else if (mode === 'journeys') renderJourneys();
-      else if (mode === 'editor'||mode === 'connections'||mode === 'double') {
+      else if (mode === 'editor'||mode === 'connections') {
         if(!games)activity.innerHTML='<p class="sr-empty">This activity could not be loaded. Refresh to try again.</p>';
         else if(mode==='editor')games.renderEditor();
-        else if(mode==='connections')games.renderConnections();
-        else games.renderDouble();
+        else games.renderConnections();
       }
       else renderQuiz();
     }
@@ -688,7 +701,7 @@
     document.addEventListener('keydown',event => {
       if (mode === 'ballot' || event.repeat || event.ctrlKey || event.metaKey || event.altKey || $('dialog[open]') || event.target.closest?.('input,textarea,select,[contenteditable="true"]')) return;
       if (mode==='journeys'&&journeyId&&['ArrowLeft','ArrowRight'].includes(event.key)) {event.preventDefault();const direction=event.key==='ArrowRight'?1:-1;const onThumb=event.target.closest?.('[data-journey-frame]');stepJourney(direction,onThumb?`[data-journey-frame="${journeyIndex+direction}"]`:'');return;}
-      if((['frame','memory','winner','daily','matchup'].includes(mode))&&['1','2','3','4'].includes(event.key)) {
+      if((['frame','memory','signature','winner','daily','matchup'].includes(mode))&&['1','2','3','4'].includes(event.key)) {
         const button = $$(mode==='matchup'?'[data-match-choice]':'[data-answer]',activity)[Number(event.key)-1];
         if (button && !button.disabled) { event.preventDefault(); button.click(); }
       }
@@ -709,6 +722,48 @@
       img.onload=()=>resolve([path,img]);img.onerror=()=>resolve([path,null]);img.src=src;
     })));
     return new Map(loaded);
+  }
+
+  async function createQuizResultCard(session,title,level) {
+    try{await document.fonts.ready;await document.fonts.load('600 80px "Barlow Condensed"');await document.fonts.load('400 146px "Instrument Serif"');}catch{}
+    const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1080;
+    const ctx=canvas.getContext('2d');if(!ctx)throw new Error('Canvas unavailable');
+    const bg='#1d1a17',fg='#f6ede1',accent='#c9af8f',muted='#bab1a5',pad=66;
+    const cover='assets/gallery/2020-2026/drive-my-car/fa1f2432ebf0.webp';
+    const art=(await loadPosterArt([cover])).get(cover);
+    ctx.fillStyle=bg;ctx.fillRect(0,0,1080,1080);
+    if(art){
+      const height=515,ratio=Math.max(1080/art.naturalWidth,height/art.naturalHeight),w=art.naturalWidth*ratio,h=art.naturalHeight*ratio;
+      ctx.save();ctx.beginPath();ctx.rect(0,0,1080,height);ctx.clip();
+      ctx.drawImage(art,(1080-w)/2,(height-h)/2,w,h);ctx.restore();
+      const fade=ctx.createLinearGradient(0,0,0,height);
+      fade.addColorStop(0,'#1d1a1770');fade.addColorStop(.48,'#1d1a1720');fade.addColorStop(.77,'#1d1a17a0');fade.addColorStop(1,bg);
+      ctx.fillStyle=fade;ctx.fillRect(0,0,1080,height);
+    }
+    const text=(value,x,y,size,color=fg,family='DM Sans',weight=500)=>{ctx.fillStyle=color;ctx.font=`${weight} ${size}px "${family}", Arial, sans-serif`;ctx.fillText(value,x,y);};
+    const rule=y=>{ctx.strokeStyle='#51483d';ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(pad,y);ctx.lineTo(1080-pad,y);ctx.stroke();};
+    text('THE T.S. ARCHIVE',pad,80,35,fg,'Barlow Condensed',700);
+    text('SCREENING ROOM',pad,385,24,accent,'DM Sans',600);
+    text(title,pad,460,77,fg,'Barlow Condensed',600);
+    const results=session.questions.map((question,index)=>question.correct.key===session.answers[index]?'correct':session.answers[index]===null?'skipped':'missed');
+    const score=results.filter(result=>result==='correct').length;
+    rule(505);
+    text(String(score),pad,690,168,fg,'Instrument Serif',400);
+    const scoreWidth=ctx.measureText(String(score)).width;
+    text('/ '+session.questions.length,pad+scoreWidth+26,685,76,accent,'Instrument Serif',400);
+    text(session.date||level,pad,739,28,muted);
+    const gap=17,box=(1080-2*pad-(results.length-1)*gap)/results.length,start=pad;
+    results.forEach((result,index)=>{
+      const x=start+index*(box+gap),y=787;
+      ctx.fillStyle=result==='correct'?'#607765':result==='skipped'?'#3e3934':'#79594d';
+      ctx.fillRect(x,y,box,70);
+      text(result==='correct'?'HIT':result==='skipped'?'SKIP':'MISS',x+13,y+45,23,fg,'DM Sans',600);
+      text(String(index+1).padStart(2,'0'),x,y+99,21,muted);
+    });
+    rule(972);
+    text('A personal cinema archive.',pad,1023,26,fg,'Instrument Serif',400);
+    ctx.textAlign='right';text('PLAY THE ARCHIVE',1080-pad,1023,22,accent,'DM Sans',600);
+    return new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error('Image encoding failed')),'image/png'));
   }
 
   async function createTasteCard(summary) {
@@ -855,6 +910,9 @@
     } else if ('requestIdleCallback' in window) requestIdleCallback(load,{timeout:1500});
     else setTimeout(load,50);
   } else if (document.body.dataset.page === 'screening') {
-    getContext().then(initRoom).catch(error => site.showError(error));
+    if(!window.ArchiveScreeningLanding?.active){
+      $('#screening-play').hidden=false;
+      getContext().then(initRoom).catch(error => site.showError(error));
+    }
   }
 })();

@@ -4,7 +4,7 @@
   'use strict';
   const negativeAwards = new Set(['worst-picture', 'most-overrated-movie']);
   const actingAwards = new Set(['best-actor', 'best-actress', 'best-supporting-actor', 'best-supporting-actress', 'best-breakthrough-performance']);
-  const memoryTypes = ['dialogue', 'music', 'scenes', 'details', 'signature'];
+  const memoryTypes = ['dialogue', 'music', 'scenes', 'details', 'pair'];
   const challengeBank = typeof module !== 'undefined' && module.exports
     ? require('./screening-challenge-bank.js') : globalThis.ArchiveScreeningChallenge;
   const gameBank = typeof module !== 'undefined' && module.exports
@@ -276,6 +276,17 @@
       return resolved.length===3&&resolved.every(group=>group.films.length===3&&group.films.every(Boolean))&&unique(resolved.flatMap(group=>group.films),film=>film.key).length===9?{id,category:id.startsWith('directors')?'Directors':id.startsWith('cinematographers')?'Cinematographers':id.startsWith('scores')?'Composers':'Cast',groups:resolved}:null;
     }).filter(Boolean);
     archive.doubleFeatures=(gameBank?.pairs ?? []).map(([theme,first,second,note])=>({theme,films:[filmsBySlug.get(first),filmsBySlug.get(second)],note})).filter(pair=>pair.films.every(Boolean));
+    // Double Feature is now an editorial memory question, not a separate
+    // programme builder. The archive's intended connection is revealed.
+    for(const pair of archive.doubleFeatures){
+      const [answer,choices]=gameBank?.pairChoices?.[pair.theme]||[];
+      if(!answer||!Array.isArray(choices))continue;
+      const correct={key:normal(answer),label:answer};
+      const challengeDistractors=unique(choices.map(label=>({key:normal(label),label})),item=>item.key);
+      if(challengeDistractors.length!==3)continue;
+      const [film,second]=pair.films;
+      archive.memory.push({key:`pair/${film.key}/${second.key}/${normal(pair.theme)}`,film,films:pair.films,subtype:'pair',marker:'Double Feature',prompt:'What is shared by both films?',correct,challengeDistractors,answerKind:'pair',explanation:pair.note});
+    }
     // Resolve only locally available curated artwork; an absent film never
     // becomes a placeholder or an unrelated image from another title.
     function curatedStill([slug, filename]) {
@@ -407,8 +418,9 @@
       // Stable keys are shared where the two levels overlap. Challenge uses
       // the visually audited list, and Classic retains the wider old pool.
       pool = challengeFramePool(archive,scope,challenge&&Boolean(gameBank));
-    } else if (mode === 'memory') {
-      const base = archive.memory.filter(question => inScope(question.film.editionId, scope) && (category === 'all' || question.subtype === category));
+    } else if (mode === 'memory' || mode === 'signature') {
+      const selected=mode==='signature'?'signature':category;
+      const base = archive.memory.filter(question => (question.answerKind==='pair'?question.films.every(film=>inScope(film.editionId,scope)):inScope(question.film.editionId,scope)) && (selected === 'all' ? question.subtype!=='signature' : question.subtype === selected));
       pool = base.map(question=>challengeMemoryQuestion(archive,question) || (challenge?null:question)).filter(Boolean);
       if (challenge) {
         const hardPaths=new Set(challengeFramePool(archive,scope,true).map(question=>question.frame.path));

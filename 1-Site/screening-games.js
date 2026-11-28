@@ -8,7 +8,7 @@
   function make({archive,activity,data,esc,poster,imageAttrs,focusHeading}) {
     let saved={};
     try { saved=JSON.parse(localStorage.getItem(storageKey)||'{}')||{}; } catch {}
-    const state={counts:{editor:{},connections:{}},editor:null,connections:null,pair:null};
+    const state={counts:{editor:{},connections:{}},editor:null,connections:null};
     for (const game of ['editor','connections']) {
       for (const puzzle of archive[game]) {
         const count=saved.counts?.[game]?.[puzzle.id];
@@ -75,14 +75,14 @@
       if (!puzzle) {activity.innerHTML='<p class="sr-empty">No editing sequences are available yet.</p>';return;}
       const keys=puzzle.frames.map(item=>item.id);
       const correct=r.order.filter((key,index)=>key===keys[index]).length;
-      const note=r.done?(r.solved?'Sequence reconstructed.':'The original sequence.'):r.checked?`${correct} of ${keys.length} in place. Try again.`:'Select two frames to swap them, or use the position controls.';
+      const note=r.done?(r.solved?'Sequence reconstructed.':'The original sequence.'):r.checked?`${correct} of ${keys.length} in place. Try again.`:'Drag a frame into place. On touchscreens, tap two frames to swap.';
       activity.innerHTML=`<section class="sr-game sr-editor">
         <header class="sr-game-heading"><div><p class="screening-kicker">The Editor · ${r.done?'Review':'Screen order'}</p><h2 tabindex="-1">${esc(puzzle.film.title)}.</h2><p>Arrange the stills as they appear in the film, from first to last.</p></div><span class="sr-game-meta">${r.done?'Sequence complete':`${3-r.attempts} attempts left`}</span></header>
         <ol class="sr-editor-grid" style="--editor-count:${keys.length}" aria-label="Film sequence">${r.order.map((id,index)=>{
           const item=puzzle.frames.find(frame=>frame.id===id);
           const mark=(r.done||r.checked)&&keys[index]===id;
           return `<li class="sr-editor-card${mark?' is-placed':''}">
-            <button type="button" class="sr-editor-frame" data-editor-tile="${esc(id)}" aria-label="Frame at position ${index+1}${r.done?', '+esc(item.caption):''}" aria-pressed="${editorSelected===id}"${r.done?' disabled':''}>${puzzleStill(item.frame,`Frame ${index+1}`)}<span class="sr-editor-number">${String(index+1).padStart(2,'0')}</span>${mark?'<span class="sr-editor-mark" aria-hidden="true">✓</span>':''}</button>
+            <button type="button" class="sr-editor-frame" data-editor-tile="${esc(id)}" draggable="${!r.done}" aria-label="Frame at position ${index+1}${r.done?', '+esc(item.caption):''}" aria-pressed="${editorSelected===id}"${r.done?' disabled':''}>${puzzleStill(item.frame,`Frame ${index+1}`)}<span class="sr-editor-number">${String(index+1).padStart(2,'0')}</span>${mark?'<span class="sr-editor-mark" aria-hidden="true">✓</span>':''}</button>
             ${r.done?`<p class="sr-editor-caption">${esc(item.caption)}</p>`:`<div class="sr-editor-moves"><button type="button" class="sr-text-action" aria-label="Move frame ${index+1} earlier" data-editor-move="${esc(id)}" data-step="-1"${index===0?' disabled':''}>← Earlier</button><button type="button" class="sr-text-action" aria-label="Move frame ${index+1} later" data-editor-move="${esc(id)}" data-step="1"${index===keys.length-1?' disabled':''}>Later →</button></div>`}
           </li>`;
         }).join('')}</ol>
@@ -94,6 +94,43 @@
         [r.order[x],r.order[y]]=[r.order[y],r.order[x]];
         r.checked=false;editorSelected=null;persist();renderEditor();
         $(`[data-editor-tile="${a}"]`,activity)?.focus({preventScroll:true});
+      }
+      // Native desktop dragging moves a frame into the target position and
+      // shifts the intervening frames. Tap/keyboard swaps remain available.
+      let dragging=null;
+      const clearDrag=()=>{
+        dragging=null;
+        for(const card of $$('.sr-editor-card',activity))card.classList.remove('is-dragged','is-drop-target');
+      };
+      for(const tile of $$('[data-editor-tile]',activity)){
+        $('img',tile)?.setAttribute('draggable','false');
+        if(r.done)continue;
+        const card=tile.closest('.sr-editor-card');
+        tile.addEventListener('dragstart',event=>{
+          dragging=tile.dataset.editorTile;editorSelected=null;
+          event.dataTransfer.effectAllowed='move';
+          event.dataTransfer.setData('text/plain',dragging);
+          card.classList.add('is-dragged');
+        });
+        card.addEventListener('dragover',event=>{
+          if(!dragging||dragging===tile.dataset.editorTile)return;
+          event.preventDefault();event.dataTransfer.dropEffect='move';
+          for(const other of $$('.sr-editor-card.is-drop-target',activity))other.classList.remove('is-drop-target');
+          card.classList.add('is-drop-target');
+        });
+        card.addEventListener('dragleave',event=>{
+          if(!card.contains(event.relatedTarget))card.classList.remove('is-drop-target');
+        });
+        card.addEventListener('drop',event=>{
+          if(!dragging||dragging===tile.dataset.editorTile)return;
+          event.preventDefault();
+          const from=r.order.indexOf(dragging),to=r.order.indexOf(tile.dataset.editorTile);
+          if(from<0||to<0){clearDrag();return;}
+          const [moved]=r.order.splice(from,1);r.order.splice(to,0,moved);
+          r.checked=false;clearDrag();persist();renderEditor();
+          $(`[data-editor-tile="${moved}"]`,activity)?.focus({preventScroll:true});
+        });
+        tile.addEventListener('dragend',clearDrag);
       }
       for (const button of $$('[data-editor-tile]',activity)) button.addEventListener('click',()=>{
         const id=button.dataset.editorTile;
@@ -158,48 +195,7 @@
       $('[data-connection-next]',activity)?.addEventListener('click',()=>{startConnections();renderConnections();focusHeading(activity);});
     }
 
-    const allFilms=[...archive.filmList].sort((a,b)=>a.title.localeCompare(b.title));
-    const programs=archive.doubleFeatures;
-    const firstProgram=programs[0];
-    function validPair(value) {
-      return value&&Array.isArray(value.keys)&&value.keys.length===2&&value.keys[0]!==value.keys[1]&&value.keys.every(key=>archive.films.has(key));
-    }
-    if(validPair(saved.pair))state.pair={keys:[...saved.pair.keys],title:typeof saved.pair.title==='string'?saved.pair.title.slice(0,80):'',theme:typeof saved.pair.theme==='string'?saved.pair.theme:''};
-    if(!state.pair&&firstProgram)state.pair={keys:firstProgram.films.map(film=>film.key),title:'',theme:firstProgram.theme};
-
-    function renderDouble(){
-      const r=state.pair;
-      if(!validPair(r)){activity.innerHTML='<p class="sr-empty">No film pairings are available yet.</p>';return;}
-      const current=programs.find(pair=>pair.theme===r.theme&&pair.films.every(film=>r.keys.includes(film.key)));
-      const films=r.keys.map(key=>archive.films.get(key));
-      const select=(index)=>`<label class="sr-double-select" for="sr-double-film-${index}"><span>Film ${index+1}</span><span class="sr-select-wrap"><select class="sr-select" id="sr-double-film-${index}" data-double-film="${index}">${allFilms.map(film=>`<option value="${esc(film.key)}"${film.key===r.keys[index]?' selected':''}${film.key===r.keys[1-index]?' disabled':''}>${esc(film.title)} · ${esc(film.year)}</option>`).join('')}</select></span></label>`;
-      activity.innerHTML=`<section class="sr-game sr-double">
-        <header class="sr-game-heading"><div><p class="screening-kicker">Double Feature · Programme a night</p><h2 tabindex="-1">Two films. One conversation.</h2><p>Choose a curated pairing or make a connection of your own.</p></div><label class="sr-double-theme"><span>Programme</span><span class="sr-select-wrap"><select id="sr-double-theme" class="sr-select"><option value="">Your own pairing</option>${programs.map(pair=>`<option value="${esc(pair.theme)}"${current===pair?' selected':''}>${esc(pair.theme)}</option>`).join('')}</select></span></label></header>
-        <div class="sr-double-grid">${films.map((film,index)=>`<article class="sr-double-card">${select(index)}<a class="sr-double-art" href="${esc(film.href)}" aria-label="Open ${esc(film.title)}">${film.frames[0]?puzzleStill(film.frames[0],film.title):poster(film)}</a><div class="sr-double-copy"><a href="${esc(film.href)}">${esc(film.title)} <span aria-hidden="true">↗</span></a><span>${esc(film.year)}</span></div></article>`).join('')}</div>
-        <div class="sr-double-reading"><div><p class="screening-kicker">${current?'The archive’s connection':'Your connection'}</p>${current?`<h3>${esc(current.theme)}</h3><p>${esc(current.note)}</p>`:'<p>Give this pairing a title, or let the two films speak for themselves.</p>'}</div><label class="sr-double-name"><span>Optional programme title</span><input id="sr-double-title" maxlength="80" value="${esc(r.title)}" placeholder="My double feature"></label></div>
-        <div class="sr-game-actions"><p role="status" id="sr-pair-status"></p><div><button type="button" class="sr-secondary" data-double-swap>Swap order</button><button type="button" class="sr-primary" data-double-copy>Copy programme</button></div></div>
-        <textarea class="sr-share-fallback" aria-label="Programme to copy" readonly hidden></textarea>
-      </section>`;
-      $('#sr-double-theme',activity).addEventListener('change',event=>{
-        const pair=programs.find(item=>item.theme===event.target.value);
-        if(pair){r.keys=pair.films.map(film=>film.key);r.theme=pair.theme;r.title='';}
-        else r.theme='';
-        persist();renderDouble();$('#sr-double-theme',activity)?.focus({preventScroll:true});
-      });
-      for(const field of $$('[data-double-film]',activity))field.addEventListener('change',()=>{
-        const index=Number(field.dataset.doubleFilm);
-        if(field.value===r.keys[1-index]||!archive.films.has(field.value))return;
-        r.keys[index]=field.value;r.theme='';persist();renderDouble();$(`[data-double-film="${index}"]`,activity)?.focus({preventScroll:true});
-      });
-      $('#sr-double-title',activity).addEventListener('input',event=>{r.title=event.target.value.slice(0,80);persist();});
-      $('[data-double-swap]',activity).addEventListener('click',()=>{r.keys.reverse();persist();renderDouble();$('[data-double-swap]',activity)?.focus({preventScroll:true});});
-      $('[data-double-copy]',activity).addEventListener('click',async()=>{
-        const output=[r.title.trim()||current?.theme||'My double feature',...films.map((film,index)=>`${index+1}. ${film.title} (${film.year})`),'The T.S. Archive',new URL('screening-room.html?mode=double',location.href).href].join('\n');
-        try{await navigator.clipboard.writeText(output);$('#sr-pair-status',activity).textContent='Programme copied.';}
-        catch{const fallback=$('.sr-share-fallback',activity);fallback.hidden=false;fallback.value=output;fallback.select();$('#sr-pair-status',activity).textContent='Select and copy your programme.';}
-      });
-    }
-    return {renderEditor,renderConnections,renderDouble};
+    return {renderEditor,renderConnections};
   }
   window.ArchiveScreeningGames={make};
 })();

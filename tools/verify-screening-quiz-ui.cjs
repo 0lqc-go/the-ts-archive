@@ -72,8 +72,8 @@ const fit=async page=>assert.ok(await page.evaluate(()=>document.documentElement
       await page.locator('[data-answer]').first().waitFor();
       assert.equal(await page.locator('[data-answer]').count(),4);
       await fit(page);
-      await page.locator('.screening-quiz-navigation [data-screening-mode="memory"]').click();
-      await page.locator('[data-memory-category="signature"]').click();
+      await page.locator('.screening-quiz-navigation [data-screening-mode="signature"]').click();
+      assert.equal(await page.locator('[data-memory-category="signature"]').count(),0);
       assert.equal(await page.locator('[data-answer]').count(),4);
       await page.waitForFunction(()=>document.querySelector('.sr-question-grid img')?.naturalWidth>0);
       assert.match(await page.locator('#sr-question-title').innerText(),/^Who (directed|photographed) this film\?/);
@@ -86,6 +86,16 @@ const fit=async page=>assert.ok(await page.evaluate(()=>document.documentElement
       assert.ok(currentEdit.order.length>=3&&!currentEdit.order.every((id,index)=>id===String(index)));
       await fit(page);
       await capture(page,label+'-editor');
+      if(!mobile){
+        const ids=currentEdit.order;
+        await page.locator('[data-editor-tile="'+ids[0]+'"]').dragTo(page.locator('[data-editor-tile="'+ids.at(-1)+'"]'));
+        const after=(await stored(page,gameKey)).editor.order;
+        assert.deepEqual(after,[...ids.slice(1),ids[0]]);
+        if(after.every((id,index)=>id===String(index))){
+          await page.locator('[data-editor-tile="0"]').click();
+          await page.locator('[data-editor-tile="1"]').click();
+        }
+      }
       await page.locator('[data-editor-check]').click();
       assert.equal((await stored(page,gameKey)).editor.attempts,1);
       for(let pos=0;pos<currentEdit.order.length;pos++){
@@ -123,26 +133,17 @@ const fit=async page=>assert.ok(await page.evaluate(()=>document.documentElement
       await page.locator('[data-connection-next]').waitFor();
       await page.locator('[data-connection-next]').click();
       assert.notEqual((await stored(page,gameKey)).connections.id,board.id);
-      await page.locator('.screening-navigation [data-screening-mode="double"]').click();
-      await page.locator('#sr-double-theme').waitFor();
-      await page.locator('#sr-double-theme').selectOption('The cost of control');
-      assert.equal(await page.locator('.sr-double-card').count(),2);
-      await page.locator('#sr-double-title').fill('A private obsession');
-      const pair=(await stored(page,gameKey)).pair;
-      assert.equal(pair.theme,'The cost of control');
-      await page.waitForFunction(()=>[...document.querySelectorAll('.sr-double-art img')].every(img=>img.naturalWidth>0));
+      await page.goto(base+'/screening-room.html?mode=double');
+      await page.locator('[data-memory-category="pair"]').waitFor();
+      assert.equal(await page.locator('[data-memory-category="pair"]').getAttribute('aria-pressed'),'true');
+      assert.equal(await page.locator('.sr-pair-clue-grid figure').count(),2);
+      assert.equal(await page.locator('[data-answer]').count(),4);
+      await page.waitForFunction(()=>[...document.querySelectorAll('.sr-pair-clue-grid img')].every(img=>img.naturalWidth>0));
       await fit(page);
-      await capture(page,label+'-double');
-      await page.locator('[data-double-swap]').click();
-      assert.deepEqual((await stored(page,gameKey)).pair.keys,[...pair.keys].reverse());
-      assert.equal(await page.locator('#sr-double-theme').inputValue(),'The cost of control');
-      await page.reload();
-      await page.locator('#sr-double-title').waitFor();
-      assert.equal(await page.locator('#sr-double-title').inputValue(),'A private obsession');
-      await page.locator('[data-double-film="0"]').selectOption('2010-2019/inception');
-      assert.equal(await page.locator('#sr-double-theme').inputValue(),'');
-      await page.locator('[data-double-copy]').click();
-      await page.waitForFunction(()=>!!document.querySelector('#sr-pair-status')?.textContent);
+      await capture(page,label+'-double-quiz');
+      await page.locator('[data-answer]').first().click();
+      await page.locator('.sr-pair-explanation').waitFor();
+      assert.equal(await page.locator('.sr-feedback-links a').count(),2);
       await page.clock.setFixedTime(new Date('2026-11-28T13:00:00+03:00'));
       await page.goto(base+'/screening-room.html?mode=daily');
       await page.locator('[data-answer]').first().waitFor();
@@ -161,21 +162,65 @@ const fit=async page=>assert.ok(await page.evaluate(()=>document.documentElement
         await page.locator('[data-answer]').first().click();
         await page.locator('[data-quiz-next]').click();
       }
-      await page.locator('[data-daily-share]').waitFor();
+      await page.locator('[data-quiz-download]').waitFor();
       assert.equal(await page.locator('[data-quiz-replay]').count(),0);
       assert.ok((await stored(page,dailyKey)).complete);
       await page.reload();
-      await page.locator('[data-daily-share]').waitFor();
-      await page.locator('[data-daily-share]').click();
-      await page.waitForFunction(()=>!!document.querySelector('#sr-daily-share-status')?.textContent);
+      await page.locator('[data-quiz-download]').waitFor();
+      const downloadPromise=page.waitForEvent('download');
+      await page.locator('[data-quiz-download]').click();
+      const download=await downloadPromise;
+      assert.match(download.suggestedFilename(),/TS-Archive-Daily-2026-11-28\.png/);
+      const png=fs.readFileSync(await download.path());
+      assert.equal(png.subarray(1,4).toString(),'PNG');
+      assert.equal(png.readUInt32BE(16),1080);
+      assert.equal(png.readUInt32BE(20),1080);
+      if(proof)fs.copyFileSync(await download.path(),path.join(proof,label+'-daily-result.png'));
       await page.clock.setFixedTime(new Date('2026-11-29T13:00:00+03:00'));
       await page.reload();
       await page.locator('[data-answer]').first().waitFor();
       assert.match(await page.locator('.sr-daily-banner').innerText(),/2026-11-29/);
-      assert.equal(await page.locator('[data-daily-share]').count(),0);
+      assert.equal(await page.locator('[data-quiz-download]').count(),0);
       assert.deepEqual(errors,[]);
       await context.close();
       console.log((mobile?'Mobile':'Desktop')+': all quizzes and new activities, reload, daily date/rotation, sharing and history passed.');
     }
+    // These are real local page renders, not static mockups. The entrance
+    // should not load the award models merely to show its directory.
+    for(const mobile of [false,true]){
+      const context=await browser.newContext({viewport:mobile?{width:390,height:844}:{width:1920,height:1080},reducedMotion:'reduce'});
+      await context.route('**/*',route=>route.request().url().startsWith(base)?route.continue():route.abort());
+      const page=await context.newPage();
+      const liveErrors=[],requests=[];
+      page.on('pageerror',error=>liveErrors.push(error.message));
+      page.on('request',request=>requests.push(request.url()));
+      const routes=[['B-programme',''],['B-fixed','?preview=editorial&cover=tenet']];
+      for(const [name,query] of routes){
+        requests.length=0;
+        await page.goto(base+'/screening-room.html'+query);
+        await page.locator('#screening-landing:not([hidden])').waitFor();
+        assert.equal(await page.locator('#screening-landing').getAttribute('data-layout'),'programme');
+        assert.equal(await page.locator('#screening-landing').getAttribute('data-cover'),'babylon');
+        assert.ok(await page.locator('#screening-play').isHidden());
+        assert.equal(await page.locator('.sr-land-card[href*="mode=signature"]').count(),1);
+        assert.equal(await page.locator('.sr-land-card[href*="mode=double"]').count(),0);
+        assert.match(await page.locator('.sr-land-card[href*="mode=ballot"] img').getAttribute('src'),/tenet-alt-01\.webp$/);
+        await page.evaluate(()=>document.querySelectorAll('#screening-landing img').forEach(img=>{img.loading='eager';}));
+        await page.waitForFunction(()=>[...document.querySelectorAll('#screening-landing img')].every(img=>img.complete&&img.naturalWidth>0));
+        await page.evaluate(async()=>{await Promise.allSettled([...document.querySelectorAll('#screening-landing img,.avatar img')].map(img=>img.decode()));await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));});
+        assert.ok(await page.locator('.avatar img').evaluate(img=>img.naturalWidth>0));
+        await fit(page);
+        assert.ok(!requests.some(url=>/\/content\/(2010-2019|2020-2026)\.json(?:\?|$)/.test(url)),'The landing loaded full editions');
+        await capture(page,(mobile?'mobile-':'')+name);
+        if(proof&&!mobile)await page.screenshot({path:path.join(proof,name+'-viewport.png'),animations:'disabled'});
+      }
+      await page.locator('.sr-land-card[href*="mode=signature"]').click();
+      await page.locator('[data-answer]').first().waitFor();
+      assert.ok(await page.locator('#screening-landing').isHidden());
+      assert.match(await page.locator('#sr-question-title').innerText(),/^Who (directed|photographed) this film\?/);
+      assert.deepEqual(liveErrors,[]);
+      await context.close();
+    }
+    console.log('Approved Babylon programme and Tenet ballot art verified on desktop and mobile; the entrance loads no full edition data.');
   } finally {await browser.close();server.close();}
 })().catch(error=>{console.error(error);server.close();process.exitCode=1;});

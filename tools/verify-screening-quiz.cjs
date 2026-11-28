@@ -40,7 +40,7 @@ const run = (mode, difficulty, scope='all', category='all') => {
 };
 for (const difficulty of ['classic','challenge']) {
   counts[difficulty]={};
-  for (const mode of ['frame','memory','winner']) {
+  for (const mode of ['frame','memory','signature','winner']) {
     counts[difficulty][mode]=run(mode,difficulty);
     for (const edition of catalog.editions) run(mode,difficulty,edition.id);
   }
@@ -49,6 +49,9 @@ for (const difficulty of ['classic','challenge']) {
 const hardCount=Object.values(games.hardFrames).flat().reduce((total,row)=>total+row[1].length,0);
 assert.equal(counts.challenge.frame,hardCount);
 assert.equal(counts.challenge.signature,games.signatures.length);
+assert.ok(data.quizPool(archive,'memory',{difficulty:'challenge'}).every(q=>q.subtype!=='signature'));
+assert.ok(data.quizPool(archive,'signature',{difficulty:'challenge'}).every(q=>q.subtype==='signature'));
+assert.equal(counts.challenge.pair,games.pairs.length);
 const strict=data.quizPool(archive,'frame',{difficulty:'challenge'}), classic=data.quizPool(archive,'frame',{difficulty:'classic'});
 assert.ok(strict.every(question=>question.hard===true));
 assert.ok(strict.every(question=>classic.some(item=>item.key===question.key)));
@@ -57,6 +60,8 @@ for(const [slug,label] of [['manchester-by-the-sea','On the boat'],['moneyball',
   assert.ok(!strict.some(q=>q.film.slug===slug&&q.frame.label===label),'An easy example leaked into Challenge');
 }
 assert.equal(archive.editor.length,games.editor.length);
+assert.ok(!archive.editor.some(puzzle=>['thelma-2017','moonlight-2016'].includes(puzzle.film.slug)));
+for(const slug of ['the-dark-knight-rises','dune-2021','dune-part-two','avengers-infinity-war','avengers-endgame','the-wolf-of-wall-street','coco-2017','your-name'])assert.ok(archive.editor.some(puzzle=>puzzle.film.slug===slug));
 assert.equal(archive.connections.length,games.connections.length);
 assert.equal(archive.doubleFeatures.length,games.pairs.length);
 for(const puzzle of archive.editor){
@@ -67,6 +72,11 @@ for(const puzzle of archive.connections){
   assert.equal(puzzle.groups.length,3);
   assert.ok(puzzle.groups.every(group=>group.films.length===3));
   assert.equal(new Set(puzzle.groups.flatMap(group=>group.films.map(film=>film.key))).size,9);
+}
+for(const pair of data.quizPool(archive,'memory',{category:'pair',difficulty:'challenge'})){
+  assert.equal(pair.answerKind,'pair');
+  assert.equal(pair.films.length,2);
+  assert.ok(pair.explanation&&pair.choices.length===4);
 }
 assert.ok(archive.doubleFeatures.every(pair=>pair.films[0].key!==pair.films[1].key));
 for(const name of ['editor','connections']){
