@@ -207,6 +207,15 @@ const fit=async page=>assert.ok(await page.evaluate(()=>document.documentElement
         assert.match(await page.locator('.sr-land-card[href*="mode=ballot"] img').getAttribute('src'),/tenet-alt-01\.webp$/);
         assert.match(await page.locator('.sr-land-card[href*="mode=memory"] img').getAttribute('src'),/screening-memory-her-640w\.webp$/);
         assert.match(await page.locator('.sr-land-card[href*="mode=connections"] img').getAttribute('src'),/screening-connections-burning-640w\.webp$/);
+        assert.match(await page.locator('.sr-land-card[href*="mode=matchup"] img').getAttribute('src'),/screening-matchup-llewyn-davis-640w\.webp$/);
+        assert.equal(await page.locator('.sr-land-card-title > span').count(),0);
+        assert.ok((await page.locator('.sr-land-hero').boundingBox()).height>=(mobile?445:680));
+        assert.equal(await page.locator('.sr-land-hero-actions a').count(),1);
+        const copy=await page.locator('.sr-land-hero-copy').boundingBox();
+        const credit=await page.locator('.sr-land-hero-credit').boundingBox();
+        if(!mobile)assert.ok(Math.abs(copy.y+copy.height-credit.y-credit.height)<2,'Cover copy must align with the bottom credit');
+        else assert.ok(copy.y+copy.height<=credit.y,'Mobile cover copy must not overlap the credit');
+        await page.locator('.sr-land-hero-actions a').click({trial:true});
         await page.evaluate(()=>document.querySelectorAll('#screening-landing img').forEach(img=>{img.loading='eager';}));
         await page.waitForFunction(()=>[...document.querySelectorAll('#screening-landing img')].every(img=>img.complete&&img.naturalWidth>0));
         await page.evaluate(async()=>{await Promise.allSettled([...document.querySelectorAll('#screening-landing img,.avatar img')].map(img=>img.decode()));await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));});

@@ -16,7 +16,7 @@
     "connections-burning": ["assets/films/responsive/screening-connections-burning-960w.webp",[960,540],[["assets/films/responsive/screening-connections-burning-320w.webp",320],["assets/films/responsive/screening-connections-burning-640w.webp",640],["assets/films/responsive/screening-connections-burning-960w.webp",960]]],
     "9503aa1ca9e8.webp": ["assets/gallery/2020-2026/dune-part-two/9503aa1ca9e8.webp",[1920,801],[["assets/gallery/2020-2026/thumbs/dune-part-two-9503aa1ca9e8-320w.webp",320],["assets/gallery/2020-2026/dune-part-two/9503aa1ca9e8-768w.webp",768],["assets/gallery/2020-2026/dune-part-two/9503aa1ca9e8-1280w.webp",1280],["assets/gallery/2020-2026/dune-part-two/9503aa1ca9e8.webp",1920]]],
     "the-batman-wide.webp": ["assets/films/the-batman-wide.webp",[1920,1080],[["assets/gallery/2020-2026/thumbs/the-batman-489b6b5fa63a-320w.webp",320],["assets/films/the-batman-wide.webp",1920]]],
-    "phantom-thread-best-actor-curator.webp": ["assets/films/phantom-thread-best-actor-curator.webp",[1280,720],[["assets/gallery/2010-2019/thumbs/phantom-thread-1e762fbf2af3-320w.webp",320],["assets/films/responsive/phantom-thread-best-actor-curator-640w.webp",640],["assets/films/responsive/phantom-thread-best-actor-curator-960w.webp",960],["assets/films/phantom-thread-best-actor-curator.webp",1280]]],
+    "matchup-llewyn-davis": ["assets/films/responsive/screening-matchup-llewyn-davis-960w.webp",[960,540],[["assets/films/responsive/screening-matchup-llewyn-davis-320w.webp",320],["assets/films/responsive/screening-matchup-llewyn-davis-640w.webp",640],["assets/films/responsive/screening-matchup-llewyn-davis-960w.webp",960]]],
     "anna-karenina-production-design-curator.webp": ["assets/films/anna-karenina-production-design-curator.webp",[1280,536],[["assets/gallery/2010-2019/thumbs/anna-karenina-2012-bcd130d69534-320w.webp",320],["assets/films/responsive/anna-karenina-production-design-curator-640w.webp",640],["assets/films/responsive/anna-karenina-production-design-curator-960w.webp",960],["assets/films/anna-karenina-production-design-curator.webp",1280]]],
   };
   const cover={ref:'babylon-2022-wide.webp',film:'Babylon',year:2022,slug:'babylon-2022',edition:'2020-2026',position:'58% 45%'};
@@ -30,7 +30,7 @@
   ];
   const daily=['daily','Daily Challenge','Five shared questions. A new round each day.','the-batman-wide.webp','Daily · 5 questions'];
   const explore=[
-    ['matchup','This or That','Choose between two cinematic moments.','phantom-thread-best-actor-curator.webp'],
+    ['matchup','This or That','Choose between two cinematic moments.','matchup-llewyn-davis'],
     ['ballot','My Ballot','Make your own selections across the decades.','tenet-alt-01.webp'],
     ['journeys','Film Journeys','Follow visual and thematic threads.','anna-karenina-production-design-curator.webp']
   ];
@@ -42,7 +42,7 @@
     const preferred=variants.find(item=>item[1]>=(hero?960:640))?.[0]||path;
     return `<img src="${esc(preferred)}"${variants.length>1?` srcset="${variants.map(([src,w])=>esc(src)+' '+w+'w').join(', ')}" sizes="${hero?'100vw':sizes}"`:''} width="${width}" height="${height}" alt="" ${hero?'fetchpriority="high" loading="eager"':'loading="lazy"'} decoding="async">`;
   };
-  const card=([mode,title,desc,ref,meta])=>`<a class="sr-land-card${mode==='daily'?' is-feature':''}" href="${href(mode)}"><span class="sr-land-art">${img(ref)}</span><span class="sr-land-card-copy"><span class="sr-land-card-title"><strong>${title}</strong><span aria-hidden="true">↗</span></span><small>${desc}</small>${meta?`<span class="sr-land-card-meta">${meta}</span>`:''}</span></a>`;
+  const card=([mode,title,desc,ref,meta])=>`<a class="sr-land-card${mode==='daily'?' is-feature':''}" href="${href(mode)}"><span class="sr-land-art">${img(ref)}</span><span class="sr-land-card-copy"><span class="sr-land-card-title"><strong>${title}</strong></span><small>${desc}</small>${meta?`<span class="sr-land-card-meta">${meta}</span>`:''}</span></a>`;
   root.dataset.layout='programme';root.dataset.cover='babylon';
   root.innerHTML=`<section class="sr-land-hero" aria-labelledby="sr-landing-title" style="--sr-cover-position:${cover.position}">
     <div class="sr-land-hero-art">${img(cover.ref,{hero:true})}</div>
@@ -51,7 +51,7 @@
       <h1 id="sr-landing-title">Screening Room</h1>
       <p class="sr-land-subtitle">Play, compare and explore the archive.</p>
       <p class="sr-land-framework">QUIZZES · CONNECTIONS · FILM JOURNEYS</p>
-      <div class="sr-land-hero-actions"><a class="sr-primary" href="screening-room.html?mode=daily">Play daily challenge</a><a class="sr-land-quiet-link" href="#sr-game-directory">Explore the programme ↘</a></div>
+      <div class="sr-land-hero-actions"><a class="sr-primary" href="screening-room.html?mode=daily">Play daily challenge</a></div>
     </div>
     <div class="section-shell sr-land-hero-credit"><a href="${movieHref}">${cover.film} · ${cover.year} <span aria-hidden="true">↗</span></a></div>
   </section>
