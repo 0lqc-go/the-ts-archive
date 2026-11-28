@@ -48,7 +48,7 @@
     <div class="sr-land-hero-art">${img(cover.ref,{hero:true})}</div>
     <div class="section-shell sr-land-hero-copy">
       <p class="sr-land-eyebrow">THE T.S. ARCHIVE / INTERACTIVE CINEMA</p>
-      <h1 id="sr-landing-title">Screening Room</h1>
+      <h1 id="sr-landing-title">Cinema Lab</h1>
       <p class="sr-land-subtitle">Play, compare and explore the archive.</p>
       <p class="sr-land-framework">QUIZZES · CONNECTIONS · FILM JOURNEYS</p>
       <div class="sr-land-hero-actions"><a class="sr-primary" href="screening-room.html?mode=daily">Play daily challenge</a></div>

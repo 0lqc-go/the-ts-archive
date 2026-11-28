@@ -743,7 +743,7 @@
     const text=(value,x,y,size,color=fg,family='DM Sans',weight=500)=>{ctx.fillStyle=color;ctx.font=`${weight} ${size}px "${family}", Arial, sans-serif`;ctx.fillText(value,x,y);};
     const rule=y=>{ctx.strokeStyle='#51483d';ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(pad,y);ctx.lineTo(1080-pad,y);ctx.stroke();};
     text('THE T.S. ARCHIVE',pad,80,35,fg,'Barlow Condensed',700);
-    text('SCREENING ROOM',pad,385,24,accent,'DM Sans',600);
+    text('CINEMA LAB',pad,385,24,accent,'DM Sans',600);
     text(title,pad,460,77,fg,'Barlow Condensed',600);
     const results=session.questions.map((question,index)=>question.correct.key===session.answers[index]?'correct':session.answers[index]===null?'skipped':'missed');
     const score=results.filter(result=>result==='correct').length;

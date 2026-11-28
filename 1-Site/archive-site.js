@@ -114,10 +114,10 @@
     $('#list-cards').innerHTML = index.lists.map(item => archiveCard(item, listHref(item), item.subtitle || 'Film list', index.media)).join('');
     $('#lists').hidden = index.lists.length === 0;
     $('#content-status').hidden = true;
-    // The two decade cards above this entry arrive asynchronously. Resolve
-    // a return from the profile after their layout exists, including mobile.
-    if(hash==='#cinema-profile')requestAnimationFrame(()=>requestAnimationFrame(()=>{
-      if(location.hash===hash)$('#cinema-profile')?.scrollIntoView({block:'start',behavior:'instant'});
+    // The two decade cards above these entries arrive asynchronously. Resolve
+    // a return from either experience after their layout exists, including mobile.
+    if(['#cinema-profile','#screening-room'].includes(hash))requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      if(location.hash===hash)$(hash)?.scrollIntoView({block:'start',behavior:'instant'});
     }));
     window.ArchiveContinuity?.register('page',()=>true,()=>{});
     trackVisit();

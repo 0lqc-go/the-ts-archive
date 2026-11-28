@@ -201,6 +201,8 @@ const fit=async page=>assert.ok(await page.evaluate(()=>document.documentElement
         await page.locator('#screening-landing:not([hidden])').waitFor();
         assert.equal(await page.locator('#screening-landing').getAttribute('data-layout'),'programme');
         assert.equal(await page.locator('#screening-landing').getAttribute('data-cover'),'babylon');
+        assert.equal(await page.locator('#sr-landing-title').innerText(),'Cinema Lab');
+        assert.equal(await page.locator('.topnav [aria-current="page"]').innerText(),'CINEMA LAB');
         assert.ok(await page.locator('#screening-play').isHidden());
         assert.equal(await page.locator('.sr-land-card[href*="mode=signature"]').count(),1);
         assert.equal(await page.locator('.sr-land-card[href*="mode=double"]').count(),0);
@@ -229,6 +231,41 @@ const fit=async page=>assert.ok(await page.evaluate(()=>document.documentElement
       await page.locator('[data-answer]').first().waitFor();
       assert.ok(await page.locator('#screening-landing').isHidden());
       assert.match(await page.locator('#sr-question-title').innerText(),/^Who (directed|photographed) this film\?/);
+      await page.goto(base+'/index.html');
+      await page.locator('#edition-cards .archive-card').first().waitFor();
+      const lab=page.locator('#cinema-profile .home-lab-card');
+      const profile=page.locator('.profile-entry-card'),journeys=page.locator('.journey-entry-card');
+      assert.equal(await lab.count(),1);
+      assert.equal(await lab.locator('h3').innerText(),'Cinema Lab');
+      assert.equal(await lab.locator('.home-lab-cover').getAttribute('href'),'screening-room.html');
+      assert.equal(await lab.locator('.home-lab-daily').getAttribute('href'),'screening-room.html?mode=daily');
+      assert.equal(await page.locator('.topnav a[href="screening-room.html"]').innerText(),'CINEMA LAB');
+      const [lb,pb,jb]=await Promise.all([lab.boundingBox(),profile.boundingBox(),journeys.boundingBox()]);
+      assert.ok(lb.y>=Math.max(pb.y+pb.height,jb.y+jb.height),'Lab must follow both discovery cards');
+      assert.ok(Math.abs(lb.x-pb.x)<2&&Math.abs(lb.x+lb.width-jb.x-jb.width)<2,'Lab must span the discovery grid');
+      assert.ok((await page.locator('#lists').boundingBox()).y>lb.y+lb.height);
+      assert.ok(await lab.locator('h3').evaluate(el=>{const size=parseFloat(getComputedStyle(el).fontSize);return size>=28&&size<=44;}));
+      const artBox=await lab.locator('.home-lab-art').boundingBox();
+      assert.ok(Math.abs(lb.width-artBox.width)<3&&Math.abs(lb.height-artBox.height)<3,'The still must fill the framed card');
+      await lab.scrollIntoViewIfNeeded();
+      await page.waitForFunction(()=>document.querySelector('.home-lab-art img').naturalWidth>0);
+      await lab.locator('.home-lab-daily').click({trial:true});
+      await lab.locator('.home-lab-cover').click({trial:true,position:{x:lb.width-12,y:12}});
+      if(proof){
+        await page.evaluate(()=>document.activeElement?.blur());
+        const screenshotStyle=await page.addStyleTag({content:'body[data-page="home"] .masthead,body[data-page="home"] .skip{visibility:hidden!important}'});
+        await page.locator('#cinema-profile').screenshot({path:path.join(proof,(mobile?'mobile-':'desktop-')+'home-lab.png'),animations:'disabled'});
+        await lab.screenshot({path:path.join(proof,(mobile?'mobile-':'desktop-')+'lab-card.png'),animations:'disabled'});
+        await screenshotStyle.evaluate(style=>style.remove());
+      }
+      await page.locator('#screening-daily').scrollIntoViewIfNeeded();
+      await page.locator('.screening-daily-card').waitFor();
+      assert.equal(await page.locator('.screening-daily-heading span').innerText(),'Frame of the day');
+      assert.ok(await page.locator('.screening-daily-card').evaluate(el=>getComputedStyle(el,'::after').backgroundImage.includes('linear-gradient')));
+      await fit(page);
+      await lab.locator('.home-lab-daily').click();
+      await page.locator('[data-answer]').first().waitFor();
+      assert.match(page.url(),/mode=daily/);
       assert.deepEqual(liveErrors,[]);
       await context.close();
     }
