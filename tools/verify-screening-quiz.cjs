@@ -1,6 +1,7 @@
 const assert = require('node:assert/strict');
 const data = require('../1-Site/screening-data.js');
 const bank = require('../1-Site/screening-challenge-bank.js');
+const games = require('../1-Site/screening-games-bank.js');
 const catalog = require('../1-Site/content/catalog.json');
 const media = require('../1-Site/content/artwork-variants.json');
 const archive = data.makeArchive(catalog.editions.map(edition=>({
@@ -45,7 +46,52 @@ for (const difficulty of ['classic','challenge']) {
   }
   for (const category of data.memoryTypes) counts[difficulty][category]=run('memory',difficulty,'all',category);
 }
-assert.equal(counts.challenge.frame,Object.values(bank.frames).flat().length);
+const hardCount=Object.values(games.hardFrames).flat().reduce((total,row)=>total+row[1].length,0);
+assert.equal(counts.challenge.frame,hardCount);
+assert.equal(counts.challenge.signature,games.signatures.length);
+const strict=data.quizPool(archive,'frame',{difficulty:'challenge'}), classic=data.quizPool(archive,'frame',{difficulty:'classic'});
+assert.ok(strict.every(question=>question.hard===true));
+assert.ok(strict.every(question=>classic.some(item=>item.key===question.key)));
+for(const [slug,label] of [['manchester-by-the-sea','On the boat'],['moneyball','The conversation in the clubhouse'],['before-midnight','The hotel room'],['her','Theodore alone above the city']]){
+  assert.ok(classic.some(q=>q.film.slug===slug&&q.frame.label===label));
+  assert.ok(!strict.some(q=>q.film.slug===slug&&q.frame.label===label),'An easy example leaked into Challenge');
+}
+assert.equal(archive.editor.length,games.editor.length);
+assert.equal(archive.connections.length,games.connections.length);
+assert.equal(archive.doubleFeatures.length,games.pairs.length);
+for(const puzzle of archive.editor){
+  assert.ok(puzzle.frames.length>=3&&puzzle.frames.length<=4);
+  assert.equal(new Set(puzzle.frames.map(item=>item.frame.path)).size,puzzle.frames.length);
+}
+for(const puzzle of archive.connections){
+  assert.equal(puzzle.groups.length,3);
+  assert.ok(puzzle.groups.every(group=>group.films.length===3));
+  assert.equal(new Set(puzzle.groups.flatMap(group=>group.films.map(film=>film.key))).size,9);
+}
+assert.ok(archive.doubleFeatures.every(pair=>pair.films[0].key!==pair.films[1].key));
+for(const name of ['editor','connections']){
+  const history={},pool=archive[name];
+  for(let i=0;i<pool.length;i++){
+    const puzzle=data.nextGamePuzzle(pool,history);
+    assert.equal(history[puzzle.id],undefined);
+    history[puzzle.id]=1;
+  }
+  assert.equal(history[data.nextGamePuzzle(pool,history).id],1);
+}
+const date='2026-11-28', dailyQuiz=data.dailyQuiz(archive,date);
+assert.equal(dailyQuiz.length,5);
+assert.deepEqual(dailyQuiz.map(q=>[q.key,q.choices.map(c=>c.key)]),data.dailyQuiz(archive,date).map(q=>[q.key,q.choices.map(c=>c.key)]));
+assert.ok(dailyQuiz[0].hard&&dailyQuiz[1].subtype==='dialogue'&&dailyQuiz[2].subtype==='signature'&&dailyQuiz[3].subtype==='details'&&dailyQuiz[4].answerKind==='winner');
+const rotations=[counts.challenge.frame,counts.challenge.dialogue,counts.challenge.signature,counts.challenge.details,counts.challenge.winner];
+const seen=rotations.map(()=>new Set());
+for(let day=0;day<Math.max(...rotations);day++){
+  const key=new Date(Date.parse(date+'T00:00:00Z')+day*86400000).toISOString().slice(0,10);
+  data.dailyQuiz(archive,key).forEach((q,index)=>{
+    if(day<rotations[index]){assert.ok(!seen[index].has(q.key),'Daily slot repeated before its rotation ended');seen[index].add(q.key);}
+  });
+}
+assert.equal(data.dailyDateKey(new Date('2026-11-28T20:59:59Z')),'2026-11-28');
+assert.equal(data.dailyDateKey(new Date('2026-11-28T21:00:00Z')),'2026-11-29');
 assert.equal(counts.challenge.details,Object.values(bank.details).flat().length);
 for (const [id,rows] of Object.entries(bank.quotes)) for (const [slug,quote] of rows) {
   assert.ok(archive.memory.some(q=>q.film.key===id+'/'+slug&&q.clue.includes(quote)));
@@ -61,5 +107,6 @@ assert.ok(data.makeQuiz(archive,'frame',{difficulty:'challenge',history:shared})
 const daily = data.dailyFrame(archive,new Date(2026,10,28,12));
 assert.equal(daily.film.slug,'the-beast-2023');
 assert.match(daily.frame.path,/the-beast-2023-curator-frame-20261126-07/);
-console.log('Verified complete quiz cycles, all scopes, shared history and daily frame.');
+console.log('Verified complete quiz cycles, strict frames, all scopes, game banks, daily rotation, shared history and daily frame.');
+console.log('Editor: '+archive.editor.length+' sequences · Connections: '+archive.connections.length+' boards · Double Feature: '+archive.doubleFeatures.length+' programmes');
 console.log(JSON.stringify(counts,null,2));

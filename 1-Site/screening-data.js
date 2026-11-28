@@ -4,9 +4,11 @@
   'use strict';
   const negativeAwards = new Set(['worst-picture', 'most-overrated-movie']);
   const actingAwards = new Set(['best-actor', 'best-actress', 'best-supporting-actor', 'best-supporting-actress', 'best-breakthrough-performance']);
-  const memoryTypes = ['dialogue', 'music', 'scenes', 'details'];
+  const memoryTypes = ['dialogue', 'music', 'scenes', 'details', 'signature'];
   const challengeBank = typeof module !== 'undefined' && module.exports
     ? require('./screening-challenge-bank.js') : globalThis.ArchiveScreeningChallenge;
+  const gameBank = typeof module !== 'undefined' && module.exports
+    ? require('./screening-games-bank.js') : globalThis.ArchiveScreeningGamesBank;
   // Additional scene-specific stills already in the curated galleries.
   // These are explicit, not guessed from a film's generic background.
   const sceneArtwork = new Map([
@@ -254,7 +256,26 @@
         memory.push({film,key:`details/${film.key}/${id}`,subtype:'details',marker:'Story detail',prompt,clue:film.title,subclue:String(film.year||''),answerKind:'detail',correct,challengeDistractors});
       }
     }
+    const filmsBySlug = new Map(filmList.map(film=>[film.slug,film]));
+    for (const [slug,ref,role,answer,alternatives] of gameBank?.signatures ?? []) {
+      const film = filmsBySlug.get(slug), frame = resolveFrame(film,ref);
+      if (!frame) continue;
+      const correct={key:normal(answer),label:answer};
+      const challengeDistractors=unique(alternatives.map(label=>({key:normal(label),label})).filter(option=>option.key!==correct.key),option=>option.key);
+      if (challengeDistractors.length!==3) continue;
+      memory.push({key:`signature/${film.key}/${role}/${ref}`,film,frame,subtype:'signature',marker:'Visual signature',prompt:role==='director'?'Who directed this film?':'Who photographed this film?',correct,challengeDistractors,answerKind:'credit'});
+    }
     const archive = {films, filmList, awards, ballotEditions, memory:unique(memory, question => question.key)};
+    archive.editor = (gameBank?.editor ?? []).map(([slug,id,rows])=>{
+      const film=filmsBySlug.get(slug);
+      const frames=rows.map(([ref,caption],index)=>({id:String(index),frame:resolveFrame(film,ref),caption}));
+      return film&&frames.length>=3&&frames.every(item=>item.frame)&&unique(frames,item=>item.frame.path).length===frames.length?{id,film,frames}:null;
+    }).filter(Boolean);
+    archive.connections = (gameBank?.connections ?? []).map(([id,groups])=>{
+      const resolved=groups.map(([label,slugs],index)=>({id:String(index),label,films:slugs.map(slug=>filmsBySlug.get(slug))}));
+      return resolved.length===3&&resolved.every(group=>group.films.length===3&&group.films.every(Boolean))&&unique(resolved.flatMap(group=>group.films),film=>film.key).length===9?{id,category:id.startsWith('directors')?'Directors':id.startsWith('cinematographers')?'Cinematographers':id.startsWith('scores')?'Composers':'Cast',groups:resolved}:null;
+    }).filter(Boolean);
+    archive.doubleFeatures=(gameBank?.pairs ?? []).map(([theme,first,second,note])=>({theme,films:[filmsBySlug.get(first),filmsBySlug.get(second)],note})).filter(pair=>pair.films.every(Boolean));
     // Resolve only locally available curated artwork; an absent film never
     // becomes a placeholder or an unrelated image from another title.
     function curatedStill([slug, filename]) {
@@ -308,14 +329,23 @@
     return distinct.length === 3 ? distinct.map(item=>({key:item.key,label:item.title})) : null;
   }
 
-  function challengeFramePool(archive, scope) {
-    return Object.entries(challengeBank?.frames ?? {}).filter(([id]) => inScope(id,scope)).flatMap(([editionId,rows]) => rows.flatMap(([slug,ref,alternatives]) => {
+  function resolveFrame(film,ref) {
+    return film?.frames.find(item=>item.label===ref||item.path.split('/').at(-1)===ref);
+  }
+
+  function challengeFramePool(archive, scope, hardOnly=false) {
+    const strictRows=Object.entries(gameBank?.hardFrames ?? {}).flatMap(([id,rows])=>rows.flatMap(([slug,refs,alternatives])=>refs.map(ref=>[id,slug,ref,alternatives,true])));
+    const classicRows=Object.entries(challengeBank?.frames ?? {}).flatMap(([id,rows])=>rows.map(([slug,ref,alternatives])=>[id,slug,ref,alternatives,false]));
+    // The hard list is explicit: never infer difficulty from a filename or
+    // bump an easy image into Challenge merely to complete a round.
+    const rows=hardOnly?strictRows:[...strictRows,...classicRows];
+    return unique(rows.filter(([id])=>inScope(id,scope)).flatMap(([editionId,slug,ref,alternatives,hard])=>{
       const film = archive.films.get(filmKey(editionId,slug));
-      const frame = film?.frames.find(item => item.label === ref || item.path.split('/').at(-1) === ref);
+      const frame = resolveFrame(film,ref);
       const challengeDistractors = film && challengeFilmOptions(archive,film,alternatives);
       if (!frame || !challengeDistractors) return [];
-      return [{key:`frame/${film.key}/${frame.path.split('/').at(-1)}`, film, frame, marker:'Film still', prompt:'Name the film.', answerKind:'film', correct:{key:film.key,label:film.title}, challengeDistractors}];
-    }));
+      return [{key:`frame/${film.key}/${frame.path.split('/').at(-1)}`, film, frame, hard,marker:'Film still', prompt:'Name the film.', answerKind:'film', correct:{key:film.key,label:film.title}, challengeDistractors}];
+    }),question=>question.key);
   }
 
   function challengeMemoryQuestion(archive, question) {
@@ -374,12 +404,16 @@
     }
     let pool = [];
     if (mode === 'frame') {
-      // Both levels share the curated frames and stable identities. Classic
-      // reduces the number of options rather than showing giveaway posters.
-      pool = challengeFramePool(archive,scope);
+      // Stable keys are shared where the two levels overlap. Challenge uses
+      // the visually audited list, and Classic retains the wider old pool.
+      pool = challengeFramePool(archive,scope,challenge&&Boolean(gameBank));
     } else if (mode === 'memory') {
       const base = archive.memory.filter(question => inScope(question.film.editionId, scope) && (category === 'all' || question.subtype === category));
       pool = base.map(question=>challengeMemoryQuestion(archive,question) || (challenge?null:question)).filter(Boolean);
+      if (challenge) {
+        const hardPaths=new Set(challengeFramePool(archive,scope,true).map(question=>question.frame.path));
+        pool=pool.map(question=>question.subtype==='scenes'&&question.frame&&!hardPaths.has(question.frame.path)?{...question,frame:null}:question);
+      }
       // Never ask for a film whose own title gives away the answer.
       pool = pool.filter(question=>question.answerKind!=='film' || !normal(question.clue).includes(normal(question.film.title)));
     }
@@ -408,6 +442,38 @@
       if (!queue.some(q=>q.key===question.key)) queue.push(question);
     }
     return shuffle(queue,random);
+  }
+
+  function dailyDateKey(date=new Date()) {
+    const parts=Object.fromEntries(new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Baghdad',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date).map(part=>[part.type,part.value]));
+    return `${parts.year}-${parts.month}-${parts.day}`;
+  }
+
+  function seededRandom(seed) {
+    let value=hash(seed)||1;
+    return ()=>{
+      value^=value<<13;value^=value>>>17;value^=value<<5;
+      return (value>>>0)/4294967296;
+    };
+  }
+
+  function dailyQuiz(archive,dateKey=dailyDateKey()) {
+    const ordinal=Math.floor(Date.parse(dateKey+'T00:00:00Z')/86400000);
+    if (!Number.isFinite(ordinal)) return [];
+    const slots=[['frame','all'],['memory','dialogue'],['memory','signature'],['memory','details'],['winner','all']];
+    return slots.flatMap(([mode,category])=>{
+      const id=mode+'/'+category;
+      const pool=quizPool(archive,mode,{category,difficulty:'challenge',random:seededRandom('daily-options/'+dateKey+'/'+id)}).sort((a,b)=>a.key<b.key?-1:a.key>b.key?1:0);
+      const ordered=shuffle(pool,seededRandom('daily-order-v1/'+id));
+      return ordered.length?[ordered[((ordinal%ordered.length)+ordered.length)%ordered.length]]:[];
+    });
+  }
+
+  function nextGamePuzzle(puzzles,history={},random=Math.random) {
+    if(!puzzles.length)return null;
+    const count=item=>Number.isSafeInteger(history[item.id])&&history[item.id]>=0?history[item.id]:0;
+    const minimum=Math.min(...puzzles.map(count));
+    return shuffle(puzzles.filter(item=>count(item)===minimum),random)[0];
   }
 
   // Occasionally the curator selects a specific daily frame from the archive.
@@ -575,7 +641,7 @@
     return result;
   }
 
-  const API = {makeArchive, makeQuiz, quizPool, dailyFrame, cleanBallot, ballotSummary, cleanMatchupRound, matchupSummary, connectionFilms, memoryTypes, shuffle};
+  const API = {makeArchive, makeQuiz, quizPool, dailyFrame, dailyDateKey,dailyQuiz,nextGamePuzzle, cleanBallot, ballotSummary, cleanMatchupRound, matchupSummary, connectionFilms, memoryTypes, shuffle};
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else window.ArchiveScreeningData = API;
 })();

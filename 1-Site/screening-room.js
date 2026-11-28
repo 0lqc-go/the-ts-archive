@@ -9,10 +9,11 @@
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[char]));
-  const nameOfMode = {frame:'Guess the Frame',memory:'Cinema Memory',winner:'Guess the Winner',matchup:'This or That',ballot:'My Alternate Ballot',journeys:'Film Journeys'};
-  const quizModes = new Set(['frame','memory','winner']);
+  const nameOfMode = {frame:'Guess the Frame',memory:'Cinema Memory',winner:'Guess the Winner',editor:'The Editor',connections:'Connections',daily:'Daily Challenge',double:'Double Feature',matchup:'This or That',ballot:'My Alternate Ballot',journeys:'Film Journeys'};
+  const quizModes = new Set(['frame','memory','winner','editor','connections','daily']);
   const storageKey = 'ts-archive-screening-ballot-v1';
   const quizHistoryStorageKey = 'ts-archive-screening-quiz-history-v2';
+  const dailyStorageKey = 'ts-archive-screening-daily-quiz-v1';
   const matchupStorageKey = 'ts-archive-screening-matchup-v1';
   let contextPromise;
   let imageMedia={sizes:{},variants:{}};
@@ -105,6 +106,36 @@
     let difficulty = refinedQuestions && initialParams.get('difficulty') !== 'classic' ? 'challenge' : 'classic';
     const sessions = new Map(), quizHistory = Object.create(null);
     let activeQuizKey = '';
+    let dailySession=null;
+    const games=window.ArchiveScreeningGames?.make({archive,activity,data,esc,poster,imageAttrs,focusHeading});
+    function getDailySession(){
+      if(dailySession)return dailySession;
+      const date=data.dailyDateKey();
+      const questions=data.dailyQuiz(archive,date), keys=questions.map(question=>question.key);
+      dailySession={date,questions,index:0,answers:[],complete:false};
+      try{
+        const saved=JSON.parse(localStorage.getItem(dailyStorageKey)||'null');
+        if(saved?.date===date&&Array.isArray(saved.keys)&&saved.keys.length===keys.length&&saved.keys.every((key,index)=>key===keys[index])&&Array.isArray(saved.answers)){
+          const answers=[];
+          for(const [index,answer] of saved.answers.slice(0,questions.length).entries()){
+            if(answer!==null&&!questions[index].choices.some(choice=>choice.key===answer))break;
+            answers.push(answer);
+          }
+          dailySession.answers=answers;
+          dailySession.complete=Boolean(saved.complete)&&answers.length===questions.length;
+          dailySession.index=Math.max(0,Math.min(Number.isInteger(saved.index)?saved.index:0,answers.length,questions.length-1));
+        }
+      }catch{}
+      return dailySession;
+    }
+    function persistDaily(session){
+      try{
+        localStorage.setItem(dailyStorageKey,JSON.stringify({date:session.date,keys:session.questions.map(question=>question.key),index:session.index,answers:session.answers,complete:session.complete}));
+      }catch{}
+    }
+    function dailyBanner(session){
+      return `<div class="sr-daily-banner"><strong>Daily Challenge · <time datetime="${esc(session.date)}">${esc(session.date)}</time></strong><p>Five shared questions · New challenge at midnight, Baghdad time.</p></div>`;
+    }
     function syncQuizHistory() {
       try {
         const record = JSON.parse(localStorage.getItem(quizHistoryStorageKey) || '{}');
@@ -162,6 +193,7 @@
     function switchMode(next, updateURL = true) {
       if (!Object.hasOwn(nameOfMode, next)) return;
       if(mode==='matchup'&&next!=='matchup') releaseTasteCard();
+      if(next==='daily'&&dailySession?.date!==data.dailyDateKey())dailySession=null;
       mode = next;
       if (quizModes.has(mode)) lastQuiz = mode;
       for (const link of $$('[data-screening-mode]', nav)) {
@@ -202,6 +234,7 @@
     quizNav.addEventListener('click',handleNav);
 
     function currentSession(fresh = false) {
+      if(mode==='daily')return getDailySession();
       const options = settings[mode];
       const key = `${mode}/${options.scope}/${options.category}/${difficulty}`;
       if (activeQuizKey!==key) {
@@ -226,8 +259,9 @@
     }
 
     function quizToolbar() {
+      if(mode==='daily')return dailyBanner(getDailySession());
       const options = settings[mode];
-      const categories = [['all','All'], ['dialogue','Dialogue'], ['music','Music'], ['scenes','Scenes'], ['details','Details']];
+      const categories = [['all','All'], ['dialogue','Dialogue'], ['music','Music'], ['scenes','Scenes'], ['details','Details'], ['signature','Visual Signature']];
       return `<div class="sr-toolbar${mode === 'memory' ? ' sr-memory-tools' : ''}">${mode === 'memory' ? `<div class="sr-segment" role="group" aria-label="Cinema memory categories">${categories.map(([key, name]) => `<button type="button" data-memory-category="${key}" aria-pressed="${options.category === key}">${name}</button>`).join('')}</div>` : ''}${quizFilters(options.scope)}</div>`;
     }
 
@@ -275,13 +309,13 @@
       }
       if (session.complete) { renderQuizResults(session); return; }
       const question = session.questions[session.index];
-      recordQuestion(session,question);
-      if (mode === 'winner') { renderWinnerQuestion(session,question); return; }
-      activity.innerHTML = `${mode === 'memory' ? quizToolbar() : ''}
+      if(mode!=='daily')recordQuestion(session,question);
+      if (question.answerKind === 'winner') { renderWinnerQuestion(session,question); return; }
+      activity.innerHTML = `${mode === 'memory'||mode==='daily' ? quizToolbar() : ''}
         <div class="sr-quiz-heading"><h2 tabindex="-1" id="sr-question-title">${esc(question.prompt)}</h2><div class="sr-quiz-heading-tools">${mode === 'frame' ? `<div class="sr-frame-tools">${quizFilters(settings.frame.scope)}</div>` : ''}${progress(session)}</div></div>
         <div class="sr-question-grid" aria-labelledby="sr-question-title">
           ${clueMarkup(question)}
-          <div>${mode === 'memory' && question.frame ? `<p class="sr-scene-clue"><small>${esc(question.marker)}</small><span>${esc(question.clue)}</span></p>` : ''}<div class="sr-answer-list" role="group" aria-label="Choose an answer">${question.choices.map(choice => `<button type="button" class="sr-answer" data-answer="${esc(choice.key)}"><span>${esc(choice.label)}</span><span class="sr-answer-state" aria-hidden="true"></span></button>`).join('')}</div>
+          <div>${question.frame && question.clue ? `<p class="sr-scene-clue"><small>${esc(question.marker)}</small><span>${esc(question.clue)}</span></p>` : ''}<div class="sr-answer-list" role="group" aria-label="Choose an answer">${question.choices.map(choice => `<button type="button" class="sr-answer" data-answer="${esc(choice.key)}"><span>${esc(choice.label)}</span><span class="sr-answer-state" aria-hidden="true"></span></button>`).join('')}</div>
             <div class="sr-quiz-actions"><button type="button" class="sr-text-action" data-quiz-skip>Skip</button><button type="button" class="sr-primary" data-quiz-next hidden>${session.index === session.questions.length-1 ? 'See results' : 'Next'}</button></div>
             <div class="sr-feedback" aria-live="polite" aria-atomic="true" hidden></div>
           </div>
@@ -300,9 +334,9 @@
     }
 
     function renderWinnerQuestion(session,question) {
-      const scope = quizFilters(settings.winner.scope);
-      activity.innerHTML = `<div class="sr-winner-quiz"><div class="sr-winner-heading"><div><p class="screening-kicker">${esc(question.marker)} · ${esc(question.award.chapter)}</p><h2 tabindex="-1" id="sr-question-title">${esc(question.award.name)}</h2><p>Which did the archive choose?</p></div><div class="sr-quiz-heading-tools"><div class="sr-frame-tools">${scope}</div>${progress(session)}</div></div>
-        <div class="sr-winner-options${difficulty==='challenge'?' is-challenge':''}" role="group" aria-labelledby="sr-question-title">${question.choices.map(choice=>{
+      const scope = mode==='daily'?'':quizFilters(settings.winner.scope);
+      activity.innerHTML = `${mode==='daily'?dailyBanner(session):''}<div class="sr-winner-quiz"><div class="sr-winner-heading"><div><p class="screening-kicker">${esc(question.marker)} · ${esc(question.award.chapter)}</p><h2 tabindex="-1" id="sr-question-title">${esc(question.award.name)}</h2><p>Which did the archive choose?</p></div><div class="sr-quiz-heading-tools">${scope?`<div class="sr-frame-tools">${scope}</div>`:''}${progress(session)}</div></div>
+        <div class="sr-winner-options${mode==='daily'||difficulty==='challenge'?' is-challenge':''}" role="group" aria-labelledby="sr-question-title">${question.choices.map(choice=>{
           const candidate = choice.candidate;
           return `<button type="button" class="sr-answer sr-winner-option" data-answer="${esc(choice.key)}"><span class="sr-winner-posters${candidate.films.length>1?' is-portfolio':''}">${candidate.films.slice(0,4).map(film=>poster(film)).join('')}</span><span class="sr-winner-option-copy"><strong>${esc(candidate.title)}</strong>${candidate.detail ? `<small>${esc(candidate.detail)}</small>` : ''}</span><span class="sr-answer-state" aria-hidden="true"></span></button>`;
         }).join('')}</div>
@@ -317,6 +351,7 @@
       const question = session.questions[session.index];
       if (key !== null && !question.choices.some(choice => choice.key === key)) return;
       session.answers.push(key);
+      if(mode==='daily')persistDaily(session);
       showFeedback(session, true);
     }
 
@@ -341,7 +376,7 @@
       const label = answer === question.correct.key ? 'That’s right.' : answer === null ? 'The answer' : 'Not quite.';
       const feedback = $('.sr-feedback', activity);
       feedback.hidden = false;
-      if (mode === 'winner') {
+      if (question.answerKind === 'winner') {
         const candidate = question.candidate;
         feedback.innerHTML = `<p class="sr-feedback-kicker">${label}</p><div class="sr-winner-feedback"><div><strong>${esc(candidate.title)}</strong>${candidate.detail ? `<p>${esc(candidate.detail)}</p>` : ''}<div class="sr-feedback-links"><a href="${esc(question.award.href)}">Open award</a>${candidate.films.length===1?`<a href="${esc(film.href)}">Open film</a>`:''}</div></div></div>`;
       } else feedback.innerHTML = `<p class="sr-feedback-kicker">${label}${answer !== question.correct.key ? ` · ${esc(question.correct.label)}` : ''}</p><div class="sr-feedback-film">${poster(film)}<div><strong>${esc(film.title)} · ${esc(film.year)}</strong>${references.length ? `<p>${film.wins.length && !question.award ? 'Awards: ' : ''}${references.map(item => esc(item.name)).join(' · ')}</p>` : ''}<div class="sr-feedback-links"><a href="${esc(film.href)}">Open film</a>${question.award ? `<a href="${esc(question.award.href)}">The award</a>` : ''}${question.listening ? `<a href="${esc(question.listening.url)}" target="_blank" rel="noopener noreferrer">${esc(question.listening.label || 'Listen')}</a>` : ''}</div></div></div>`;
@@ -353,20 +388,28 @@
       if (session.index >= session.answers.length) return;
       if (session.index >= session.questions.length-1) session.complete = true;
       else session.index++;
+      if(mode==='daily')persistDaily(session);
       renderQuiz();
       focusHeading(activity);
     }
 
     function renderQuizResults(session) {
       const count = session.questions.filter((question,index) => question.correct.key === session.answers[index]).length;
-      activity.innerHTML = `${quizToolbar()}<div class="sr-results-header"><div><span class="screening-kicker">${nameOfMode[mode]}${refinedQuestions?' · '+(difficulty==='challenge'?'Challenge':'Classic'):''}</span><h2 tabindex="-1">${count} of ${session.questions.length}.</h2><p>A little more of the archive to remember.</p></div><button type="button" class="sr-primary" data-quiz-replay>Play again</button></div><ol class="sr-result-list">${session.questions.map((question,index) => {
+      const daily=mode==='daily';
+      activity.innerHTML = `${quizToolbar()}<div class="sr-results-header"><div><span class="screening-kicker">${nameOfMode[mode]}${!daily&&refinedQuestions?' · '+(difficulty==='challenge'?'Challenge':'Classic'):''}</span><h2 tabindex="-1">${count} of ${session.questions.length}.</h2><p>${daily?'Today’s screening is complete. Come back tomorrow.':'A little more of the archive to remember.'}</p></div>${daily?'<div class="sr-daily-share"><p id="sr-daily-share-status" role="status"></p><button type="button" class="sr-primary" data-daily-share>Copy result</button></div>':'<button type="button" class="sr-primary" data-quiz-replay>Play again</button>'}</div><ol class="sr-result-list">${session.questions.map((question,index) => {
         const picked = question.choices.find(choice => choice.key === session.answers[index]);
         const match = question.correct.key === session.answers[index];
         if (question.answerKind === 'winner') return `<li>${poster(question.film)}<div><strong><a href="${esc(question.award.href)}">${esc(question.award.name)}</a></strong><p>${esc(question.correct.label)} · ${esc(question.marker)}${!match && picked?` · You chose ${esc(picked.label)}`:''}</p></div><span class="sr-result-status${match?' is-match':''}">${match?'Correct':picked?'Missed':'Skipped'}</span></li>`;
-        return `<li>${poster(question.film)}<div><strong><a href="${esc(question.film.href)}">${esc(question.film.title)}</a></strong><p>${['composer','detail'].includes(question.answerKind) ? `${esc(question.correct.label)}${!match && picked ? ` · You chose ${esc(picked.label)}` : ''}` : !match && picked ? `You chose ${esc(picked.label)}` : `${esc(question.film.year)}`}</p></div><span class="sr-result-status${match ? ' is-match' : ''}">${match ? 'Correct' : picked ? 'Missed' : 'Skipped'}</span></li>`;
-      }).join('')}</ol>`;
+        return `<li>${poster(question.film)}<div><strong><a href="${esc(question.film.href)}">${esc(question.film.title)}</a></strong><p>${['composer','detail','credit'].includes(question.answerKind) ? `${esc(question.correct.label)}${!match && picked ? ` · You chose ${esc(picked.label)}` : ''}` : !match && picked ? `You chose ${esc(picked.label)}` : `${esc(question.film.year)}`}</p></div><span class="sr-result-status${match ? ' is-match' : ''}">${match ? 'Correct' : picked ? 'Missed' : 'Skipped'}</span></li>`;
+      }).join('')}</ol>${daily?'<textarea class="sr-share-fallback" aria-label="Daily result to copy" readonly hidden></textarea>':''}`;
       bindQuizToolbar();
-      $('[data-quiz-replay]',activity).addEventListener('click', () => { currentSession(true); renderQuiz(); focusHeading(activity); });
+      $('[data-quiz-replay]',activity)?.addEventListener('click', () => { currentSession(true); renderQuiz(); focusHeading(activity); });
+      $('[data-daily-share]',activity)?.addEventListener('click',async()=>{
+        const marks=session.questions.map((question,index)=>question.correct.key===session.answers[index]?'■':session.answers[index]===null?'–':'□').join(' ');
+        const share=`The T.S. Archive · Daily Challenge ${session.date}\n${count}/${session.questions.length} · ${marks}\n${new URL('screening-room.html?mode=daily',location.href).href}`;
+        try{await navigator.clipboard.writeText(share);$('#sr-daily-share-status',activity).textContent='Result copied.';}
+        catch{const fallback=$('.sr-share-fallback',activity);fallback.hidden=false;fallback.value=share;fallback.select();$('#sr-daily-share-status',activity).textContent='Select and copy your result.';}
+      });
     }
 
     function edition() { return archive.ballotEditions.get(ballotEditionId) || archive.ballotEditions.values().next().value; }
@@ -631,6 +674,12 @@
       if (mode === 'ballot') renderBallot();
       else if (mode === 'matchup') renderMatchup();
       else if (mode === 'journeys') renderJourneys();
+      else if (mode === 'editor'||mode === 'connections'||mode === 'double') {
+        if(!games)activity.innerHTML='<p class="sr-empty">This activity could not be loaded. Refresh to try again.</p>';
+        else if(mode==='editor')games.renderEditor();
+        else if(mode==='connections')games.renderConnections();
+        else games.renderDouble();
+      }
       else renderQuiz();
     }
 
@@ -639,7 +688,7 @@
     document.addEventListener('keydown',event => {
       if (mode === 'ballot' || event.repeat || event.ctrlKey || event.metaKey || event.altKey || $('dialog[open]') || event.target.closest?.('input,textarea,select,[contenteditable="true"]')) return;
       if (mode==='journeys'&&journeyId&&['ArrowLeft','ArrowRight'].includes(event.key)) {event.preventDefault();const direction=event.key==='ArrowRight'?1:-1;const onThumb=event.target.closest?.('[data-journey-frame]');stepJourney(direction,onThumb?`[data-journey-frame="${journeyIndex+direction}"]`:'');return;}
-      if((quizModes.has(mode)||mode==='matchup')&&['1','2','3'].includes(event.key)) {
+      if((['frame','memory','winner','daily','matchup'].includes(mode))&&['1','2','3','4'].includes(event.key)) {
         const button = $$(mode==='matchup'?'[data-match-choice]':'[data-answer]',activity)[Number(event.key)-1];
         if (button && !button.disabled) { event.preventDefault(); button.click(); }
       }
