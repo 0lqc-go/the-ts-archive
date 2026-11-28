@@ -114,9 +114,20 @@ assert.ok(second.every(q=>!history[q.key]),'Changing difficulty and category mus
 const narrow = data.makeQuiz(archive,'frame',{scope:catalog.editions[0].id,difficulty:'classic'});
 const shared = Object.fromEntries(narrow.map(q=>[q.key,1]));
 assert.ok(data.makeQuiz(archive,'frame',{difficulty:'challenge',history:shared}).every(q=>!shared[q.key]));
-const daily = data.dailyFrame(archive,new Date(2026,10,28,12));
-assert.equal(daily.film.slug,'the-beast-2023');
-assert.match(daily.frame.path,/the-beast-2023-curator-frame-20261126-07/);
+const schedule=[
+  ['2026-11-28T12:00:00+03:00','chungking-express',1994],
+  ['2026-11-29T00:00:00+03:00','dark-city',1998],
+  ['2026-11-30T00:00:00+03:00','magnetic-rose',1995]
+];
+for(const [date,slug,year] of schedule){
+  const daily=data.dailyFrame(archive,new Date(date));
+  assert.equal(daily.film.slug,slug);assert.equal(daily.film.year,year);assert.equal(daily.film.external,true);
+  assert.ok(daily.frame.path.includes('daily-'+slug));
+  assert.ok(daily.frame.variants.some(v=>v.width===640));
+}
+assert.equal(data.dailyFrame(archive,new Date('2026-11-28T20:59:59Z')).film.slug,'chungking-express');
+assert.equal(data.dailyFrame(archive,new Date('2026-11-28T21:00:00Z')).film.slug,'dark-city');
+assert.ok(!data.dailyFrame(archive,new Date('2026-12-01T00:00:00+03:00')).film.external);
 console.log('Verified complete quiz cycles, strict frames, all scopes, game banks, daily rotation, shared history and daily frame.');
 console.log('Editor: '+archive.editor.length+' sequences · Connections: '+archive.connections.length+' boards · Double Feature: '+archive.doubleFeatures.length+' programmes');
 console.log(JSON.stringify(counts,null,2));

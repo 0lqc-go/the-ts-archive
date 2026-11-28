@@ -211,7 +211,8 @@ const fit=async page=>assert.ok(await page.evaluate(()=>document.documentElement
         assert.match(await page.locator('.sr-land-card[href*="mode=connections"] img').getAttribute('src'),/screening-connections-burning-640w\.webp$/);
         assert.match(await page.locator('.sr-land-card[href*="mode=matchup"] img').getAttribute('src'),/screening-matchup-llewyn-davis-640w\.webp$/);
         assert.equal(await page.locator('.sr-land-card-title > span').count(),0);
-        assert.ok((await page.locator('.sr-land-hero').boundingBox()).height>=(mobile?445:680));
+        const heroHeight=(await page.locator('.sr-land-hero').boundingBox()).height;
+        assert.ok(mobile?heroHeight>=360&&heroHeight<=440:heroHeight>=680);
         assert.equal(await page.locator('.sr-land-hero-actions a').count(),1);
         const copy=await page.locator('.sr-land-hero-copy').boundingBox();
         const credit=await page.locator('.sr-land-hero-credit').boundingBox();
@@ -231,6 +232,7 @@ const fit=async page=>assert.ok(await page.evaluate(()=>document.documentElement
       await page.locator('[data-answer]').first().waitFor();
       assert.ok(await page.locator('#screening-landing').isHidden());
       assert.match(await page.locator('#sr-question-title').innerText(),/^Who (directed|photographed) this film\?/);
+      await page.clock.setFixedTime(new Date('2026-11-28T13:00:00+03:00'));
       await page.goto(base+'/index.html');
       await page.locator('#edition-cards .archive-card').first().waitFor();
       const lab=page.locator('#cinema-profile .home-lab-card');
@@ -247,7 +249,7 @@ const fit=async page=>assert.ok(await page.evaluate(()=>document.documentElement
       assert.ok(Math.abs(lb.x-pb.x)<2&&Math.abs(lb.x+lb.width-jb.x-jb.width)<2,'Lab must span the discovery grid');
       if(!mobile) assert.ok(Math.abs(lb.x-1920*.072)<3,'The homepage must use the slightly wider desktop gutters');
       assert.ok((await page.locator('#lists').boundingBox()).y>lb.y+lb.height);
-      assert.ok(await lab.locator('h3').evaluate(el=>{const size=parseFloat(getComputedStyle(el).fontSize);return size>=28&&size<=44;}));
+      assert.ok(await lab.locator('h3').evaluate((el,mobile)=>{const size=parseFloat(getComputedStyle(el).fontSize);return mobile?size>=24&&size<=30:size>=28&&size<=44;},mobile));
       const artBox=await lab.locator('.home-lab-art').boundingBox();
       assert.ok(Math.abs(lb.width-artBox.width)<3&&Math.abs(lb.height-artBox.height)<3,'The still must fill the framed card');
       await lab.scrollIntoViewIfNeeded();
@@ -267,6 +269,19 @@ const fit=async page=>assert.ok(await page.evaluate(()=>document.documentElement
       await page.locator('.screening-daily-card').waitFor();
       assert.equal(await page.locator('.screening-daily-heading span').innerText(),'Frame of the day');
       assert.ok(await page.locator('.screening-daily-card').evaluate(el=>getComputedStyle(el,'::after').backgroundImage.includes('linear-gradient')));
+      for(const [date,title,slug] of [
+        ['2026-11-28','Chungking Express','chungking-express'],
+        ['2026-11-29','Dark City','dark-city'],
+        ['2026-11-30','Magnetic Rose','magnetic-rose']
+      ]){
+        await page.clock.setFixedTime(new Date(date+'T00:05:00+03:00'));
+        await page.evaluate(()=>dispatchEvent(new Event('focus')));
+        await page.waitForFunction(title=>document.querySelector('.screening-daily-caption strong')?.textContent===title,title);
+        assert.equal(await page.locator('.screening-daily-heading time').getAttribute('datetime'),date);
+        assert.equal(await page.locator('.screening-daily-card').getAttribute('target'),'_blank');
+        await page.waitForFunction(slug=>{const image=document.querySelector('.screening-daily-card img');return image?.currentSrc.includes('daily-'+slug)&&image.complete&&image.naturalWidth>0;},slug);
+        if(proof)await page.locator('#screening-daily').screenshot({path:path.join(proof,(mobile?'mobile-':'desktop-')+'daily-frame-'+date+'.png')});
+      }
       await fit(page);
       await lab.locator('.home-lab-daily').click();
       await page.locator('[data-answer]').first().waitFor();

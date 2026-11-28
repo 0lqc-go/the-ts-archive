@@ -456,8 +456,9 @@
     return shuffle(queue,random);
   }
 
+  const dailyDateFormatter=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Baghdad',year:'numeric',month:'2-digit',day:'2-digit'});
   function dailyDateKey(date=new Date()) {
-    const parts=Object.fromEntries(new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Baghdad',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date).map(part=>[part.type,part.value]));
+    const parts=Object.fromEntries(dailyDateFormatter.formatToParts(date).map(part=>[part.type,part.value]));
     return `${parts.year}-${parts.month}-${parts.day}`;
   }
 
@@ -488,9 +489,18 @@
     return shuffle(puzzles.filter(item=>count(item)===minimum),random)[0];
   }
 
-  // Occasionally the curator selects a specific daily frame from the archive.
-  // A dated choice affects only that local calendar day; the rotation resumes
-  // unchanged on every other day.
+  // Hand-picked frames can also come from films outside the current editions.
+  // They do not enter the quizzes or awards catalogue.
+  function guestDailyFrame(date,slug,title,year,href,height,label) {
+    const stem='assets/films/responsive/daily-'+slug+'-'+date.replaceAll('-','');
+    return {
+      externalFilm:{key:'daily/'+slug,slug,title,year,href,external:true},
+      frame:{path:stem+'-1920w.webp',width:1920,height,label,credit:'Film still provided by the curator',
+        variants:[640,960,1280,1920].map(width=>({src:stem+'-'+width+'w.webp',width}))}
+    };
+  }
+  // A dated choice affects only that Baghdad calendar day; the rotation
+  // resumes automatically when the curator's selections have ended.
   const dailyCuratorSelections = {
     '2026-11-26': {journey:'silence', film:'the-souvenir', frame:{
       path:'assets/films/the-souvenir-daily-frame.jpg', width:2000, height:1153,
@@ -503,20 +513,19 @@
       label:'Sunlight and shadows across the floor',
       credit:'Film still provided by the curator'
     }},
-    '2026-11-28': {edition:'2020-2026', film:'the-beast-2023', frame:{
-      path:'assets/films/the-beast-2023-curator-frame-20261126-07.webp', width:2494, height:1383,
-      label:'Gabrielle and Louis in a period interior',
-      credit:'Film still provided by the curator'
-    }}
+    '2026-11-28': guestDailyFrame('2026-11-28','chungking-express','Chungking Express',1994,'https://letterboxd.com/film/chungking-express/',1149,'A woman in sunglasses and Cop 223'),
+    '2026-11-29': guestDailyFrame('2026-11-29','dark-city','Dark City',1998,'https://letterboxd.com/film/dark-city-1998/',808,'A street under the city lights'),
+    '2026-11-30': guestDailyFrame('2026-11-30','magnetic-rose','Magnetic Rose',1995,'https://letterboxd.com/film/memories/',1063,'The portrait in the ornate hall')
   };
 
   function dailyFrame(archive, date = new Date()) {
-    const ordinal = Math.floor(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 86400000);
-    const selection = dailyCuratorSelections[new Date(ordinal * 86400000).toISOString().slice(0,10)];
+    const dateKey=dailyDateKey(date);
+    const ordinal = Math.floor(Date.parse(dateKey+'T00:00:00Z') / 86400000);
+    const selection = dailyCuratorSelections[dateKey];
     if (selection) {
       const entry = archive.journeys?.find(journey => journey.id === selection.journey)
         ?.entries.find(item => item.film.slug === selection.film);
-      const film = entry?.film ?? (selection.edition
+      const film = selection.externalFilm ?? entry?.film ?? (selection.edition
         ? archive.filmList?.find(item => item.key === `${selection.edition}/${selection.film}`)
         : null);
       const frame = selection.frame ?? entry?.frame;

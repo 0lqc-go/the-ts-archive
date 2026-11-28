@@ -72,13 +72,16 @@
         if (!current || current.day === lastDay) return;
         lastDay = current.day;
         const {film, frame} = current;
-        const date = new Intl.DateTimeFormat('en', {day:'numeric', month:'short'}).format(now);
-        const dateISO = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+        const date = new Intl.DateTimeFormat('en', {timeZone:'Asia/Baghdad',day:'numeric',month:'short'}).format(now);
+        const dateISO = data.dailyDateKey(now);
         // Attribution remains with the artwork metadata and the edition's
         // existing artwork-source list, without adding chrome to this card.
         const credit = frame.credit ? ` data-photo-credit="${esc(frame.credit)}"` : '';
+        const sizes='(max-width: 680px) 92vw, (min-width: 1440px) 680px, 48vw';
+        const attrs=frame.variants ? asset.attributes({sizes:{[frame.path]:[frame.width,frame.height]},variants:{[frame.path]:frame.variants}},frame.path,sizes,640) : imageAttrs(frame.path,sizes,640);
+        const external=film.external ? ' target="_blank" rel="noopener noreferrer"' : '';
         section.innerHTML = `<div class="screening-daily-heading"><span>Frame of the day</span><time datetime="${dateISO}">${esc(date)}</time></div>
-          <a class="screening-daily-card" href="${esc(film.href)}" aria-label="Explore ${esc(film.title)} (${esc(film.year)})"><img ${imageAttrs(frame.path,'(max-width: 680px) 92vw, (min-width: 1440px) 680px, 48vw',640)} width="${frame.width}" height="${frame.height}" alt=""${credit} loading="lazy" decoding="async"><span class="screening-daily-caption"><strong>${esc(film.title)}</strong><small>${esc(film.year)}</small></span></a>`;
+          <a class="screening-daily-card" href="${esc(film.href)}"${external} aria-label="Explore ${esc(film.title)} (${esc(film.year)})"><img ${attrs} width="${frame.width}" height="${frame.height}" alt=""${credit} loading="lazy" decoding="async"><span class="screening-daily-caption"><strong>${esc(film.title)}</strong><small>${esc(film.year)}</small></span></a>`;
         const image = $('img', section);
         image.addEventListener('error', () => { image.hidden = true; });
       }
@@ -205,6 +208,25 @@
       for (const link of $$('[data-screening-mode]',quizNav)) {
         if (link.dataset.screeningMode === mode) link.setAttribute('aria-current','page');
         else link.removeAttribute('aria-current');
+      }
+      if (matchMedia('(max-width: 680px), (max-width: 932px) and (pointer: coarse) and (max-height: 500px)').matches) {
+        requestAnimationFrame(() => {
+          for (const strip of [nav,quizNav]) {
+            if (strip.hidden || strip.scrollWidth <= strip.clientWidth) continue;
+            const active = strip.querySelector('[aria-current="page"]');
+            if (!active) continue;
+            const a=active.getBoundingClientRect(), b=strip.getBoundingClientRect();
+            if (a.left < b.left || a.right > b.right) {
+              const offset=strip.scrollLeft, activeLeft=a.left-b.left+offset;
+              const minStart=Math.max(0,activeLeft+a.width-b.width);
+              const maxStart=strip.scrollWidth-strip.clientWidth;
+              // Start on a complete tab instead of leaving a clipped label at the left.
+              const anchors=[...strip.querySelectorAll('[data-screening-mode]')].map(link=>link.getBoundingClientRect().left-b.left+offset);
+              const start=anchors.find(x=>x>=minStart-.5&&x<=Math.min(activeLeft,maxStart)+.5);
+              strip.scrollLeft=start??Math.min(activeLeft,maxStart);
+            }
+          }
+        });
       }
       activity.setAttribute('aria-label', nameOfMode[mode]);
       if (updateURL) {

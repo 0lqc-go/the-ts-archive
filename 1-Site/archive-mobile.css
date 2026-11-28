@@ -1,0 +1,221 @@
+/* Phone editorial system. Independent of the desktop compositions.
+   Keep the reading scale in rem, then tune the layout rather than zooming a page. */
+@media (max-width: 760px), (max-width: 932px) and (pointer: coarse) and (max-height: 500px) {
+  :root {
+    --gutter: clamp(16px, 4.5vw, 24px);
+    --m-s1: 4px; --m-s2: 8px; --m-s3: 12px; --m-s4: 16px; --m-s5: 24px; --m-s6: 32px;
+    --m-hero: clamp(2.125rem, 9.5vw, 2.75rem);
+    --m-section: clamp(1.5rem, 6.25vw, 1.875rem);
+    --m-card: clamp(1.1875rem, 4.9vw, 1.375rem);
+    --m-feature: clamp(1.5rem, 6.1vw, 1.875rem);
+    --m-body: .9375rem; --m-meta: .75rem; --m-label: .8125rem; --m-control: .875rem;
+    --type-section: var(--m-section);
+    --type-winner: var(--m-feature);
+    --type-category: 1.0625rem;
+    --type-dialog: 1.1875rem;
+    --type-meta: var(--m-meta);
+    --type-control: var(--m-control);
+    --type-utility: var(--m-meta);
+  }
+  .section-heading h2,.mood-collections .section-heading h2 { font-size: var(--m-section); line-height: 1.13; }
+  .archive-card h3 { font-size: var(--m-card); line-height: 1.2; margin: 5px 0 4px; }
+  .archive-card-copy p:last-of-type { font-size: var(--m-control); line-height: 1.5; }
+  .archive-card-copy { padding-top: 10px; }
+  .archive-directory { padding-block: var(--m-s6); }
+  .archive-directory + .archive-directory { padding-top: 4px; }
+  .archive-directory .section-heading { margin-bottom: var(--m-s4); }
+  .archive-card-grid { gap: var(--m-s5) var(--m-s3); }
+  .section-aside { line-height: 1.35; text-wrap: pretty; }
+}
+
+@media (max-width: 680px), (max-width: 932px) and (pointer: coarse) and (max-height: 500px) {
+  :root { --header: 56px; --nav: 48px; }
+  body { line-height: 1.5; }
+  .masthead { min-height: var(--header); gap: 8px; }
+  .masthead .wordmark b { font-size: clamp(.96rem, 4vw, 1.08rem); letter-spacing: .025em; }
+  .masthead .topnav a { font-size: .72rem; letter-spacing: .025em; min-height: 38px; }
+  /* Preserve the existing responsive navigation visibility rules. */
+  .masthead .topnav a[hidden] { display: none; }
+  .masthead-tools { gap: 5px; }
+  .masthead .profile .avatar { width: 36px; height: 36px; }
+  .masthead .archive-search-open { width: 36px; height: 40px; }
+  footer { padding-block: 20px; gap: 10px 16px; }
+  footer .wordmark b { font-size: 1.05rem; }
+  footer p { font-size: var(--m-label); }
+  input:not([type="range"]):not([type="checkbox"]):not([type="radio"]), select, textarea { font-size: max(1rem, var(--m-control)); }
+
+  /* Home and editorial covers: keep the film full bleed, expose content sooner. */
+  :is(.archive-hero,.archive-list-hero) { min-height: clamp(380px, 58svh, 510px); }
+  :is(.archive-hero,.archive-list-hero) h1 { font-size: var(--m-hero); line-height: .99; }
+  :is(.archive-hero,.archive-list-hero) .hero-title { padding-top: 80px; padding-bottom: 82px; }
+  :is(.archive-hero,.archive-list-hero) .hero-bottom { gap: 6px; margin-top: 11px; }
+  :is(.archive-hero,.archive-list-hero) .hero-bottom p { font-size: clamp(1rem,4.4vw,1.18rem); line-height: 1.24; }
+  :is(.archive-hero,.archive-list-hero) .hero-topline { font-size: var(--m-meta); }
+  :is(.archive-hero,.archive-list-hero) .hero-foot { bottom: 14px; gap: 5px; font-size: var(--m-meta); }
+  body[data-page="awards"][data-award-view] .legacy-awards-hero { min-height: clamp(385px, 57svh, 500px); }
+  body[data-page="awards"][data-award-view] .legacy-awards-hero h1 { font-size: var(--m-hero); }
+  body[data-page="awards"][data-award-view] .legacy-awards-hero .hero-title { padding-bottom: 53px; }
+  body[data-page="awards"][data-award-view] .legacy-awards-hero .hero-edition-awards { font-size: var(--m-meta); }
+  .hero-caption { font-size: var(--m-meta); }
+  .home-directory-heading { column-gap: 10px; align-items: flex-start; }
+  .home-discovery { gap: 3px; }
+  .home-discover { font-size: var(--m-label); min-height: 40px; padding: 6px 9px; }
+  .screening-mobile-link { min-height: 30px; font-size: var(--m-label); }
+  .home-lab-card { min-height: clamp(268px, 69vw, 318px); padding: 16px 15px 35px; }
+  .home-lab-copy h3 { font-size: var(--m-feature); line-height: 1.12; margin-bottom: 7px; }
+  .home-lab-copy p { font-size: var(--m-control); line-height: 1.45; }
+  .home-lab-daily { min-height: 44px; margin-top: 14px; font-size: var(--m-label); }
+  .daily-frame-entry { padding-block: 24px var(--m-s6); }
+  .screening-entry.daily-frame-entry h2 { font-size: var(--m-section); }
+  .daily-frame-entry .screening-entry-copy > p { font-size: var(--m-control); }
+  body[data-page="home"] .daily-frame-entry .screening-daily-heading { margin-bottom: 8px; }
+  /* The two companion experiences share a row on normal phones; the wide
+     Cinema Lab card keeps its editorial weight under both. */
+  @media (min-width: 375px) {
+    body[data-page="home"] .profile-entry .archive-card-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px 12px; }
+    body[data-page="home"] .profile-entry .archive-card > img { aspect-ratio: 1.73; }
+    body[data-page="home"] .profile-entry .archive-card h3 { font-size: 1.15rem; }
+    body[data-page="home"] .profile-entry .archive-card-copy p:last-of-type { font-size: .8125rem; }
+  }
+
+  /* Awards and lists: a readable hierarchy, compact chapter rhythm, unchanged art. */
+  body[data-award-view="cinematic"] .chapter { padding-top: 34px; }
+  body[data-award-view="cinematic"] .chapter + .chapter { padding-top: 47px; }
+  body[data-award-view="cinematic"] .award-grid { row-gap: 38px; }
+  body[data-award-view="cinematic"] .chapter-heading.ts-rhythm-lead { min-height: 96px; gap: 9px; padding: 15px 12px; }
+  body[data-award-view="cinematic"] .chapter-heading.ts-rhythm-lead h2,
+  body[data-award-view] .chapter-heading h2,
+  body[data-award-view="compact"] .chapter-heading h2 { font-size: var(--m-section); line-height: 1.12; }
+  body[data-award-view="cinematic"] .chapter-heading:not(.ts-rhythm-lead) { margin-bottom: 16px; }
+  body[data-award-view] .award-heading h3,
+  body[data-award-view="cinematic"] .featured-award .award-heading h3 { font-size: 1rem; line-height: 1.35; }
+  body[data-award-view="cinematic"] .featured-award .winner-title,
+  body[data-award-view="cinematic"] .enhanced-card .performance-copy .winner-title,
+  body[data-award-view="cinematic"] .award-card .winner-title { font-size: var(--m-feature); line-height: 1.11; }
+  body[data-award-view="compact"] .enhanced-card .winner-title,
+  body[data-award-view="compact"] .enhanced-card .performance-copy .winner-title { font-size: 1rem; line-height: 1.35; }
+  body[data-award-view] .edition-quote { margin-block: 30px; }
+  body[data-award-view] .edition-quote blockquote { font-size: clamp(1.25rem,5vw,1.6rem); line-height: 1.38; }
+  body[data-award-view] .edition-utilities { gap: 8px 12px; }
+  .edition-tools { gap: 10px; }
+  .edition-tools .ceremony-entry { min-height: 38px; font-size: var(--m-label); }
+  :is(.spotlights,.final-cut,.double-feature,.snub-list) { padding-block: 30px; }
+  :is(#snub-entries,#list-items) { gap: 18px; }
+  .snub-card,.collection-entry { gap: 11px; }
+  .snub-card h3,.collection-entry h3 { font-size: 1rem; line-height: 1.35; }
+  .ts-r2-07 .ts-ceremony-intertitle { min-height: min(43dvh,355px); padding: 22px 14px; }
+  .ts-r2-07 .ts-ceremony-title { gap: 11px; }
+  .ts-r2-07 .ts-ceremony-title h3 { font-size: var(--m-feature); }
+  #film-file-dialog { --file-gutter: 14px; }
+  #film-file-dialog #film-file-title { font-size: 1.0625rem; line-height: 1.3; }
+  #film-file-dialog .file-year,.file-tally { font-size: var(--m-meta); }
+  #film-file-dialog .file-group-summary { min-height: 44px; }
+  #film-file-dialog .file-group-summary strong { font-size: var(--m-control); }
+  #index-dialog input[type="search"],#index-query { font-size: 1rem; min-height: 44px; }
+
+  /* Cinema Lab: the programme and the activities use different densities.
+     Keep controls reachable, but let the film/question lead the viewport. */
+  #screening-landing[data-layout="programme"] .sr-land-hero { height: clamp(360px, 101vw, 440px); }
+  #screening-landing[data-layout="programme"] .sr-land-hero-copy { bottom: 38px; }
+  .sr-land-hero h1 { font-size: var(--m-hero); line-height: 1.06; }
+  .sr-land-subtitle { font-size: var(--m-body); }
+  .sr-land-framework,.sr-land-eyebrow { font-size: .69rem; }
+  .sr-land-content { gap: 10px; padding-block: 10px var(--m-s6); }
+  .sr-land-section-heading h2 { font-size: var(--m-section); }
+  .sr-land-section-heading p { font-size: var(--m-label); }
+  #screening-landing[data-layout="programme"] .sr-land-grid .sr-land-card { gap: 11px; padding-block: 10px; grid-template-columns:minmax(0,.72fr) minmax(0,1fr); }
+  #screening-landing[data-layout="programme"] .sr-land-grid .sr-land-card-title strong { font-size: clamp(1.0625rem,4.5vw,1.35rem); line-height: 1.17; }
+  .sr-land-card small { font-size: var(--m-label); line-height: 1.4; }
+  .sr-land-card-meta { font-size: var(--m-meta); }
+  .sr-land-hero-actions .sr-primary { min-height: 44px; padding: 9px 14px; font-size: var(--m-control); }
+  .screening-page { width: calc(100% - 2 * var(--gutter)); padding-top: var(--m-s4); padding-bottom: var(--m-s6); }
+  .screening-intro { margin-bottom: 9px; }
+  .screening-intro h1 { font-size: var(--m-section); line-height: 1.1; }
+  .screening-intro p { font-size: var(--m-label); margin-top: 4px; }
+  .screening-navigation,.screening-quiz-navigation:not([hidden]) { display: flex; flex-wrap: nowrap; justify-content: flex-start; gap: 0 17px; overflow-x: auto; scrollbar-width: thin; overscroll-behavior-x: contain; }
+  .screening-navigation a,.screening-quiz-navigation a { flex: none; white-space: nowrap; font-size: var(--m-label); min-height: 42px; }
+  .screening-quiz-navigation:not([hidden]) { padding-block: 0; margin-bottom: 12px; }
+  .sr-toolbar { gap: 8px; margin-bottom: 12px; }
+  .sr-memory-tools .sr-segment { flex-wrap:nowrap; max-width:100%; min-width:0; overflow-x:auto; scrollbar-width:thin; }
+  .sr-memory-tools .sr-segment button { flex:none; white-space:nowrap; }
+  .sr-quiz-heading,.sr-ballot-heading,.sr-winner-heading { margin-bottom: 10px; }
+  .sr-quiz-heading h2,.sr-ballot-heading h2 { font-size: 1.25rem; line-height: 1.35; }
+  .sr-winner-heading h2,.sr-game-heading h2,.sr-matchup-heading h2,.ts-r2-12 .sr-matchup-heading h2,
+  .sr-journey-intro h2,.sr-journey-heading h2,.sr-results-header h2 { font-size: var(--m-feature); line-height: 1.15; }
+  .sr-memory-clue { font-size: clamp(1.5rem,6.1vw,1.85rem); line-height: 1.2; }
+  .sr-memory-prompt { min-height: 150px; padding: 16px 13px; }
+  .sr-question-grid { gap: 10px; }
+  .sr-answer { min-height: 44px; padding: 9px 11px; font-size: var(--m-body); line-height: 1.4; }
+  .sr-game-heading { gap: 9px 12px; margin-bottom: 12px; }
+  .sr-game-heading p:not(.screening-kicker) { font-size: var(--m-control); line-height: 1.5; }
+  .sr-game-actions { gap: 10px; margin-top: 14px; padding-top: 12px; }
+  .sr-editor-moves button { min-height: 40px; }
+  .sr-taste-hero-copy h2 { font-size: var(--m-hero); }
+  .sr-taste-section-heading h3 { font-size: var(--m-section); }
+  .sr-journey-tile-copy strong { font-size: 1.2rem; line-height: 1.2; }
+  .sr-journey-tile-copy { gap: 4px; padding-block: 10px 12px; }
+
+  /* Cinema Profile: the assessment is a reading experience, not a tiny desktop.
+     Give guidance its own full-width row, and compact the repeated question cards. */
+  .cp-body.cp-intro-page { --cp-intro-header-h: var(--header); }
+  .cp-body .cp-masthead { height: var(--header); }
+  .cp-body .cp-masthead .wordmark b { font-size: 1rem; }
+  .cp-body .cp-wrap,.cp-body .cp-wrap-wide { width: calc(100% - 2 * var(--gutter)); }
+  .cp-body .cp-footer { min-height: 0; padding-block: 18px; }
+  .cp-intro-cover { height: clamp(325px, 86vw, 395px); }
+  .cp-intro-cover-copy { bottom: 37px; }
+  .cp-root .cp-intro-title { font-size: var(--m-hero); line-height: 1.06; }
+  .cp-root[dir="rtl"] .cp-intro-title { font-size: clamp(1.75rem,7vw,2.1rem); }
+  .cp-intro-subtitle { font-size: var(--m-body); }
+  .cp-intro-content { gap: var(--m-s5); padding-bottom: var(--m-s6); }
+  .cp-intro-start-row { grid-template-columns: minmax(0,1fr); gap: 11px; }
+  .cp-intro-start-copy { grid-template-columns: minmax(0,1fr); gap: 6px; }
+  .cp-intro-page .cp-start-actions { justify-content: flex-start; }
+  .cp-intro-page .cp-start-actions .cp-button { min-height: 44px; font-size: var(--m-control); }
+  .cp-intro-page .cp-start-facts strong { font-size: var(--m-control); }
+  .cp-intro-page .cp-start-guidance,.cp-intro-page .cp-edition-description { font-size: var(--m-label); line-height: 1.5; }
+  .cp-intro-page .cp-edition-option strong { font-size: var(--m-label); }
+  .cp-intro-works-heading h2 { font-size: var(--m-section); }
+  .cp-root[dir="rtl"] .cp-intro-works-heading h2 { font-size: 1.3rem; }
+  .cp-intro-works-grid .cp-hero-film-caption { font-size: var(--m-meta); }
+  .cp-intro-works-grid .cp-hero-film-caption span:last-child { font-size: .72rem; }
+  .cp-progress-row { font-size: var(--m-label); margin-bottom: 8px; }
+  .cp-question { margin-top: 14px; }
+  .cp-body .cp-root .cp-question-title,
+  .ts-r2-12 .cp-body .cp-root .cp-visual-heading .cp-question-title,
+  .cp-root .cp-cf-quiz .cp-visual-heading .cp-question-title { font-size: clamp(1.375rem,5.6vw,1.625rem); line-height: 1.23; }
+  .cp-body .cp-root[dir="rtl"] .cp-question-title,
+  .ts-r2-12 .cp-body .cp-root[dir="rtl"] .cp-visual-heading .cp-question-title { font-size: clamp(1.125rem,4.9vw,1.35rem); line-height: 1.55; }
+  .cp-root .cp-visual-heading { margin-bottom: 12px; }
+  .cp-root .cp-visual-grid { gap: 10px; }
+  .cp-root .cp-visual-art,.ts-r2-12 .cp-root .cp-visual-art { aspect-ratio: 2.3; }
+  .cp-root .cp-visual-meta { padding: 9px 11px; }
+  .cp-adaptive .cp-scene-choice .cp-cinema-answer { min-height: 62px; }
+  .cp-adaptive .cp-scene-choice .cp-cinema-answer strong { font-size: var(--m-body); line-height: 1.45; font-weight: 500; }
+  .cp-root[dir="rtl"] .cp-scene-choice .cp-cinema-answer strong { line-height: 1.65; }
+  .cp-root .cp-small { font-size: var(--m-label); line-height: 1.55; }
+  .cp-question-tools,.cp-familiarity-options { gap: 3px 12px; }
+  .cp-question-footer,.ts-r2-12 .cp-question-footer { margin-top: 11px; padding-top: 8px; }
+  .cp-root .cp-button { font-size: var(--m-control); min-height: 44px; padding: 9px 13px; }
+  .cp-root .cp-section-heading { font-size: var(--m-section); }
+  .cp-root .cp-subheading { font-size: 1.25rem; }
+  .cp-root .cp-result-marker .cp-signature-name { font-size: clamp(2rem,8vw,2.4rem); }
+  .cp-root[dir="rtl"] .cp-result-marker .cp-signature-name { font-size: 1.85rem; }
+  .cp-results-grid { gap: 12px; }
+  .cp-results-grid .cp-panel { padding: 13px; }
+  .cp-result-head .cp-display { font-size: var(--m-hero); }
+}
+
+@media (max-width: 360px) {
+  .masthead { gap: 6px; }
+  .masthead .profile .avatar { width: 32px; height: 32px; }
+  .masthead .archive-search-open { width: 32px; }
+  .cp-body.cp-intro-page .cp-masthead .nav-profile-short { font-size: .65rem; }
+  .home-discover { font-size: .75rem; padding-inline: 7px; }
+  .screening-navigation,.screening-quiz-navigation:not([hidden]) { gap: 0 12px; }
+}
+
+@media (max-width: 932px) and (pointer: coarse) and (max-height: 500px) and (orientation: landscape) {
+  :is(.archive-hero,.archive-list-hero),body[data-page="awards"][data-award-view] .legacy-awards-hero { min-height: max(360px, 88svh); }
+  #screening-landing[data-layout="programme"] .sr-land-hero,.cp-intro-cover { height: max(320px, 88svh); }
+}

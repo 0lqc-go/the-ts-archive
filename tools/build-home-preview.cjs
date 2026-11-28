@@ -80,9 +80,9 @@ async function main() {
   const sizes = {}, variants = {};
   function add(frame) {
     sizes[frame.path] = allSizes[frame.path] || [frame.width,frame.height];
-    if (allVariants[frame.path]?.length) {
+    const options=frame.variants || allVariants[frame.path];
+    if (options?.length) {
       // The daily card is bounded to a much smaller screen than the viewer.
-      const options = allVariants[frame.path];
       const firstLarge = options.findIndex(option=>option.width>=1360);
       variants[frame.path] = firstLarge<0 ? options : options.slice(0,firstLarge+1);
     }
