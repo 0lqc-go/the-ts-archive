@@ -206,6 +206,9 @@ body.ts-journey-active .screening-activity { padding-top:clamp(15px,1.6vw,21px);
 
 /* Cinematic Wide: smoothly widen the shared reading grid on medium-large
    desktops. Below 1280px, keep the original responsive gutters. */
+@media (min-width: 1024px) {
+  body[data-page="home"] { --gutter: max(22px, 7.2vw); }
+}
 @media (min-width: 1280px) {
   body[data-page="awards"], body[data-page="cinema-profile"].cp-intro-page {
     --gutter: max(22px, clamp(6vw, calc(45vw - 500px), 12vw), calc((100vw - 1840px) / 2));

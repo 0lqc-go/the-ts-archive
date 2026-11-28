@@ -237,18 +237,23 @@ const fit=async page=>assert.ok(await page.evaluate(()=>document.documentElement
       const profile=page.locator('.profile-entry-card'),journeys=page.locator('.journey-entry-card');
       assert.equal(await lab.count(),1);
       assert.equal(await lab.locator('h3').innerText(),'Cinema Lab');
+      assert.equal(await lab.locator('.eyebrow').count(),0);
+      assert.equal(await page.locator('.daily-frame-entry .screening-entry-copy p').innerText(),'What remains when the lights return.');
       assert.equal(await lab.locator('.home-lab-cover').getAttribute('href'),'screening-room.html');
       assert.equal(await lab.locator('.home-lab-daily').getAttribute('href'),'screening-room.html?mode=daily');
       assert.equal(await page.locator('.topnav a[href="screening-room.html"]').innerText(),'CINEMA LAB');
       const [lb,pb,jb]=await Promise.all([lab.boundingBox(),profile.boundingBox(),journeys.boundingBox()]);
       assert.ok(lb.y>=Math.max(pb.y+pb.height,jb.y+jb.height),'Lab must follow both discovery cards');
       assert.ok(Math.abs(lb.x-pb.x)<2&&Math.abs(lb.x+lb.width-jb.x-jb.width)<2,'Lab must span the discovery grid');
+      if(!mobile) assert.ok(Math.abs(lb.x-1920*.072)<3,'The homepage must use the slightly wider desktop gutters');
       assert.ok((await page.locator('#lists').boundingBox()).y>lb.y+lb.height);
       assert.ok(await lab.locator('h3').evaluate(el=>{const size=parseFloat(getComputedStyle(el).fontSize);return size>=28&&size<=44;}));
       const artBox=await lab.locator('.home-lab-art').boundingBox();
       assert.ok(Math.abs(lb.width-artBox.width)<3&&Math.abs(lb.height-artBox.height)<3,'The still must fill the framed card');
       await lab.scrollIntoViewIfNeeded();
       await page.waitForFunction(()=>document.querySelector('.home-lab-art img').naturalWidth>0);
+      assert.match(await lab.locator('.home-lab-art img').getAttribute('srcset'),/babylon-cinema-lab-4096w\.webp 4096w/);
+      assert.equal(await lab.locator('.home-lab-art img').getAttribute('width'),'4096');
       await lab.locator('.home-lab-daily').click({trial:true});
       await lab.locator('.home-lab-cover').click({trial:true,position:{x:lb.width-12,y:12}});
       if(proof){
