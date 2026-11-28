@@ -10,10 +10,10 @@
     "babylon-2022-wide.webp": ["assets/films/babylon-2022-wide.webp",[1920,1080],[["assets/gallery/2020-2026/thumbs/babylon-2022-63df61638bb0-320w.webp",320],["assets/films/babylon-2022-wide.webp",1920]]],
     "tenet-alt-01.webp": ["assets/films/tenet-alt-01.webp",[1250,703],[["assets/gallery/2020-2026/thumbs/tenet-fcc810d27c50-320w.webp",320],["assets/films/tenet-alt-01.webp",1250]]],
     "eaf64409575d.webp": ["assets/gallery/2010-2019/1917/eaf64409575d.webp",[1280,533],[["assets/gallery/2010-2019/thumbs/1917-eaf64409575d-320w.webp",320],["assets/gallery/2010-2019/1917/eaf64409575d-768w.webp",768],["assets/gallery/2010-2019/1917/eaf64409575d.webp",1280]]],
-    "the-souvenir-daily-frame.jpg": ["assets/films/the-souvenir-daily-frame.jpg",[2000,1153],[["assets/gallery/2010-2019/thumbs/the-souvenir-daily-frame-320w.webp",320],["assets/films/responsive/the-souvenir-daily-frame-640w.webp",640],["assets/films/responsive/the-souvenir-daily-frame-960w.webp",960],["assets/films/responsive/the-souvenir-daily-frame-1280w.webp",1280],["assets/films/responsive/the-souvenir-daily-frame-1920w.webp",1920],["assets/films/the-souvenir-daily-frame.jpg",2000]]],
+    "memory-her": ["assets/films/responsive/screening-memory-her-960w.webp",[960,540],[["assets/films/responsive/screening-memory-her-320w.webp",320],["assets/films/responsive/screening-memory-her-640w.webp",640],["assets/films/responsive/screening-memory-her-960w.webp",960]]],
     "680fd3349108.webp": ["assets/gallery/2010-2019/blade-runner-2049/680fd3349108.webp",[1280,546],[["assets/gallery/2010-2019/thumbs/blade-runner-2049-680fd3349108-320w.webp",320],["assets/gallery/2010-2019/blade-runner-2049/680fd3349108-768w.webp",768],["assets/gallery/2010-2019/blade-runner-2049/680fd3349108.webp",1280]]],
     "inception-curator-frame-14.webp": ["assets/films/inception-curator-frame-14.webp",[3840,1600],[["assets/gallery/2010-2019/thumbs/inception-curator-frame-14-320w.webp",320],["assets/films/responsive/inception-curator-frame-14-640w.webp",640],["assets/films/responsive/inception-curator-frame-14-960w.webp",960],["assets/films/responsive/inception-curator-frame-14-1280w.webp",1280],["assets/films/responsive/screen-7110d0aa98a7-2560w.webp",2560],["assets/films/responsive/screen-7110d0aa98a7-3840w.webp",3840]]],
-    "past-lives-film-file.webp": ["assets/films/past-lives-film-file.webp",[1680,945],[["assets/gallery/2020-2026/thumbs/past-lives-8c69a4356a3a-320w.webp",320],["assets/films/past-lives-film-file.webp",1680]]],
+    "connections-burning": ["assets/films/responsive/screening-connections-burning-960w.webp",[960,540],[["assets/films/responsive/screening-connections-burning-320w.webp",320],["assets/films/responsive/screening-connections-burning-640w.webp",640],["assets/films/responsive/screening-connections-burning-960w.webp",960]]],
     "9503aa1ca9e8.webp": ["assets/gallery/2020-2026/dune-part-two/9503aa1ca9e8.webp",[1920,801],[["assets/gallery/2020-2026/thumbs/dune-part-two-9503aa1ca9e8-320w.webp",320],["assets/gallery/2020-2026/dune-part-two/9503aa1ca9e8-768w.webp",768],["assets/gallery/2020-2026/dune-part-two/9503aa1ca9e8-1280w.webp",1280],["assets/gallery/2020-2026/dune-part-two/9503aa1ca9e8.webp",1920]]],
     "the-batman-wide.webp": ["assets/films/the-batman-wide.webp",[1920,1080],[["assets/gallery/2020-2026/thumbs/the-batman-489b6b5fa63a-320w.webp",320],["assets/films/the-batman-wide.webp",1920]]],
     "phantom-thread-best-actor-curator.webp": ["assets/films/phantom-thread-best-actor-curator.webp",[1280,720],[["assets/gallery/2010-2019/thumbs/phantom-thread-1e762fbf2af3-320w.webp",320],["assets/films/responsive/phantom-thread-best-actor-curator-640w.webp",640],["assets/films/responsive/phantom-thread-best-actor-curator-960w.webp",960],["assets/films/phantom-thread-best-actor-curator.webp",1280]]],
@@ -22,11 +22,11 @@
   const cover={ref:'babylon-2022-wide.webp',film:'Babylon',year:2022,slug:'babylon-2022',edition:'2020-2026',position:'58% 45%'};
   const games=[
     ['frame','Guess the Frame','Recognize the film through a single still.','eaf64409575d.webp','Image recognition'],
-    ['memory','Cinema Memory','Scenes, dialogue, music and cinematic connections.','the-souvenir-daily-frame.jpg','Film knowledge'],
+    ['memory','Cinema Memory','Scenes, dialogue, music and cinematic connections.','memory-her','Film knowledge'],
     ['signature','Visual Signature','Read the eye behind the image.','680fd3349108.webp','Directors & cinematographers'],
     ['winner','Guess the Winner','Recall the archive’s award selections.','9503aa1ca9e8.webp','The archive awards'],
     ['editor','The Editor','Put the frames back in screen order.','inception-curator-frame-14.webp','Sequence puzzles'],
-    ['connections','Connections','Discover the credits linking nine films.','past-lives-film-file.webp','Credit connections']
+    ['connections','Connections','Discover the credits linking nine films.','connections-burning','Credit connections']
   ];
   const daily=['daily','Daily Challenge','Five shared questions. A new round each day.','the-batman-wide.webp','Daily · 5 questions'];
   const explore=[

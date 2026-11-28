@@ -205,6 +205,8 @@ const fit=async page=>assert.ok(await page.evaluate(()=>document.documentElement
         assert.equal(await page.locator('.sr-land-card[href*="mode=signature"]').count(),1);
         assert.equal(await page.locator('.sr-land-card[href*="mode=double"]').count(),0);
         assert.match(await page.locator('.sr-land-card[href*="mode=ballot"] img').getAttribute('src'),/tenet-alt-01\.webp$/);
+        assert.match(await page.locator('.sr-land-card[href*="mode=memory"] img').getAttribute('src'),/screening-memory-her-640w\.webp$/);
+        assert.match(await page.locator('.sr-land-card[href*="mode=connections"] img').getAttribute('src'),/screening-connections-burning-640w\.webp$/);
         await page.evaluate(()=>document.querySelectorAll('#screening-landing img').forEach(img=>{img.loading='eager';}));
         await page.waitForFunction(()=>[...document.querySelectorAll('#screening-landing img')].every(img=>img.complete&&img.naturalWidth>0));
         await page.evaluate(async()=>{await Promise.allSettled([...document.querySelectorAll('#screening-landing img,.avatar img')].map(img=>img.decode()));await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));});
